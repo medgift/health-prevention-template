@@ -4,3 +4,9 @@
 // infractus
 // Diabte
 // Cancer
+
+class algorithm{
+
+
+
+}
