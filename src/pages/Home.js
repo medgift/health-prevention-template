@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import Algorithm from "./Algorithm"
 
 export default function Home({ currentUser }) {
+    console.log("java script pue la merde")
   return (
     <div>
+        <Algorithm></Algorithm>
       <h1>Welcome to the Health Prevention Questionnaire</h1>
       {!currentUser ? (
         <>
