@@ -36,3 +36,60 @@
     transform: rotate(360deg);
   }
 }
+
+.Content {
+  background: url(Vector_2.svg) no-repeat right center;
+  background-size: contain;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+}
+
+.Login-Form {
+  width: 70%;
+  text-align: left;
+  margin-left: 15%;
+}
+
+.Login-Shape {
+  width: 40%;
+  height: 100vh;
+}
+
+h1 {
+  font-size: 48px;
+  text-transform: uppercase;
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+input {
+  border: 1px solid #0473D5;
+  border-radius: 10px;
+  width: 40vh;
+  height: 5vh;
+  margin-bottom: 2vh;
+  font-size: 14px;
+  text-transform: uppercase;
+  padding-left: 2vh;
+}
+
+button {
+  background: #0473D5;
+  border-radius: 10px;
+  height: 5vh;
+  color: #f6f6f6;
+  padding: 10px 20px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: 20px;
+  display: inline;
+}
