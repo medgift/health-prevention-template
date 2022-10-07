@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, updateProfile } from "firebase/auth";
 import {getFirestore, collection, getDocs} from "@firebase/firestore";
+import { userConverter } from "./objects/User";
 
 // Configure Firebase.
 //const config = {
@@ -28,6 +29,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+export const refUser = collection(db, 'User').withConverter(userConverter);
 
 export async function getUsers(){
   const userCollection = collection(db, 'User');
