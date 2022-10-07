@@ -1,7 +1,9 @@
 import { Link, Route } from "react-router-dom";
 import Algorithm from "./Algorithm"
+import {database} from "../initFirebase";
 
 export default function Home({ currentUser }) {
+
   return (
     <div>
       <h1>Welcome to the Health Prevention Questionnaire</h1>

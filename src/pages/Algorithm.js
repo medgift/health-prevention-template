@@ -82,6 +82,7 @@ export default class Algorithm extends React.Component{
     }
 
     Diabete(sex, age, bmi, tension,glyc, sport, alim){
+
         let totalPointDiabete
         let diabteConst = [[0.0226,0.0209],[0.2333,0.1167],[0.8209,0.1316]]
         let pointAge = age < 45 ? 1 : age < 56 ? 2 : 3
