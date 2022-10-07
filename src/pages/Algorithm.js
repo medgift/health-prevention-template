@@ -2,21 +2,20 @@ import React  from "react";
 
 export default class Algorithm extends React.Component{
 
-    constructor() {
+    resultNonInfarctus = 0
+    resultInfarctus = 0
+    resultCancer = 0
+    resultDiabete = 0
+
+    constructor(sex, age, smoke, systolique, chol, hdl, afinf, afCancer, bmi, sport, alcool, alim , tension, glyc,diab,inf) {
         super();
+        this.resultDiabete = this.Diabete(sex,age,bmi,tension,glyc,sport,alim)
+        this.resultInfarctus = this.Infarctus(age,sex,smoke,systolique,diab,inf,chol,hdl)
+        this.resultCancer = this.Cancer(afCancer,smoke,bmi,sport,alcool,alim)
+        this.resultNonInfarctus = this.NonInfractus(age,smoke,systolique,chol,hdl,afinf,sex)
     }
-
-    infarctusCoeff = [0.0116, 0.2148, 0.1754, 0.0037, 0.2465, 0.3399, 0.4159, -0.2989, -0.0308, -0.0177, 0.0854]
-
     // Constant for the risk calculation, to choose the right column we used the sex variable
-    diabteConst = [[0.0226,0.0209],[0.2333,0.1167],[0.8209,0.1316]]
-
-    result = 0
-    totalPointDiabete = 0
-    riskDiabete = 0
-
-
-    NonInfractus(age, smoke, systo, Chol, hdl, afinf,sex){
+    NonInfractus(age, smoke, systolique, chol, hdl, afinf,sex){
 
         // The 9th first element (0-8) are for the coeff and
         // the 11 and 12(index 9-10) is for the formule line and the 12 is for the final risk
@@ -25,28 +24,26 @@ export default class Algorithm extends React.Component{
         let risk = 0
 
         let ageCalcul = (age-60)/5
-        let systoCalcul = (systo-120)/20
-        let CholCalcul =  Chol-6
+        let systoCalcul = (systolique-120)/20
+        let CholCalcul =  chol-6
         let hdlCalcul = (hdl-1.30)/0.5
 
         let calcul = [ageCalcul,smoke,systoCalcul,CholCalcul,hdlCalcul,smoke * ageCalcul, ageCalcul  * systoCalcul,
-                        ageCalcul * CholCalcul, ageCalcul *hdl]
-        for(var i = 0; i < calcul.length-1; i++){
-            risk += Coeff[i][sex] * calcul[i]
+                        ageCalcul * CholCalcul, ageCalcul *hdlCalcul]
+        for(var i = 0; i < calcul.length; i++){
+            risk += Coeff[i][sex] *  calcul[i]
         }
 
         let formule = (1-Math.pow(Coeff[9][sex],Math.exp(risk)))
         let finalRisk = (1-Math.exp(-Math.exp(Coeff[10][sex]+
-            Coeff[11][sex]*Math.log(-Math.log(1-formule)))))
+            Coeff[11][sex]*Math.log(-Math.log(1-formule))))) * 100
 
-        return (formule + finalRisk)*100
+         return Math.round((finalRisk * 1.3) * 100)/100
     }
 
-    cancerCoeff = [1.0,1.0,0.5,0.5,0.5,0.5]
-    resultCancer = 0
-
-    Cancer(afCancer, fume, bmi, sport, alcool, alim){
-        
+    Cancer(afCancer, smoke, bmi, sport, alcool, alim){
+        let cancerCoeff = [1.0,1.0,0.5,0.5,0.5,0.5]
+        let resultCancer = 0
         //Take the props and stock them in varaibles
         let pSport = sport;
         let pAlcool = alcool;
@@ -58,46 +55,41 @@ export default class Algorithm extends React.Component{
         pAlim = (alim/3)*100;
 
         //Stock the variables in a tab
-        var cancerVar = [afCancer, fume, bmi, pSport, pAlcool, pAlim];
+        var cancerVar = [afCancer, smoke, bmi, pSport, pAlcool, pAlim];
         var sumCoefficient = 0;
         
         //Find the Total of Cancer Coefficient
-        for(var i = 0; i < cancerVar.length; i++){
-            sumCoefficient += this.cancerCoeff[i];
+        for(let i = 0; i < cancerVar.length; i++){
+            sumCoefficient += cancerCoeff[i];
         }
 
         //Calculate the Value of Risk of getting Cancer
-        for(var i = 0; i < cancerVar.length; i++) {
-            this.resultCancer += ((this.cancerCoeff[i] * cancerVar[i])/sumCoefficient);
+        for(let i = 0; i < cancerVar.length; i++) {
+            resultCancer += ((cancerCoeff[i] * cancerVar[i])/sumCoefficient);
         }
-
         //+ 9  is the base risk of getting cancer
-        return Math.round(this.resultCancer+9) ;
-       
+        return Math.round((resultCancer+9)*100)/100 ;
     }
 
-
-
-    Infarctus(age, sex, fume, syst, dm, inf, chol, hdl,totalCHOL, eGRF,CRP) {
-        for (var i = 0; i < arguments.length; i++) {
-            this.result += this.infarctusCoeff[i] * arguments[i]
+    Infarctus(age, sex, smoke, systolique, diab, inf, chol, hdl) {
+        let result = 0
+        let Coeff= [0.0116, 0.2148, 0.1754, 0.0037, 0.2465, 0.3399, 0.4159, -0.2989, -0.0308, -0.0177, 0.0854]
+        for (let i = 0; i < arguments.length; i++) {
+            result += Coeff[i] * arguments[i]
         }
-        return (1-(Math.pow(0.61785,Math.exp(this.result-2.0869)))) * 100
+        result += Coeff[9]*120 + Coeff[10] * -1
+       return Math.round(((1-(Math.pow(0.61785,Math.exp(result-2.0869))))* 100)*100)/100
     }
 
-    Diabete(sex, age, bmi, tension,gly, phys, alim){
-        this.totalPointDiabete = age + bmi + tension + gly + phys + alim + 3
-        return this.totalPointDiabete > 19 ?  100 :  Math.round(Math.pow(this.totalPointDiabete,3) * this.diabteConst[0][sex] - Math.pow(this.totalPointDiabete,2) *
-            this.diabteConst[1][sex] + this.totalPointDiabete * this.diabteConst[2][sex] - 3*Math.exp(-13))
-    }
+    Diabete(sex, age, bmi, tension,glyc, sport, alim){
 
-
-    render() {
-        return (
-          this.Infarctus(70,0,0,110,0,0,3.5,1.9,0,120,0.1)+ " %" +
-          this.Cancer(0,0,28,3,3,2) + 
-          this.Diabete(0,1,0,0,5,4,1) + " %" +
-          this.NonInfractus(12,1,120,6.3,1.4,1,1) + " %");
+        let totalPointDiabete
+        let diabteConst = [[0.0226,0.0209],[0.2333,0.1167],[0.8209,0.1316]]
+        let pointAge = age < 45 ? 1 : age < 56 ? 2 : 3
+        let pointBMI = bmi < 27 ? 1 : bmi < 31 ? 2 : 3
+        totalPointDiabete = pointAge + pointBMI + tension + glyc + sport + alim + 3
+        return totalPointDiabete > 19 ?  100 :  Math.round(Math.pow(totalPointDiabete,3) * diabteConst[0][sex] - Math.pow(totalPointDiabete,2) *
+            diabteConst[1][sex] + totalPointDiabete * diabteConst[2][sex] - 3*Math.exp(-13))
     }
 }
 
