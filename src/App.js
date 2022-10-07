@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import {Route, Routes} from "react-router-dom";
 import Register from "./pages/Register";
@@ -8,8 +9,9 @@ import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
 import {db} from "./initFirebase";
 import { collection, query, where, doc, getDoc, getDocs} from "firebase/firestore";
-import {useEffect, useState} from "react";
+import { useEffect, useState, Component} from "react";
 import Logout from "./pages/Logout";
+import * as PropTypes from "prop-types";
 //import firebase from "firebase/compat";
 //import firestore from "firebase/Firestore";
 
@@ -62,15 +64,77 @@ export default function App() {
                     <Route path="/logout" element={<Logout/>}/>
                 </Routes>
                 <h1>Questionnaire 1</h1>
-
+                <QuestionList/>
             </header>
         </div>
     );
 }
 
-function Question(props) {
+class Question extends React.Component {
 
+    render() {
+
+        let formattedQuestion;
+        if (this.props.inputType === "ToggleSlider") {
+            formattedQuestion = (
+                //Min and Max of range refer to the index in choices array of the question
+                <input type="range"
+                       min={0}
+                       max={this.props.choices.length-1}
+                       step="1"/>
+            );
+        }
+        return (
+            <>
+                <label>{this.props.text}Bite</label>
+                {formattedQuestion}
+            </>
+        );
+    }
+
+};
+
+//Replace state with props after tests-----------------------------------------
+class QuestionList extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            //Test Questions--------------------------------
+            questions : [{choices:[0,1], DefaultValue:0, inputType:"ToggleSlider", NormalValue:0, QuestionNo:1, Text:"Question 1", VariableName:"var1"},
+                        {choices:["left","middle","right"], DefaultValue:-1, inputType:"ToggleSlider", NormalValue:0, QuestionNo:2, Text:"Question 2", VariableName:"var2"}]
+            //Test Questions--------------------------------
+        };
+    }
+
+
+    //FormSubmission
+    handleFormSubmit = async e => {
+
+    }
+
+    //FormInput Change handler
+    handleInputChange = (event) => {
+
+    }
+
+    render() {
+
+        console.log("questions list"+this.state.questions);
+        return (
+            <form>
+                <ul>
+                {this.state.questions.map((question,index) => (
+                    <li key={index}>
+                        <Question {...question}/>
+                    </li>
+                ))}
+                </ul>
+                <button type="submit">Confirmer</button>
+            </form>
+        );
+    }
 }
+
 
 async function GetQuestionnaire () {
     const questRef = collection(db, "Questionnaire");
