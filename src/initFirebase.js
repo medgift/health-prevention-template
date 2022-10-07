@@ -43,18 +43,6 @@ export async function getUserById(){
   //return userList
 }
 
-export async function createAuthUser(email,password){
- 
-   app.auth().createUserWithEmailAndPassword(email,password)
-    .then(data => {  
-       console.log("User ID :- ", data.user.uid);
-       return true;
-    })
-    .catch(error => {
-       console.log(error);
-       return false;
-    });
-}
 
 export async function getAuthCurrentUser(){
   if(auth.currentUser !== null){
