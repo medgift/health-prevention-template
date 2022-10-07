@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
 import {db} from "./initFirebase";
-import { collection, query, where, doc, getDoc, getDocs} from "firebase/firestore";
+import {collection, query, where, doc, getDoc, getDocs} from "firebase/firestore";
 import {useEffect, useState} from "react";
 import Logout from "./pages/Logout";
 //import firebase from "firebase/compat";
@@ -16,6 +16,7 @@ import Logout from "./pages/Logout";
 export default function App() {
     /* Current user state */
     const [currentUser, setCurrentUser] = useState(undefined);
+    const NUMBER_OF_QUESTIONNAIRES = 3;
 
     /* Watch for authentication state changes */
     useEffect(() => {
@@ -30,6 +31,22 @@ export default function App() {
         };
     }, []);
 
+    useEffect( () => {
+        async function LoadQuestion() {
+            for (let i = 1; i < NUMBER_OF_QUESTIONNAIRES+1; i++) {
+                let questions = await GetQuestions(i);
+                for (const q of questions) {
+                    console.log("Questions : " + q.get("Text"))
+
+                }
+            }
+        }
+        GetQuestions();
+    }, []);
+
+
+
+
     if (currentUser === undefined) {
         return (
             <div className="App">
@@ -39,18 +56,6 @@ export default function App() {
             </div>
         );
     }
-
-    const questionnaire = GetQuestionnaire();
-
-    /*const questionsRef = collection(firestore, 'Questionnaire'.doc(1).collection('Question'));
-    console.log(questionsRef);*/
-    //const queryRef = questionsRef.where('QuestionnaireNO', '==', 1).get();
-
-        /*const q = query(collection(db, "Questionnaire"))
-        const unsub = onSnapshot(q, (querySnapshot) => {
-            console.log("Data", querySnapshot.docs.map(d => doc.data()));
-        });
-        console.log("after the function");*/
 
     return (
         <div className="App">
@@ -72,15 +77,32 @@ function Question(props) {
 
 }
 
-async function GetQuestionnaire () {
-    const questRef = collection(db, "Questionnaire");
-    const querstionnaire1 = query(questRef, where("QuestionnaireNO", "==", 1));
-    const q = query(collection(db, "Questionnaire"), where("QuestionnaireNO", "==", 1));
+async function GetQuestions(questionnaireNo) {
+    const q = query(collection(db, "Question"), where("QuestionNO", "==", questionnaireNo));
     const querySnapshot = await getDocs(q);
+    let documentList = [];
     querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-
+        documentList = [...documentList, doc];
     });
-    console.log("Questionnaire 1 : " + (await getDocs(querstionnaire1)).docs);
+    let i = 0;
+    for (const q of documentList) {
+        i++;
+        console.log(i + "Question text : " + q.get("Text"))
+    }
+    return documentList;
+}
+
+async function GetPatient(firstName) {
+    const q = query(collection(db, "Patient"), where("FirstName", "==", firstName));
+    const querySnapshot = await getDocs(q);
+    let documentList = [];
+    querySnapshot.forEach((doc) => {
+        documentList = [...documentList, doc];
+    });
+    console.log("After get function ....")
+   /* for (const documentListElement of documentList) {
+        console.log("LastName : " + documentListElement.get("LastName"))
+    }
+    */
+    return documentList;
 }
