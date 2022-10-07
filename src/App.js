@@ -8,6 +8,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
 import { useEffect, useState } from "react";
 import Logout from "./pages/Logout";
+import Info from "./pages/Info";
 
 export default function App() {
   /* Current user state */
@@ -44,6 +45,7 @@ export default function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/info" element={<Info />} />
         </Routes>
       </header>
     </div>
