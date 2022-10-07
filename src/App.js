@@ -8,8 +8,8 @@ import Home from "./pages/Home";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
 import {db} from "./initFirebase";
-import { collection, query, where, doc, getDoc, getDocs} from "firebase/firestore";
-import { useEffect, useState, Component} from "react";
+import {collection, query, where, doc, getDoc, getDocs} from "firebase/firestore";
+import {useEffect, useState, Component} from "react";
 import Logout from "./pages/Logout";
 import * as PropTypes from "prop-types";
 //import firebase from "firebase/compat";
@@ -17,7 +17,7 @@ import * as PropTypes from "prop-types";
 
 export default function App() {
     /* Current user state */
-    const [currentUser, setCurrentUser] = useState(undefined);
+    const [currentUser, setCurrentUser] = useState(undefined)
 
     /* Watch for authentication state changes */
     useEffect(() => {
@@ -66,11 +66,11 @@ class Question extends React.Component {
         if (this.props.inputType === "ToggleSlider") {
             formattedQuestion = (
                 //Min and Max of range refer to the index in choices array of the question
-                <input type ="range"
-                       min ={0}
-                       max ={this.props.choices.length-1}
-                       step ="1"
-                       list ="bite"/>
+                <input type="range"
+                       min={0}
+                       max={this.props.choices.length - 1}
+                       step="1"
+                       list="bite"/>
             );
         }
         return (
@@ -90,15 +90,50 @@ class Question extends React.Component {
 };
 
 //Replace state with props after tests-----------------------------------------
-function QuestionList (){
+function QuestionList() {
 
     //Test Questions--------------------------------
-   const questions = [{choices:[0,1], DefaultValue:0, inputType:"ToggleSlider", NormalValue:0, QuestionNo:1, Text:"Question 1", VariableName:"var1"},
-                {choices:["left","middle","right"], DefaultValue:-1, inputType:"ToggleSlider", NormalValue:0, QuestionNo:2, Text:"Question 2", VariableName:"var2"}];
+    //const questions = [{choices:[0,1], DefaultValue:0, inputType:"ToggleSlider", NormalValue:0, QuestionNo:1, Text:"Question 1", VariableName:"var1"},
+    //             {choices:["left","middle","right"], DefaultValue:-1, inputType:"ToggleSlider", NormalValue:0, QuestionNo:2, Text:"Question 2", VariableName:"var2"}];
     //Test Questions--------------------------------
 
+    let questionModel = {
+        choices: [],
+        DefaultValue: 0,
+        inputType: "",
+        NormalValue: 0,
+        QuestionNO: 1,
+        Text: "",
+        VariableName: ""
+    }
+    let [questions, setQuestions] = useState([]);
+
+    useEffect(() => {
+        async function loadQuestions() {
+            let querySnapchot = await GetQuestions(2);
+            for (const q of querySnapchot) {
+                setQuestions(prevState => [...prevState, convertToQuestion(q)])
+            }
+        }
+        loadQuestions();
+    }, []);
 
 
+    for (const q of questions) {
+        console.log(q.inputType);
+    }
+
+    function convertToQuestion(q) {
+        return {
+            choices: q.get("Choices"),
+            defaultValue: q.get("DefaultValue"),
+            inputType: q.get("InputType"),
+            normalValue: q.get("NormalValue"),
+            questionNO: q.get("QuestionNO"),
+            text: q.get("Text"),
+            variableName: q.get("Variable")
+        };
+    }
 
     //FormSubmission
 
@@ -106,16 +141,16 @@ function QuestionList (){
     //FormInput Change handler
 
 
-    return  (
+    return (
         <form>
             <ul>
-            {questions.map((question,index) => (
-                <li key={index}>
-                    <Question {...question}/>
-                    <br/>
-                    <br/>
-                </li>
-            ))}
+                {questions.map((question, index) => (
+                    <li key={index}>
+                        <Question {...question}/>
+                        <br/>
+                        <br/>
+                    </li>
+                ))}
             </ul>
             <button type="submit">Confirmer</button>
         </form>
@@ -123,14 +158,12 @@ function QuestionList (){
 }
 
 
-async function GetQuestion (questionnaireNo) {
+async function GetQuestions(questionnaireNo) {
     const q = query(collection(db, "Question"), where("QuestionnaireNO", "==", questionnaireNo));
     const querySnapshot = await getDocs(q);
     let questions = [];
     querySnapshot.forEach((doc) => {
-        questions = [doc, ...questions]
+        questions = [doc, ...questions];
     });
-    for (const q of questions) {
-       console.log(q.get("Text"));
-    }
+    return questions;
 }
