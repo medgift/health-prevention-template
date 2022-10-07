@@ -73,26 +73,35 @@ export default function App() {
 class Question extends React.Component {
 
     render() {
-
         let formattedQuestion;
-        if (this.props.inputType === "ToggleSlider") {
+        //For inputs of type RadioSlider and NumericSlider
+        if (this.props.inputType === "RadioSlider" || this.props.inputType === "NumericSlider") {
             formattedQuestion = (
                 //Min and Max of range refer to the index in choices array of the question
                 <input type ="range"
                        min ={0}
                        max ={this.props.choices.length-1}
                        step ="1"
-                       list ="bite"/>
+                       onInput={this.props.HandleInputChanges}/>
             );
         }
+
+        //For inputs of type ToggleSlider
+        if (this.props.inputType === "ToggleSlider") {
+            formattedQuestion = (
+                <label class="switch">
+                    <input type ="checkbox"
+                           onInput={this.props.HandleInputChanges}
+                           onChange={this.props.HandleInputChanges}
+                           step="1"/>
+                    <span className="slider round"></span>
+                </label>
+            );
+        }
+
         return (
             <>
-                <datalist id="bite">
-                    {this.props.choices.map((choice) => (
-                        <option value={choice}/>
-                    ))}
-                </datalist>
-                <p>{this.props.question}</p>
+                <p>{this.props.Text}</p>
                 {formattedQuestion}
             </>
         );
@@ -101,30 +110,34 @@ class Question extends React.Component {
 
 };
 
-//Replace state with props after tests-----------------------------------------
 function QuestionList (){
 
     //Test Questions--------------------------------
    const questions = [{choices:[0,1], DefaultValue:0, inputType:"ToggleSlider", NormalValue:0, QuestionNo:1, Text:"Question 1", VariableName:"var1"},
-                {choices:["left","middle","right"], DefaultValue:-1, inputType:"ToggleSlider", NormalValue:0, QuestionNo:2, Text:"Question 2", VariableName:"var2"}];
+                {choices:["left","middle","right"], DefaultValue:-1, inputType:"RadioSlider", NormalValue:0, QuestionNo:2, Text:"Question 2", VariableName:"var2"}];
     //Test Questions--------------------------------
 
-
-
-    //FormSubmission
-
-
     //FormInput Change handler
+    let HandleInputChanges = (event) => {
+        event.preventDefault();
+        console.log("Change Detected");
+        console.log(event.target.toString());
+    };
 
+    //Form Submission
+    let HandleFormSubmit = (event) => {
+        event.preventDefault();
+        console.log("Form Submitted");
+    };
 
     return  (
-        <form>
+        <form onSubmit={HandleFormSubmit}>
             <ul>
             {questions.map((question,index) => (
                 <li key={index}>
-                    <Question {...question}/>
-                    <br/>
-                    <br/>
+                    <p>
+                    <Question {...question} HandleInputChanges={HandleInputChanges.bind(this)}/>
+                    </p>
                 </li>
             ))}
             </ul>
