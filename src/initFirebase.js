@@ -43,7 +43,7 @@ export async function getUserById(){
   //return userList
 }
 
-export async function createUser(email,password){
+export async function createAuthUser(email,password){
  
    app.auth().createUserWithEmailAndPassword(email,password)
     .then(data => {  
@@ -56,8 +56,8 @@ export async function createUser(email,password){
     });
 }
 
-export async function getCurrentUser(){
-  if(auth.getCurrentUser !== null){
+export async function getAuthCurrentUser(){
+  if(auth.currentUser !== null){
     return auth.currentUser;
   }else{
     console.log("Couldn't find the current user..")
@@ -65,10 +65,9 @@ export async function getCurrentUser(){
   }
 }
 
-export async function updateCurrentUser(props){
-  updateProfile(getCurrentUser, {
-    displayName: props.displayName, photoURL: props.photoURL, 
-  }).then(() => {
+export async function updateAuthCurrentUser(displayName,photoURL ){
+  updateProfile(getAuthCurrentUser(), {
+    displayName: displayName, photoURL: photoURL, }).then(() => {
     // Profile updated!
     // ...
   }).catch((error) => {
