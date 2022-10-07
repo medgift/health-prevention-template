@@ -42,18 +42,6 @@ export default function App() {
         );
     }
 
-    const questionnaire = GetQuestionnaire();
-
-    /*const questionsRef = collection(firestore, 'Questionnaire'.doc(1).collection('Question'));
-    console.log(questionsRef);*/
-    //const queryRef = questionsRef.where('QuestionnaireNO', '==', 1).get();
-
-        /*const q = query(collection(db, "Questionnaire"))
-        const unsub = onSnapshot(q, (querySnapshot) => {
-            console.log("Data", querySnapshot.docs.map(d => doc.data()));
-        });
-        console.log("after the function");*/
-
     return (
         <div className="App">
             <header className="App-header">
@@ -108,6 +96,7 @@ class QuestionList extends React.Component {
     }
 
 
+
     //FormSubmission
     handleFormSubmit = async e => {
 
@@ -137,15 +126,14 @@ class QuestionList extends React.Component {
 }
 
 
-async function GetQuestionnaire () {
-    const questRef = collection(db, "Questionnaire");
-    const querstionnaire1 = query(questRef, where("QuestionnaireNO", "==", 1));
-    const q = query(collection(db, "Questionnaire"), where("QuestionnaireNO", "==", 1));
+async function GetQuestion (questionnaireNo) {
+    const q = query(collection(db, "Question"), where("QuestionnaireNO", "==", questionnaireNo));
     const querySnapshot = await getDocs(q);
+    let questions = [];
     querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-
+        questions = [doc, ...questions]
     });
-    console.log("Questionnaire 1 : " + (await getDocs(querstionnaire1)).docs);
+    for (const q of questions) {
+       console.log(q.get("Text"));
+    }
 }
