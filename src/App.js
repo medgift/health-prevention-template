@@ -42,18 +42,6 @@ export default function App() {
         );
     }
 
-    const questionnaire = GetQuestionnaire();
-
-    /*const questionsRef = collection(firestore, 'Questionnaire'.doc(1).collection('Question'));
-    console.log(questionsRef);*/
-    //const queryRef = questionsRef.where('QuestionnaireNO', '==', 1).get();
-
-        /*const q = query(collection(db, "Questionnaire"))
-        const unsub = onSnapshot(q, (querySnapshot) => {
-            console.log("Data", querySnapshot.docs.map(d => doc.data()));
-        });
-        console.log("after the function");*/
-
     return (
         <div className="App">
             <header className="App-header">
@@ -63,7 +51,6 @@ export default function App() {
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/logout" element={<Logout/>}/>
                 </Routes>
-                <h1>Questionnaire 1</h1>
                 <QuestionList/>
             </header>
         </div>
@@ -75,22 +62,22 @@ class Question extends React.Component {
     render() {
         let formattedQuestion;
         //For inputs of type RadioSlider and NumericSlider
-        if (this.props.inputType === "RadioSlider" || this.props.inputType === "NumericSlider") {
+        if (this.props.InputType === "RadioSlider" || this.props.InputType === "NumericSlider") {
             formattedQuestion = (
                 //Min and Max of range refer to the index in choices array of the question
-                <input type ="range"
-                       min ={0}
-                       max ={this.props.choices.length-1}
-                       step ="1"
+                <input type="range"
+                       min={0}
+                       max={this.props.Choices.length - 1}
+                       step="1"
                        onInput={this.props.HandleInputChanges}/>
             );
         }
 
         //For inputs of type ToggleSlider
-        if (this.props.inputType === "ToggleSlider") {
+        if (this.props.InputType === "ToggleSlider") {
             formattedQuestion = (
-                <label class="switch">
-                    <input type ="checkbox"
+                <label className="switch">
+                    <input type="checkbox"
                            onInput={this.props.HandleInputChanges}
                            onChange={this.props.HandleInputChanges}
                            step="1"/>
@@ -112,47 +99,29 @@ class Question extends React.Component {
 
 //Replace state with props after tests-----------------------------------------
 function QuestionList() {
-
-    //Test Questions--------------------------------
-    //const questions = [{choices:[0,1], DefaultValue:0, inputType:"ToggleSlider", NormalValue:0, QuestionNo:1, Text:"Question 1", VariableName:"var1"},
-    //             {choices:["left","middle","right"], DefaultValue:-1, inputType:"ToggleSlider", NormalValue:0, QuestionNo:2, Text:"Question 2", VariableName:"var2"}];
-    //Test Questions--------------------------------
-
-    let questionModel = {
-        choices: [],
-        DefaultValue: 0,
-        inputType: "",
-        NormalValue: 0,
-        QuestionNO: 1,
-        Text: "",
-        VariableName: ""
-    }
+    const QUESTIONNAIRE_NO = 1;
     let [questions, setQuestions] = useState([]);
-
     useEffect(() => {
         async function loadQuestions() {
-            let querySnapchot = await GetQuestions(2);
+            let querySnapchot = await GetQuestions(QUESTIONNAIRE_NO);
             for (const q of querySnapchot) {
                 setQuestions(prevState => [...prevState, convertToQuestion(q)])
             }
         }
+
         loadQuestions();
     }, []);
 
 
-    for (const q of questions) {
-        console.log(q.inputType);
-    }
-
     function convertToQuestion(q) {
         return {
-            choices: q.get("Choices"),
-            defaultValue: q.get("DefaultValue"),
-            inputType: q.get("InputType"),
-            normalValue: q.get("NormalValue"),
-            questionNO: q.get("QuestionNO"),
-            text: q.get("Text"),
-            variableName: q.get("Variable")
+            Choices: q.get("Choices"),
+            DefaultValue: q.get("DefaultValue"),
+            InputType: q.get("InputType"),
+            NormalValue: q.get("NormalValue"),
+            QuestionNO: q.get("QuestionNO"),
+            Text: q.get("Text"),
+            VariableName: q.get("Variable")
         };
     }
 
@@ -172,19 +141,22 @@ function QuestionList() {
         console.log("Form Submitted");
     };
 
-    return  (
-        <form onSubmit={HandleFormSubmit}>
-            <ul>
-            {questions.map((question,index) => (
-                <li key={index}>
-                    <p>
-                    <Question {...question} HandleInputChanges={HandleInputChanges.bind(this)}/>
-                    </p>
-                </li>
-            ))}
-            </ul>
-            <button type="submit">Confirmer</button>
-        </form>
+    return (
+        <div>
+            <h1>Questionnaire {QUESTIONNAIRE_NO}</h1>
+            <form onSubmit={HandleFormSubmit}>
+                <ul>
+                    {questions.map((question, index) => (
+                        <li key={index}>
+                            <div>
+                                <Question {...question} HandleInputChanges={HandleInputChanges.bind(this)}/>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+                <button type="submit">Confirmer</button>
+            </form>
+        </div>
     );
 }
 
