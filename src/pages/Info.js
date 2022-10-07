@@ -1,11 +1,23 @@
-import { useEffect } from "react";
-import { signOut } from "firebase/auth";
-import { auth } from "../initFirebase";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import initFirebase from "../initFirebase";
 import Algorithm from "./Algorithm";
+import { firestore } from '../initFirebase.js';
+import { collection, getDocs } from "firebase/firestore"; 
 
-export default function Info() {
+
+
+export default async function Info() {
  
+  const querySnapshot = await getDocs(collection(firestore, "users"));
+      querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${doc.data().firstname} => ${doc.data().lastname} => ${doc.data().mail} => ${doc.data().password} => ${doc.data().role}`);
+    });
 
-  return <h1><Algorithm></Algorithm></h1>;
+
+  return (
+  <>
+      
+  </>
+  
+  );
 }
