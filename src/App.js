@@ -78,62 +78,59 @@ class Question extends React.Component {
         if (this.props.inputType === "ToggleSlider") {
             formattedQuestion = (
                 //Min and Max of range refer to the index in choices array of the question
-                <input type="range"
-                       min={0}
-                       max={this.props.choices.length-1}
-                       step="1"/>
+                <input type ="range"
+                       min ={0}
+                       max ={this.props.choices.length-1}
+                       step ="1"
+                       list ="bite"/>
             );
         }
         return (
             <>
-                <label>{this.props.Text}</label>
-                <br/>
+                <datalist id="bite">
+                    {this.props.choices.map((choice) => (
+                        <option value={choice}/>
+                    ))}
+                </datalist>
+                <p>{this.props.question}</p>
                 {formattedQuestion}
             </>
         );
     }
 
+
 };
 
 //Replace state with props after tests-----------------------------------------
-class QuestionList extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            //Test Questions--------------------------------
-            questions : [{choices:[0,1], DefaultValue:0, inputType:"ToggleSlider", NormalValue:0, QuestionNo:1, Text:"Question 1", VariableName:"var1"},
-                        {choices:["left","middle","right"], DefaultValue:-1, inputType:"ToggleSlider", NormalValue:0, QuestionNo:2, Text:"Question 2", VariableName:"var2"}]
-            //Test Questions--------------------------------
-        };
-    }
+function QuestionList (){
+
+    //Test Questions--------------------------------
+   const questions = [{choices:[0,1], DefaultValue:0, inputType:"ToggleSlider", NormalValue:0, QuestionNo:1, Text:"Question 1", VariableName:"var1"},
+                {choices:["left","middle","right"], DefaultValue:-1, inputType:"ToggleSlider", NormalValue:0, QuestionNo:2, Text:"Question 2", VariableName:"var2"}];
+    //Test Questions--------------------------------
+
 
 
     //FormSubmission
-    handleFormSubmit = async e => {
 
-    }
 
     //FormInput Change handler
-    handleInputChange = (event) => {
 
-    }
 
-    render() {
-
-        console.log("questions list"+this.state.questions);
-        return (
-            <form>
-                <ul>
-                {this.state.questions.map((question,index) => (
-                    <li key={index}>
-                        <Question {...question}/>
-                    </li>
-                ))}
-                </ul>
-                <button type="submit">Confirmer</button>
-            </form>
-        );
-    }
+    return  (
+        <form>
+            <ul>
+            {questions.map((question,index) => (
+                <li key={index}>
+                    <Question {...question}/>
+                    <br/>
+                    <br/>
+                </li>
+            ))}
+            </ul>
+            <button type="submit">Confirmer</button>
+        </form>
+    );
 }
 
 
