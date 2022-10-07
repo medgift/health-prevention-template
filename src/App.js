@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import {Route, Routes} from "react-router-dom";
 import Register from "./pages/Register";
@@ -7,15 +8,16 @@ import Home from "./pages/Home";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
 import {db} from "./initFirebase";
-import { collection, query, where, doc, getDoc, getDocs} from "firebase/firestore";
-import {useEffect, useState} from "react";
+import {collection, query, where, doc, getDoc, getDocs} from "firebase/firestore";
+import {useEffect, useState, Component} from "react";
 import Logout from "./pages/Logout";
+import * as PropTypes from "prop-types";
 //import firebase from "firebase/compat";
 //import firestore from "firebase/Firestore";
 
 export default function App() {
     /* Current user state */
-    const [currentUser, setCurrentUser] = useState(undefined);
+    const [currentUser, setCurrentUser] = useState(undefined)
 
     /* Watch for authentication state changes */
     useEffect(() => {
@@ -40,18 +42,6 @@ export default function App() {
         );
     }
 
-    const questionnaire = GetQuestionnaire();
-
-    /*const questionsRef = collection(firestore, 'Questionnaire'.doc(1).collection('Question'));
-    console.log(questionsRef);*/
-    //const queryRef = questionsRef.where('QuestionnaireNO', '==', 1).get();
-
-        /*const q = query(collection(db, "Questionnaire"))
-        const unsub = onSnapshot(q, (querySnapshot) => {
-            console.log("Data", querySnapshot.docs.map(d => doc.data()));
-        });
-        console.log("after the function");*/
-
     return (
         <div className="App">
             <header className="App-header">
@@ -61,26 +51,122 @@ export default function App() {
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/logout" element={<Logout/>}/>
                 </Routes>
-                <h1>Questionnaire 1</h1>
-
+                <QuestionList/>
             </header>
         </div>
     );
 }
 
-function Question(props) {
+class Question extends React.Component {
 
+    render() {
+        let formattedQuestion;
+        //For inputs of type RadioSlider and NumericSlider
+        if (this.props.InputType === "RadioSlider" || this.props.InputType === "NumericSlider") {
+            formattedQuestion = (
+                //Min and Max of range refer to the index in choices array of the question
+                <input type="range"
+                       min={0}
+                       max={this.props.Choices.length - 1}
+                       step="1"
+                       onInput={this.props.HandleInputChanges}/>
+            );
+        }
+
+        //For inputs of type ToggleSlider
+        if (this.props.InputType === "ToggleSlider") {
+            formattedQuestion = (
+                <label className="switch">
+                    <input type="checkbox"
+                           onInput={this.props.HandleInputChanges}
+                           onChange={this.props.HandleInputChanges}
+                           step="1"/>
+                    <span className="slider round"></span>
+                </label>
+            );
+        }
+
+        return (
+            <>
+                <p>{this.props.Text}</p>
+                {formattedQuestion}
+            </>
+        );
+    }
+
+
+};
+
+//Replace state with props after tests-----------------------------------------
+function QuestionList() {
+    const QUESTIONNAIRE_NO = 1;
+    let [questions, setQuestions] = useState([]);
+    useEffect(() => {
+        async function loadQuestions() {
+            let querySnapchot = await GetQuestions(QUESTIONNAIRE_NO);
+            for (const q of querySnapchot) {
+                setQuestions(prevState => [...prevState, convertToQuestion(q)])
+            }
+        }
+
+        loadQuestions();
+    }, []);
+
+
+    function convertToQuestion(q) {
+        return {
+            Choices: q.get("Choices"),
+            DefaultValue: q.get("DefaultValue"),
+            InputType: q.get("InputType"),
+            NormalValue: q.get("NormalValue"),
+            QuestionNO: q.get("QuestionNO"),
+            Text: q.get("Text"),
+            VariableName: q.get("Variable")
+        };
+    }
+
+    //FormSubmission
+
+
+    //FormInput Change handler
+    let HandleInputChanges = (event) => {
+        event.preventDefault();
+        console.log("Change Detected");
+        console.log(event.target.toString());
+    };
+
+    //Form Submission
+    let HandleFormSubmit = (event) => {
+        event.preventDefault();
+        console.log("Form Submitted");
+    };
+
+    return (
+        <div>
+            <h1>Questionnaire {QUESTIONNAIRE_NO}</h1>
+            <form onSubmit={HandleFormSubmit}>
+                <ul>
+                    {questions.map((question, index) => (
+                        <li key={index}>
+                            <div>
+                                <Question {...question} HandleInputChanges={HandleInputChanges.bind(this)}/>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+                <button type="submit">Confirmer</button>
+            </form>
+        </div>
+    );
 }
 
-async function GetQuestionnaire () {
-    const questRef = collection(db, "Questionnaire");
-    const querstionnaire1 = query(questRef, where("QuestionnaireNO", "==", 1));
-    const q = query(collection(db, "Questionnaire"), where("QuestionnaireNO", "==", 1));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
 
+async function GetQuestions(questionnaireNo) {
+    const q = query(collection(db, "Question"), where("QuestionnaireNO", "==", questionnaireNo));
+    const querySnapshot = await getDocs(q);
+    let questions = [];
+    querySnapshot.forEach((doc) => {
+        questions = [doc, ...questions];
     });
-    console.log("Questionnaire 1 : " + (await getDocs(querstionnaire1)).docs);
+    return questions;
 }
