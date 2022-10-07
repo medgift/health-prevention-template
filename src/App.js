@@ -86,7 +86,8 @@ class Question extends React.Component {
         }
         return (
             <>
-                <label>{this.props.text}Bite</label>
+                <label>{this.props.Text}</label>
+                <br/>
                 {formattedQuestion}
             </>
         );
