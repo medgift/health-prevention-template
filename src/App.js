@@ -42,6 +42,18 @@ export default function App() {
         );
     }
 
+    const questionnaire = GetQuestionnaire();
+
+    /*const questionsRef = collection(firestore, 'Questionnaire'.doc(1).collection('Question'));
+    console.log(questionsRef);*/
+    //const queryRef = questionsRef.where('QuestionnaireNO', '==', 1).get();
+
+        /*const q = query(collection(db, "Questionnaire"))
+        const unsub = onSnapshot(q, (querySnapshot) => {
+            console.log("Data", querySnapshot.docs.map(d => doc.data()));
+        });
+        console.log("after the function");*/
+
     return (
         <div className="App">
             <header className="App-header">
@@ -61,26 +73,35 @@ export default function App() {
 class Question extends React.Component {
 
     render() {
-
         let formattedQuestion;
-        if (this.props.inputType === "ToggleSlider") {
+        //For inputs of type RadioSlider and NumericSlider
+        if (this.props.inputType === "RadioSlider" || this.props.inputType === "NumericSlider") {
             formattedQuestion = (
                 //Min and Max of range refer to the index in choices array of the question
-                <input type="range"
-                       min={0}
-                       max={this.props.choices.length - 1}
-                       step="1"
-                       list="bite"/>
+                <input type ="range"
+                       min ={0}
+                       max ={this.props.choices.length-1}
+                       step ="1"
+                       onInput={this.props.HandleInputChanges}/>
             );
         }
+
+        //For inputs of type ToggleSlider
+        if (this.props.inputType === "ToggleSlider") {
+            formattedQuestion = (
+                <label class="switch">
+                    <input type ="checkbox"
+                           onInput={this.props.HandleInputChanges}
+                           onChange={this.props.HandleInputChanges}
+                           step="1"/>
+                    <span className="slider round"></span>
+                </label>
+            );
+        }
+
         return (
             <>
-                <datalist id="bite">
-                    {this.props.choices.map((choice) => (
-                        <option value={choice}/>
-                    ))}
-                </datalist>
-                <p>{this.props.question}</p>
+                <p>{this.props.Text}</p>
                 {formattedQuestion}
             </>
         );
@@ -139,18 +160,28 @@ function QuestionList() {
 
 
     //FormInput Change handler
+    let HandleInputChanges = (event) => {
+        event.preventDefault();
+        console.log("Change Detected");
+        console.log(event.target.toString());
+    };
 
+    //Form Submission
+    let HandleFormSubmit = (event) => {
+        event.preventDefault();
+        console.log("Form Submitted");
+    };
 
-    return (
-        <form>
+    return  (
+        <form onSubmit={HandleFormSubmit}>
             <ul>
-                {questions.map((question, index) => (
-                    <li key={index}>
-                        <Question {...question}/>
-                        <br/>
-                        <br/>
-                    </li>
-                ))}
+            {questions.map((question,index) => (
+                <li key={index}>
+                    <p>
+                    <Question {...question} HandleInputChanges={HandleInputChanges.bind(this)}/>
+                    </p>
+                </li>
+            ))}
             </ul>
             <button type="submit">Confirmer</button>
         </form>
