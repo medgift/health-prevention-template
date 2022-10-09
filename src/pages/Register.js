@@ -7,6 +7,7 @@ import {doc,setDoc} from "firebase/firestore";
 import { refUser,refDocteur } from "../initFirebase";
 import { User } from "../objects/User";
 import { Docteur } from "../objects/Docteur";
+import logo from "../pages/img/logo.png"
 
 export default function Register() {
   const navigate = useNavigate();
@@ -25,7 +26,9 @@ export default function Register() {
   };
 
   return (
-    <div>
+    <div className="register_page">
+        <img className="logo" src={logo}></img>
+        <h1 className="app_title">HealthApp</h1>
       <h1>Register</h1>
       <UserForm handleSubmit={handleRegister} submitButtonLabel="Register" />
     </div>

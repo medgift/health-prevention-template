@@ -5,6 +5,7 @@ import {collection, getDocs} from "firebase/firestore"
 import { async } from "@firebase/util";
 import app from "../initFirebase";
 import { getUsers } from "../initFirebase";
+import logo from "../pages/img/logo.png"
 export default function Home({ currentUser }) {
 
   const result = getUsers();
@@ -13,15 +14,17 @@ export default function Home({ currentUser }) {
   return (
    <React.Fragment>
      <div>
-      <h1>Welcome to the Health Prevention Questionnaire</h1>
+      <img className="logo" src={logo}></img>
+      <h1 className="app_title">HealthApp</h1>
+      <h1 className="welcome">Welcome to the Health Prevention Questionnaire</h1>
       {!currentUser ? (
         <>
           <Link to="/register" className="App-link">
-            Register
+            <button className="btn register_btn">Register</button>
           </Link>
-          <span> / </span>
+          <span> </span>
           <Link to="/login" className="App-link">
-            Login
+          <button className=" btn login_btn">Login</button>
           </Link>
         </>
       ) : (
