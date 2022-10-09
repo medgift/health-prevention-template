@@ -4,8 +4,9 @@ import { auth } from "../initFirebase";
 import { useNavigate } from "react-router-dom";
 import { db } from "../initFirebase";
 import {doc,setDoc} from "firebase/firestore";
-import { refUser } from "../initFirebase";
+import { refUser,refDocteur } from "../initFirebase";
 import { User } from "../objects/User";
+import { Docteur } from "../objects/Docteur";
 import "@fontsource/lexend-deca";
 import logo from "../pages/img/logo.png"
 
@@ -17,7 +18,8 @@ export default function Register() {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      CreateDocUser(new User(email,'idRoleExemple', 20, 0,50, 165 ));
+      //CreateDocUser(new User(email,'idRoleExemple', 20, 0,50, 165 ));
+      //CreateDocDocteur(new Docteur("Fabrice",20))
       navigate("/");
     } catch (e) {
       console.error(e);
@@ -45,3 +47,8 @@ console.log("Auth User ID: ", auth.currentUser.uid);
 console.log("Document User written with ID: ", docRef.id);
   
 }
+async function CreateDocDocteur(docteur) {
+  const docRef = await setDoc(doc(refDocteur, auth.currentUser.uid), docteur)
+console.log("Auth User ID: ", auth.currentUser.uid);
+console.log("Document User written with ID: ", docRef.id);
+  }
