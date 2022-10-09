@@ -2,7 +2,10 @@ import { initializeApp } from "firebase/app";
 import { getAuth, updateProfile } from "firebase/auth";
 import {getFirestore, collection, getDocs} from "@firebase/firestore";
 import { userConverter } from "./objects/User";
+import { docteurConverter } from "./objects/Docteur";
 import { roleConverter } from "./objects/Role";
+
+
 
 // Configure Firebase.
 //const config = {
@@ -31,6 +34,7 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const refUser = collection(db, 'User').withConverter(userConverter);
+export const refDocteur = collection(db, 'Docteur').withConverter(docteurConverter);
 export const refRole = collection(db, 'Roles').withConverter(roleConverter);
 
 export async function getUsers(){

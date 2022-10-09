@@ -14,22 +14,24 @@ export default function UserForm({ handleSubmit, submitButtonLabel }) {
       }}
     >
       <input
+        className="email_input"
         type="text"
-        placeholder="email"
+        placeholder="Email"
         value={email}
         onChange={handleEmailChange}
         required
       />
       <br />
       <input
+        className="password_input"
         type="password"
-        placeholder="password"
+        placeholder="Password"
         value={password}
         onChange={handlePasswordChange}
         required
       />
       <br />
-      <button type="submit">{submitButtonLabel}</button>
+      <button className="btn btn_submit" type="submit">{submitButtonLabel}</button>
     </form>
   );
 }
