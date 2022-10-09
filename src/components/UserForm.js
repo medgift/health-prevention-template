@@ -14,6 +14,7 @@ export default function UserForm({ handleSubmit, submitButtonLabel }) {
       }}
     >
       <input
+        className="email_input"
         type="text"
         placeholder="email"
         value={email}
@@ -22,6 +23,7 @@ export default function UserForm({ handleSubmit, submitButtonLabel }) {
       />
       <br />
       <input
+        className="password_input"
         type="password"
         placeholder="password"
         value={password}
@@ -29,7 +31,7 @@ export default function UserForm({ handleSubmit, submitButtonLabel }) {
         required
       />
       <br />
-      <button type="submit">{submitButtonLabel}</button>
+      <button className="btn btn_submit" type="submit">{submitButtonLabel}</button>
     </form>
   );
 }
