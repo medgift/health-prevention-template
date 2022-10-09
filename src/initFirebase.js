@@ -4,6 +4,7 @@ import {getFirestore, collection, getDocs} from "@firebase/firestore";
 import { userConverter } from "./objects/User";
 import { docteurConverter } from "./objects/Docteur";
 import { roleConverter } from "./objects/Role";
+import { variableConverter } from "./objects/Variables";
 
 
 
@@ -35,7 +36,8 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const refUser = collection(db, 'User').withConverter(userConverter);
 export const refDocteur = collection(db, 'Docteur').withConverter(docteurConverter);
-export const refRole = collection(db, 'Roles').withConverter(roleConverter);
+export const refRoles = collection(db, 'Roles').withConverter(roleConverter);
+export const refVariables = collection(db, 'Variables').withConverter(variableConverter);
 
 export async function getUsers(){
   const userCollection = collection(db, 'User');

@@ -1,8 +1,8 @@
 export class Docteur{
 
-    constructor (nom, id_role, ) {
+    constructor (nom ) {
         this.nom = nom;
-        this.id_role = id_role;
+        this.id_role = 'jFC8Tuw87Ic3my6SyOU0';
         //+ list users
     }
     toString() {
