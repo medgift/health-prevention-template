@@ -1,3 +1,4 @@
+import { Link} from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../initFirebase";
 import UserForm from "../components/UserForm";
@@ -13,6 +14,10 @@ export default function Login() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
+
+      //Faire requete pour savoir si le user connecté est un user - un docteur ou un admin
+
+
       navigate("/");
     } catch (e) {
       console.error(e);
@@ -25,7 +30,9 @@ export default function Login() {
       <h1 className="app_title">HealthApp</h1>
       <h1>Login</h1> 
       <span>
-      <p className="click_here">You're new here ? click here to register </p>
+      <p className="click_here">You're new here ?   
+        <Link to="/Register" >click here to register</Link>
+       </p>
       </span>
       <UserForm handleSubmit={handleLogin} submitButtonLabel="Login" />
     </div>

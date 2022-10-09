@@ -7,23 +7,14 @@ import { roleConverter } from "./objects/Role";
 import { variableConverter } from "./objects/Variables";
 
 
-
-// Configure Firebase.
-//const config = {
- // apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
- // authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  // Other configuration options, such as the Realtime Database / Firestore details...
-//};
-
 // Import the functions you need from the SDKs you need
-//import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
+// Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCwOkWBC-wDGVb2_aTPFQbO8hM58gFJUok",
-  authDomain: "healthapp-23042.firebaseapp.com",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   projectId: "healthapp-23042",
   storageBucket: "healthapp-23042.appspot.com",
   messagingSenderId: "312027639734",
@@ -34,10 +25,15 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+//Get the Base Collection References
 export const refUser = collection(db, 'User').withConverter(userConverter);
 export const refDocteur = collection(db, 'Docteur').withConverter(docteurConverter);
 export const refRoles = collection(db, 'Roles').withConverter(roleConverter);
 export const refVariables = collection(db, 'Variables').withConverter(variableConverter);
+
+
+
 
 export async function getUsers(){
   const userCollection = collection(db, 'User');
