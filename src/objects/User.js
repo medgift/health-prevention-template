@@ -26,7 +26,6 @@ export const userConverter = {
             sexe: user.sexe,
             poids: user.poids,
             taille: user.taille
-            //Questionnaire en plus
             };
     },
     fromFirestore: (snapshot, options) => {
