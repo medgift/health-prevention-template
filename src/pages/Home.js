@@ -6,6 +6,7 @@ import { async } from "@firebase/util";
 import app from "../initFirebase";
 import { getUsers } from "../initFirebase";
 import logo from "../pages/img/logo.png"
+import "@fontsource/lexend-deca";
 export default function Home({ currentUser }) {
 
   const result = getUsers();

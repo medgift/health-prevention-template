@@ -16,7 +16,7 @@ export default function UserForm({ handleSubmit, submitButtonLabel }) {
       <input
         className="email_input"
         type="text"
-        placeholder="email"
+        placeholder="Email"
         value={email}
         onChange={handleEmailChange}
         required
@@ -25,7 +25,7 @@ export default function UserForm({ handleSubmit, submitButtonLabel }) {
       <input
         className="password_input"
         type="password"
-        placeholder="password"
+        placeholder="Password"
         value={password}
         onChange={handlePasswordChange}
         required

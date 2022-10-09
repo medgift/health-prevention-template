@@ -6,6 +6,7 @@ import { db } from "../initFirebase";
 import {doc,setDoc} from "firebase/firestore";
 import { refUser } from "../initFirebase";
 import { User } from "../objects/User";
+import "@fontsource/lexend-deca";
 import logo from "../pages/img/logo.png"
 
 export default function Register() {
@@ -28,6 +29,7 @@ export default function Register() {
         <img className="logo" src={logo}></img>
         <h1 className="app_title">HealthApp</h1>
       <h1>Register</h1>
+      <p className="click_here">Register yourself to keep track on your health </p>
       <UserForm handleSubmit={handleRegister} submitButtonLabel="Register" />
     </div>
   );

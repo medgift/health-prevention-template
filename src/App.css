@@ -32,7 +32,7 @@
   overflow: hidden;
   z-index: 1;
   font-weight: bold;
-  color: #090909;
+  color: #ffff;
   padding: 0.7em 1.7em;
   font-size: 18px;
   border-radius: 0.5em; /*to round the corner of the shape */
@@ -79,7 +79,7 @@
 }
 
 .btn:hover {
-  color: black;
+  color: #093545;
   border: 1px solid #e8e8e8;
 }
 
@@ -113,7 +113,16 @@
 }
 
 h1{
-  font-size: 1.5em;
+  padding-bottom: -20px;
+  color: #097969;
+  font-size: 2em;
+  font-family: "Lexend Deca";
+}
+
+.click_here{
+  color: #093545;
+  font-size: 17px;
+  padding-bottom: 5px;
 }
 
 .welcome{
