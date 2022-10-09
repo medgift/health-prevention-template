@@ -4,7 +4,7 @@ import { auth } from "../initFirebase";
 import { useNavigate } from "react-router-dom";
 import { db } from "../initFirebase";
 import {doc,setDoc} from "firebase/firestore";
-import { refUser } from "../initFirebase";
+import { refUser, refRole } from "../initFirebase";
 import { User } from "../objects/User";
 
 export default function Register() {
@@ -15,7 +15,7 @@ export default function Register() {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      CreateDocUser(new User(email,'idRoleExemple', 20, 0,50, 165 ));
+      CreateDocUser(new User(email,'idRoleExemple', 20, 0,50, 165 ), 'Patient');
       navigate("/");
     } catch (e) {
       console.error(e);
@@ -31,9 +31,21 @@ export default function Register() {
 }
 
 
-async function CreateDocUser(user) {
-// Add a new document with a generated id.
+async function CreateDocUser(user, role) {
+  //recup id du role selon role choisi
 
+  const snapshot = await refRole.where('nom_role', '==', role).get();
+  if (snapshot.empty) {
+    console.log('No matching documents.');
+    return;
+  }  
+  
+  snapshot.forEach(doc => {
+    console.log(doc.id, '=>', doc.data());
+    user.id_role = doc.uid;
+  });
+
+// Add a new document with a generated id.
 const docRef = await setDoc(doc(refUser, auth.currentUser.uid), user)
 console.log("Auth User ID: ", auth.currentUser.uid);
 
