@@ -4,7 +4,7 @@ import { db } from "../initFirebase";
 import {collection, getDocs} from "firebase/firestore"
 import { async } from "@firebase/util";
 import app from "../initFirebase";
-import { getUsers } from "../initFirebase";
+import { getUsers } from "../objects_managers/UserManager";
 import logo from "../pages/img/logo.png"
 import "@fontsource/lexend-deca";
 export default function Home({ currentUser }) {
