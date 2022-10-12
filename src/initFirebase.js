@@ -33,23 +33,6 @@ export const refRoles = collection(db, 'Roles').withConverter(roleConverter);
 export const refVariables = collection(db, 'Variables').withConverter(variableConverter);
 
 
-
-
-export async function getUsers(){
-  const userCollection = collection(db, 'User');
-  const userSnapshot = await getDocs(userCollection);
-  const userList = userSnapshot.docs.map(doc => doc.data());
-  return userList
-}
-
-export async function getUserById(){
-  //const userCollection = collection(db, 'User');
-  //const userSnapshot = await getDocs(userCollection);
-  //const userList = userSnapshot.docs.map(doc => doc.data());
-  //return userList
-}
-
-
 export async function getAuthCurrentUser(){
   if(auth.currentUser !== null){
     return auth.currentUser;
