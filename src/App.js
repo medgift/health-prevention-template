@@ -8,12 +8,15 @@ import Home from "./pages/Home";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
 import {db} from "./initFirebase";
-import {collection, query, where, doc, getDoc, getDocs} from "firebase/firestore";
+import {collection, query, where, doc, getDoc, getDocs, setDoc, addDoc} from "firebase/firestore";
+import {questionRef} from "./initFirebase";
 import {useEffect, useState, Component} from "react";
 import Logout from "./pages/Logout";
 import * as PropTypes from "prop-types";
-//import firebase from "firebase/compat";
-//import firestore from "firebase/Firestore";
+import {QuestionDB} from "./DAL/QuestionDB";
+import {QuestionDTO} from "./DTO/QuestionDTO"
+import {ResponseDB} from "./DAL/ResponseDB";
+import {ResponseDTO} from "./DTO/ResponseDTO";
 
 export default function App() {
     /* Current user state */
@@ -62,19 +65,19 @@ class Question extends React.Component {
     render() {
         let formattedQuestion;
         //For inputs of type RadioSlider and NumericSlider
-        if (this.props.InputType === "RadioSlider" || this.props.InputType === "NumericSlider") {
+        if (this.props.inputType === "RadioSlider" || this.props.inputType === "NumericSlider") {
             formattedQuestion = (
                 //Min and Max of range refer to the index in choices array of the question
                 <input type="range"
                        min={0}
-                       max={this.props.Choices.length - 1}
+                       max={this.props.choices.length - 1}
                        step="1"
                        onInput={this.props.HandleInputChanges}/>
             );
         }
 
         //For inputs of type ToggleSlider
-        if (this.props.InputType === "ToggleSlider") {
+        if (this.props.inputType === "ToggleSlider") {
             formattedQuestion = (
                 <label className="switch">
                     <input type="checkbox"
@@ -88,7 +91,7 @@ class Question extends React.Component {
 
         return (
             <>
-                <p>{this.props.Text}</p>
+                <p>{this.props.text}</p>
                 {formattedQuestion}
             </>
         );
@@ -99,14 +102,13 @@ class Question extends React.Component {
 
 //Replace state with props after tests-----------------------------------------
 function QuestionList() {
-    const QUESTIONNAIRE_NO = 1;
+    const QUESTIONNAIRE_NO = 2;
     let [questions, setQuestions] = useState([]);
     useEffect(() => {
         async function loadQuestions() {
-            let questions = await GetQuestions(QUESTIONNAIRE_NO);
-            setQuestions(prevState => [...prevState, ...questions])
+            let questions = await QuestionDB.prototype.getQuestionsByQuestionnaire(QUESTIONNAIRE_NO);
+            setQuestions(prevState => [...prevState, ...questions]);
         }
-
         loadQuestions();
     }, []);
 
@@ -147,25 +149,6 @@ function QuestionList() {
 }
 
 
-async function GetQuestions(questionnaireNo) {
-    const q = query(collection(db, "Question"), where("QuestionnaireNO", "==", questionnaireNo));
-    const querySnapshot = await getDocs(q);
-    let questions = [];
-    querySnapshot.forEach((doc) => {
-        questions = [convertToQuestion(doc), ...questions];
-    });
-    return questions;
-}
 
 
-function convertToQuestion(q) {
-    return {
-        Choices: q.get("Choices"),
-        DefaultValue: q.get("DefaultValue"),
-        InputType: q.get("InputType"),
-        NormalValue: q.get("NormalValue"),
-        QuestionNO: q.get("QuestionNO"),
-        Text: q.get("Text"),
-        VariableName: q.get("Variable")
-    };
-}
+
