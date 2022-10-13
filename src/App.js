@@ -1,4 +1,4 @@
-import React from "react";
+import React, {forwardRef} from "react";
 import "./App.css";
 import {Route, Routes} from "react-router-dom";
 import Register from "./pages/Register";
@@ -17,6 +17,8 @@ import {QuestionDB} from "./DAL/QuestionDB";
 import {QuestionDTO} from "./DTO/QuestionDTO"
 import {ResponseDB} from "./DAL/ResponseDB";
 import {ResponseDTO} from "./DTO/ResponseDTO";
+
+let Poids = 0;
 
 export default function App() {
     /* Current user state */
@@ -60,19 +62,57 @@ export default function App() {
     );
 }
 
-class Question extends React.Component {
+class Question extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            answer: this.props.normalValue
+        };
+    }
+
+    //FormInput Change handler
+    //Do not put SendAnswer() here, it will send answer on every change
+    HandleInputChanges = (event) => {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        this.setState({answer: value});
+        /*switch (this.props.VariableName) {
+            case "Poids": Poids = value;
+        }*/
+        //debug
+        console.log("Answer: " + target.value);
+        console.log("Checked: " + target.checked);
+        console.log("Poids: " + Poids);
+    };
 
     render() {
+
         let formattedQuestion;
         //For inputs of type RadioSlider and NumericSlider
-        if (this.props.inputType === "RadioSlider" || this.props.inputType === "NumericSlider") {
+
+        if (this.props.InputType === "RadioSlider") {
+
             formattedQuestion = (
                 //Min and Max of range refer to the index in choices array of the question
                 <input type="range"
                        min={0}
                        max={this.props.choices.length - 1}
                        step="1"
-                       onInput={this.props.HandleInputChanges}/>
+                       defaultValue={this.props.normalValue}
+                       onChange={this.HandleInputChanges}/>
+            );
+        }
+
+        //For inputs of type NumericSlider
+        if (this.props.InputType === "NumericSlider") {
+            formattedQuestion = (
+                //Min and Max of range refer to the index in choices array of the question
+                <input type="range"
+                       min={this.props.Choices[0]}
+                       max={this.props.Choices[this.props.Choices.length - 1]}
+                       step="1"
+                       defaultValue={this.props.normalValue}
+                       onChange={this.HandleInputChanges}/>
             );
         }
 
@@ -81,8 +121,7 @@ class Question extends React.Component {
             formattedQuestion = (
                 <label className="switch">
                     <input type="checkbox"
-                           onInput={this.props.HandleInputChanges}
-                           onChange={this.props.HandleInputChanges}
+                           onInput={this.HandleInputChanges}
                            step="1"/>
                     <span className="slider round"></span>
                 </label>
@@ -93,11 +132,10 @@ class Question extends React.Component {
             <>
                 <p>{this.props.text}</p>
                 {formattedQuestion}
+                {this.state.answer}
             </>
         );
     }
-
-
 };
 
 //Replace state with props after tests-----------------------------------------
@@ -113,35 +151,38 @@ function QuestionList() {
     }, []);
 
 
-    //FormSubmission
+
+//----------------------------------------------
+    //use for debug, for now
+    //list of answers, only the values
+    let [answers, setAnswers] = useState([]);
+    let handleCallback = (childData) =>{
+        setAnswers(prevState => [...prevState, childData]);
+    }
+//----------------------------------------------
 
 
-    //FormInput Change handler
-    let HandleInputChanges = (event) => {
-        event.preventDefault();
-        console.log("Change Detected");
-        console.log(event.target.toString());
-    };
 
     //Form Submission
     let HandleFormSubmit = (event) => {
         event.preventDefault();
-        console.log("Form Submitted");
+        console.log(this.state.answer);
     };
 
     return (
         <div>
             <h1>Questionnaire {QUESTIONNAIRE_NO}</h1>
             <form onSubmit={HandleFormSubmit}>
-                <ul>
                     {questions.map((question, index) => (
-                        <li key={index}>
+                        <div key={index}>
                             <div>
-                                <Question {...question} HandleInputChanges={HandleInputChanges.bind(this)}/>
+                                <Question {...question}
+                                          normalValue={question.NormalValue}
+                                          SendAnswer={handleCallback}
+                                />
                             </div>
-                        </li>
+                        </div>
                     ))}
-                </ul>
                 <button type="submit">Confirmer</button>
             </form>
         </div>
