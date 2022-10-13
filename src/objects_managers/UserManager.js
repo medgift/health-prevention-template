@@ -1,8 +1,9 @@
 import { auth } from "../initFirebase";
-import { db } from "../initFirebase";
-import { doc, setDoc, getDoc,getDocs,query,where } from "firebase/firestore";
+import { db} from "../initFirebase";
+import { doc, setDoc, getDoc,getDocs,query,where, updateDoc } from "firebase/firestore";
 import { refUser } from "../initFirebase";
 import { userConverter } from "../objects/User";
+
 
 export async function CreateDocUser(user) {
   //By default : the constructor put the patient id as the id_role
@@ -46,3 +47,24 @@ export async function getUserByEmail(userEmail) {
     console.log(doc.id, " => ", doc.data());
   });
 }
+
+
+//Update information for the user
+export async function updateUserData(userId,age,weight,sex,height){
+  const ref = doc(refUser,userId);
+  await updateDoc(ref,{
+    age: age,
+    poids: weight,
+    sexe: sex,
+    taille: height,
+  });
+}
+
+console.log(updateUserData('MPfBRXNkgmhJw24HihqsJILGVNS2',29,190,1,210));
+
+
+
+
+
+
+
