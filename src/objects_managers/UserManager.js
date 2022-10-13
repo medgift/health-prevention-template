@@ -1,6 +1,6 @@
 import { auth } from "../initFirebase";
 import { db } from "../initFirebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc,getDocs,query,where } from "firebase/firestore";
 import { refUser } from "../initFirebase";
 import { userConverter } from "../objects/User";
 
