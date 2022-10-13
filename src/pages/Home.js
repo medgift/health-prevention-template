@@ -1,33 +1,26 @@
-import { Link, Route } from "react-router-dom";
-import Algorithm from "./Algorithm"
-import {database} from "../initFirebase";
+import {Link} from "react-router-dom";
+import Login from "./Login";
 
-export default function Home({ currentUser }) {
+export default function Home({currentUser}) {
+    return (
+        <div className="Content">
+            <div className="Login-Form">
+                <h2>Health Prevention Questionnaire</h2>
+                {!currentUser ? (
+                    <>
+                        <Login/>
+                        or &nbsp;
+                        <Link to="/register" className="App-link">
+                            Register
+                        </Link>
+                    </>
+                ) : (
+                    <Link to="/logout" className="App-link">
+                        Logout
+                    </Link>
+                )}
+            </div>
 
-  return (
-    <div>
-      <h1>Welcome to the Health Prevention Questionnaire</h1>
-      {!currentUser ? (
-        <>
-          <Link to="/register" className="App-link">
-            Register
-          </Link>
-          <span> / </span>
-          <Link to="/login" className="App-link">
-            Login
-          </Link>
-        </>
-      ) : (
-        <>
-        <Link to="/logout" className="App-link">
-          Logout
-        </Link>
-        <br/>
-        <Link to="/info" className="App-link">
-          Info
-        </Link>
-      </>
-      )}
-    </div>
-  );
+        </div>
+    );
 }

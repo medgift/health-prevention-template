@@ -39,7 +39,6 @@ export default function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
         <Routes>
           <Route path="/" element={<Home currentUser={currentUser} />} />
           <Route path="/register" element={<Register />} />
@@ -47,7 +46,6 @@ export default function App() {
           <Route path="/logout" element={<Logout />} />
           <Route path="/info" element={<Info />} />
         </Routes>
-      </header>
     </div>
   );
 }
