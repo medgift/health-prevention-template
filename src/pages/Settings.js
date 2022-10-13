@@ -7,7 +7,7 @@ function Settings (){
         <>
           <Navbar/>
       <div className="container center">
-        <div className="container quiz">
+        <div className="container variables">
         <h2 className="survey_title">[Survey name]</h2>
         </div>
       </div>
