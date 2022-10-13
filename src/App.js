@@ -90,7 +90,7 @@ class Question extends React.Component{
         let formattedQuestion;
         //For inputs of type RadioSlider and NumericSlider
 
-        if (this.props.InputType === "RadioSlider") {
+        if (this.props.inputType === "RadioSlider") {
 
             formattedQuestion = (
                 //Min and Max of range refer to the index in choices array of the question
@@ -104,12 +104,12 @@ class Question extends React.Component{
         }
 
         //For inputs of type NumericSlider
-        if (this.props.InputType === "NumericSlider") {
+        if (this.props.inputType === "NumericSlider") {
             formattedQuestion = (
                 //Min and Max of range refer to the index in choices array of the question
                 <input type="range"
-                       min={this.props.Choices[0]}
-                       max={this.props.Choices[this.props.Choices.length - 1]}
+                       min={this.props.choices[0]}
+                       max={this.props.choices[this.props.choices.length - 1]}
                        step="1"
                        defaultValue={this.props.normalValue}
                        onChange={this.HandleInputChanges}/>
