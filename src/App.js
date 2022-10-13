@@ -7,6 +7,7 @@ import HomeApp from "./pages/HomeApp";
 import Navbar from "./pages/Navbar";
 import Layout from "./pages/Layout";
 import Survey from "./pages/Survey";
+import Registration from "./pages/Registration";
 
 
 import { onAuthStateChanged } from "firebase/auth";
@@ -52,6 +53,7 @@ export default function App() {
           <Route path="/logout" element={<Logout />} />
           <Route path="/homeApp" element={<HomeApp />} />
           <Route path="/survey" element={<Survey />} />
+          <Route path="/registration" element={<Registration/>}/>
         </Routes>
       {/* </header> */}
     </div>
