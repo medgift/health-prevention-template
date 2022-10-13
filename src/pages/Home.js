@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import {PatientDB} from "../DAL/PatientDB";
 
 export default function Home({ currentUser }) {
+
   return (
     <div>
       <h1>Welcome to the Health Prevention Questionnaire</h1>
@@ -22,3 +24,5 @@ export default function Home({ currentUser }) {
     </div>
   );
 }
+
+

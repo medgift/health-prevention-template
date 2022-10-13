@@ -44,11 +44,11 @@ export default function App() {
         <div className="App">
             <header className="App-header">
                 <Routes>
-                    <Route path="/" element={<Home currentUser={currentUser}/>}/>
+                    <Route path="/home" element={<Home currentUser={currentUser}/>}/>
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/logout" element={<Logout/>}/>
-                    <Route path="/questionnaire" element={<QuestionList/>}></Route>
+                    <Route path="/" element={<QuestionList/>}></Route>
                 </Routes>
             </header>
         </div>
