@@ -6,6 +6,7 @@ export default class Algorithm extends React.Component{
     resultInfarctus = 0
     resultCancer = 0
     resultDiabete = 0
+    //TODO transformer 4 variable en state ???
 
     constructor(sex, age, smoke, systolique, chol, hdl, afinf, afCancer, bmi, sport, alcool, alim , tension, glyc,diab,inf) {
         super();
