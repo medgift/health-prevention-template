@@ -97,7 +97,7 @@ function Registration() {
                 </form>
             </div>
 
-            <div className="container right">
+            <div className="container rightt">
                 <div className="flex-container">
                     <h1 className="choose_avatar">Choose an avatar </h1>
                     <div className="avatar">
@@ -141,7 +141,7 @@ body{
 
 }
 
-.right{
+.rightt{
     width:50%;
     right:0;
     background-color: #eafaf1 ;
@@ -230,7 +230,7 @@ input {
 
 .btn {
   margin-top: 20px;
-  margin-left: 450px;
+  margin-left: 220px;
   display: inline-block;
   transition: all 0.2s ease-in;
   position: relative;
@@ -243,8 +243,8 @@ input {
   border-radius: 0.5em; /*to round the corner of the shape */
   background: #77C5A6;
   border: 1px solid #77C5A6;
-  box-shadow: 6px 6px 12px #c5c5c5,
-             -6px -6px 12px #ffffff;
+  /* box-shadow: 6px 6px 12px #c5c5c5,
+             -6px -6px 12px #ffffff; */
 }
 
 .btn:active {

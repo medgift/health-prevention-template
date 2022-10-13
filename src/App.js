@@ -8,6 +8,7 @@ import Navbar from "./pages/Navbar";
 import Layout from "./pages/Layout";
 import Survey from "./pages/Survey";
 import Registration from "./pages/Registration";
+import Results from "./pages/Results";
 import { ThemeContext, themes } from "./ThemeContext";
 
 import { onAuthStateChanged } from "firebase/auth";
@@ -56,6 +57,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/survey" element={<Survey />} />
+          <Route path="/results" element={<Results/>}/>
           <Route path="/registration" element={<Registration/>}/>
         </Routes>
     </div>
