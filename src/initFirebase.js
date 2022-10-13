@@ -3,6 +3,7 @@ import { getAuth } from "firebase/auth";
 import {doc, getFirestore, collection} from "firebase/firestore";
 import {questionConverter} from "./DTO/QuestionDTO";
 import {responseConverter} from "./DTO/ResponseDTO";
+import {patientConverter} from "./DTO/PatientDTO";
 
 // Configure Firebase.
 const config = {
@@ -21,8 +22,9 @@ const db = getFirestore(app);
 // Collections
 const questionRef = collection(db, "Question").withConverter(questionConverter);
 const responseRef = collection(db, "Response").withConverter(responseConverter);
+const patientRef = collection(db, "Patient").withConverter(patientConverter);
 
 
 export const auth = getAuth(app);
 export {db};
-export {questionRef, responseRef};
+export {questionRef, responseRef, patientRef};
