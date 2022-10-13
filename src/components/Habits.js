@@ -49,7 +49,7 @@ function Habits({ values, setValues }) {
                 id="typeinp"
                 type="range"
                 name="alcool"
-                min="0" max="3"
+                min="0" max="4"
                 value={  values.alcool }
                 onChange={ handleChange }
                 step="1" />
