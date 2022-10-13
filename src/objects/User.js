@@ -1,7 +1,7 @@
 
 
 export class User {
-    constructor (nom, age,sexe,poids, taille ) {
+    constructor (nom, age,sexe,poids, taille) {
         this.nom = nom;
         this.id_role = 'n5Gejr1pLJrcMagawHqp';
         this.age = age;
