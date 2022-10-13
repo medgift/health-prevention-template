@@ -103,27 +103,13 @@ function QuestionList() {
     let [questions, setQuestions] = useState([]);
     useEffect(() => {
         async function loadQuestions() {
-            let querySnapchot = await GetQuestions(QUESTIONNAIRE_NO);
-            for (const q of querySnapchot) {
-                setQuestions(prevState => [...prevState, convertToQuestion(q)])
-            }
+            let questions = await GetQuestions(QUESTIONNAIRE_NO);
+            setQuestions(prevState => [...prevState, ...questions])
         }
 
         loadQuestions();
     }, []);
 
-
-    function convertToQuestion(q) {
-        return {
-            Choices: q.get("Choices"),
-            DefaultValue: q.get("DefaultValue"),
-            InputType: q.get("InputType"),
-            NormalValue: q.get("NormalValue"),
-            QuestionNO: q.get("QuestionNO"),
-            Text: q.get("Text"),
-            VariableName: q.get("Variable")
-        };
-    }
 
     //FormSubmission
 
@@ -166,7 +152,20 @@ async function GetQuestions(questionnaireNo) {
     const querySnapshot = await getDocs(q);
     let questions = [];
     querySnapshot.forEach((doc) => {
-        questions = [doc, ...questions];
+        questions = [convertToQuestion(doc), ...questions];
     });
     return questions;
+}
+
+
+function convertToQuestion(q) {
+    return {
+        Choices: q.get("Choices"),
+        DefaultValue: q.get("DefaultValue"),
+        InputType: q.get("InputType"),
+        NormalValue: q.get("NormalValue"),
+        QuestionNO: q.get("QuestionNO"),
+        Text: q.get("Text"),
+        VariableName: q.get("Variable")
+    };
 }
