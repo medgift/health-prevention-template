@@ -18,7 +18,23 @@ import {QuestionDTO} from "./DTO/QuestionDTO"
 import {ResponseDB} from "./DAL/ResponseDB";
 import {ResponseDTO} from "./DTO/ResponseDTO";
 
-let Poids = 0;
+//Variables containing the responses, one per question
+let Poids
+let Aclool
+let Glyc
+let Alim
+let Sport
+let Inf
+let Gender
+let DIAB
+let Afcancer
+let Avc
+let Age
+let Afinf//pour question 11, pas encore sur Firebase
+let Syst
+let Fume
+let Taille
+
 
 export default function App() {
     /* Current user state */
@@ -61,7 +77,7 @@ export default function App() {
         </div>
     );
 }
-
+// Corriger les toggles pour afficher la valeur de la réponse
 class Question extends React.Component{
     constructor(props) {
         super(props);
@@ -76,30 +92,78 @@ class Question extends React.Component{
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         this.setState({answer: value});
-        /*switch (this.props.VariableName) {
+        switch (this.props.variableName) {
+            //Poids does not work ---------------------------------------------------  (〃＞＿＜;〃)
             case "Poids": Poids = value;
-        }*/
+                break;
+            case "Aclool": Aclool = value;
+                break;
+            case "Glyc": Glyc = value;
+                break;
+            case "Alim": Alim = value;
+                break;
+            case "Sport": Sport = value;
+                break;
+            case "Inf": Inf = value;
+                break;
+            case "Gender" : Gender = value;
+                break;
+            case "DIAB" : DIAB = value;
+                break;
+            case "Afcancer" : Afcancer = value;
+                break;
+            case "Avc" : Avc = value;
+                break;
+            case "Age" : Age = value;
+                break;
+            case "Afinf" : Afinf = value;
+                break;
+            case "Syst" : Syst = value;
+                break;
+            case "Fume" : Fume = value;
+                break;
+            case "Taille" : Taille = value;
+                break;
+        }
         //debug
         console.log("Answer: " + target.value);
         console.log("Checked: " + target.checked);
         console.log("Poids: " + Poids);
+        console.log("Aclool: " + Aclool);
+        console.log("Glyc: " + Glyc);
+        console.log("Alim: " + Alim);
+        console.log("Sport: " + Sport);
+        console.log("Inf: " + Inf);
+        console.log("Gender: " + Gender);
+        console.log("DIAB: " + DIAB);
+        console.log("Afcancer: " + Afcancer);
+        console.log("Avc: " + Avc);
+        console.log("Age: " + Age);
+        console.log("Afinf: " + Afinf);
+        console.log("Syst: " + Syst);
+        console.log("Fume: " + Fume);
+        console.log("Taille: " + Taille);
+        console.log();
     };
+
 
     render() {
 
         let formattedQuestion;
         //For inputs of type RadioSlider and NumericSlider
-
         if (this.props.inputType === "RadioSlider") {
 
             formattedQuestion = (
                 //Min and Max of range refer to the index in choices array of the question
-                <input type="range"
-                       min={0}
-                       max={this.props.choices.length - 1}
-                       step="1"
-                       defaultValue={this.props.normalValue}
-                       onChange={this.HandleInputChanges}/>
+                <>
+                    <input type="range"
+                           min={0}
+                           max={this.props.choices.length - 1}
+                           step="1"
+                           defaultValue={this.props.normalValue}
+                           onChange={this.HandleInputChanges}/>
+                    {this.state.answer}
+                </>
             );
         }
 
@@ -107,38 +171,46 @@ class Question extends React.Component{
         if (this.props.inputType === "NumericSlider") {
             formattedQuestion = (
                 //Min and Max of range refer to the index in choices array of the question
-                <input type="range"
-                       min={this.props.choices[0]}
-                       max={this.props.choices[this.props.choices.length - 1]}
-                       step="1"
-                       defaultValue={this.props.normalValue}
-                       onChange={this.HandleInputChanges}/>
+                <>
+                    <input type="range"
+                           min={this.props.choices[0]}
+                           max={this.props.choices[this.props.choices.length - 1]}
+                           step="1"
+                           defaultValue={this.props.normalValue}
+                           onChange={this.HandleInputChanges}/>
+                    {this.state.answer}
+                </>
             );
         }
 
         //For inputs of type ToggleSlider
         if (this.props.inputType === "ToggleSlider") {
             formattedQuestion = (
-                <label className="switch">
-                    <input type="checkbox"
-                           onInput={this.HandleInputChanges}
-                           step="1"/>
-                    <span className="slider round"></span>
-                </label>
+                <>
+                    <label className="switch">
+                        <input type="checkbox"
+                               onInput={this.HandleInputChanges}
+                        />
+                        <span className="slider round"></span>
+                        {this.state.answer? "Oui" : "Non"}
+                    </label>
+                </>
             );
         }
 
         return (
-            <>
+            <div>
                 <p>{this.props.text}</p>
                 {formattedQuestion}
-                {this.state.answer}
-            </>
+                <br/>
+                <br/>
+            </div>
         );
     }
 };
 
-//Replace state with props after tests-----------------------------------------
+
+
 function QuestionList() {
     const QUESTIONNAIRE_NO = 1;
     let [questions, setQuestions] = useState([]);
@@ -151,40 +223,25 @@ function QuestionList() {
     }, []);
 
 
-
-//----------------------------------------------
-    //use for debug, for now
-    //list of answers, only the values
-    let [answers, setAnswers] = useState([]);
-    let handleCallback = (childData) =>{
-        setAnswers(prevState => [...prevState, childData]);
-    }
-//----------------------------------------------
-
-
-
     //Form Submission
+    //Maybe change it to go to next couple of questions-----------------------------------------------------
     let HandleFormSubmit = (event) => {
         event.preventDefault();
-        console.log(this.state.answer);
+        console.log("Form Submitted");
+        console.log(...questions);
     };
 
     return (
         <div>
             <h1>Questionnaire {QUESTIONNAIRE_NO}</h1>
-            <form onSubmit={HandleFormSubmit}>
                     {questions.map((question, index) => (
                         <div key={index}>
                             <div>
-                                <Question {...question}
-                                          normalValue={question.NormalValue}
-                                          SendAnswer={handleCallback}
-                                />
+                                <Question {...question}/>
                             </div>
                         </div>
                     ))}
-                <button type="submit">Confirmer</button>
-            </form>
+            <button type="submit" onClick={HandleFormSubmit}>Confirmer</button>
         </div>
     );
 }
