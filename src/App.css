@@ -14,14 +14,13 @@
 }
 
 .App-header {
-  background-color: #ffffff;
+  background-color:#eafaf1 ;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #77C5A6;
 }
 
 
@@ -35,7 +34,7 @@
   color: #ffff;
   padding: 0.7em 1.7em;
   font-size: 18px;
-  border-radius: 0.5em; /*to round the corner of the shape */
+  border-radius: 0.5em; 
   background: #77C5A6;
   border: 1px solid #77C5A6;
   box-shadow: 6px 6px 12px #c5c5c5,
@@ -103,16 +102,16 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 h1{
+  padding-bottom: -20px;
+  color: #054A2F;
+  font-size: 2em;
+  font-family: "Lexend Deca";
+}
+
+.page_name{
+  margin-top: 150px;
   padding-bottom: -20px;
   color: #054A2F;
   font-size: 2em;
@@ -131,8 +130,11 @@ h1{
 
 .app_title{
   font-size: 1em;
+  font-family: "Lexend Deca";
+  text-transform: uppercase;
+  color: #054A2F;
   position: absolute;
-  top:-5px;
+  top:20px;
   left: 55px;
 }
 
@@ -140,7 +142,7 @@ h1{
   height: 45px;
   width: 45px;
   position: absolute;
-  top:5px;
+  top:10px;
   left: 5px;
 }
 

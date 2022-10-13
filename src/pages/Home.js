@@ -16,7 +16,7 @@ export default function Home({ currentUser }) {
    <React.Fragment>
      <div>
       <img className="logo" src={logo}></img>
-      <h1 className="app_title">HealthApp</h1>
+      <h2 className="app_title">Health Prevention</h2>
       <h1 className="welcome">Welcome to the Health Prevention Questionnaire</h1>
       {!currentUser ? (
         <>

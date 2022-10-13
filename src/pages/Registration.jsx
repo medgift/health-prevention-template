@@ -6,7 +6,8 @@ import avatar3 from './img/avatar3.png';
 import avatar4 from './img/avatar4.png';
 import avatar5 from './img/avatar5.png';
 import avatar6 from './img/avatar6.png';
-
+import logo from './img/logo.png';
+import background from './img/background.png';
 
 function Registration() {
 
@@ -22,14 +23,17 @@ function Registration() {
 
     return (
         <Container2>
+            <img className="logo" src={logo}></img>
+            <h2 className="app_title">HealthApp</h2>
             <div className="container left">
-            <h1 className="choose_avatar">Enter your personnal information</h1>
+                <h1 className="choose_avatar">Enter your personnal information</h1>
                 <form>
                     <label className="label">Name</label>
                     <br />
                     <input
                         className="text_input"
                         type="text"
+                        maxLength={30}
                         // value={email}
                         // onChange={handleEmailChange}
                         required
@@ -42,6 +46,7 @@ function Registration() {
                     <input
                         className="text_input"
                         type="text"
+                        maxLength={30}
                         // value={email}
                         // onChange={handleEmailChange}
                         required
@@ -54,6 +59,7 @@ function Registration() {
                     <input
                         className="nb_input"
                         type="text"
+                        maxLength={3}
                         // value={email}
                         // onChange={handleEmailChange}
                         required
@@ -65,6 +71,7 @@ function Registration() {
                     <input
                         className="nb_input"
                         type="text"
+                        maxLength={3}
                         // value={email}
                         // onChange={handleEmailChange}
                         required
@@ -75,6 +82,7 @@ function Registration() {
                     <input
                         className="nb_input"
                         type="text"
+                        maxLength={3}
                         // value={email}
                         // onChange={handleEmailChange}
                         required
@@ -86,7 +94,6 @@ function Registration() {
                         <option value="woman">Woman</option>
                         <option value="man">Man</option>
                     </select>
-
                 </form>
             </div>
 
@@ -124,22 +131,21 @@ body{
   margin-right: auto;
   height: 100%;
   width: 100%;
+
 }
 
 .left {
-    margin-top:60px;
     width: 50%;
     left: 0;
-    background-color: white;
+    background-color: #eafaf1 ;
+
 }
 
 .right{
-    margin-top: 50px;
     width:50%;
     right:0;
-    background-color:transparent;
+    background-color: #eafaf1 ;
 }
-
 .label{
     align-items:center;
     font-size:1em;
@@ -147,6 +153,16 @@ body{
     color: #224957;
     font-size: 1em;
     font-weight:bold;
+}
+
+.nb_input{
+    text-align:center;
+    width: 50px;
+}
+
+.text_input{
+    align-items:center;
+    width: 200px;
 }
 
 select{
@@ -166,22 +182,20 @@ select{
     cursor: pointer;
 }
 
-.nb_input{
-    /* margin-right:150px; */
-    width: 50px;
-}
-
-.text_input{
-    width: 200px;
-}
 
 input {
+    text-align:left;
+    margin-top: 5px;
     margin-bottom: 10px;
     box-sizing: border-box;
     border-radius: 4px;
     outline: none;
     border: 1.5px solid #77C5A6;
     padding: 10px;
+  }
+
+  input:hover{
+    background-color:#f2f3f4 ;
   }
 
   input:focus {
@@ -196,11 +210,11 @@ input {
 .avatar{
     margin-top:20px;
     margin-left: 0px;
-    padding-bottom: 25px;
 
 }
 
 .choose_avatar{
+    margin-top:60px;
     text-align:center;
     color: #224957;
     font-size: 1.2em;
