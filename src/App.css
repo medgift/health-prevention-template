@@ -61,12 +61,12 @@
 h1 {
   font-size: 48px;
   text-transform: uppercase;
-  margin-top: 0;
+  margin-bottom: 0;
 }
 
 h2 {
   font-size: 20px;
-  margin: 0;
+  margin: 0 0 30px 0;
 }
 
 input {
@@ -92,4 +92,22 @@ button {
   text-transform: uppercase;
   margin-top: 20px;
   display: inline;
+}
+
+button:hover {
+  background: #0439CB;
+  cursor: pointer;
+}
+
+div.progress-bar {
+  width: 50%;
+  display: flex;
+  margin: auto;
+  border: 1px solid #0473D5;
+  height: 30px;
+}
+
+.progress-bar > span {
+  width: 100%;
+  background: #0473D5;
 }

@@ -18,9 +18,11 @@ export default function Register() {
   };
 
   return (
-    <div>
+      <div className="Content">
+        <div className="Login-Form">
       <h1>Register</h1>
       <UserForm handleSubmit={handleRegister} submitButtonLabel="Register" />
+          </div>
     </div>
   );
 }
