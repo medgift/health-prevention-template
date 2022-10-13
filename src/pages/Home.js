@@ -15,9 +15,14 @@ export default function Home({currentUser}) {
                         </Link>
                     </>
                 ) : (
+                    <div>
                     <Link to="/logout" className="App-link">
                         Logout
                     </Link>
+                    <Link to="/ShowResult" className="App-link">
+                        Show Result
+                    </Link>
+                    </div>
                 )}
             </div>
 

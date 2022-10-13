@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import ShowResult from "./pages/ShowResult"
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
@@ -45,6 +46,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/info" element={<Info />} />
+          <Route path="/ShowResult" element={<ShowResult />}/>
         </Routes>
     </div>
   );
