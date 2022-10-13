@@ -23,7 +23,7 @@ export default function Register() {
       } else {
         CreateDocUser(new User(email, 20, 0, 50, 165));
       }
-      navigate("/");
+      navigate("/homeApp");
     } catch (e) {
       console.error(e);
     }
