@@ -1,6 +1,5 @@
-import { auth } from "../initFirebase";
 import { db } from "../initFirebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { refVariables } from "../initFirebase";
 import { variableConverter } from "../objects/Variables";
 
@@ -34,6 +33,8 @@ export async function getVariableById(varId) {
   }
 }
 
+console.log('getvariable',getVariableById('0wLBCWipfVrOeV3anxPE'));
+
 //Get one Variable by name
 export async function getVariableByName(varName) {
   const q = query(refVariables, where("nom", "==", varName));
@@ -44,3 +45,32 @@ export async function getVariableByName(varName) {
     console.log(doc.id, " => ", doc.data());
   });
 }
+
+//Update one variable
+export async function updateVariableData(varId,limits,name,normalVal,predefinedVal){
+  let refV = doc(refVariables,varId);  
+  await updateDoc(refV,{
+    limites: limits,
+    nom: name,
+    val_normale: normalVal,
+    val_predefinie: predefinedVal,
+  });
+}
+
+//Set multiples variables
+//Don't work for the moment
+export function writeVariablesData(listVariable){
+  listVariable.forEach(v => 
+    set(ref(db,"Variables", v.varId),{
+    limites: v.limits,
+    nom: v.name,
+    val_normale: v.val_normal,
+    val_predefinie: v.val_predefined,
+  })
+  );
+}
+
+
+
+
+
