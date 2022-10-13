@@ -1,6 +1,6 @@
 export class Maladie {
     constructor(nom_maladie, list_coef, list_variable) {
-        this.nom_maladie = nom_maladie,
+        this.nom_maladie = nom_maladie;
             this.list_coef = {
                 coefAge: list_coef.coefAge,
                 coefCHOL: list_coef.coefCHOL,
@@ -13,10 +13,10 @@ export class Maladie {
                 coefSyst: list_coef.coefSyst,
                 coefSyst2: list_coef.coefSyst2,
                 coefTotalCHOL: list_coef.coefTotalCHOL,
-            },
+            };
             this.list_variable = {
                 //Collection variables not done
-            }
+            };
     }
     toString() {
         return this.nom_maladie;
@@ -30,7 +30,7 @@ export const maladieConverter = {
         return {
             nom: maladie.nom,
             list_coef: {
-                coefAge: maladie.list_coef.coefAge,
+                coefAge : maladie.list_coef.coefAge,
                 coefCHOL: maladie.list_coef.coefCHOL,
                 coefDM: maladie.list_coef.coefDM,
                 coefFume: maladie.list_coef.coefFume,
