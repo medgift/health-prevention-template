@@ -1,11 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { db } from "../initFirebase";
-import { collection, getDocs } from "firebase/firestore";
-import { async } from "@firebase/util";
-import app from "../initFirebase";
-import { getUsers } from "../objects_managers/UserManager";
-import logo from "../pages/img/logo.png";
 import "@fontsource/lexend-deca";
 import   {NavbarNotLogged}  from "./Navbar";
 import Navbar from "./Navbar";
@@ -16,12 +10,9 @@ export default function Home({ currentUser }) {
     <React.Fragment>
       {!currentUser ? (<NavbarNotLogged />): (<Navbar/>)}
       <div>
-        {/* <img className="logo" src={logo}></img> */}
-        {/* <h1 className="app_title">HealthApp Prevention</h1> */}
         <div className="container left">
           <img className="docs_pics" src={docs}></img>
         </div>
-
         <div className="container right">
           {!currentUser ? (
             <>
@@ -45,7 +36,6 @@ export default function Home({ currentUser }) {
               <br />
             </>
           ) : (
-            //TODO :: Replace thiings in this page for the home so the current user is accessible
             <div>
               <h2 className="center hi">Hi, {currentUser.email}</h2>
               <br/>

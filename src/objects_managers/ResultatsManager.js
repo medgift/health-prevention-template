@@ -1,8 +1,6 @@
-import { auth, getAuthCurrentUser, } from "../initFirebase";
 import { db } from "../initFirebase";
-import {collection, doc, setDoc, getDoc, getDocs,updateDoc, query, where } from "firebase/firestore";
+import { doc, setDoc, getDoc, getDocs,updateDoc, query, where } from "firebase/firestore";
 import { resultatsConverter, Resultats } from "../objects/Resultats";
-import { async } from "@firebase/util";
 
 
 export async function CreateDocResultats(id_user,resultat) {

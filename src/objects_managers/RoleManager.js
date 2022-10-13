@@ -1,9 +1,7 @@
-import { auth } from "../initFirebase";
 import { db } from "../initFirebase";
-import { doc, setDoc, getDoc,getDocs,deleteDoc,query,where } from "firebase/firestore";
+import { doc, getDoc,getDocs,deleteDoc,query,where } from "firebase/firestore";
 import { refRoles } from "../initFirebase";
 import { roleConverter } from "../objects/Role";
-import { async } from "@firebase/util";
 
 //Get data once
 export async function GetAllRole() {

@@ -5,6 +5,7 @@ import UserForm from "../components/UserForm";
 import { useNavigate } from "react-router-dom";
 import "@fontsource/lexend-deca";
 import {  getRoleById } from "../objects_managers/RoleManager";
+import {getDocteurById} from "../objects_managers/DocteurManager"
 import { getUserById } from "../objects_managers/UserManager";
 import  {NavbarNotLogged}  from "./Navbar";
 
@@ -48,8 +49,6 @@ export default function Login() {
     <>
     <NavbarNotLogged/>
     <div>
-      {/* <img className="logo" src={logo}></img>
-      <h2 className="app_title">Health Prevention</h2> */}
       <h3 className="page_name">Login</h3>
       <span>
         <p className="click_here">
@@ -68,9 +67,9 @@ export async function CheckRole() {
   //Get the user
   let user = await getUserById(userid);
 
-  //  if(user === null){
-  //   user = getDocteurById();
-  //  }
+   if(user === null){
+    user = getDocteurById();
+   }
   if (user === null) {//By Default it is a Guest if no user nor doctor was found
     return "Invite";
   }

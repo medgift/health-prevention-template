@@ -1,8 +1,7 @@
 import { db, auth } from "../initFirebase";
-import {  collection, doc, setDoc, getDoc,getDocs,deleteDoc, updateDoc,query,where } from "firebase/firestore";
+import { doc, setDoc, getDoc,getDocs,deleteDoc, updateDoc,query,where } from "firebase/firestore";
 import { refUser } from "../initFirebase";
-import { userConverter } from "../objects/User";
-import { async } from "@firebase/util";
+
 
 export async function CreateDocUser(user) {
   //By default : the constructor put the patient id as the id_role
@@ -17,10 +16,6 @@ export async function CreateDocUser(user) {
 export async function getUsers() {
   const userSnapshot = await getDocs(refUser);
   const userList = userSnapshot.docs.map((doc) => doc.data());
-  // querySnapshot.forEach((doc) => {
-  //   // doc.data() is never undefined for query doc snapshots
-  //   console.log(doc.id, " => ", doc.data());
-  // });
   return userList;
 }
 
@@ -44,7 +39,6 @@ export async function getUserByEmail(userEmail) {
 let user;
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
     console.log(doc.id, " => ", doc.data());
     user = doc.data();
   });

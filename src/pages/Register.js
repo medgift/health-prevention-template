@@ -6,7 +6,6 @@ import { User, setId } from "../objects/User";
 import { CreateDocUser } from "../objects_managers/UserManager";
 import { NavbarNotLogged } from "./Navbar";
 import "@fontsource/lexend-deca";
-import logo from "../pages/img/logo.png";
 import "./pages.css";
 
 export default function Register() {
@@ -32,8 +31,6 @@ export default function Register() {
     <>
         <NavbarNotLogged/>
     <div className="register_page">
-      {/* <img className="logo" src={logo}></img>
-      <h2 className="app_title">Health Prevention</h2> */}
       <h3 className="page_name">Register</h3>
       <p className="click_here">
         Register yourself to keep track on your health{" "}
