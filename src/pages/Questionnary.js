@@ -36,6 +36,7 @@ export default function Questionnary() {
         e.preventDefault();
         if(step === formTitles.length - 1 ){
             alert("FORM FINISH");
+            console.log(values)
         } else {
             setStep(step + 1)
         }
