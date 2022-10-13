@@ -2,7 +2,10 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import HomeOLD from "./pages/HomeOLD";
 import Home from "./pages/Home";
+import Navbar from "./components/Navbar";
+import Test from "./pages/Test";
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
@@ -38,14 +41,17 @@ export default function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      {/*<header className="App-header">*/}
+        <Navbar/>
         <Routes>
           <Route path="/" element={<Home currentUser={currentUser} />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/test" element={<Test />} />
         </Routes>
-      </header>
+      {/*</header>*/}
     </div>
   );
 }
