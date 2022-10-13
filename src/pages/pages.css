@@ -1,13 +1,13 @@
-.container {
-  margin-left: auto;
-  margin-right: auto;
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  z-index: 1;
-  top: 10%;
-  overflow-x: hidden;
-}
+  .container {
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 10%;
+    overflow-x: hidden;
+  }
 
 .left {
   width: 40%;
@@ -31,12 +31,51 @@
   
 }
 
+.quiz1 {
+  margin-left: 15px;
+  margin-top: 50px;
+  border: 1px solid grey;
+  height: 65%;
+  width: 30%;
+  left: 0;
+  background-color: white;
+}
+
+.quiz2 {
+  margin-top: 50px;
+  margin-right: 15px;
+  border: 1px solid grey;
+  height: 65%;
+  width: 30%;
+  right: 0;
+  background-color: white;
+}
+
+.quiz3 {
+  margin-top: 50px;
+  height: 65%;
+  border: 1px solid grey;
+  margin-left: 33%;
+  margin-right: 33%;
+  width: 32%;
+  background-color: white;
+  
+}
+
 .quiz{
   margin-top: 20px;
   left: 25%;
   width: 50%;
   height: 80%;
   background-color: #B6F3DC;
+}
+
+.my_avatar{
+  margin-left: 10px;
+  margin-top:120px ;
+  float:left;
+  height:180px;
+  width:60;
 }
 
 

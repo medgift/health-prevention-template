@@ -18,7 +18,7 @@ export default function Login() {
       //Faire requete pour savoir si le user connecté est un user - un docteur ou un admin
 
 
-      navigate("/homeApp");
+      navigate("/");
     } catch (e) {
       console.error(e);
     }
