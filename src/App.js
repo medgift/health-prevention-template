@@ -3,6 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import HomeApp from "./pages/HomeApp";
+import Navbar from "./pages/Navbar";
+import Layout from "./pages/Layout";
+import Survey from "./pages/Survey";
+
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
@@ -38,14 +43,17 @@ export default function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header"> */}
         <Routes>
           <Route path="/" element={<Home currentUser={currentUser} />} />
+          <Route path="/layout" element={<Layout />}/>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/homeApp" element={<HomeApp />} />
+          <Route path="/survey" element={<Survey />} />
         </Routes>
-      </header>
+      {/* </header> */}
     </div>
   );
 }

@@ -1,0 +1,70 @@
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 10%;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.left {
+  width: 40%;
+  left: 0;
+  background-color: #fff;
+}
+
+.right {
+  width: 60%;
+  right: -15px;
+  border-radius: 20px;
+  background-color: #BBF3DD;
+  transform: translateZ(0);
+  z-index: -1;
+}
+
+.center {
+  width: 100%;
+  align-items: center;
+  color: #224957;
+  /* background-color: #3C3C3D; */
+  
+}
+
+.quiz{
+  margin-top: 20px;
+  left: 25%;
+  width: 50%;
+  height: 80%;
+  background-color: #B6F3DC;
+}
+
+
+.docs_pics{
+  height: 390px;
+  width: 600px;
+}
+
+.center {
+  margin-bottom: 5px;
+  text-align: center;
+  }
+
+  .hi{
+    font-size: 2em;
+    margin-top: 120px;
+    color: #3C3C3D;
+  }
+
+  .welcome{
+    font-size: 2em;
+    color:#1A523C;
+  }
+
+  .text{
+    font-size: 1em;
+  }
+
