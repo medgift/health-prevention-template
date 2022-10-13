@@ -1,6 +1,6 @@
 import { auth } from "../initFirebase";
-import { db } from "../initFirebase";
-import { doc, setDoc, getDoc,getDocs,deleteDoc,query,where } from "firebase/firestore";
+import { db, auth } from "../initFirebase";
+import { doc, setDoc, getDoc,getDocs,deleteDoc, updateDoc,query,where } from "firebase/firestore";
 import { refUser } from "../initFirebase";
 import { userConverter } from "../objects/User";
 import { async } from "@firebase/util";
@@ -53,9 +53,21 @@ export async function getUserByEmail(userEmail) {
   });
 }
 
+//Update information for the user
+export async function updateUserData(userId,age,weight,sex,height){
+  const ref = doc(refUser,userId);
+  await updateDoc(ref,{
+    age: age,
+    poids: weight,
+    sexe: sex,
+    taille: height,
+  });
+}
+
+console.log(updateUserData('MPfBRXNkgmhJw24HihqsJILGVNS2',29,190,1,210));
+
 
 //Delete a User Document
 export async function DeleteUserDoc(id_user){
   await deleteDoc(doc(db, "User", id_user));
 }
-

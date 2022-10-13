@@ -31,13 +31,13 @@ export default function Login() {
           break;
         case "Patient":
           console.log("Nav to Patient Portal");
-            navigate("/")
+            navigate("/homeApp")
           break;
         case "Invite":
-            navigate("/")
+            navigate("/homeApp")
           break;
         default:
-          navigate("/")
+          navigate("/homeApp")
       }
     } catch (e) {
       console.error(e);
@@ -46,9 +46,9 @@ export default function Login() {
 
   return (
     <div>
-     <img className="logo" src={logo} alt="img"></img>
-      <h1 className="app_title">HealthApp</h1>
-      <h1>Login</h1> 
+     <img className="logo" src={logo}></img>
+     <h2 className="app_title">Health Prevention</h2>
+      <h3 className="page_name">Login</h3> 
       <span>
       <p className="click_here">You're new here ?   
         <Link to="/Register" >click here to register</Link>

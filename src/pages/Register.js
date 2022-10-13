@@ -8,6 +8,7 @@ import { CreateDocUser } from "../objects_managers/UserManager";
 import { CreateDocDocteur } from "../objects_managers/DocteurManager";
 import "@fontsource/lexend-deca";
 import logo from "../pages/img/logo.png";
+import "./pages.css";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function Register() {
       user.setIdUser(auth.currentUser.uid);
       CreateDocUser(user);
       
-      navigate("/");
+      navigate("/Registration");
     } catch (e) {
       console.error(e);
     }
@@ -30,9 +31,9 @@ export default function Register() {
 
   return (
     <div className="register_page">
-      <img className="logo" src={logo} alt="img"></img>
-      <h1 className="app_title">HealthApp</h1>
-      <h1>Register</h1>
+      <img className="logo" src={logo}></img>
+      <h2 className="app_title">Health Prevention</h2>
+      <h3 className="page_name">Register</h3>
       <p className="click_here">
         Register yourself to keep track on your health{" "}
       </p>

@@ -6,6 +6,8 @@ import { docteurConverter } from "./objects/Docteur";
 import { roleConverter } from "./objects/Role";
 import { variableConverter } from "./objects/Variables";
 import { resultatsConverter } from "./objects/Resultats";
+import { questionnaireConverter } from "./objects/Variables";
+import { maladieConverter } from "./objects/Maladie";
 
 
 // Import the functions you need from the SDKs you need
@@ -33,6 +35,8 @@ export const refDocteur = collection(db, 'Docteur').withConverter(docteurConvert
 export const refRoles = collection(db, 'Roles').withConverter(roleConverter);
 export const refVariables = collection(db, 'Variables').withConverter(variableConverter);
 //export const refResultats = collection(db, "Resultat", auth.currentUser, "Resultats").withConverter(resultatsConverter);
+export const refQuestionnaire = collection(db, 'Questionnaires').withConverter(variableConverter);
+export const refMaladies = collection(db, 'Maladies').withConverter(maladieConverter);
 
 
 export async function getAuthCurrentUser(){
@@ -54,6 +58,8 @@ export async function updateAuthCurrentUser(displayName,photoURL ){
     // ...
   });
 }
+
+
 
 
 
