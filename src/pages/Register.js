@@ -2,10 +2,9 @@ import UserForm from "../components/UserForm";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../initFirebase";
 import { useNavigate } from "react-router-dom";
-import { User } from "../objects/User";
-import { Docteur } from "../objects/Docteur";
+import { User, setId } from "../objects/User";
 import { CreateDocUser } from "../objects_managers/UserManager";
-import { CreateDocDocteur } from "../objects_managers/DocteurManager";
+import { NavbarNotLogged } from "./Navbar";
 import "@fontsource/lexend-deca";
 import logo from "../pages/img/logo.png";
 import "./pages.css";
@@ -20,7 +19,7 @@ export default function Register() {
       await createUserWithEmailAndPassword(auth, email, password);
       //To create the user document in Firestore with the id created by Auth
       let user= new User(email);
-      user.setIdUser(auth.currentUser.uid);
+      user.setId(auth.currentUser.uid);
       CreateDocUser(user);
       
       navigate("/Registration");
@@ -30,15 +29,19 @@ export default function Register() {
   };
 
   return (
+    <>
+        <NavbarNotLogged/>
     <div className="register_page">
-      <img className="logo" src={logo}></img>
-      <h2 className="app_title">Health Prevention</h2>
+      {/* <img className="logo" src={logo}></img>
+      <h2 className="app_title">Health Prevention</h2> */}
       <h3 className="page_name">Register</h3>
       <p className="click_here">
         Register yourself to keep track on your health{" "}
       </p>
       <UserForm handleSubmit={handleRegister} submitButtonLabel="Register" />
     </div>
+    </>
+    
   );
 }
 

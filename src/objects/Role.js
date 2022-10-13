@@ -10,7 +10,7 @@ export class Role {
       }
 
     toString() {
-        return this.nom_role + ', ' + this.id_role ;
+        return this.nom_role;
     }
 }
 

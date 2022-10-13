@@ -1,5 +1,9 @@
 export class User {
   id_user;
+  age = 0;
+  sexe = 0;
+  poids = 0;
+  taille = 0;
   constructor(nom) {
     this.nom = nom;
     this.id_role = "n5Gejr1pLJrcMagawHqp";

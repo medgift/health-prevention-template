@@ -24,6 +24,8 @@
 }
 
 
+
+
 .btn {
   display: inline-block;
   transition: all 0.2s ease-in;
@@ -134,7 +136,7 @@ h1{
   text-transform: uppercase;
   color: #054A2F;
   position: absolute;
-  top:20px;
+  top:16px;
   left: 55px;
 }
 

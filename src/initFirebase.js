@@ -48,6 +48,15 @@ export async function getAuthCurrentUser(){
   }
 }
 
+export async function getAuthCurrentUserId(){
+  if(auth.currentUser !== null){
+    return auth.currentUser.uid;
+  }else{
+    console.log("Couldn't find the current user..")
+      return undefined;
+  }
+}
+
 export async function updateAuthCurrentUser(displayName,photoURL ){
   updateProfile(getAuthCurrentUser(), {
     displayName: displayName, photoURL: photoURL, }).then(() => {

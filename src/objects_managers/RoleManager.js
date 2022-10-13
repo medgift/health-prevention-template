@@ -27,3 +27,16 @@ export async function getRoleByName(roleName) {
   });
   return role;
 }
+
+//Get one user by id
+export async function getRoleById(roleId) {
+  const ref = doc(db, "Roles", roleId.toString()).withConverter(roleConverter);
+  const docSnap = await getDoc(ref);
+  if (docSnap.exists()) {
+    const role = docSnap.data();
+    return role;
+  } else {
+    console.log("No such role document!");
+    return null;
+  }
+}

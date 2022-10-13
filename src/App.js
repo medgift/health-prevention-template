@@ -1,24 +1,24 @@
 import "./App.css";
+
 import { Route, Routes } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import HomeApp from "./pages/HomeApp";
 import Navbar from "./pages/Navbar";
 import Layout from "./pages/Layout";
 import Survey from "./pages/Survey";
 import Registration from "./pages/Registration";
-
+import { ThemeContext, themes } from "./ThemeContext";
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Logout from "./pages/Logout";
 
 export default function App() {
   /* Current user state */
   const [currentUser, setCurrentUser] = useState(undefined);
-
+  let themeContext = useContext(ThemeContext);
   /* Watch for authentication state changes */
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -35,7 +35,12 @@ export default function App() {
   if (currentUser === undefined) {
     return (
       <div className="App">
-        <header className="App-header">
+        <header className="App-header"
+          style={{
+            backgroundColor: themes[themeContext.theme].background,
+            color: themes[themeContext.theme].foreground,
+          }}
+        >
           <h1>Loading...</h1>
         </header>
       </div>
@@ -44,18 +49,15 @@ export default function App() {
 
   return (
     <div className="App">
-      {/* <header className="App-header"> */}
         <Routes>
           <Route path="/" element={<Home currentUser={currentUser} />} />
           <Route path="/layout" element={<Layout />}/>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/homeApp" element={<HomeApp />} />
           <Route path="/survey" element={<Survey />} />
           <Route path="/registration" element={<Registration/>}/>
         </Routes>
-      {/* </header> */}
     </div>
   );
 }
