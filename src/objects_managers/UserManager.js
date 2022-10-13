@@ -1,14 +1,16 @@
 import { auth } from "../initFirebase";
 import { db } from "../initFirebase";
-import { doc, setDoc, getDoc,getDocs,query,where } from "firebase/firestore";
+import { doc, setDoc, getDoc,getDocs,deleteDoc,query,where } from "firebase/firestore";
 import { refUser } from "../initFirebase";
 import { userConverter } from "../objects/User";
+import { async } from "@firebase/util";
 
 export async function CreateDocUser(user) {
   //By default : the constructor put the patient id as the id_role
   // Add a new document with the id of the auth user created.
-  const docRef = await setDoc(doc(refUser, auth.currentUser.uid), user);
+  const docRef = await setDoc(doc(refUser, user.id_user), user);
   console.log("Auth User ID: ", auth.currentUser.uid);
+  console.log("Doc User ID: ", user.id_user);
   console.log("Document User written with ID: ", docRef.id);
 }
 
@@ -17,6 +19,10 @@ export async function CreateDocUser(user) {
 export async function getUsers() {
   const userSnapshot = await getDocs(refUser);
   const userList = userSnapshot.docs.map((doc) => doc.data());
+  // querySnapshot.forEach((doc) => {
+  //   // doc.data() is never undefined for query doc snapshots
+  //   console.log(doc.id, " => ", doc.data());
+  // });
   return userList;
 }
 
@@ -46,3 +52,10 @@ export async function getUserByEmail(userEmail) {
     console.log(doc.id, " => ", doc.data());
   });
 }
+
+
+//Delete a User Document
+export async function DeleteUserDoc(id_user){
+  await deleteDoc(doc(db, "User", id_user));
+}
+
