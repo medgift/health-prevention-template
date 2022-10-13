@@ -140,7 +140,7 @@ class Question extends React.Component{
 
 //Replace state with props after tests-----------------------------------------
 function QuestionList() {
-    const QUESTIONNAIRE_NO = 2;
+    const QUESTIONNAIRE_NO = 1;
     let [questions, setQuestions] = useState([]);
     useEffect(() => {
         async function loadQuestions() {
