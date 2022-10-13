@@ -4,8 +4,10 @@ import {  refDocteur } from "../initFirebase";
 
 
 export async function CreateDocDocteur(docteur) {
-    const docRef = await setDoc(doc(refDocteur, auth.currentUser.uid), docteur);
-    console.log("Auth Docteur ID: ", auth.currentUser.uid);
-    console.log("Document User written with ID: ", docRef.id);
+    const docRef = await setDoc(doc(refDocteur, docteur.id), docteur);
+    console.log("Auth User ID: ", auth.currentUser.uid);
+    console.log("Docteur ID: ", docteur.id);
+
+    console.log("Document Docteur written with ID: ", docRef.id);
   }
   

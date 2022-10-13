@@ -13,18 +13,17 @@ import "./pages.css";
 export default function Register() {
   const navigate = useNavigate();
 
-  const handleRegister = async (e, email, password, isDoc) => {
+  const handleRegister = async (e, email, password) => {
     e.preventDefault();
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      //To create the doc correspondant in Firestore
-      if (isDoc) {
-        CreateDocDocteur(new Docteur(email));
-      } else {
-        CreateDocUser(new User(email, 20, 0, 50, 165));
-      }
-      navigate("/registration");
+      //To create the user document in Firestore with the id created by Auth
+      let user= new User(email);
+      user.setIdUser(auth.currentUser.uid);
+      CreateDocUser(user);
+      
+      navigate("/Registration");
     } catch (e) {
       console.error(e);
     }

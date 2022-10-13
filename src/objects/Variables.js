@@ -26,6 +26,6 @@ export const variableConverter = {
     },
     fromFirestore: (snapshot, options) => {
         const data = snapshot.data(options);
-        return new Variable(...data);
+        return new Variable({...data});
     }
 };
