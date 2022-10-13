@@ -8,12 +8,15 @@ import Home from "./pages/Home";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
 import {db} from "./initFirebase";
-import {collection, query, where, doc, getDoc, getDocs} from "firebase/firestore";
+import {collection, query, where, doc, getDoc, getDocs, setDoc, addDoc} from "firebase/firestore";
+import {questionRef} from "./initFirebase";
 import {useEffect, useState, Component} from "react";
 import Logout from "./pages/Logout";
 import * as PropTypes from "prop-types";
-//import firebase from "firebase/compat";
-//import firestore from "firebase/Firestore";
+import {QuestionDB} from "./DAL/QuestionDB";
+import {QuestionDTO} from "./DTO/QuestionDTO"
+import {ResponseDB} from "./DAL/ResponseDB";
+import {ResponseDTO} from "./DTO/ResponseDTO";
 
 let Poids = 0;
 
@@ -86,12 +89,14 @@ class Question extends React.Component{
 
         let formattedQuestion;
         //For inputs of type RadioSlider and NumericSlider
+
         if (this.props.InputType === "RadioSlider") {
+
             formattedQuestion = (
                 //Min and Max of range refer to the index in choices array of the question
                 <input type="range"
                        min={0}
-                       max={this.props.Choices.length - 1}
+                       max={this.props.choices.length - 1}
                        step="1"
                        defaultValue={this.props.normalValue}
                        onChange={this.HandleInputChanges}/>
@@ -112,7 +117,7 @@ class Question extends React.Component{
         }
 
         //For inputs of type ToggleSlider
-        if (this.props.InputType === "ToggleSlider") {
+        if (this.props.inputType === "ToggleSlider") {
             formattedQuestion = (
                 <label className="switch">
                     <input type="checkbox"
@@ -125,7 +130,7 @@ class Question extends React.Component{
 
         return (
             <>
-                <p>{this.props.Text}</p>
+                <p>{this.props.text}</p>
                 {formattedQuestion}
                 {this.state.answer}
             </>
@@ -135,31 +140,17 @@ class Question extends React.Component{
 
 //Replace state with props after tests-----------------------------------------
 function QuestionList() {
-    const QUESTIONNAIRE_NO = 1;
+    const QUESTIONNAIRE_NO = 2;
     let [questions, setQuestions] = useState([]);
     useEffect(() => {
         async function loadQuestions() {
-            let querySnapchot = await GetQuestions(QUESTIONNAIRE_NO);
-            for (const q of querySnapchot) {
-                setQuestions(prevState => [...prevState, convertToQuestion(q)])
-            }
+            let questions = await QuestionDB.prototype.getQuestionsByQuestionnaire(QUESTIONNAIRE_NO);
+            setQuestions(prevState => [...prevState, ...questions]);
         }
-
         loadQuestions();
     }, []);
 
 
-    function convertToQuestion(q) {
-        return {
-            Choices: q.get("Choices"),
-            DefaultValue: q.get("DefaultValue"),
-            InputType: q.get("InputType"),
-            NormalValue: q.get("NormalValue"),
-            QuestionNO: q.get("QuestionNO"),
-            Text: q.get("Text"),
-            VariableName: q.get("Variable")
-        };
-    }
 
 //----------------------------------------------
     //use for debug, for now
@@ -169,6 +160,7 @@ function QuestionList() {
         setAnswers(prevState => [...prevState, childData]);
     }
 //----------------------------------------------
+
 
 
     //Form Submission
@@ -198,12 +190,6 @@ function QuestionList() {
 }
 
 
-async function GetQuestions(questionnaireNo) {
-    const q = query(collection(db, "Question"), where("QuestionnaireNO", "==", questionnaireNo));
-    const querySnapshot = await getDocs(q);
-    let questions = [];
-    querySnapshot.forEach((doc) => {
-        questions = [doc, ...questions];
-    });
-    return questions;
-}
+
+
+

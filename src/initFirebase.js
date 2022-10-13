@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import {doc, getFirestore, collection} from "firebase/firestore";
+import {questionConverter} from "./DTO/QuestionDTO";
+import {responseConverter} from "./DTO/ResponseDTO";
 
 // Configure Firebase.
 const config = {
@@ -14,7 +16,13 @@ const config = {
 };
 
 const app = initializeApp(config);
+const db = getFirestore(app);
+
+// Collections
+const questionRef = collection(db, "Question").withConverter(questionConverter);
+const responseRef = collection(db, "Response").withConverter(responseConverter);
+
 
 export const auth = getAuth(app);
-const db = getFirestore(app);
 export {db};
+export {questionRef, responseRef};
