@@ -1,4 +1,4 @@
-import React, {forwardRef} from "react";
+import React from "react";
 import "./App.css";
 import {Route, Routes} from "react-router-dom";
 import Register from "./pages/Register";
@@ -7,16 +7,9 @@ import Home from "./pages/Home";
 
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
-import {db} from "./initFirebase";
-import {collection, query, where, doc, getDoc, getDocs, setDoc, addDoc} from "firebase/firestore";
-import {questionRef} from "./initFirebase";
-import {useEffect, useState, Component} from "react";
+import {useEffect, useState} from "react";
 import Logout from "./pages/Logout";
-import * as PropTypes from "prop-types";
 import {QuestionDB} from "./DAL/QuestionDB";
-import {QuestionDTO} from "./DTO/QuestionDTO"
-import {ResponseDB} from "./DAL/ResponseDB";
-import {ResponseDTO} from "./DTO/ResponseDTO";
 import EditAvatar from "./pages/EditAvatar";
 
 let Poids = 0;
@@ -48,6 +41,7 @@ export default function App() {
         );
     }
 
+    //Separation of editAvatar Route due to css display issues (text-align: center;)
     return (
         <div className="App">
             <header className="App-header">
@@ -143,7 +137,7 @@ class Question extends React.Component{
             </>
         );
     }
-};
+}
 
 //Replace state with props after tests-----------------------------------------
 function QuestionList() {
@@ -162,7 +156,7 @@ function QuestionList() {
 //----------------------------------------------
     //use for debug, for now
     //list of answers, only the values
-    let [answers, setAnswers] = useState([]);
+    let [setAnswers] = useState([]);
     let handleCallback = (childData) =>{
         setAnswers(prevState => [...prevState, childData]);
     }

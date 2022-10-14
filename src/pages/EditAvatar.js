@@ -4,7 +4,11 @@ import React from "react";
 export default class EditAvatar extends React.Component {
     constructor(props) {
         super(props);
-        const defaultConfig = {"sex": "woman",
+
+        //AFTER : Implement after from DB when connected user
+        //Temporary default config
+        const defaultConfig = {
+            "sex": "woman",
             "faceColor": "#AC6651",
             "earSize": "big",
             "eyeStyle": "circle",
@@ -18,15 +22,16 @@ export default class EditAvatar extends React.Component {
             "hatColor": "#F48150",
             "eyeBrowStyle": "upWoman",
             "shirtColor": "#77311D",
-            "bgColor": "white"};
+            "bgColor": "white"
+        };
         const config = genConfig(defaultConfig);
         this.state = {
             myConfig: config
         };
     }
 
-
-    change = (e) => {
+    //On Change Event for select-options
+    change = () => {
         const config = {
             sex: document.getElementById("sex").value,
             faceColor: document.getElementById("faceColor").value,
@@ -48,7 +53,6 @@ export default class EditAvatar extends React.Component {
 
 
     }
-
 
 
     render() {
