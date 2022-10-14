@@ -12,14 +12,12 @@ export default function NormalValueList(currentUser) {
         async function loadQuestions() {
             let q = await QuestionDB.prototype.getAllQuestions();
             setQuestions(prevState => [...prevState, ...q]);
-            //order questions
-            setQuestions(prevState => prevState.sort((a, b) => a.questionNO - b.questionNO));
         }
         loadQuestions();
 
     }, []);
 
-    //fill normalValues array after the questions have been ordered
+    //fill normalValues array each time the questions are reFetched
     useEffect(() => {
         normalValues = questions.map(qu => qu.normalValue);
     }, [questions]);
