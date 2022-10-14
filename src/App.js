@@ -17,6 +17,7 @@ import {QuestionDB} from "./DAL/QuestionDB";
 import {QuestionDTO} from "./DTO/QuestionDTO"
 import {ResponseDB} from "./DAL/ResponseDB";
 import {ResponseDTO} from "./DTO/ResponseDTO";
+import EditAvatar from "./pages/EditAvatar";
 
 let Poids = 0;
 
@@ -50,14 +51,20 @@ export default function App() {
     return (
         <div className="App">
             <header className="App-header">
+                <header className="App-header-align">
+                    <Routes>
+                        <Route path="/" element={<Home currentUser={currentUser}/>}/>
+                        <Route path="/register" element={<Register/>}/>
+                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/logout" element={<Logout/>}/>
+                    </Routes>
+                    <QuestionList/>
+                </header>
                 <Routes>
-                    <Route path="/" element={<Home currentUser={currentUser}/>}/>
-                    <Route path="/register" element={<Register/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/logout" element={<Logout/>}/>
+                    <Route path="/editAvatar" element={<EditAvatar/>}/>
                 </Routes>
-                <QuestionList/>
             </header>
+
         </div>
     );
 }
