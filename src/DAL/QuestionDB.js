@@ -9,7 +9,14 @@ class QuestionDB {
     async getQuestionsByQuestionnaire(questionnaireNo) {
         const q = query(questionRef, where("QuestionnaireNO", "==", questionnaireNo));
         const docSnap = await getDocs(q);
-        return docSnap.docs.map(d => d.data());
+        const questions = docSnap.docs.map(d => d.data());
+        return questions.sort((a, b) => a.questionNO - b.questionNO);
+    }
+
+    async getAllQuestions() {
+        const questions = await getDocs(questionRef);
+        const q =questions.docs.map(q => q.data());
+        return q.sort((a, b) => a.questionNO - b.questionNO);
     }
 }
 
