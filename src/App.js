@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import QuestionList from "./pages/Questionnaire";
+import NormalValue from "./pages/Admin";
 
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
@@ -49,6 +50,7 @@ export default function App() {
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/logout" element={<Logout/>}/>
                     <Route path="/" element={<QuestionList/>}></Route>
+                    <Route path="/admin" element={<NormalValue></NormalValue>}></Route>
                 </Routes>
             </header>
         </div>
