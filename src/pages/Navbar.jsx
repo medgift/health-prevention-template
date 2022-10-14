@@ -17,16 +17,13 @@ export default class Navbar extends React.Component {
             <img className="logo_app" src={logo} />
           </Link>
           <ul>
-            <li>
               <Link to="/logout" style={{ textDecoration: "none" }}>
-                <button className="btn" title="Logout">
+                <button className="btn btn_logout" title="Logout">
                   <img className="logo_logout" src={exit} />
                 </button>
               </Link>
-            </li>
-            <li>
               <button
-                className="btn"
+                className="btn btn_switch"
                 title="Switch Theme"
                 onClick={this.context.toggleTheme}
               >
@@ -36,7 +33,6 @@ export default class Navbar extends React.Component {
                   <img className="logo_theme" src={day} />
                 )}
               </button>
-            </li>
             <li>
               <Link to="/" style={{ textDecoration: "none" }}>
                 My Account
@@ -126,7 +122,7 @@ const Container = styled.div`
     background: linear-gradient(currentColor, currentColor) bottom / 0 0.1em
       no-repeat;
     font-size: 1rem;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Lexend Deca";
     font-weight: 800;
     white-space: nowrap;
     -webkit-text-fill-color: #77c5a6;

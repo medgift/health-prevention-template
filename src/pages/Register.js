@@ -30,7 +30,7 @@ export default function Register() {
   return (
     <>
         <NavbarNotLogged/>
-    <div className="register_page">
+        <div className="background">
       <h3 className="page_name">Register</h3>
       <p className="click_here">
         Register yourself to keep track on your health{" "}

@@ -48,7 +48,7 @@ export default function Login() {
   return (
     <>
     <NavbarNotLogged/>
-    <div>
+    <div className="background">
       <h3 className="page_name">Login</h3>
       <span>
         <p className="click_here">

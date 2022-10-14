@@ -7,9 +7,121 @@
     z-index: 1;
     top: 10%;
     overflow-x: hidden;
+    background-color: #BBF3DD;
   }
 
-.left {
+  .container_quiz{
+    margin: auto;
+    height: 550px;
+    width: 50%;
+    background-color: #B6F3DC;
+  }
+
+  .container_left{
+    margin-top: 30px;
+    float: left;
+    height: 480px;
+    width: 50%;
+    font-family: "Lexend Deca";
+    font-size: 0.8em;
+  }
+
+  .container_right{
+    margin-top: 40px;
+    float: right;
+    width: 50%;
+    height: 480px;
+    font-family: "Lexend Deca";
+    font-size: 0.8em;
+  }
+
+.survey_title{
+  padding-top: 20px;
+  font-family: "Lexend Deca";
+}
+
+.question{
+  text-align: left;
+  margin-left: 20px;
+}
+
+.nb_input{
+  text-align:center;
+  width: 50px;
+}
+
+.text_input{
+  align-items:center;
+  width: 200px;
+}
+
+input{
+  margin-bottom: 16px;
+}
+.result1 {
+  margin-left: 25px;
+  margin-top: 250px;
+  border: 1px solid grey;
+  height: 55%;
+  width: 30%;
+  left: 0;
+  background-color: white;
+}
+
+.result2 {
+  margin-top: 250px;
+  margin-right: 25px;
+  border: 1px solid grey;
+  height: 55%;
+  width: 30%;
+  right: 0;
+  background-color: white;
+}
+
+.result3 {
+  margin-top: 250px;
+  height: 55%;
+  border: 1px solid grey;
+  margin-left: 35%;
+  margin-right: 33%;
+  width: 30%;
+  background-color: white;
+}
+
+
+.my_avatar{
+  margin-left: 10px;
+  margin-top:120px ;
+  float:left;
+  height:150px;
+  width:145;
+}
+
+.center {
+  margin-bottom: 5px;
+  text-align: center;
+  }
+
+  .hi{
+    font-family: "Lexend Deca";
+    font-size: 2em;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    color: #3C3C3D;
+  }
+
+  .welcome{
+    font-family: "Lexend Deca";
+    font-size: 2em;
+    color:#1A523C;
+  }
+
+  /* .text{
+    font-family: "Lexend Deca";
+    font-size: 1em;
+  }  */
+
+  /* .left {
   width: 40%;
   left: 0;
   background-color: #fff;
@@ -22,84 +134,4 @@
   background-color: #BBF3DD;
   transform: translateZ(0);
   z-index: -1;
-}
-
-.center {
-  width: 100%;
-  align-items: center;
-  color: #224957;
-  
-}
-
-.quiz1 {
-  margin-left: 15px;
-  margin-top: 50px;
-  border: 1px solid grey;
-  height: 65%;
-  width: 30%;
-  left: 0;
-  background-color: white;
-}
-
-.quiz2 {
-  margin-top: 50px;
-  margin-right: 15px;
-  border: 1px solid grey;
-  height: 65%;
-  width: 30%;
-  right: 0;
-  background-color: white;
-}
-
-.quiz3 {
-  margin-top: 50px;
-  height: 65%;
-  border: 1px solid grey;
-  margin-left: 33%;
-  margin-right: 33%;
-  width: 32%;
-  background-color: white;
-  
-}
-
-.quiz{
-  margin-top: 20px;
-  left: 25%;
-  width: 50%;
-  height: 80%;
-  background-color: #B6F3DC;
-}
-
-.my_avatar{
-  margin-left: 10px;
-  margin-top:120px ;
-  float:left;
-  height:180px;
-  width:60;
-}
-
-
-.docs_pics{
-  height: 390px;
-  width: 600px;
-}
-
-.center {
-  margin-bottom: 5px;
-  text-align: center;
-  }
-
-  .hi{
-    font-size: 2em;
-    margin-top: 120px;
-    color: #3C3C3D;
-  }
-
-  .welcome{
-    font-size: 2em;
-    color:#1A523C;
-  }
-
-  .text{
-    font-size: 1em;
-  } 
+} */

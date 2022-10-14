@@ -14,5 +14,4 @@ export default function Layout() {
 };
 
 const Container = styled.div`
-
 `;
