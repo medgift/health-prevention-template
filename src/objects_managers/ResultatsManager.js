@@ -4,7 +4,7 @@ import { resultatsConverter, Resultats } from "../objects/Resultats";
 
 
 export async function CreateDocResultats(id_user,resultat) {
-  let refDoc = db.collection("Resultat").doc(id_user).collection("Resultats").doc(resultat.todayDate).withConverter(resultatsConverter);
+  let refDoc = db.collection("Resultat").doc(id_user).collection("Resultats").doc(resultat.id_resultats).withConverter(resultatsConverter);
 
  
 
@@ -34,10 +34,10 @@ export async function GetAllResultatsByUser(id_user) {
 }
 
 //Get one resultat of one user on a precise date
-export async function GetResultatsByDate(id_user,date) {
+export async function GetResultatsByDate(id_user,id_resultats) {
   let refCollection = db.collection("Resultat").doc(id_user).collection("Resultats").withConverter(resultatsConverter);
 
-  const ref = doc(db, refCollection, date).withConverter(resultatsConverter);
+  const ref = doc(db, refCollection, id_resultats).withConverter(resultatsConverter);
   const docSnap = await getDoc(ref);
   if (docSnap.exists()) {
     // Convert to Resultat object

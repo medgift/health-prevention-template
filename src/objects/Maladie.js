@@ -1,5 +1,7 @@
 export class Maladie {
-    constructor(nom_maladie, list_coef, list_variable) {
+    id_maladie;
+    constructor(id,nom_maladie, list_coef, list_variable) {
+        this.setIdMaladie(id);
         this.nom_maladie = nom_maladie;
             this.list_coef = {
                 coefAge: list_coef.coefAge,
@@ -18,6 +20,9 @@ export class Maladie {
                 //Collection variables not done
             };
     }
+    setIdMaladie(id) {
+        this.id_maladie = id;
+      }
     toString() {
         return this.nom_maladie;
     }
@@ -49,6 +54,6 @@ export const maladieConverter = {
     },
     fromFirestore: (snapshot, options) => {
         const data = snapshot.data(options);
-        return new Maladie(...data);
+        return new Maladie(snapshot.id, data.nom_maladie, data.list_coef, data.list_variable);
     }
 };

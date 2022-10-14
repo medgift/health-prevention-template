@@ -10,7 +10,6 @@ import my_avatar from "./img/avatar5.png";
 export default function Home({ currentUser }) {
   return (
     <React.Fragment>
-      {!currentUser ? <NavbarNotLogged /> : <Navbar />}
       <div className="container">
         {!currentUser ? (
           <>

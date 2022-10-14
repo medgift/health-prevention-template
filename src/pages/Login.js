@@ -4,16 +4,17 @@ import { auth, getAuthCurrentUserId } from "../initFirebase";
 import UserForm from "../components/UserForm";
 import { useNavigate } from "react-router-dom";
 import "@fontsource/lexend-deca";
-import {  getRoleById } from "../objects_managers/RoleManager";
-import {getDocteurById} from "../objects_managers/DocteurManager"
+import { getRoleById } from "../objects_managers/RoleManager";
+import { getDocteurById } from "../objects_managers/DocteurManager";
 import { getUserById } from "../objects_managers/UserManager";
-import  {NavbarNotLogged}  from "./Navbar";
+import LoginForm from "../components/LoginForm";
+import docs from "./img/docs.jpg";
 
 export default function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async (e, email, password) => {
-    e.preventDefault();
+    //e.preventDefault();
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -21,25 +22,22 @@ export default function Login() {
       let roleOfUser = await CheckRole();
       console.log("Role of the User Returned :  ", roleOfUser);
 
-      if(roleOfUser==='Admin'){
+      if (roleOfUser === "Admin") {
         console.log("Nav to Admin Portal");
-          //navigate("/admin");
+        //navigate("/admin");
       }
 
-      if(roleOfUser==='Docteur'){
+      if (roleOfUser === "Docteur") {
         console.log("Nav to Docteur Portal");
-         // navigate("/registration");
+        // navigate("/registration");
       }
-      //? don't know why it don't understand it's equal and goes to Invite portal :/
-      if(roleOfUser==='Patient'){
-        console.log("Nav to Patient Portal");
-        return navigate("/registration");
-      }
-      else{
+      if (roleOfUser === "Patient") {
+        console.log("Nav to Patient Portal (Home)");
+        return navigate("/");
+      } else {
         console.log("Nav to Invite Portal");
-          return navigate("/survey");
+        return navigate("/survey");
       }
-      
     } catch (e) {
       console.error(e);
     }
@@ -47,18 +45,23 @@ export default function Login() {
 
   return (
     <>
-    <NavbarNotLogged/>
-    <div className="background">
-      <h3 className="page_name">Login</h3>
-      <span>
-        <p className="click_here">
-          You're new here ?<Link to="/Register">click here to register</Link>
-        </p>
-      </span>
-      <UserForm handleSubmit={handleLogin} submitButtonLabel="Login" />
-    </div>
+      <div>
+        <div className="container left">
+          <img className="docs_pics" src={docs}></img>
+        </div>
+        <div className="container right">
+          <>
+          <h2 className="page_name">Login</h2>
+          <span>
+            <p className="click_here">
+              You're new here ? <Link to="/Register">Click here to register</Link>{" "}
+            </p>
+          </span>
+          <LoginForm handleSubmit={handleLogin} />
+          </>
+          </div>
+      </div>
     </>
-    
   );
 }
 
@@ -67,16 +70,14 @@ export async function CheckRole() {
   //Get the user
   let user = await getUserById(userid);
 
-   if(user === null){
+  if (user === null) {
     user = getDocteurById();
-   }
-  if (user === null) {//By Default it is a Guest if no user nor doctor was found
+  }
+  if (user === null) {
+    //By Default it is a Guest if no user nor doctor was found
     return "Invite";
   }
   //Get all role existing
-  let RoleNameOfUser ;
-  await getRoleById(user.id_role).then((role) => {
-    RoleNameOfUser = role.nom_role;
-  });
-  return RoleNameOfUser;
+  let role = await getRoleById(user.id_role);
+  return role.nom_role;
 }
