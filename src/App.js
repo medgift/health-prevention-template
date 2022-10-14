@@ -49,14 +49,13 @@ export default function App() {
             <header className="App-header">
                 <header className="App-header-align">
                     <Routes>
-                     <Route path="/home" element={<Home currentUser={currentUser}/>}/>
-                    <Route path="/register" element={<Register/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/logout" element={<Logout/>}/>
-                    <Route path="/" element={<QuestionList/>}></Route>
-                    <Route path="/admin" element={<NormalValue currentUser={{currentUser}}></NormalValue>}></Route>
-                    </Routes>
-                    <QuestionList/>
+                        <Route path="/home" element={<Home currentUser={currentUser}/>}/>
+                        <Route path="/register" element={<Register/>}/>
+                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/logout" element={<Logout/>}/>
+                        <Route path="/" element={<QuestionList/>}></Route>
+                        <Route path="/admin" element={<NormalValue currentUser={{currentUser}}></NormalValue>}/>
+                        </Routes>
                 </header>
                 <Routes>
                     <Route path="/editAvatar" element={<EditAvatar/>}/>
