@@ -1,11 +1,12 @@
-import {addDoc, doc, getDoc, getDocs, query, where, collection} from "firebase/firestore";
+import {addDoc, doc, getDoc, getDocs, query, where, collection, setDoc} from "firebase/firestore";
 import {db, patientRef} from "../initFirebase";
 import {patientConverter} from "../DTO/PatientDTO";
 
 class PatientDB {
 
-    async addPatient(patient) {
-        await addDoc(patientRef, patient);
+    async addPatient(uid, patient) {
+      //  await addDoc(patientRef, patient);
+        await setDoc(doc(db, "Patient", uid), patient);
     }
 
     async getPatientById(patientId) {
