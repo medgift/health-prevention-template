@@ -161,6 +161,19 @@ h1{
   border: 2px solid #054A2F
 }
 
+.email_input_error,
+.password_input_error{
+  font-size: 18px;
+  width : 300px;
+  height: 25px;
+  text-align: left;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: transparent;
+  border-radius: 1em;
+  border: 2px solid  rgb(122,12,22)
+}
+
 .email_input:hover{
   background-color: #e8e8e8;
 }
@@ -169,4 +182,11 @@ h1{
   background-color: #e8e8e8;
 }
 
-
+.error{
+  font-size: 12px;
+  font-weight:500;
+  color: rgb(122,12,22);
+  margin-top: -12px;
+  margin-bottom: -10px;
+  margin-left: 10px;
+}

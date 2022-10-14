@@ -1,11 +1,20 @@
 export class User {
   id_user;
+  nom ="";
   age = 0;
   sexe = 0;
   poids = 0;
   taille = 0;
-  constructor(nom) {
-    this.nom = nom;
+
+
+  constructor(id_user,mail, nom, age, sexe, poids, taille) {
+    this.setId(id_user);
+    this.setEmail(mail);
+    this.setNom(nom);
+    this.setAge(age);
+    this.setSexe(sexe);
+    this.setPoids(poids);
+    this.setTaille(taille);
     this.id_role = "n5Gejr1pLJrcMagawHqp";
     //+ collections Questionnaires
   }
@@ -13,6 +22,9 @@ export class User {
 
   setId(id) {
     this.id_user = id;
+  }
+  setEmail(mail) {
+    this.email = mail;
   }
 
   setNom(nom) {
@@ -37,7 +49,7 @@ export class User {
 
   toString() {
     return (
-      this.nom +
+      this.email +
       ", " +
       this.sexe +
       ", " +
@@ -55,6 +67,7 @@ export const userConverter = {
   toFirestore: (user) => {
     return {
       nom: user.nom,
+      email: user.email,
       id_role: user.id_role,
       age: user.age,
       sexe: user.sexe,
@@ -64,6 +77,6 @@ export const userConverter = {
   },
   fromFirestore: (snapshot, options) => {
     const data = snapshot.data(options);
-    return new User({...data}); 
+    return new User(snapshot.id,data.email,data.nom, data.age, data.sexe, data.poids, data.taille); 
   },
 };

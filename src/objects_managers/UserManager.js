@@ -28,35 +28,41 @@ export async function getUserById(userId) {
     const user = docSnap.data();
     return user;
   } else {
-    console.log("No such document!");
+    console.log("No such User document!");
     return null;
   }
 }
 
 //Get one user by id
 export async function getUserByEmail(userEmail) {
-  const q = query(refUser, where("nom", "==", userEmail));
+  const q = query(refUser, where("email", "==", userEmail));
 let user;
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     console.log(doc.id, " => ", doc.data());
     user = doc.data();
   });
+  if(user ===null){
+    console.log("No such User document!");
+    return null;
+  }
   return user;
 }
 
 //Update information for the user
-export async function updateUserData(userId,age,weight,sex,height){
-  const ref = doc(refUser,userId);
+export async function updateUserData(user){
+  const ref = doc(refUser, user.id_user);
   await updateDoc(ref,{
-    age: age,
-    poids: weight,
-    sexe: sex,
-    taille: height,
+    nom: user.nom,
+    email: user.mail,
+    age: user.age,
+    poids: user.weight,
+    sexe: user.sex, //
+    taille: user.height,
   });
 }
 
-console.log(updateUserData('MPfBRXNkgmhJw24HihqsJILGVNS2',29,190,1,210));
+//console.log(updateUserData('MPfBRXNkgmhJw24HihqsJILGVNS2',29,190,1,210));
 
 
 //Delete a User Document

@@ -1,8 +1,9 @@
 
 export class Role {
     id_role;
-    constructor (nom_role, id_role) {
+    constructor ( id_role,nom_role) {
         this.nom_role = nom_role;
+        this.id_role= id_role;
     }
 
     setIdRole(id) {
@@ -23,6 +24,6 @@ export const roleConverter = {
     },
     fromFirestore: (snapshot, options) => {
         const data = snapshot.data(options);
-        return new Role({...data});
+        return new Role(snapshot.id, data.nom_role);
     }
 };
