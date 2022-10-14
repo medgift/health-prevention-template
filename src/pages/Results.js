@@ -8,15 +8,15 @@ function Results() {
   return (
     <>
       <Navbar />
-      <div className="container quiz1">
+      <div className="container result1">
         <img className="my_avatar" src={my_avatar} />
       </div>
 
-      <div className="container quiz2">
+      <div className="container result2">
         <img className="my_avatar" src={my_avatar} />
       </div>
 
-      <div className="container quiz3">
+      <div className="container result3">
         <img className="my_avatar" src={my_avatar} />
       </div>
     </>

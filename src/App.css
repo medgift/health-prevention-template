@@ -106,7 +106,6 @@
 
 .btn_switch, .btn_logout{
   margin-right: 10px;
-  margin-top: 3px;
   float: right;
 }
 
@@ -177,7 +176,7 @@ h1{
 
 .email_input,
 .password_input{
-  font-family: "Lexend Deca";
+    font-family: "Lexend Deca";
   font-size: 18px;
   width : 300px;
   height: 25px;

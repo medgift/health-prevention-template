@@ -70,11 +70,9 @@ export class NavbarNotLogged extends React.Component {
             <img className="logo_app" src={logo} />
           </Link>
           <h1 className="app_title">HealthApp Prevention</h1>
-
           <ul>
-            <li>
-              <button
-                className="btn"
+          <button style={{marginTop:"5px"}}
+                className="btn btn_switch"
                 title="Switch Theme"
                 onClick={this.context.toggleTheme}
               >
@@ -84,7 +82,6 @@ export class NavbarNotLogged extends React.Component {
                   <img className="logo_theme" src={day} />
                 )}
               </button>
-            </li>
           </ul>
         </div>
       </Container>
