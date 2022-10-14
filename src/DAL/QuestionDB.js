@@ -11,6 +11,11 @@ class QuestionDB {
         const docSnap = await getDocs(q);
         return docSnap.docs.map(d => d.data());
     }
+
+    async getAllQuestions() {
+        const questions = await getDocs(questionRef);
+        return questions.docs.map(q => q.data());
+    }
 }
 
 export {QuestionDB};
