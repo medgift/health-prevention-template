@@ -7,6 +7,8 @@ import avatar4 from './img/avatar4.png';
 import avatar5 from './img/avatar5.png';
 import avatar6 from './img/avatar6.png';
 import logo from './img/logo.png';
+import {Link} from 'react-router-dom'
+import  {NavbarNotLogged}  from "./Navbar";
 import background from './img/background.png';
 
 function Registration() {
@@ -23,8 +25,7 @@ function Registration() {
 
     return (
         <Container2>
-            <img className="logo" src={logo}></img>
-            <h2 className="app_title">HealthApp</h2>
+            <NavbarNotLogged/>
             <div className="container left">
                 <h1 className="choose_avatar">Enter your personnal information</h1>
                 <form>
@@ -111,7 +112,9 @@ function Registration() {
                         <img className="avatar1" src={avatar6} onClick={handleClick}></img>
                     </div>
                 </div>
+                <Link to="/">
                 <button className="btn">Submit</button>
+                </Link>
             </div>
         </Container2>
     )
@@ -137,7 +140,6 @@ body{
 .left {
     width: 50%;
     left: 0;
-    background-color: #eafaf1 ;
 
 }
 
@@ -155,7 +157,11 @@ body{
     font-weight:bold;
 }
 
-.nb_input{
+.logo{
+    margin-top:10px
+}
+
+/* .nb_input{
     text-align:center;
     width: 50px;
 }
@@ -163,7 +169,7 @@ body{
 .text_input{
     align-items:center;
     width: 200px;
-}
+} */
 
 select{
     position: relative;
