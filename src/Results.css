@@ -1,0 +1,37 @@
+.results-div{
+    border-radius: 25px;
+    padding: 20px;
+    margin: 100px 50px 50px 50px;
+    width: 300px;
+    height: 400px;
+    font-size: 12px;
+    align-content: center;
+    text-align: center;
+    border: 2px solid black; 
+  }
+  
+  .results-title{
+    font-size: 24px;
+    padding: 0px 0px 20px 0px;
+  }
+  
+  .progress{
+    margin: 10px;
+  }
+  
+  .result-line{
+    display:inline-flex;
+  }
+  
+  .select-habits{
+    width: 120px;
+    margin: 10px;
+  }
+  
+  .select-div{
+    width: 100%;
+    display: inline-block;
+    align-items: flex-end;
+    text-align: end;
+    align-self: flex-end;
+  }
