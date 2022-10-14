@@ -13,6 +13,19 @@
   }
 }
 
+.formInput {
+  padding: 1.5vh;
+  font-size: large;
+  align-content: center;
+  margin: 1.5vh;
+}
+
+.centered_div {
+  justify-content: center;
+  display: flex;
+  margin: auto;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
