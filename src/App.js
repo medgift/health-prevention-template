@@ -50,7 +50,7 @@ export default function App() {
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/logout" element={<Logout/>}/>
                     <Route path="/" element={<QuestionList/>}></Route>
-                    <Route path="/admin" element={<NormalValue></NormalValue>}></Route>
+                    <Route path="/admin" element={<NormalValue currentUser={{currentUser}}></NormalValue>}></Route>
                 </Routes>
             </header>
         </div>

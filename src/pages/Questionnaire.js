@@ -84,14 +84,14 @@ class Question extends React.Component {
 export default function QuestionList() {
     const QUESTIONNAIRE_NO = 1;
     let [questions, setQuestions] = useState([]);
-    useEffect(() => {
-        async function loadQuestions() {
-            let questions = await QuestionDB.prototype.getQuestionsByQuestionnaire(QUESTIONNAIRE_NO);
-            setQuestions(prevState => [...prevState, ...questions]);
-        }
+        useEffect(() => {
+            async function loadQuestions() {
+                let questions = await QuestionDB.prototype.getQuestionsByQuestionnaire(QUESTIONNAIRE_NO);
+                setQuestions(prevState => [...prevState, ...questions]);
+            }
 
-        loadQuestions();
-    }, []);
+            loadQuestions();
+        }, []);
 
 
 //----------------------------------------------
