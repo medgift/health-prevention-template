@@ -79,7 +79,10 @@ export default function Register() {
                        required
                 />
                 <br/>
-                <button type="submit">Register</button>
+                <button
+                    type="submit"
+                    className="formButton"
+                >Register</button>
             </form>
         </div>
     );

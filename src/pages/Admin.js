@@ -19,14 +19,22 @@ export default function NormalValueList(currentUser) {
 
     //fill normalValues array each time the questions are reFetched
     useEffect(() => {
-        normalValues = questions.map(qu => qu.normalValue);
+        const q = [...questions];
+        normalValues = q.map(qu => qu.normalValue);
     }, [questions]);
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        console.log(normalValues);
-        normalValues.map((n, i) => console.log("Question " + (i + 1) + "\t" + n));
-        //access db
+        const q = [...questions]; //do not use state value directly
+        let i = 0;
+        for (const n of normalValues) {
+            if (n !== q[i].normalValue) {
+                //change was made, update in db
+                await QuestionDB.prototype.setNormalValue((i+1), n);
+            }
+            i++;
+        }
+        window.location.reload(); //reload page to re-fetch normal values
     }
 
     return (
@@ -51,7 +59,7 @@ export default function NormalValueList(currentUser) {
             <form className="normalValueForm" onSubmit={handleFormSubmit}>
                 <button
                     type="submit"
-                    className="formButton"
+                    className="formButton rightButton"
                 >Confirm
                 </button>
                 <br/>
