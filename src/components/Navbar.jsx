@@ -24,7 +24,7 @@ export default function Navbar() {
                         <Link className="links" to="/login" style={{textDecoration: 'none'}}>Login</Link>
                     </li>
                     <li>
-                        <Link className="links" to="/home" style={{textDecoration: 'none'}}>Home</Link>
+                        <Link className="links" to="/" style={{textDecoration: 'none'}}>Home</Link>
                     </li>
                 </ul>
             </div>
@@ -69,14 +69,16 @@ const Container = styled.div`
     float: right;
     color: #8DC6FF;
     padding: 10px;
+    border: 2px solid transparent;
     font-weight: bold;
   }
   
   .links:hover {
-    color: white;
-    padding: 10px;
-    background: #8DC6FF;
-    text-underline: #8DC6FF;
+    background: transparent;
+    border: 2px solid #1167b1;
+    color: #1167b1;
+    text-decoration: none;
+    border-radius: 8px;
   }
   
   

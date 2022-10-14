@@ -36,3 +36,92 @@
         transform: rotate(360deg);
     }
 }
+
+/*******************************************
+                 Home page
+/******************************************/
+
+.mainDivHomePage {
+    margin-top: 100px;
+    float: left;
+    width: 50%;
+    border-radius: 20%;
+}
+
+.imageDivHomePage {
+    margin-top: 100px;
+    float: right;
+    width: 50%;
+}
+
+.titleHomePage1 {
+    color: #1167b1;
+}
+
+.titleHomePage3 {
+    color: #8DC6FF;
+}
+
+.linkSurvey {
+    background: #1167b1;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.linkSurvey:hover {
+    background: transparent;
+    border: 2px solid #1167b1;
+    color: #1167b1;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+
+/*******************************************
+    User form for login and register pages
+/******************************************/
+.divUserFormLogin {
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 5%;
+    background-color: white;
+    border-radius: 10px;
+
+}
+
+.emailInputLogin {
+    padding: 2%;
+    margin: 2%;
+    border: transparent;
+}
+
+.passwordInputLogin {
+    padding: 2%;
+    margin: 2%;
+    border: transparent;
+}
+
+.buttonSubmitLogin {
+    margin-top: 15%;
+    color: white;
+    background-color: #1167b1;
+    border-radius: 10px;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+/*******************************************
+                Login page
+/******************************************/
+.mainDivLogin {
+    float: right;
+}
+
+.mainTitleLogin {
+    color: white;
+}
