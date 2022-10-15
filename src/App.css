@@ -12,6 +12,61 @@
     }
 }
 
+.padded_div {
+    min-height: 50vh;
+    margin: auto;
+    border-radius: 15px;
+    padding: 3vh;
+    border: 2px solid lightgray;
+    box-shadow: 3px 3px #888888;
+}
+
+.register {
+    max-width: 60%;
+    min-width: 50%;
+}
+
+.login {
+    min-height: 40vh;
+    width: 100%;
+}
+
+.avatar {
+    min-width: 40%;
+}
+
+.questionDiv {
+    display: flex;
+    align-content: flex-start;
+}
+
+.question {
+    max-width: 40%;
+    min-height: 0px;
+    margin-bottom: 5vh;
+}
+
+.questionTitle {
+    min-width: 50%;
+    max-width: 50%;
+    white-space: -o-pre-wrap;
+    margin-right: 5vh;
+}
+
+.questionTitleDiv {
+    display: inline-flex;
+    margin-left: 0px;
+    width: 60%;
+    align-content: flex-start;
+}
+
+.inputDiv {
+    display: flex;
+    width: 40%;
+    align-self: flex-end;
+    align-content: flex-end;
+}
+
 .formInput {
     padding: 1.5vh;
     font-size: large;
@@ -45,23 +100,22 @@
 
 .formButton {
     margin-top: 1vh;
-    background: #61dafb;
+    background: #1A73E8;
     box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
     border: 1px solid transparent;
-    border-radius: 20px;
+    border-radius: 5px;
     padding: 1vh;
-    color: black;
+    color: white;
     transition: all 0.2s ease-in-out;
     text-align: center;
-    width: auto;
     font-size: large;
-    width: 100vh;
-    max-width: 11%;
+    width: 11vh;
 }
 
 .rightButton {
     float: right;
+    margin-right: 20%;
 }
 
 .centered_div {
@@ -71,15 +125,14 @@
 }
 
 .App-header {
-
-  background-color: #282c34;
+  background-color: white;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: black;
 
 }
 .App-header-align{
@@ -87,7 +140,7 @@
 }
 
 .App-link {
-    color: #61dafb;
+    color: #1A73E8;
 }
 
 @keyframes App-logo-spin {

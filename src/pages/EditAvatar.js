@@ -58,7 +58,7 @@ export default class EditAvatar extends React.Component {
     render() {
 
         return (
-            <div>
+            <div className="padded_div avatar">
                 <h1>Edit your Avatar</h1>
                 <NiceAvatar style={{width: '10rem', height: '10rem'}} {...this.state.myConfig} />
                 <br/>

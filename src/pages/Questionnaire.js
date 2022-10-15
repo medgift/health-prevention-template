@@ -128,16 +128,19 @@ class Question extends React.Component{
                         />
                         <span className="slider round"></span>
                     </label>
-                    <br/>
-                    {this.state.answer ?(this.props.choices[1]):(this.props.choices[0])}
+                    &nbsp;{this.state.answer ?(this.props.choices[1]):(this.props.choices[0])}
                 </>
             );
         }
 
         return (
-            <div>
-                <h3>{this.props.questionNO}. {this.props.text}</h3>
+            <div className="questionDiv">
+                <div className="questionTitleDiv">
+                <h4 className="questionTitle">{this.props.questionNO}. {this.props.text}</h4>
+                </div>
+                <div className="inputDiv">
                 {formattedQuestion}
+                </div>
                 <br/>
                 <br/>
             </div>
@@ -209,7 +212,7 @@ export default function QuestionList() {
             <h1>Questionnaire {QUESTIONNAIRE_NO}</h1>
             {questions.map((question) => (
                 <div key={question.questionNO}>
-                    <div>
+                    <div className="padded_div question">
                         <Question {...question}/>
                     </div>
                 </div>
