@@ -41,7 +41,7 @@
 }
 
 .question {
-    max-width: 40%;
+    max-width: 35%;
     min-height: 0px;
     margin-bottom: 5vh;
 }
@@ -55,14 +55,14 @@
 
 .questionTitleDiv {
     display: inline-flex;
-    margin-left: 0px;
-    width: 60%;
+    margin: 0;
+    width: 100%;
     align-content: flex-start;
 }
 
 .inputDiv {
     display: flex;
-    width: 40%;
+    width: 37%;
     align-self: flex-end;
     align-content: flex-end;
 }
