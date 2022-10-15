@@ -218,8 +218,8 @@ export default function QuestionList() {
                 </div>
             ))}
             <button type="submit"
-                    className="formButton rightButton"
-                    onClick={HandleFormSubmit}>Confirmer</button>
+                    className="formButton rightButton questionButton"
+                    onClick={HandleFormSubmit}>Confirm</button>
             <br/>
             <br/>
         </div>
