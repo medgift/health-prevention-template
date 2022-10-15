@@ -56,9 +56,12 @@
     text-align: center;
     width: auto;
     font-size: large;
-    float: right;
     width: 100vh;
     max-width: 11%;
+}
+
+.rightButton {
+    float: right;
 }
 
 .centered_div {

@@ -1,5 +1,5 @@
-import {addDoc, getDocs, query, where} from "firebase/firestore";
-import {questionRef} from "../initFirebase";
+import {addDoc, doc, getDocs, query, updateDoc, where} from "firebase/firestore";
+import {db, questionRef} from "../initFirebase";
 
 class QuestionDB {
     async addQuestion(question) {
@@ -18,6 +18,26 @@ class QuestionDB {
         const q =questions.docs.map(q => q.data());
         return q.sort((a, b) => a.questionNO - b.questionNO);
     }
+
+    async setNormalValue(questionNO, normalValue) {
+        let questionId = await this.findQuestionId(questionNO);
+        const d = doc(db, "Question",questionId);
+        await updateDoc(d, {
+            NormalValue: normalValue
+        });
+    }
+
+    async findQuestionId(questionNO) {
+        const questionQuery = query(questionRef, where("QuestionNO", "==", questionNO));
+        const snapshot = await getDocs(questionQuery);
+        let questionId;
+        snapshot.forEach((d) => {
+            questionId = d.id;
+        });
+        return questionId;
+    }
+
+
 }
 
 export {QuestionDB};

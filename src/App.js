@@ -5,7 +5,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import QuestionList from "./pages/Questionnaire";
-import NormalValue from "./pages/Admin";
+import NormalValueList from "./pages/Admin";
 
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
@@ -49,14 +49,13 @@ export default function App() {
             <header className="App-header">
                 <header className="App-header-align">
                     <Routes>
-                     <Route path="/home" element={<Home currentUser={currentUser}/>}/>
-                    <Route path="/register" element={<Register/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/logout" element={<Logout/>}/>
-                    <Route path="/" element={<QuestionList/>}></Route>
-                    <Route path="/admin" element={<NormalValue currentUser={{currentUser}}></NormalValue>}></Route>
-                    </Routes>
-                    <QuestionList/>
+                        <Route path="/home" element={<Home currentUser={currentUser}/>}/>
+                        <Route path="/register" element={<Register/>}/>
+                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/logout" element={<Logout/>}/>
+                        <Route path="/" element={<QuestionList/>}></Route>
+                        <Route path="/admin" element={<NormalValueList currentUser={currentUser}></NormalValueList>}/>
+                        </Routes>
                 </header>
                 <Routes>
                     <Route path="/editAvatar" element={<EditAvatar/>}/>
