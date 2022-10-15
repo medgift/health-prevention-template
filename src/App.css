@@ -20,7 +20,7 @@
 }
 
 .normalValueForm {
-    diplay: flex;
+    display: flex;
     align-content: flex-end;
 }
 
@@ -159,4 +159,23 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+/* select CSS */
+.select {
+    width: 20%;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    font-size: 15px;
+}
+.grid{
+    display: grid;
+    grid-template-columns: 200px auto;
+    grid-gap: 12px;
+    grid-template-rows: auto;
+}
+.grid-item{
+
 }
