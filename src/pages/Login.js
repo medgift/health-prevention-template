@@ -37,9 +37,9 @@ export default function Login() {
 
 
   return (
-    <div>
-      <h1>Login</h1>
-      <UserForm handleSubmit={handleLogin} submitButtonLabel="Login" />
+    <div className="padded_div login">
+      <h2>Sign in</h2>
+      <UserForm handleSubmit={handleLogin} submitButtonLabel="Confirm" />
     </div>
   );
 }
