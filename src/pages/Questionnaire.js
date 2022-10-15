@@ -95,7 +95,6 @@ class Question extends React.Component{
                            step="1"
                            defaultValue={this.props.normalValue}
                            onChange={this.HandleInputChanges}/>
-                    <br/>
                     {this.props.choices[this.state.answer]}
                 </>
             );
@@ -112,8 +111,7 @@ class Question extends React.Component{
                            step="1"
                            defaultValue={this.props.normalValue}
                            onChange={this.HandleInputChanges}/>
-                    <br/>
-                    {this.state.answer}
+                    &nbsp;{this.state.answer}
                 </>
             );
         }
@@ -136,7 +134,7 @@ class Question extends React.Component{
         return (
             <div className="questionDiv">
                 <div className="questionTitleDiv">
-                <h4 className="questionTitle">{this.props.questionNO}. {this.props.text}</h4>
+                <p className="questionTitle">{this.props.questionNO}. {this.props.text}</p>
                 </div>
                 <div className="inputDiv">
                 {formattedQuestion}
@@ -209,7 +207,7 @@ export default function QuestionList() {
     //Create div for questions and submit button
     return (
         <div>
-            <h1>Questionnaire {QUESTIONNAIRE_NO}</h1>
+            <h2>Questionnaire {QUESTIONNAIRE_NO}</h2>
             {questions.map((question) => (
                 <div key={question.questionNO}>
                     <div className="padded_div question">
