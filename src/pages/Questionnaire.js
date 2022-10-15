@@ -95,7 +95,9 @@ class Question extends React.Component{
                            step="1"
                            defaultValue={this.props.normalValue}
                            onChange={this.HandleInputChanges}/>
+                    <p>
                     {this.props.choices[this.state.answer]}
+                    </p>
                 </>
             );
         }

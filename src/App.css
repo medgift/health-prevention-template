@@ -48,9 +48,9 @@
 
 .questionTitle {
     min-width: 50%;
-    max-width: 50%;
+    max-width: 100%;
     white-space: -o-pre-wrap;
-    margin-right: 5vh;
+    margin-right: 2vh;
 }
 
 .questionTitleDiv {
