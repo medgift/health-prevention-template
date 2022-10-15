@@ -110,11 +110,14 @@
     transition: all 0.2s ease-in-out;
     text-align: center;
     font-size: large;
-    width: 11vh;
+    width: 12vh;
 }
 
 .rightButton {
     float: right;
+}
+
+.questionButton {
     margin-right: 20%;
 }
 
