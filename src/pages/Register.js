@@ -40,7 +40,7 @@ export default function Register() {
     });
 
     return (
-        <div className="padded_div register">
+        <div className="padded_div register centered_div">
             <h3>Create a patient account to save your data !</h3>
             <form
                 onSubmit={(e) => {
