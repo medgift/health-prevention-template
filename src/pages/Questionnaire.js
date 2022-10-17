@@ -95,9 +95,7 @@ class Question extends React.Component{
                            step="1"
                            defaultValue={this.props.normalValue}
                            onChange={this.HandleInputChanges}/>
-                    <p>
                     {this.props.choices[this.state.answer]}
-                    </p>
                 </>
             );
         }
@@ -150,13 +148,13 @@ class Question extends React.Component{
 
 //To manage questions
 export default function QuestionList() {
-    const QUESTIONNAIRE_NO = 1;
+    const QUESTIONNAIRE_NO = 3;
     let [questions, setQuestions] = useState([]);
     useEffect(() => {
         async function loadQuestions() {
             //--------------------------------------------Changé getQuestionsByQuestionnaire pour GetAllQuestions, afin d'avoir toutes les variables
             //TODO: à voir pour faire des routes pour les différentes parties du questionnaire
-            let questions = await QuestionDB.prototype.getAllQuestions();
+            let questions = await QuestionDB.prototype.getQuestionsByQuestionnaire(QUESTIONNAIRE_NO);
             setQuestions(prevState => [...prevState, ...questions]);
 
             //Get the default values of the questions and set them in the Variables class
@@ -209,7 +207,8 @@ export default function QuestionList() {
     //Create div for questions and submit button
     return (
         <div>
-            <h2>Questionnaire {QUESTIONNAIRE_NO}</h2>
+        <div id="questionnaire" className="padded_div">
+            <h2 id="questionnaireTitle">Questionnaire {QUESTIONNAIRE_NO}</h2>
             {questions.map((question) => (
                 <div key={question.questionNO}>
                     <div className="padded_div question">
@@ -217,11 +216,10 @@ export default function QuestionList() {
                     </div>
                 </div>
             ))}
-            <button type="submit"
-                    className="formButton rightButton questionButton"
-                    onClick={HandleFormSubmit}>Confirm</button>
-            <br/>
-            <br/>
+        </div>
+    <button type="submit"
+            className="formButton rightButton questionButton"
+            onClick={HandleFormSubmit}>Confirm</button>
         </div>
     );
 }

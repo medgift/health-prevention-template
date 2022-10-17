@@ -32,25 +32,42 @@
 }
 
 .avatar {
-    min-width: 40%;
+    margin-top: 2%;
+    margin-bottom: 5%;
+    padding-top: 0px;
+    min-width: 50%;
+}
+
+#questionnaire {
+    margin-top: 2%;
+    display: flex;
+    width: 45vw;
+    align-content: flex-start !important;
+    align-items: initial !important;
+    flex-direction: column;
+    margin-left: 0px;
+    box-shadow: 0px 0px ;
 }
 
 .questionDiv {
-    display: flex;
-    align-content: flex-start;
+    display: block;
 }
 
 .question {
-    max-width: 35%;
+    border: 0;
+    padding: 0px;
+    min-width: 70vh;
+    box-shadow: 0px 0px;
+    max-width: 50%;
+    margin-left: 0px;
+    text-align: left;
     min-height: 0px;
-    margin-bottom: 5vh;
 }
 
 .questionTitle {
     min-width: 50%;
     max-width: 100%;
-    white-space: -o-pre-wrap;
-    margin-right: 2vh;
+    margin-bottom: 2vh;
 }
 
 .questionTitleDiv {
@@ -62,7 +79,7 @@
 
 .inputDiv {
     display: flex;
-    width: 37%;
+    width: 100%;
     align-self: flex-end;
     align-content: flex-end;
 }
@@ -118,7 +135,13 @@
 }
 
 .questionButton {
-    margin-right: 20%;
+   margin-right: 18%;
+    margin-top: 2vh;
+    margin-bottom: 5%;
+}
+
+#questionnaireTitle {
+    text-align: left;
 }
 
 .centered_div {
