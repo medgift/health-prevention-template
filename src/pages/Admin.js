@@ -39,25 +39,6 @@ export default function NormalValueList(currentUser) {
 
     return (
             <div>
-            <br/>
-            <div className="padded_div">
-                <div>
-                    {!currentUser ? (
-                        <>
-                            <Link to="/register" className="App-link">
-                                Register
-                            </Link>
-                            <span> / </span>
-                            <Link to="/login" className="App-link">
-                                Login
-                            </Link>
-                        </>
-                    ) : (
-                        <Link to="/logout" className="App-link">
-                            Logout
-                        </Link>
-                    )}
-                </div>
             <h1>Admin page, act wisely ...</h1>
             <form className="normalValueForm" onSubmit={handleFormSubmit}>
                 <button
@@ -74,7 +55,7 @@ export default function NormalValueList(currentUser) {
                 ))}
             </form>
             </div>
-            </div>
+
     );
 }
 
