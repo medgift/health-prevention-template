@@ -148,13 +148,13 @@ class Question extends React.Component{
 
 //To manage questions
 export default function QuestionList() {
-    const QUESTIONNAIRE_NO = 3;
+    const QUESTIONNAIRE_NO = 2;
     let [questions, setQuestions] = useState([]);
     useEffect(() => {
         async function loadQuestions() {
             //--------------------------------------------Changé getQuestionsByQuestionnaire pour GetAllQuestions, afin d'avoir toutes les variables
             //TODO: à voir pour faire des routes pour les différentes parties du questionnaire
-            let questions = await QuestionDB.prototype.getQuestionsByQuestionnaire(QUESTIONNAIRE_NO);
+            let questions = await QuestionDB.prototype.getAllQuestions();
             setQuestions(prevState => [...prevState, ...questions]);
 
             //Get the default values of the questions and set them in the Variables class
@@ -207,7 +207,7 @@ export default function QuestionList() {
     //Create div for questions and submit button
     return (
         <div>
-        <div id="questionnaire" className="padded_div">
+        <div id="questionnaire">
             <h2 id="questionnaireTitle">Questionnaire {QUESTIONNAIRE_NO}</h2>
             {questions.map((question) => (
                 <div key={question.questionNO}>
