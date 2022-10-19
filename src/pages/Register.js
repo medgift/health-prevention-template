@@ -40,8 +40,8 @@ export default function Register() {
     });
 
     return (
-        <div>
-            <h1>Create a patient account to save your data !</h1>
+        <div className="padded_div register centered_div">
+            <h3>Create a patient account to save your data !</h3>
             <form
                 onSubmit={(e) => {
                     handleRegister(e, email, password, firstName, lastName);
