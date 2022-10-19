@@ -1,9 +1,10 @@
 class PatientDTO {
-    constructor(firstName, lastName, doctorId, responseIds) {
+    constructor(firstName, lastName, doctorId, responseIds, avatarConfig) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.doctorId = doctorId;
         this.responseIds = responseIds;
+        this.avatarConfig = avatarConfig;
     }
 
     toString() {
@@ -14,7 +15,8 @@ class PatientDTO {
 const patientConverter = {
     toFirestore(patient) {
         return {FirstName: patient.firstName, LastName: patient.lastName,
-                DoctorId: patient.doctorId, ResponseIds: patient.responseIds
+                DoctorId: patient.doctorId, ResponseIds: patient.responseIds,
+                AvatarConfig: patient.avatarConfig
         };
     },
     fromFirestore(
@@ -22,7 +24,7 @@ const patientConverter = {
         options
     ) {
         const data = snapshot.data(options);
-        return new PatientDTO(data.FirstName, data.LastName, data.DoctorId, data.ResponseIds);
+        return new PatientDTO(data.FirstName, data.LastName, data.DoctorId, data.ResponseIds, data.AvatarConfig);
     }
 };
 export {patientConverter};
