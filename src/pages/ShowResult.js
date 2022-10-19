@@ -1,6 +1,6 @@
 import React from "react";
 import Algorithm from "./Algorithm";
-import Questionary from "./Questionary"
+import Questionnary from "./Questionnary"
 import {doc, setDoc} from "firebase/firestore";
 import {database} from "../initFirebase";
 
@@ -9,11 +9,11 @@ export default class ShowResult extends React.Component {
     myAlgo;
     userAnswer;
 
-    constructor(props,questionary) {
+    constructor(props,questionnary) {
         super(props);
         this.handlClick = this.handlClick.bind(this);
         this.myAlgo = new Algorithm(this.props,0,70,0,110,3.5,1.9,1,0,28,3,3,2,0,5,0,0,1)
-        this.userAnswer = new Questionary();
+        this.userAnswer = new Questionnary();
 
         this.userAnswer.updatePersonalData(0,70,180,170,0,1,1,0,1,0);
         this.userAnswer.updateFamilyData(0,0);
