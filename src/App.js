@@ -14,7 +14,38 @@ import EditAvatar from "./pages/EditAvatar";
 import {db} from "./initFirebase";
 import {useEffect, useState, Component} from "react";
 import Logout from "./pages/Logout";
-import * as PropTypes from "prop-types";
+
+class Navigate extends React.Component {
+
+    render(){
+
+        let LoginLogout = null;
+        console.log("Navigate: " + this.props.currentUser);
+        if (this.props.currentUser !== undefined && this.props.currentUser !== null) {
+            LoginLogout = <a href="/logout">Logout</a>
+        }else {
+            LoginLogout = <a href="/login">Login</a>
+        }
+
+        return (
+            <nav className="navbar navbar-default">
+                <div className="container-fluid">
+                    <div className="navbar-header">
+                        <a className="navbar-brand" href="/home">Health Prevention 6</a>
+                    </div>
+                    <ul className="nav navbar-nav">
+                        <li className="active"><a href="/home">Home</a></li>
+                        <li><a href="/">Questionnaire</a></li>
+                        <li><a href="/register">Register</a></li>
+                        <li>{LoginLogout}</li>
+                    </ul>
+                </div>
+            </nav>
+        )
+    };
+}
+
+
 
 export default function App() {
     /* Current user state */
@@ -46,14 +77,16 @@ export default function App() {
     //Separation of editAvatar Route due to css display issues (text-align: center;)
     return (
         <div className="App">
+            <Navigate currentUser={currentUser}/>
             <header className="App-header">
                 <header className="App-header-align">
+
                     <Routes>
                         <Route path="/home" element={<Home currentUser={currentUser}/>}/>
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/logout" element={<Logout/>}/>
-                        <Route path="/" element={<QuestionList/>}/>
+                        <Route path="/" element={<QuestionList currentUser={currentUser}/>}></Route>
                         <Route path="/admin" element={<NormalValueList currentUser={currentUser}></NormalValueList>}/>
                         </Routes>
                 </header>

@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {QuestionDB} from "../DAL/QuestionDB";
 import {Variables} from "../components/Variables";
+import {ResponseDB} from "../DAL/ResponseDB";
+import {ResponseDTO} from "../DTO/ResponseDTO";
 
 
 // Manages a single question, its input and values
@@ -147,7 +149,7 @@ class Question extends React.Component{
 };
 
 //To manage questions
-export default function QuestionList() {
+export default function QuestionList({currentUser}) {
     const QUESTIONNAIRE_NO = 2;
     let [questions, setQuestions] = useState([]);
     useEffect(() => {
@@ -156,43 +158,10 @@ export default function QuestionList() {
             //TODO: à voir pour faire des routes pour les différentes parties du questionnaire
             let questions = await QuestionDB.prototype.getAllQuestions();
             setQuestions(prevState => [...prevState, ...questions]);
-
-            //Get the default values of the questions and set them in the Variables class
-            questions.forEach(question => {
-                switch (question.variableName) {
-                case "Poids": Variables.prototype.Poids = question.normalValue;
-                    break;
-                case "Alcool": Variables.prototype.Alcool = question.normalValue;
-                    break;
-                case "Glyc": Variables.prototype.Glyc = question.normalValue;
-                    break;
-                case "Alim": Variables.prototype.Alim = question.normalValue;
-                    break;
-                case "Sport": Variables.prototype.Sport = question.normalValue;
-                    break;
-                case "Inf": Variables.prototype.Inf = question.normalValue;
-                    break;
-                case "Gender" : Variables.prototype.Gender = question.normalValue;
-                    break;
-                case "DIAB" : Variables.prototype.DIAB = question.normalValue;
-                    break;
-                case "Afcancer" : Variables.prototype.Afcancer = question.normalValue;
-                    break;
-                case "Avc" : Variables.prototype.Avc = question.normalValue;
-                    break;
-                case "Age" : Variables.prototype.Age = question.normalValue;
-                    break;
-                case "Afinf" : Variables.prototype.Afinf = question.normalValue;
-                    break;
-                case "Syst" :Variables.prototype.Syst = question.normalValue;
-                    break;
-                case "Fume" : Variables.prototype.Fume = question.normalValue;
-                    break;
-                case "Taille" : Variables.prototype.Taille = question.normalValue;
-                    break;
-            }});
+            setDefaultValues(questions);
         }
         loadQuestions();
+        setDefaultValues(questions)
     }, []);
 
 
@@ -200,8 +169,12 @@ export default function QuestionList() {
     //Maybe change it to go to next couple of questions-----------------------------------------------------
     let HandleFormSubmit = (event) => {
         event.preventDefault();
-        console.log("Form Submitted");
-        console.log(...questions);
+        async function postResponses() {
+            let responses = {...Variables.prototype};
+            let resDTO = new ResponseDTO(Date.now(), currentUser.uid, responses);
+            await ResponseDB.prototype.addResponses(resDTO);
+        }
+        postResponses();
     };
 
     //Create div for questions and submit button
@@ -222,4 +195,41 @@ export default function QuestionList() {
             onClick={HandleFormSubmit}>Confirm</button>
         </div>
     );
+}
+
+function setDefaultValues(questions) {
+//Get the default values of the questions and set them in the Variables class
+    questions.forEach(question => {
+        switch (question.variableName) {
+            case "Poids": Variables.prototype.Poids = question.normalValue;
+                break;
+            case "Alcool": Variables.prototype.Alcool = question.normalValue;
+                break;
+            case "Glyc": Variables.prototype.Glyc = question.normalValue;
+                break;
+            case "Alim": Variables.prototype.Alim = question.normalValue;
+                break;
+            case "Sport": Variables.prototype.Sport = question.normalValue;
+                break;
+            case "Inf": Variables.prototype.Inf = question.normalValue;
+                break;
+            case "Gender" : Variables.prototype.Gender = question.normalValue;
+                break;
+            case "DIAB" : Variables.prototype.DIAB = question.normalValue;
+                break;
+            case "Afcancer" : Variables.prototype.Afcancer = question.normalValue;
+                break;
+            case "Avc" : Variables.prototype.Avc = question.normalValue;
+                break;
+            case "Age" : Variables.prototype.Age = question.normalValue;
+                break;
+            case "Afinf" : Variables.prototype.Afinf = question.normalValue;
+                break;
+            case "Syst" :Variables.prototype.Syst = question.normalValue;
+                break;
+            case "Fume" : Variables.prototype.Fume = question.normalValue;
+                break;
+            case "Taille" : Variables.prototype.Taille = question.normalValue;
+                break;
+        }});
 }
