@@ -12,6 +12,7 @@ import Logout from "./pages/Logout";
 import Info from "./pages/Info";
 import ShowResult from "./pages/ShowResult";
 import Navbar from "./components/Navbar";
+import AdminPage from "./pages/AdminPage";
 
 export default function App() {
   /* Current user state */
@@ -51,6 +52,7 @@ export default function App() {
           <Route path="/info" element={<Info />} />
           <Route path="/customization" element={<Customization/>}/>
           <Route path="/ShowResult" element={<ShowResult/>}/>
+          <Route path="/AdminPage" element={<AdminPage/>}/>
         </Routes>
     </div>
   );

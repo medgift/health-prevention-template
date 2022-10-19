@@ -1,7 +1,7 @@
 import Algorithm from "./Algorithm";
 import "firebase/firestore"
 import { database } from '../initFirebase.js';
-import { collection, getDocs, query, where } from "firebase/firestore"; 
+import { collection, getDocs, query } from "firebase/firestore"; 
 //import {doc, getDoc, setDoc} from "firebase/firestore"
 import React from "react";
 import Users from "../components/Users";
@@ -94,9 +94,7 @@ async getAllResultsFromUser(){
 
   this.resetNewData();
 
-});
-
-
+  });
 }
 
 //Method to getAllUsers
