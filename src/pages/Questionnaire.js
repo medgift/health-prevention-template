@@ -95,7 +95,6 @@ class Question extends React.Component{
                            step="1"
                            defaultValue={this.props.normalValue}
                            onChange={this.HandleInputChanges}/>
-                    <br/>
                     {this.props.choices[this.state.answer]}
                 </>
             );
@@ -112,8 +111,7 @@ class Question extends React.Component{
                            step="1"
                            defaultValue={this.props.normalValue}
                            onChange={this.HandleInputChanges}/>
-                    <br/>
-                    {this.state.answer}
+                    &nbsp;{this.state.answer}
                 </>
             );
         }
@@ -128,16 +126,19 @@ class Question extends React.Component{
                         />
                         <span className="slider round"></span>
                     </label>
-                    <br/>
-                    {this.state.answer ?(this.props.choices[1]):(this.props.choices[0])}
+                    &nbsp;{this.state.answer ?(this.props.choices[1]):(this.props.choices[0])}
                 </>
             );
         }
 
         return (
-            <div>
-                <h3>{this.props.text}</h3>
+            <div className="questionDiv">
+                <div className="questionTitleDiv">
+                <p className="questionTitle">{this.props.questionNO}. {this.props.text}</p>
+                </div>
+                <div className="inputDiv">
                 {formattedQuestion}
+                </div>
                 <br/>
                 <br/>
             </div>
@@ -147,7 +148,7 @@ class Question extends React.Component{
 
 //To manage questions
 export default function QuestionList() {
-    const QUESTIONNAIRE_NO = 1;
+    const QUESTIONNAIRE_NO = 2;
     let [questions, setQuestions] = useState([]);
     useEffect(() => {
         async function loadQuestions() {
@@ -206,15 +207,19 @@ export default function QuestionList() {
     //Create div for questions and submit button
     return (
         <div>
-            <h1>Questionnaire {QUESTIONNAIRE_NO}</h1>
+        <div id="questionnaire">
+            <h2 id="questionnaireTitle">Questionnaire {QUESTIONNAIRE_NO}</h2>
             {questions.map((question) => (
                 <div key={question.questionNO}>
-                    <div>
+                    <div className="padded_div question">
                         <Question {...question}/>
                     </div>
                 </div>
             ))}
-            <button type="submit" onClick={HandleFormSubmit}>Confirmer</button>
+        </div>
+    <button type="submit"
+            className="formButton rightButton questionButton"
+            onClick={HandleFormSubmit}>Confirm</button>
         </div>
     );
 }

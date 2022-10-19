@@ -1,4 +1,4 @@
-import {addDoc, doc, getDoc, getDocs, query, where, collection, setDoc} from "firebase/firestore";
+import {doc, getDoc, setDoc} from "firebase/firestore";
 import {db, patientRef} from "../initFirebase";
 import {patientConverter} from "../DTO/PatientDTO";
 

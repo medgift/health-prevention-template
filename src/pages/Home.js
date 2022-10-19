@@ -4,7 +4,7 @@ import {PatientDB} from "../DAL/PatientDB";
 export default function Home({ currentUser }) {
 
   return (
-    <div>
+    <div className="padded_div">
       <h1>Welcome to the Health Prevention Questionnaire</h1>
       {!currentUser ? (
         <>
