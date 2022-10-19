@@ -66,19 +66,22 @@ class Algo{
         this.age=v[1];
         this.poids=this.defaultPoids=v[2];
         this.taille=v[3];
-        this.syst=v[4];
-        this.glyc=v[5];
-        this.chol=v[6];
-        this.hdl=v[7];
-        this.diab=v[8];
-        this.infa=v[9];
-        this.avc=v[10];
-        this.afinf=v[11];
-        this.afcancer=v[12];
-        this.fume=this.defaultFume=v[13];
-        this.alim=this.defaultAlim=v[14];
-        this.sport=this.defaultSport=v[15];
-        this.alcool=this.defaultAlcool=v[16];
+        this.systBool=v[4];
+        this.syst=v[5];
+        this.glycBool=v[6];
+        this.glyc=v[7];
+        this.cholBool=v[8];
+        this.chol=v[9];
+        this.hdl=v[10];
+        this.diab=v[11];
+        this.infa=v[12];
+        this.avc=v[13];
+        this.afinf=v[14];
+        this.afcancer=v[15];
+        this.fume=this.defaultFume=v[16];
+        this.alim=this.defaultAlim=v[17];
+        this.sport=this.defaultSport=v[18];
+        this.alcool=this.defaultAlcool=v[19];
         this.BMI=this.SetBMI();
         this.infRate=0.0;
         this.diaRate=0.0;
@@ -181,7 +184,7 @@ class Algo{
     CalculateDiabete(){
         let coeff = this.sexe?coeffDiabM:coeffDiabF;
 
-        let score = (this.age<DiaAge1?1:this.age<DiaAge2?3:6) + (this.BMI<DiaBMI0?0:this.BMI<DiaBMI1?1:this.BMI<DiaBMI2?3:6) +  (this.syst>0?2:0) + (this.glyc>0?5:0) + alimAnswersDiab-this.alim + sportAnswersDiab-this.sport + coeffSuppWaist;
+        let score = (this.age<DiaAge1?1:this.age<DiaAge2?3:6) + (this.BMI<DiaBMI0?0:this.BMI<DiaBMI1?1:this.BMI<DiaBMI2?3:6) +  (this.systBool>0?2:0) + (this.glycBool>0?5:0) + alimAnswersDiab-this.alim + sportAnswersDiab-this.sport + coeffSuppWaist;
         console.log("score = " + score);
         let risk = Math.pow(score,3)*coeff[0] -  Math.pow(score,2)*coeff[1] +  score*coeff[2] - 3*Math.pow(Math.E, coeffDiabRisqueCalc);
 
