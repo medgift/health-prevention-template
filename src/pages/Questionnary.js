@@ -8,9 +8,9 @@ export default function Questionnary() {
     const [step, setStep] = useState(0);
     const [values, setValues] = useState({
         sexe: 0,
-        age: 0,
-        poids: 0,
-        taille: 0,
+        age: "",
+        poids: "",
+        taille: "",
         syst: 0,
         glyc: 0,
         chol: 0,
@@ -73,26 +73,24 @@ export default function Questionnary() {
     return (
         <div className="form">
             <div className="progress-bar">
-                <span style={{width: step === 0 ? "33%" : step === 1 ? "66%" : "100%"}}></span>
+                <span style={{width: step === 0 ? "33.3%" : step === 1 ? "66.6%" : "102%"}}></span>
             </div>
+            <header>
+                <h1>{ formTitles[step] }</h1>
+            </header>
             <div className="form-container">
-                <header>
-                    <h1>{ formTitles[step] }</h1>
-                </header>
-                <section>
-                    { displayStep(step) }
-                </section>
-                <footer>
-                    {!(step === 0) ?
-                        <button
-                            onClick={ prevStep }>Prev</button> : null
-                    }
-
-                    <button onClick={ nextStep }>
-                        {step === formTitles.length -1 ? "Submit" : "Next"}
-                    </button>
-                </footer>
+                { displayStep(step) }
             </div>
+            <footer>
+                {!(step === 0) ?
+                    <button
+                        onClick={ prevStep }>Prev</button> : <span></span>
+                }
+
+                <button
+                    onClick={ nextStep }>{step === formTitles.length -1 ? "Submit" : "Next"}
+                </button>
+            </footer>
         </div>
     );
 }

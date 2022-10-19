@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import Logout from "./pages/Logout";
 import Info from "./pages/Info";
 import ShowResult from "./pages/ShowResult";
+import Navbar from "./components/Navbar";
 
 export default function App() {
   /* Current user state */
@@ -43,6 +44,7 @@ export default function App() {
     <div className="App">
         <Routes>
           <Route path="/" element={<Home currentUser={currentUser} />} />
+          <Route path="/nav" element={<Navbar />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />

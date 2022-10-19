@@ -10,9 +10,10 @@ function Habits({ values, setValues }) {
     }
 
     return (
-        <>
+        <div>
             fume
             <input
+                class="slider"
                 id="typeinp"
                 type="range"
                 name="fume"
@@ -24,6 +25,7 @@ function Habits({ values, setValues }) {
             <br/>
             Feed
             <input
+                class="slider"
                 id="typeinp"
                 type="range"
                 name="alim"
@@ -54,7 +56,7 @@ function Habits({ values, setValues }) {
                 onChange={ handleChange }
                 step="1" />
             { values.alcool }
-        </>
+        </div>
     )
 
 }
