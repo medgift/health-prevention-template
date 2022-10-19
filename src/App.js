@@ -86,7 +86,7 @@ export default function App() {
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/logout" element={<Logout/>}/>
-                        <Route path="/" element={<QuestionList/>}></Route>
+                        <Route path="/" element={<QuestionList currentUser={currentUser}/>}></Route>
                         <Route path="/admin" element={<NormalValueList currentUser={currentUser}></NormalValueList>}/>
                         </Routes>
                 </header>

@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {QuestionDB} from "../DAL/QuestionDB";
 import {Variables} from "../components/Variables";
+import {ResponseDB} from "../DAL/ResponseDB";
+import {ResponseDTO} from "../DTO/ResponseDTO";
 
 
 // Manages a single question, its input and values
@@ -147,7 +149,7 @@ class Question extends React.Component{
 };
 
 //To manage questions
-export default function QuestionList() {
+export default function QuestionList({currentUser}) {
     const QUESTIONNAIRE_NO = 2;
     let [questions, setQuestions] = useState([]);
     useEffect(() => {
@@ -156,19 +158,23 @@ export default function QuestionList() {
             //TODO: à voir pour faire des routes pour les différentes parties du questionnaire
             let questions = await QuestionDB.prototype.getAllQuestions();
             setQuestions(prevState => [...prevState, ...questions]);
+            setDefaultValues(questions);
         }
         loadQuestions();
         setDefaultValues(questions)
     }, []);
 
 
-
     //Form Submission
     //Maybe change it to go to next couple of questions-----------------------------------------------------
     let HandleFormSubmit = (event) => {
         event.preventDefault();
-        console.log("Form Submitted");
-        console.log(...questions);
+        async function postResponses() {
+            let responses = {...Variables.prototype};
+            let resDTO = new ResponseDTO(Date.now(), currentUser.uid, responses);
+            await ResponseDB.prototype.addResponses(resDTO);
+        }
+        postResponses();
     };
 
     //Create div for questions and submit button
@@ -192,7 +198,7 @@ export default function QuestionList() {
 }
 
 function setDefaultValues(questions) {
-    //Get the default values of the questions and set them in the Variables class
+//Get the default values of the questions and set them in the Variables class
     questions.forEach(question => {
         switch (question.variableName) {
             case "Poids": Variables.prototype.Poids = question.normalValue;
