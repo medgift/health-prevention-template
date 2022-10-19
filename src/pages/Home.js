@@ -1,31 +1,23 @@
 import {Link} from "react-router-dom";
 import Login from "./Login";
+import Questionnary from "./Questionnary";
+import Navbar from "../components/Navbar";
 
 export default function Home({currentUser}) {
     return (
-        <div className="Content">
-            <div className="Login-Form">
-                <h2>Health Prevention Questionnaire</h2>
-                {!currentUser ? (
-                    <>
-                        <Login/>
-                        or &nbsp;
-                        <Link to="/register" className="App-link">
-                            Register
-                        </Link>
-                    </>
-                ) : (
-                    <div>
-                    <Link to="/logout" className="App-link">
-                        Logout
-                    </Link>
-                    <Link to="/ShowResult" className="App-link">
-                        Show Result
-                    </Link>
+        <>
+            {!currentUser ? (
+                <>
+                    <Login/>
+                </>
+            ) : (
+                <div className="wrapper">
+                    <Navbar/>
+                    <div className="box">
+                        <Questionnary/>
                     </div>
-                )}
-            </div>
-
-        </div>
+                </div>
+            )}
+        </>
     );
 }

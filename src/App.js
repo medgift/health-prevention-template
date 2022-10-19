@@ -4,13 +4,14 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Customization from "./pages/Customization";
-import ShowResult from "./pages/ShowResult"
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
 import { useEffect, useState } from "react";
 import Logout from "./pages/Logout";
 import Info from "./pages/Info";
+import ShowResult from "./pages/ShowResult";
+import Navbar from "./components/Navbar";
 import AdminPage from "./pages/AdminPage";
 
 export default function App() {
@@ -44,12 +45,13 @@ export default function App() {
     <div className="App">
         <Routes>
           <Route path="/" element={<Home currentUser={currentUser} />} />
+          <Route path="/nav" element={<Navbar />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/info" element={<Info />} />
           <Route path="/customization" element={<Customization/>}/>
-          <Route path="/ShowResult" element={<ShowResult />}/>
+          <Route path="/ShowResult" element={<ShowResult/>}/>
           <Route path="/AdminPage" element={<AdminPage/>}/>
         </Routes>
     </div>

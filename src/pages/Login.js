@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../initFirebase";
 import UserForm from "../components/UserForm";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -18,9 +18,11 @@ export default function Login() {
   };
 
   return (
-    <div>
+      <div className="Content">
+        <div className="Login-Form">
       <h1>Login</h1>
-      <UserForm handleSubmit={handleLogin} submitButtonLabel="Login" />
+      <UserForm handleSubmit={handleLogin} submitButtonLabel="Login" or="register" />
     </div>
+      </div>
   );
 }
