@@ -17,6 +17,7 @@ export default function NormalValueList(currentUser) {
 
     }, []);
 
+
     //fill normalValues array each time the questions are reFetched
     useEffect(() => {
         const q = [...questions];

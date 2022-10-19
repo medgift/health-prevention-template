@@ -156,44 +156,11 @@ export default function QuestionList() {
             //TODO: à voir pour faire des routes pour les différentes parties du questionnaire
             let questions = await QuestionDB.prototype.getAllQuestions();
             setQuestions(prevState => [...prevState, ...questions]);
-
-            //Get the default values of the questions and set them in the Variables class
-            questions.forEach(question => {
-                switch (question.variableName) {
-                case "Poids": Variables.prototype.Poids = question.normalValue;
-                    break;
-                case "Alcool": Variables.prototype.Alcool = question.normalValue;
-                    break;
-                case "Glyc": Variables.prototype.Glyc = question.normalValue;
-                    break;
-                case "Alim": Variables.prototype.Alim = question.normalValue;
-                    break;
-                case "Sport": Variables.prototype.Sport = question.normalValue;
-                    break;
-                case "Inf": Variables.prototype.Inf = question.normalValue;
-                    break;
-                case "Gender" : Variables.prototype.Gender = question.normalValue;
-                    break;
-                case "DIAB" : Variables.prototype.DIAB = question.normalValue;
-                    break;
-                case "Afcancer" : Variables.prototype.Afcancer = question.normalValue;
-                    break;
-                case "Avc" : Variables.prototype.Avc = question.normalValue;
-                    break;
-                case "Age" : Variables.prototype.Age = question.normalValue;
-                    break;
-                case "Afinf" : Variables.prototype.Afinf = question.normalValue;
-                    break;
-                case "Syst" :Variables.prototype.Syst = question.normalValue;
-                    break;
-                case "Fume" : Variables.prototype.Fume = question.normalValue;
-                    break;
-                case "Taille" : Variables.prototype.Taille = question.normalValue;
-                    break;
-            }});
         }
         loadQuestions();
+        setDefaultValues(questions)
     }, []);
+
 
 
     //Form Submission
@@ -222,4 +189,41 @@ export default function QuestionList() {
             onClick={HandleFormSubmit}>Confirm</button>
         </div>
     );
+}
+
+function setDefaultValues(questions) {
+    //Get the default values of the questions and set them in the Variables class
+    questions.forEach(question => {
+        switch (question.variableName) {
+            case "Poids": Variables.prototype.Poids = question.normalValue;
+                break;
+            case "Alcool": Variables.prototype.Alcool = question.normalValue;
+                break;
+            case "Glyc": Variables.prototype.Glyc = question.normalValue;
+                break;
+            case "Alim": Variables.prototype.Alim = question.normalValue;
+                break;
+            case "Sport": Variables.prototype.Sport = question.normalValue;
+                break;
+            case "Inf": Variables.prototype.Inf = question.normalValue;
+                break;
+            case "Gender" : Variables.prototype.Gender = question.normalValue;
+                break;
+            case "DIAB" : Variables.prototype.DIAB = question.normalValue;
+                break;
+            case "Afcancer" : Variables.prototype.Afcancer = question.normalValue;
+                break;
+            case "Avc" : Variables.prototype.Avc = question.normalValue;
+                break;
+            case "Age" : Variables.prototype.Age = question.normalValue;
+                break;
+            case "Afinf" : Variables.prototype.Afinf = question.normalValue;
+                break;
+            case "Syst" :Variables.prototype.Syst = question.normalValue;
+                break;
+            case "Fume" : Variables.prototype.Fume = question.normalValue;
+                break;
+            case "Taille" : Variables.prototype.Taille = question.normalValue;
+                break;
+        }});
 }
