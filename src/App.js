@@ -91,7 +91,7 @@ export default function App() {
                         </Routes>
                 </header>
                 <Routes>
-                    <Route path="/editAvatar" element={<EditAvatar/>}/>
+                    <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                 </Routes>
             </header>
 

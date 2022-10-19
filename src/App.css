@@ -93,7 +93,6 @@
 }
 
 .normalValueForm {
-    diplay: flex;
     align-content: flex-end;
 }
 
@@ -115,6 +114,7 @@
     display: flex;
     align-content: flex-end;
 }
+
 
 .formButton {
     margin-top: 1vh;
@@ -239,4 +239,24 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+/* select CSS */
+.select {
+    width: 20%;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    font-size: 15px;
+    border: 2px solid black;
+}
+.grid{
+    display: grid;
+    grid-template-columns: 200px auto;
+    grid-gap: 12px;
+    grid-template-rows: auto;
+}
+.grid-item{
+
 }
