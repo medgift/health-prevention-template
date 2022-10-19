@@ -1,12 +1,14 @@
 import NiceAvatar, {genConfig} from "react-nice-avatar";
 import React from "react";
+import {PatientDB} from "../DAL/PatientDB";
+import {PatientDTO} from "../DTO/PatientDTO";
+import {redirect} from "react-router-dom";
 
 export default class EditAvatar extends React.Component {
     constructor(props) {
         super(props);
 
-        //AFTER : Implement after from DB when connected user
-        //Temporary default config
+
         const defaultConfig = {
             "sex": "man",
             "faceColor": "#8d5524",
@@ -19,16 +21,31 @@ export default class EditAvatar extends React.Component {
             "hairColor": "#000000",
             "hairStyle": "normal",
             "hatStyle": "none",
-            "hatColor": "#F48150",
+            "hatColor": "#000000",
             "eyeBrowStyle": "up",
             "shirtColor": "#000000",
             "bgColor": "white",
         };
-        const config = genConfig(defaultConfig);
         this.state = {
-            myConfig: config
+            myConfig: defaultConfig,
         };
+        console.log(props.currentUser.uid)
     }
+
+    async getPatient() {
+        const pat = await PatientDB.prototype.getPatientById(this.props.currentUser.uid);
+        const config = genConfig(pat.avatarConfig);
+        this.setState({myConfig: config});
+        console.log(config);
+    }
+
+    componentDidMount() {
+        if (this.props.currentUser == undefined)
+            redirect("/")
+        this.getPatient();
+
+    }
+
 
     //On Change Event for select-options
     change = () => {
@@ -54,6 +71,11 @@ export default class EditAvatar extends React.Component {
 
 
     }
+    save = async () => {
+        console.log(this.props.currentUser.uid & " " & this.state.myConfig)
+        await PatientDB.prototype.updateAvatar(this.props.currentUser.uid, this.state.myConfig)
+        alert("Avatar saved!")
+    }
 
 
     render() {
@@ -70,7 +92,8 @@ export default class EditAvatar extends React.Component {
                         <option value={"woman"}>Woman</option>
                     </select>
                     <label style={{}}>Face Color:</label>
-                    <select className={"select"} name="faceColor" id="faceColor" onChange={this.change}>
+                    <select className={"select"} name="faceColor" id="faceColor" onChange={this.change}
+                            value={this.state.myConfig.faceColor}>
                         <option value={"#8d5524"}>Color 1</option>
                         <option value={"#c68642"}>Color 2</option>
                         <option value={"#e0ac69"}>Color 3</option>
@@ -78,12 +101,14 @@ export default class EditAvatar extends React.Component {
                         <option value={"#ffdbac"}>Color 5</option>
                     </select>
                     <label>Ear size: </label>
-                    <select className={"select"} name="earSize" id="earSize" onChange={this.change}>
+                    <select className={"select"} name="earSize" id="earSize" onChange={this.change}
+                            value={this.state.myConfig.earSize}>
                         <option value={"small"}>Small</option>
                         <option value={"big"}>Big</option>
                     </select>
                     <label>Hair color: </label>
-                    <select className={"select"} name="hairColor" id="hairColor" onChange={this.change}>
+                    <select className={"select"} name="hairColor" id="hairColor" onChange={this.change}
+                            value={this.state.myConfig.hairColor}>
                         <option value={"#000000"}>Black</option>
                         <option value={"#4a4a4a"}>Grey</option>
                         <option value={"#ffffff"}>White</option>
@@ -92,7 +117,8 @@ export default class EditAvatar extends React.Component {
                         <option value={"#FDCFA1"}>Blonde</option>
                     </select>
                     <label>Hair style: </label>
-                    <select className={"select"} name="hairStyle" id="hairStyle" onChange={this.change}>
+                    <select className={"select"} name="hairStyle" id="hairStyle" onChange={this.change}
+                            value={this.state.myConfig.hairStyle}>
                         <option value={"normal"}>Normal</option>
                         <option value={"thick"}>Thick</option>
                         <option value={"mohawk"}>Mohawk</option>
@@ -100,13 +126,15 @@ export default class EditAvatar extends React.Component {
                         <option value={"womanShort"}>Short (Woman)</option>
                     </select>
                     <label>Hat style: </label>
-                    <select className={"select"} name="hatStyle" id="hatStyle" onChange={this.change}>
+                    <select className={"select"} name="hatStyle" id="hatStyle" onChange={this.change}
+                            value={this.state.myConfig.hatStyle}>
                         <option value={"none"}>None</option>
                         <option value={"beanie"}>Beanie</option>
                         <option value={"turban"}>Turban</option>
                     </select>
                     <label>Hat color: </label>
-                    <select className={"select"} name="hatColor" id="hatColor" onChange={this.change}>
+                    <select className={"select"} name="hatColor" id="hatColor" onChange={this.change}
+                            value={this.state.myConfig.hatColor}>
                         <option value={"#000000"}>Black</option>
                         <option value={"#4a4a4a"}>Grey</option>
                         <option value={"#ffffff"}>White</option>
@@ -119,36 +147,42 @@ export default class EditAvatar extends React.Component {
                         <option value={"#FF99CC"}>Pink</option>
                     </select>
                     <label>Eye style: </label>
-                    <select className={"select"} name="eyeStyle" id="eyeStyle" onChange={this.change}>
+                    <select className={"select"} name="eyeStyle" id="eyeStyle" onChange={this.change}
+                            value={this.state.myConfig.eyeStyle}>
                         <option value={"circle"}>Circle</option>
                         <option value={"oval"}>Oval</option>
                         <option value={"smile"}>Smile</option>
                     </select>
                     <label>Eye brow style: </label>
-                    <select className={"select"} name="eyeBrowStyle" id="eyeBrowStyle" onChange={this.change}>
+                    <select className={"select"} name="eyeBrowStyle" id="eyeBrowStyle" onChange={this.change}
+                            value={this.state.myConfig.eyeBrowStyle}>
                         <option value={"up"}>Up</option>
                         <option value={"upWoman"}>Up (Woman)</option>
                     </select>
                     <label>Glasses style: </label>
-                    <select className={"select"} name="glassesStyle" id="glassesStyle" onChange={this.change}>
+                    <select className={"select"} name="glassesStyle" id="glassesStyle" onChange={this.change}
+                            value={this.state.myConfig.glassesStyle}>
                         <option value={"none"}>None</option>
                         <option value={"round"}>Round</option>
                         <option value={"square"}>Square</option>
                     </select>
                     <label>Nose style: </label>
-                    <select className={"select"} name="noseStyle" id="noseStyle" onChange={this.change}>
+                    <select className={"select"} name="noseStyle" id="noseStyle" onChange={this.change}
+                            value={this.state.myConfig.noseStyle}>
                         <option value={"short"}>Short</option>
                         <option value={"long"}>Long</option>
                         <option value={"round"}>Round</option>
                     </select>
                     <label>Mouth style: </label>
-                    <select className={"select"} name="mouthStyle" id="mouthStyle" onChange={this.change}>
+                    <select className={"select"} name="mouthStyle" id="mouthStyle" onChange={this.change}
+                            value={this.state.myConfig.mouthStyle}>
                         <option value={"laugh"}>Laugh</option>
                         <option value={"smile"}>Smile</option>
                         <option value={"peace"}>Peace</option>
                     </select>
                     <label>Shirt color: </label>
-                    <select className={"select"} name="shirtColor" id="shirtColor" onChange={this.change}>
+                    <select className={"select"} name="shirtColor" id="shirtColor" onChange={this.change}
+                            value={this.state.myConfig.shirtColor}>
                         <option value={"#000000"}>Black</option>
                         <option value={"#4a4a4a"}>Grey</option>
                         <option value={"#ffffff"}>White</option>
@@ -161,7 +195,8 @@ export default class EditAvatar extends React.Component {
                         <option value={"#FF99CC"}>Pink</option>
                     </select>
                     <label>Shirt style: </label>
-                    <select className={"select"} name="shirtStyle" id="shirtStyle" onChange={this.change}>
+                    <select className={"select"} name="shirtStyle" id="shirtStyle" onChange={this.change}
+                            value={this.state.myConfig.shirtStyle}>
                         <option value={"hoody"}>Hoody</option>
                         <option value={"short"}>Short</option>
                         <option value={"polo"}>Polo</option>
@@ -174,3 +209,4 @@ export default class EditAvatar extends React.Component {
 
 
 }
+

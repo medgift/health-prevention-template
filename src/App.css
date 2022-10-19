@@ -249,6 +249,7 @@ input:checked + .slider:before {
     border-radius: 10px;
     background-color: #f1f1f1;
     font-size: 15px;
+    border: 2px solid black;
 }
 .grid{
     display: grid;
