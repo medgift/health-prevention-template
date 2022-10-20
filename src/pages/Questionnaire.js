@@ -152,6 +152,7 @@ class Question extends React.Component{
 export default function QuestionList({currentUser}) {
     const QUESTIONNAIRE_NO = 2;
     let [questions, setQuestions] = useState([]);
+
     useEffect(() => {
         async function loadQuestions() {
             //--------------------------------------------Changé getQuestionsByQuestionnaire pour GetAllQuestions, afin d'avoir toutes les variables
@@ -161,7 +162,6 @@ export default function QuestionList({currentUser}) {
             setDefaultValues(questions);
         }
         loadQuestions();
-        setDefaultValues(questions)
     }, []);
 
 
