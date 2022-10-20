@@ -1,0 +1,37 @@
+
+.slider{
+    color: #282c34;
+    background: red;
+    fill: red;
+}
+
+.allColumnText{
+    border-color: #282c34;
+    border-radius: 2px;
+    border-style: groove;
+}
+
+.child{
+    display: inline-block;
+}
+
+
+.column {
+    float: left;
+    width: 33.33%;
+    border-radius:  25%;
+    margin: 75px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+
+}
+
+.topBackground{
+    background: aqua;
+    margin-bottom: 30px;
+}
