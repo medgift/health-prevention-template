@@ -20,7 +20,6 @@ class Navigate extends React.Component {
     render(){
 
         let LoginLogout = null;
-        console.log("Navigate: " + this.props.currentUser);
         if (this.props.currentUser !== undefined && this.props.currentUser !== null) {
             LoginLogout = <a href="/logout">Logout</a>
         }else {
