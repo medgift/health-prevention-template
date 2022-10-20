@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {QuestionDB} from "../DAL/QuestionDB";
 import {Variables} from "../components/Variables";
+import {ResponseDB} from "../DAL/ResponseDB";
+import {ResponseDTO} from "../DTO/ResponseDTO";
 
 
 // Manages a single question, its input and values
@@ -221,28 +223,33 @@ class Question extends React.Component{
 };
 
 //To manage questions
-export default function QuestionList() {
+
+export default function QuestionList({currentUser}) {
     let [questions, setQuestions] = useState([]);
     let [Display5, setDisplay5] = useState(false);
     let [Display6, setDisplay6] = useState(false);
     let [Display7, setDisplay7] = useState(false);
+
     useEffect(() => {
-        async function loadQuestions() {
-            //--------------------------------------------Changé getQuestionsByQuestionnaire pour GetAllQuestions, afin d'avoir toutes les variables
-            //TODO: à voir pour faire des routes pour les différentes parties du questionnaire
+        (async function loadQuestions() {
             let questions = await QuestionDB.prototype.getAllQuestions();
-            setQuestions(prevState => [...prevState, ...questions]);
-            setDefaultValues(questions)
-        }
-        loadQuestions();
+            setQuestions(questions);
+            setDefaultValues(questions);
+            }())
     }, []);
+
+
 
     //Form Submission
     //Maybe change it to go to next couple of questions-----------------------------------------------------
     let HandleFormSubmit = (event) => {
         event.preventDefault();
-        console.log("Form Submitted");
-        console.log(...questions);
+        (async function postResponses() {
+            let responses = {...Variables.prototype}; //put values from variables class in an array
+            let userId = currentUser ? currentUser.uid : null ; //id is null if a guest fills the questionnaire
+            let resDTO = new ResponseDTO(Date.now(), userId, responses);
+            await ResponseDB.prototype.addResponses(resDTO);
+        }())
     };
 
     //Create div for questions and submit button
@@ -269,7 +276,7 @@ export default function QuestionList() {
 }
 
 function setDefaultValues(questions) {
-    //Get the default values of the questions and set them in the Variables class
+//Get the default values of the questions and set them in the Variables class
     questions.forEach(question => {
         switch (question.variableName) {
             case "Poids": Variables.prototype.Poids = question.normalValue;
