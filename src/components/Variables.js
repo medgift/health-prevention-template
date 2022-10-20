@@ -19,7 +19,7 @@ export class Variables {
      Fume;
      Taille;
      CholBool;
-     CHol;
+     Chol;
      Glyc;
      HDL;
 }
