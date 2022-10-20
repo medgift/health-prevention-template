@@ -16,7 +16,7 @@ export default function NormalValueList({currentUser}) {
         (async function loadQuestions() {
             console.log("Loading question")
             let q = await QuestionDB.prototype.getAllQuestions();
-            setQuestions(prevState => [...prevState, ...q]);
+            setQuestions(q);
         }())
 
     }, []);
