@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import QuestionList from "./pages/Questionnaire";
 import NormalValueList from "./pages/Admin";
+import icon from "./icon.svg.png";
 
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
@@ -17,34 +18,35 @@ import Logout from "./pages/Logout";
 
 class Navigate extends React.Component {
 
-    render(){
-
+    render() {
         let LoginLogout = null;
-        console.log("Navigate: " + this.props.currentUser);
-        if (this.props.currentUser !== undefined && this.props.currentUser !== null) {
+        let register = null;
+        //used to only display login and register to unauthenticated user
+        if (this.props.currentUser) {
             LoginLogout = <a href="/logout">Logout</a>
-        }else {
+        } else {
             LoginLogout = <a href="/login">Login</a>
+            register = <li><a href="/register">Register</a></li>
         }
 
         return (
-            <nav className="navbar navbar-default">
-                <div className="container-fluid">
-                    <div className="navbar-header">
-                        <a className="navbar-brand" href="/home">Health Prevention 6</a>
+            <div id="navBarDiv">
+                <img id="icon" src={icon} alt="logo"/>
+                <nav className="navbar navbar-default appBar">
+                    <div className="container-fluid">
+                        <ul className="nav navbar-nav">
+                            <li><a href="/home">Home</a></li>
+                            <li><a href="/">Questionnaire</a></li>
+                            <li><a href="/editAvatar">Avatar</a></li>
+                            {register}
+                            <li>{LoginLogout}</li>
+                        </ul>
                     </div>
-                    <ul className="nav navbar-nav">
-                        <li className="active"><a href="/home">Home</a></li>
-                        <li><a href="/">Questionnaire</a></li>
-                        <li><a href="/register">Register</a></li>
-                        <li>{LoginLogout}</li>
-                    </ul>
-                </div>
-            </nav>
+                </nav>
+            </div>
         )
     };
 }
-
 
 
 export default function App() {
@@ -80,7 +82,6 @@ export default function App() {
             <Navigate currentUser={currentUser}/>
             <header className="App-header">
                 <header className="App-header-align">
-
                     <Routes>
                         <Route path="/home" element={<Home currentUser={currentUser}/>}/>
                         <Route path="/register" element={<Register/>}/>
@@ -88,7 +89,7 @@ export default function App() {
                         <Route path="/logout" element={<Logout/>}/>
                         <Route path="/" element={<QuestionList currentUser={currentUser}/>}></Route>
                         <Route path="/admin" element={<NormalValueList currentUser={currentUser}></NormalValueList>}/>
-                        </Routes>
+                    </Routes>
                 </header>
                 <Routes>
                     <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
