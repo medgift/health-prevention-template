@@ -156,7 +156,7 @@ export default function QuestionList({currentUser}) {
     useEffect(() => {
         (async function loadQuestions() {
             let questions = await QuestionDB.prototype.getAllQuestions();
-            setQuestions(prevState => [...prevState, ...questions]);
+            setQuestions(questions);
             setDefaultValues(questions);
             }())
     }, []);

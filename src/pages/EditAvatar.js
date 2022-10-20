@@ -7,9 +7,10 @@ export default class EditAvatar extends React.Component {
     constructor(props) {
         super(props);
 
-        if (this.props.currentUser === undefined)
+        if (this.props.currentUser) {
             redirect("/");
-
+            return;
+        }
 
         const defaultConfig = {
             "sex": "man",
@@ -31,23 +32,25 @@ export default class EditAvatar extends React.Component {
         this.state = {
             myConfig: defaultConfig,
         };
-        console.log(props.currentUser.uid)
     }
 
     async getPatient() {
-        const pat = await PatientDB.prototype.getPatientById(this.props.currentUser.uid);
-        const config = genConfig(pat.avatarConfig);
-        this.setState({myConfig: config});
-        console.log(config);
+        if (this.props.currentUser) {
+            const pat = await PatientDB.prototype.getPatientById(this.props.currentUser.uid);
+            const config = genConfig(pat.avatarConfig);
+            this.setState({myConfig: config});
+            console.log(config);
+        }
     }
 
     componentDidMount() {
-        if (this.props.currentUser === undefined)
+        if (this.props.currentUser) {
             redirect("/")
+            return;
+        }
         this.getPatient();
 
     }
-
 
     //On Change Event for select-options
     change = () => {
