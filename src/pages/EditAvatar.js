@@ -13,7 +13,7 @@ export default class EditAvatar extends React.Component {
 
         const defaultConfig = {
             "sex": "man",
-            "faceColor": "#8d5524",
+            "faceColor": "#f5d6a1",
             "earSize": "small",
             "eyeStyle": "circle",
             "noseStyle": "short",
