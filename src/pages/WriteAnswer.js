@@ -14,7 +14,7 @@ export default class WriteAnswer extends React.Component{
     glyc= -1;
     chol= -1;
     diab= -1;
-    inf=-1;
+    inf= -1;
     avc= -1;
 
     //Data about his family
@@ -27,7 +27,6 @@ export default class WriteAnswer extends React.Component{
     alcool= -1;
     alim= -1;
 
-
     //calculate Data
     systAlgo = -1;
     glycAlgo = -1;
@@ -38,8 +37,7 @@ export default class WriteAnswer extends React.Component{
     alcoolAlgo = -1;
     alimAlgo = -1;
 
-
-    updatePersonalData = (sex,age,weight,heigt,syst,glyc,chol,diab,inf,avc) =>{
+    updatePersonalData = (sex,age,weight,heigt,syst,glyc,chol,diab,inf,avc) => {
         this.sex = sex;
         this.age = age;
         this.weight = weight;
@@ -79,11 +77,9 @@ export default class WriteAnswer extends React.Component{
         //TODO changement point sport etc...
     }
 
-
-
     async WriteResult() {
         try {
-            await setDoc(doc(database, "answers/"  + 2), {
+            await setDoc(doc(database, "answers/"  + 3), {
                 afcancer: this.afCancer,
                 afinf: this.afinf,
                 age: this.age,
