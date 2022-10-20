@@ -18,12 +18,18 @@
     border-radius: 15px;
     padding: 3vh;
     border: 2px solid lightgray;
-    box-shadow: 3px 3px #888888;
+    box-shadow: 1px 1px #888888;
 }
 
 .register {
     max-width: 60%;
     min-width: 50%;
+    min-height: 30%;
+}
+
+#registerMessage {
+    font-size: medium;
+
 }
 
 .login {

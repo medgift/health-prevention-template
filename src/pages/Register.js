@@ -19,7 +19,7 @@ export default function Register() {
     const handleFirstNameChange = (e) => setFirstName(e.target.value);
     const handleLastNameChange = (e) => setLastName(e.target.value);
 
-    const handleRegister = async (e, email, password, firstName, lastName) => {
+    const handleRegister = async (e, email, password) => {
         e.preventDefault();
 
         try {
@@ -31,9 +31,9 @@ export default function Register() {
         }
     };
 
+    //create a patient account using the newly generated auth id
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            //create a patient account
             let patient = {"FirstName": firstName, "LastName": lastName};
             PatientDB.prototype.addPatient(user.uid, patient);
         }
@@ -41,7 +41,11 @@ export default function Register() {
 
     return (
         <div className="padded_div register centered_div">
+            <div>
             <h3>Create a patient account to save your data !</h3>
+                <p id="registerMessage">*Only registered patients can save their answers and custom avatar.</p>
+            </div>
+
             <form
                 onSubmit={(e) => {
                     handleRegister(e, email, password, firstName, lastName);
