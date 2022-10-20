@@ -10,14 +10,14 @@ export default function NormalValueList({currentUser}) {
     const navigate = useNavigate();
     let [questions, setQuestions] = useState([]);
     useEffect(() => {
+        //prohibit the access to non-admin users
         isAnAdminConnected();
 
-        async function loadQuestions() {
+        (async function loadQuestions() {
+            console.log("Loading question")
             let q = await QuestionDB.prototype.getAllQuestions();
             setQuestions(prevState => [...prevState, ...q]);
-        }
-
-        loadQuestions();
+        }())
 
     }, []);
 

@@ -154,14 +154,11 @@ export default function QuestionList({currentUser}) {
     let [questions, setQuestions] = useState([]);
 
     useEffect(() => {
-        async function loadQuestions() {
-            //--------------------------------------------Changé getQuestionsByQuestionnaire pour GetAllQuestions, afin d'avoir toutes les variables
-            //TODO: à voir pour faire des routes pour les différentes parties du questionnaire
+        (async function loadQuestions() {
             let questions = await QuestionDB.prototype.getAllQuestions();
             setQuestions(prevState => [...prevState, ...questions]);
             setDefaultValues(questions);
-        }
-        loadQuestions();
+            }())
     }, []);
 
 
@@ -169,12 +166,12 @@ export default function QuestionList({currentUser}) {
     //Maybe change it to go to next couple of questions-----------------------------------------------------
     let HandleFormSubmit = (event) => {
         event.preventDefault();
-        async function postResponses() {
-            let responses = {...Variables.prototype};
-            let resDTO = new ResponseDTO(Date.now(), currentUser.uid, responses);
+        (async function postResponses() {
+            let responses = {...Variables.prototype}; //put values from variables class in an array
+            let userId = currentUser ? currentUser.uid : null ; //id is null if a guest fills the questionnaire
+            let resDTO = new ResponseDTO(Date.now(), userId, responses);
             await ResponseDB.prototype.addResponses(resDTO);
-        }
-        postResponses();
+        }())
     };
 
     //Create div for questions and submit button
