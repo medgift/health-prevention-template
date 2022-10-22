@@ -4,21 +4,9 @@ import { database } from '../initFirebase.js';
 
 export default class Algorithm extends React.Component{
 
-    idUser;
-    resultInfarctus;
-    resultNonInfarctus;
-    resultCancer;
-    resultDiabete;
 
-    constructor(props,sex, age, smoke, systolique, chol, hdl, afinf, afCancer, bmi, sport, alcool, alim , tension, glyc,diab,inf,idUser) {
+    constructor(props) {
         super(props);
-
-            this.idUser = idUser;
-            this.resultInfarctus = this.Infarctus(age,sex,smoke,systolique,diab,inf,chol,hdl);
-            this.resultNonInfarctus = this.NonInfractus(age,smoke,systolique,chol,hdl,afinf,sex);
-            this.resultCancer=  this.Cancer(afCancer,smoke,bmi,sport,alcool,alim);
-            this.resultDiabete = this.Diabete(sex,age,bmi,tension,glyc,sport,alim);
-
     }
     // Constant for the risk calculation, to choose the right column we used the sex variable
     NonInfractus(age, smoke, systolique, chol, hdl, afinf,sex){

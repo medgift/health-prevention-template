@@ -2,8 +2,11 @@ import React, {useState} from "react";
 import Family from "../components/Family";
 import You from "../components/You";
 import Habits from "../components/Habits";
+import WriteAnswer from "./WriteAnswer";
 
 export default function Questionnary() {
+
+    const allAnswers = new WriteAnswer();
 
     const [step, setStep] = useState(0);
     const [values, setValues] = useState({
@@ -34,9 +37,18 @@ export default function Questionnary() {
     // proceed to the next step
     const nextStep = (e) => {
         e.preventDefault();
-        if(step === formTitles.length - 1 ){
-            alert("FORM FINISH");
-            console.log(values)
+        if (step === formTitles.length - 1) {
+            allAnswers.updatePersonalData(
+                values.sexe, values.age, values.poids, values.taille, values.syst, values.glyc, values.chol, values.diab, values.inf, values.avc
+            );
+            allAnswers.updateFamilyData(
+                values.afinf, values.afcancer
+            );
+            allAnswers.updateHabitsData(
+                values.fume, values.alim, values.sport, values.alcool
+            );
+            allAnswers.calculateFinalData();
+            allAnswers.WriteResult();
         } else {
             setStep(step + 1)
         }
@@ -46,15 +58,15 @@ export default function Questionnary() {
         switch (step) {
             case 0:
                 return (
-                    <You values = { values } setValues = { setValues } />
+                    <You values={ values } setValues={ setValues }/>
                 )
             case 1:
                 return (
-                    <Family values = { values } setValues = { setValues } />
+                    <Family values={ values } setValues={ setValues }/>
                 )
             case 2:
                 return (
-                    <Habits values = { values } setValues = { setValues } />
+                    <Habits values={ values } setValues={ setValues }/>
                 )
             case 4:
                 return (
@@ -76,19 +88,18 @@ export default function Questionnary() {
                 <span style={{width: step === 0 ? "33.3%" : step === 1 ? "66.6%" : "102%"}}></span>
             </div>
             <header>
-                <h1>{ formTitles[step] }</h1>
+                <h1>{formTitles[step]}</h1>
             </header>
             <div className="form-container">
-                { displayStep(step) }
+                {displayStep(step)}
             </div>
             <footer>
                 {!(step === 0) ?
                     <button
-                        onClick={ prevStep }>Prev</button> : <span></span>
+                        onClick={prevStep}>Prev</button> : <span></span>
                 }
-
                 <button
-                    onClick={ nextStep }>{step === formTitles.length -1 ? "Submit" : "Next"}
+                    onClick={nextStep}>{step === formTitles.length - 1 ? "Submit" : "Next"}
                 </button>
             </footer>
         </div>

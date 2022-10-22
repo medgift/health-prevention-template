@@ -12,9 +12,9 @@ export default function Home({currentUser}) {
                 </>
             ) : (
                 <div className="wrapper">
-                    <Navbar/>
+                    <Navbar />
                     <div className="box">
-                        <Questionnary/>
+                        <Questionnary />
                     </div>
                 </div>
             )}
