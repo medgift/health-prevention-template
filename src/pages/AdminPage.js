@@ -1,61 +1,62 @@
 //TODO create Admin page to create doctors 
 // make link with Firestore to create Doctors
-
-
 //TODO change the COefficients
 //Get the Data from Firestore and update it
-
-
 //TODO Admin Login -> authentication
-
+import Navbar from "../components/Navbar";
 import {doc, setDoc} from "firebase/firestore";
 import {auth, database} from "../initFirebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-
+import {createUserWithEmailAndPassword, onAuthStateChanged} from "firebase/auth";
 import React from "react";
-import Users from "../components/Users";
+import { useState } from "react";
+import DoctorForm from "../components/DoctorForm";
 
-export default class AdminPage extends React.Component{s
+export default function AdminPage()  {
+   
+    //    const resetNewDoctor = () => {
+    //     this.setState({newDoctor : this.emptyDoctor});
+    // };
+    var created = false;
 
-    newDoctor;
-
-    constructor(props) {
-        super(props);
-        this.handleClick = this.handleClick.bind(this);
-        this.newDoctor = new Users(this.props,"Dr. Hugo", "Vouillamoz", "drhugo@test.ch", "password", 2);
+    const createDoctor = async(e, email, password, firstname, lastname) => {
         
-    }
+        e.preventDefault();
 
-    async CreateDoctor() {
         try {
-            //await createUserWithEmailAndPassword(auth, this.newDoctor.mail, this.newDoctor.password);
-            await setDoc(doc(database, "users/"+ auth ),{
-                firstname : this.newDoctor.firstname,
-                lastname : this.newDoctor.lastname,
-                mail : this.newDoctor.mail,
-                password : this.newDoctor.password,
-                role : this.newDoctor.role
+            await createUserWithEmailAndPassword(auth, email, password);
 
+            onAuthStateChanged(auth, async (user) => {
+                await setDoc(doc(database, "users", user.uid), {
+                    firstname: firstname,
+                    lastname: lastname,
+                    email: email,
+                    password: password,
+                    role: 2
+                });
             });
+
+            //navigate("/");
+            //succeeded = true;
             console.log("Doctor Created")
+            created = true;
+
+           // resetNewDoctor();
+            
         } catch (e) {
-            console.log(e)
-            console.log("c'esst pas créééééé")
+            console.error(e);
+            console.log("not Created")
         }
+
     }
 
-    handleClick = () => {
-        this.CreateDoctor();
-    }
-
-    render() {
-        return (
-            <>
-                <h1>Welcome Admin !!</h1>
-                <h2>Create Doctor : </h2>
-                <button onClick={this.handleClick}></button>
-            </>
-        )
-    }
-
+    
+    return (
+        <>
+            <Navbar/>
+            <h1>Welcome Admin !!</h1>
+            <h2>Create Doctor : </h2>
+            <DoctorForm handleSubmit={createDoctor} submitButtonLabel="Create Doctor"/>
+        </>
+    );
+    
 }

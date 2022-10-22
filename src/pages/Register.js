@@ -15,7 +15,9 @@ export default function Register() {
 
             onAuthStateChanged(auth, async (user) => {
                 await setDoc(doc(database, "users", user.uid), {
-                    firstname: "test"
+                    mail: email,
+                    password: password,
+                    role: 1
                 });
             });
 
