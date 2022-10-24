@@ -22,12 +22,11 @@
 
 #icon {
     float: left;
-    /*change width*/
-    max-width: 3.3%;
+    height: 57px;
     min-width: 15px;
     display: inline;
-    margin-left: 13%;
-    margin-right: 5%;
+    margin-left: 20%;
+    margin-right: 1%;
 }
 
 .appBar {
@@ -65,6 +64,7 @@
 .padded_div {
     min-height: 50vh;
     margin: 0 auto;
+    margin-left: 0;
     border-radius: 15px;
     padding: 3vh;
     border: 2px solid lightgray;
@@ -77,7 +77,7 @@
     max-width: 60%;
     min-width: 50%;
     justify-content: center;
-    margin: auto;
+    /*margin: auto;*/
 }
 
 .disclaimer {
@@ -94,7 +94,7 @@
     margin-top: 2%;
     margin-bottom: 5%;
     padding-top: 0px;
-    min-width: 50%;
+    min-width: 65%;
 }
 
 #questionnaire {
@@ -215,7 +215,9 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /*align-items: center;*/
+    align-items: flex-start;
+    margin-left: 22%;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: black;
