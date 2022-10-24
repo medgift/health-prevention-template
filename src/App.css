@@ -12,9 +12,59 @@
     }
 }
 
+#navBarDiv {
+    background-color: black;
+    max-width: 100%;
+    margin: 0 auto;
+    margin-left: auto;
+    text-align: center;
+}
+
+#icon {
+    float: left;
+    height: 57px;
+    min-width: 15px;
+    display: inline;
+    margin-left: 20%;
+    margin-right: 1%;
+}
+
+.appBar {
+    width: 90%;
+}
+
+.appBar li {
+    float: left;
+}
+
+.appBar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 20px 20px;
+    text-decoration: none;
+}
+
+.appBar li a:hover:not(.active) {
+    background-color: #1A73E8;
+    color: white;
+}
+
+.appBar .active {
+    background-color: #1A73E8;
+}
+
+.appBar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
 .padded_div {
     min-height: 50vh;
-    margin: auto;
+    margin: 0 auto;
+    margin-left: 0;
     border-radius: 15px;
     padding: 3vh;
     border: 2px solid lightgray;
@@ -22,20 +72,29 @@
 }
 
 .register {
+    display: flex;
+    min-height: auto;
     max-width: 60%;
     min-width: 50%;
+    justify-content: center;
+    /*margin: auto;*/
+}
+
+.disclaimer {
+    font-size: medium;
 }
 
 .login {
     min-height: 40vh;
     width: 100%;
+    margin-left: 0;
 }
 
 .avatar {
     margin-top: 2%;
     margin-bottom: 5%;
     padding-top: 0px;
-    min-width: 50%;
+    min-width: 65%;
 }
 
 #questionnaire {
@@ -156,7 +215,9 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /*align-items: center;*/
+    align-items: flex-start;
+    margin-left: 22%;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: black;

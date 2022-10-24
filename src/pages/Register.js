@@ -40,8 +40,11 @@ export default function Register() {
     });
 
     return (
-        <div className="padded_div register centered_div">
-            <h3>Create a patient account to save your data !</h3>
+        <div className="padded_div register ">
+            <div>
+                <h3>Create a patient account to save your data !</h3>
+                <p className="disclaimer">*Only patients can save their answers and custom avatar.</p>
+            </div>
             <form
                 onSubmit={(e) => {
                     handleRegister(e, email, password, firstName, lastName);
@@ -82,7 +85,8 @@ export default function Register() {
                 <button
                     type="submit"
                     className="formButton"
-                >Register</button>
+                >Register
+                </button>
             </form>
         </div>
     );
