@@ -33,7 +33,7 @@ export default function UserForm({handleSubmit, submitButtonLabel}) {
             <br/>
             <button
                 type="submit"
-                className="formButton"
+                className="formButton animatedButton"
             >{submitButtonLabel}</button>
         </form>
     );
