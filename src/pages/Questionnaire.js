@@ -269,7 +269,7 @@ export default function QuestionList({currentUser}) {
             ))}
         </div>
             <button type="submit"
-            className="formButton rightButton questionButton"
+            className="formButton rightButton questionButton animatedButton"
             onClick={HandleFormSubmit}>Confirm</button>
         </div>
     );

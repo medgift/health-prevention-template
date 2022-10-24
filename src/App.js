@@ -6,7 +6,8 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import QuestionList from "./pages/Questionnaire";
 import NormalValueList from "./pages/Admin";
-import icon from "./icon.svg.png";
+//import icon from "./icon.svg.png";
+import icon from "./hearth_icon.png"
 
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";

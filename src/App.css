@@ -22,11 +22,11 @@
 
 #icon {
     float: left;
-    height: 57px;
+    height: 40px;
+    margin-top: 10px;
     min-width: 15px;
-    display: inline;
-    margin-left: 20%;
-    margin-right: 1%;
+    margin-left: 21%;
+    margin-right: 0.5%;
 }
 
 .appBar {
@@ -183,7 +183,7 @@
 .formButton {
     margin-top: 1vh;
     background: #1A73E8;
-    box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, 0.2);
+    box-shadow: 10px 10px 30px -6px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
     border: 1px solid transparent;
     border-radius: 5px;
@@ -193,6 +193,10 @@
     text-align: center;
     font-size: large;
     width: 12vh;
+}
+
+.animatedButton:hover {
+    zoom: 102%;
 }
 
 .rightButton {
@@ -222,7 +226,7 @@
     flex-direction: column;
     /*align-items: center;*/
     align-items: flex-start;
-    margin-left: 22%;
+    margin-left: 21%;
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: black;
