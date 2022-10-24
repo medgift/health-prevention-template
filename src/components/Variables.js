@@ -4,7 +4,7 @@ import React from "react";
 export class Variables {
      Poids;
      Alcool;
-     Glyc;
+     GlycBool;
      Alim;
      Sport;
      Inf;
@@ -14,7 +14,12 @@ export class Variables {
      Avc;
      Age;
      Afinf;
+     SystBool;
      Syst;
      Fume;
      Taille;
+     CholBool;
+     Chol;
+     Glyc;
+     HDL;
 }
