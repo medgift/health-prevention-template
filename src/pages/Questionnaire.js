@@ -10,7 +10,7 @@ class Question extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            answer: this.props.normalValue
+            answer: this.props.normalValue,
         };
     }
 
@@ -32,7 +32,9 @@ class Question extends React.Component{
                 break;
             case "Alcool": Variables.prototype.Alcool = value;
                 break;
-            case "Glyc": Variables.prototype.Glyc = value;
+            case "GlycBool": Variables.prototype.GlycBool = value;
+                //Display question 6.1 if answer is Yes
+                this.props.setdisplay6(current => !current);
                 break;
             case "Alim": Variables.prototype.Alim = value;
                 break;
@@ -52,19 +54,34 @@ class Question extends React.Component{
                 break;
             case "Afinf" : Variables.prototype.Afinf = value;
                 break;
-            case "Syst" :Variables.prototype.Syst = value;
+            case "SystBool" :Variables.prototype.SystBool = value;
+                //Display question 5.1 if answer is Yes
+                this.props.setdisplay5(current => !current);
                 break;
             case "Fume" : Variables.prototype.Fume = value;
                 break;
             case "Taille" : Variables.prototype.Taille = value;
                 break;
+            case "CholBool" : Variables.prototype.CholBool = value;
+                //Display question 7.1 and 7.2 if answer is Yes
+                this.props.setdisplay7(current => !current);
+                break;
+            case "Syst" : Variables.prototype.Syst = value;
+                break;
+            case "Glyc" : Variables.prototype.Glyc = value;
+                break;
+            case "Chol" : Variables.prototype.Chol = value;
+                break;
+            case "HDL" : Variables.prototype.HDL = value;
+                break;
         }
+
         //debug---------------------------------------------------
         console.log("Answer: " + target.value);
         console.log("Checked: " + target.checked);
         console.log("Poids: " + Variables.prototype.Poids);
         console.log("Alcool: " + Variables.prototype.Alcool);
-        console.log("Glyc: " + Variables.prototype.Glyc);
+        console.log("GlycBool: " + Variables.prototype.GlycBool);
         console.log("Alim: " + Variables.prototype.Alim);
         console.log("Sport: " + Variables.prototype.Sport);
         console.log("Inf: " + Variables.prototype.Inf);
@@ -74,17 +91,56 @@ class Question extends React.Component{
         console.log("Avc: " + Variables.prototype.Avc);
         console.log("Age: " + Variables.prototype.Age);
         console.log("Afinf: " + Variables.prototype.Afinf);
-        console.log("Syst: " + Variables.prototype.Syst);
+        console.log("SystBool: " + Variables.prototype.SystBool);
         console.log("Fume: " + Variables.prototype.Fume);
         console.log("Taille: " + Variables.prototype.Taille);
+        console.log("CholBool: " + Variables.prototype.CholBool);
+        console.log("Syst: " + Variables.prototype.Syst);
+        console.log("Glyc: " + Variables.prototype.Glyc);
+        console.log("Chol: " + Variables.prototype.Chol);
+        console.log("HDL: " + Variables.prototype.HDL);
         console.log();
         //debug---------------------------------------------------
     };
 
-    //Questions and inputs change depending on questions
+
+    //Questions and inputs change depending on question type
     render() {
 
         let formattedQuestion;
+
+        //these must be displayed only if the answer to the previous question is Yes
+        switch (this.props.questionNO) {
+            case 5.1 : if(this.props.display5 === false){
+                Variables.prototype.Syst = this.props.normalValue;
+                //Debug---------------------------------------------------
+                console.log("Syst reset: " + Variables.prototype.Syst);
+                return null;
+            }
+                break;
+            case 6.1 : if(this.props.display6 === false){
+                Variables.prototype.Glyc = this.props.normalValue;
+                //Debug---------------------------------------------------
+                console.log("Glyc reset: " + Variables.prototype.Glyc);
+                return null;
+            }
+                break;
+            case 7.1: if(this.props.display7 === false){
+                Variables.prototype.Chol = this.props.normalValue;
+                //Debug---------------------------------------------------
+                console.log("Chol reset: " + Variables.prototype.Chol);
+                return null;
+            }
+                break;
+            case 7.2: if(this.props.display7 === false){
+                Variables.prototype.HDL = this.props.normalValue;
+                //Debug---------------------------------------------------
+                console.log("HDL reset: " + Variables.prototype.HDL);
+                return null;
+            }
+                break;
+        }
+
 
         //For inputs of type RadioSlider and NumericSlider
         if (this.props.inputType === "RadioSlider") {
@@ -104,19 +160,37 @@ class Question extends React.Component{
 
         //For inputs of type NumericSlider
         if (this.props.inputType === "NumericSlider"){
-            formattedQuestion = (
-                //Min and Max of range refer to the index in choices array of the question
-                <>
-                    <input type="range"
-                           min={this.props.choices[0]}
-                           max={this.props.choices[this.props.choices.length - 1]}
-                           step="1"
-                           defaultValue={this.props.normalValue}
-                           onChange={this.HandleInputChanges}/>
-                    &nbsp;{this.state.answer}
-                </>
-            );
+            //For questions 6.1 , 7.1 and 7.2
+            //Input step is set to 0.1
+            if (this.props.questionNO === 6.1|| this.props.questionNO === 7.1 || this.props.questionNO === 7.2) {
+                formattedQuestion = (
+                        //Min and Max of range refer to the index in choices array of the question
+                        <>
+                            <input type="range"
+                                   min={this.props.choices[0]}
+                                   max={this.props.choices[this.props.choices.length - 1]}
+                                   step="0.1"
+                                   defaultValue={this.props.defaultValue}
+                                   onChange={this.HandleInputChanges}/>
+                            &nbsp;{this.state.answer}
+                        </>
+                );
+            }else{
+                formattedQuestion = (
+                    //Min and Max of range refer to the index in choices array of the question
+                    <>
+                        <input type="range"
+                               min={this.props.choices[0]}
+                               max={this.props.choices[this.props.choices.length - 1]}
+                               step="1"
+                               defaultValue={this.props.normalValue}
+                               onChange={this.HandleInputChanges}/>
+                        &nbsp;{this.state.answer}
+                    </>
+                );
+            }
         }
+
 
         //For inputs of type ToggleSlider
         if (this.props.inputType === "ToggleSlider") {
@@ -149,9 +223,12 @@ class Question extends React.Component{
 };
 
 //To manage questions
+
 export default function QuestionList({currentUser}) {
-    const QUESTIONNAIRE_NO = 2;
     let [questions, setQuestions] = useState([]);
+    let [Display5, setDisplay5] = useState(false);
+    let [Display6, setDisplay6] = useState(false);
+    let [Display7, setDisplay7] = useState(false);
 
     useEffect(() => {
         (async function loadQuestions() {
@@ -160,6 +237,7 @@ export default function QuestionList({currentUser}) {
             setDefaultValues(questions);
             }())
     }, []);
+
 
 
     //Form Submission
@@ -178,16 +256,19 @@ export default function QuestionList({currentUser}) {
     return (
         <div>
         <div id="questionnaire">
-            <h2 id="questionnaireTitle">Questionnaire {QUESTIONNAIRE_NO}</h2>
+            <h2 id="questionnaireTitle">Questionnaire</h2>
             {questions.map((question) => (
                 <div key={question.questionNO}>
                     <div className="padded_div question">
-                        <Question {...question}/>
+                        <Question {...question}
+                                  display5={Display5} setdisplay5={setDisplay5}
+                                  display6={Display6} setdisplay6={setDisplay6}
+                                  display7={Display7} setdisplay7={setDisplay7}/>
                     </div>
                 </div>
             ))}
         </div>
-    <button type="submit"
+            <button type="submit"
             className="formButton rightButton questionButton"
             onClick={HandleFormSubmit}>Confirm</button>
         </div>
@@ -202,7 +283,7 @@ function setDefaultValues(questions) {
                 break;
             case "Alcool": Variables.prototype.Alcool = question.normalValue;
                 break;
-            case "Glyc": Variables.prototype.Glyc = question.normalValue;
+            case "GlycBool": Variables.prototype.GlycBool = question.normalValue;
                 break;
             case "Alim": Variables.prototype.Alim = question.normalValue;
                 break;
@@ -222,11 +303,21 @@ function setDefaultValues(questions) {
                 break;
             case "Afinf" : Variables.prototype.Afinf = question.normalValue;
                 break;
-            case "Syst" :Variables.prototype.Syst = question.normalValue;
+            case "SystBool" :Variables.prototype.SystBool = question.normalValue;
                 break;
             case "Fume" : Variables.prototype.Fume = question.normalValue;
                 break;
             case "Taille" : Variables.prototype.Taille = question.normalValue;
+                break;
+            case "CholBool" : Variables.prototype.CholBool = question.normalValue;
+                break;
+            case "Syst" : Variables.prototype.Syst = question.normalValue;
+                break;
+            case "Glyc" : Variables.prototype.Glyc = question.normalValue;
+                break;
+            case "Chol" : Variables.prototype.Chol = question.normalValue;
+                break;
+            case "HDL" : Variables.prototype.HDL = question.normalValue;
                 break;
         }});
 }
