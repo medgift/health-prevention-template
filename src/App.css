@@ -183,7 +183,7 @@
 .formButton {
     margin-top: 1vh;
     background: #1A73E8;
-    box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, 0.2);
+    box-shadow: 10px 10px 30px -6px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
     border: 1px solid transparent;
     border-radius: 5px;
@@ -195,8 +195,8 @@
     width: 12vh;
 }
 
-.formButton:hover {
-    transform: scale(1.05);
+.animatedButton:hover {
+    zoom: 102%;
 }
 
 .rightButton {
