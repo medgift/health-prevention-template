@@ -68,7 +68,7 @@
     border-radius: 15px;
     padding: 3vh;
     border: 2px solid lightgray;
-    box-shadow: 3px 3px #888888;
+    box-shadow: 1px 1px #888888;
 }
 
 .register {
@@ -106,7 +106,7 @@
     align-items: initial !important;
     flex-direction: column;
     margin-left: 0px;
-    box-shadow: 0px 0px ;
+    box-shadow: 0px 0px;
 }
 
 .questionDiv {
@@ -151,27 +151,32 @@
     margin: 1.5vh;
 }
 
-.normalValueForm {
-    align-content: flex-end;
-}
 
 .normalValueDiv {
     display: flex;
-    align-content: flex-start;
+    text-align: left;
 }
 
 .normalValueInput {
-    max-width: 10%;
     padding: 1vh;
     font-size: medium;
-    align-content: center;
     margin-bottom: 1.5vh;
-    margin-left: auto;
 }
 
-. leftAlignedDiv {
-    display: flex;
-    align-content: flex-end;
+#normalValuesLabel {
+    margin-right: auto;
+    margin-left: 0px;
+    min-width: 60%;
+}
+
+.leftAlignedDiv {
+    margin: 0 auto;
+    margin-left: 0;
+}
+
+#admin {
+    max-width: 70%;
+    margin-bottom: 2%;
 }
 
 
@@ -195,7 +200,7 @@
 }
 
 .questionButton {
-   margin-right: 18%;
+    margin-right: 18%;
     margin-top: 2vh;
     margin-bottom: 5%;
 }
@@ -211,20 +216,21 @@
 }
 
 .App-header {
-  background-color: white;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  /*align-items: center;*/
+    background-color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /*align-items: center;*/
     align-items: flex-start;
     margin-left: 22%;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: black;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: black;
 
 }
-.App-header-align{
-  text-align: center;
+
+.App-header-align {
+    text-align: center;
 }
 
 .App-link {
@@ -312,12 +318,14 @@ input:checked + .slider:before {
     font-size: 15px;
     border: 2px solid black;
 }
-.grid{
+
+.grid {
     display: grid;
     grid-template-columns: 200px auto;
     grid-gap: 12px;
     grid-template-rows: auto;
 }
-.grid-item{
+
+.grid-item {
 
 }

@@ -55,9 +55,9 @@ export default function NormalValueList({currentUser}) {
     }
 
     return (
-        <div>
-            <h1>Admin page, act wisely ...</h1>
-            <form className="normalValueForm" onSubmit={handleFormSubmit}>
+        <div id="admin" className="leftAlignedDiv">
+            <h2>Admin page, act wisely ...</h2>
+            <form onSubmit={handleFormSubmit}>
                 <button
                     type="submit"
                     className="formButton rightButton"
@@ -86,7 +86,7 @@ function NormalValue(props) {
 
     return (
         <>
-            <label>{props.questionNO}. {props.text}</label>
+            <label id="normalValuesLabel">{props.questionNO}. {props.text}</label>
             <input type="number"
                    className="normalValueInput"
                    defaultValue={props.normalValue}
