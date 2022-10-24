@@ -195,6 +195,10 @@
     width: 12vh;
 }
 
+.formButton:hover {
+    transform: scale(1.05);
+}
+
 .rightButton {
     float: right;
 }
