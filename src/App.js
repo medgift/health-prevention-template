@@ -31,7 +31,7 @@ class Navigate extends React.Component {
 
         return (
             <div id="navBarDiv">
-                <img id="icon" src={icon} alt="logo"/>
+                <a href="/home"><img id="icon" src={icon} alt="logo" /></a>
                 <nav className="navbar navbar-default appBar">
                     <div className="container-fluid">
                         <ul className="nav navbar-nav">
