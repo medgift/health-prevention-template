@@ -17,7 +17,7 @@ export default function Login() {
             //search for a patient in the db
             let patient = await PatientDB.prototype.getPatientById(user.uid);
             if (patient != null) {
-                navigate("/");
+                navigate("/questionnaire");
                 return;
             }
 
