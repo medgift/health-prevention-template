@@ -1,15 +1,13 @@
 import NiceAvatar, {genConfig} from "react-nice-avatar";
 import React from "react";
 import {PatientDB} from "../DAL/PatientDB";
-import {redirect} from "react-router-dom";
 
 export default class EditAvatar extends React.Component {
     constructor(props) {
         super(props);
 
-        if (this.props.currentUser) {
-            redirect("/");
-            return;
+        if (this.props.navigate == null) {
+            //navigate to login page
         }
 
         const defaultConfig = {
@@ -45,8 +43,7 @@ export default class EditAvatar extends React.Component {
 
     componentDidMount() {
         if (this.props.currentUser) {
-            redirect("/")
-            return;
+            //navigate to login page
         }
         this.getPatient();
 
@@ -77,9 +74,13 @@ export default class EditAvatar extends React.Component {
 
     }
     save = async () => {
-        console.log(this.props.currentUser.uid & " " & this.state.myConfig)
-        await PatientDB.prototype.updateAvatar(this.props.currentUser.uid, this.state.myConfig)
-        alert("Avatar saved!")
+        if (this.props.currentUser == null) {
+            alert("Please login first");
+        } else {
+            console.log(this.props.currentUser.uid & " " & this.state.myConfig)
+            await PatientDB.prototype.updateAvatar(this.props.currentUser.uid, this.state.myConfig)
+            alert("Avatar saved!")
+        }
     }
 
 
