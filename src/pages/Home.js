@@ -16,7 +16,7 @@ export default function Home({ currentUser }) {
                   <p>It will also help you to find the right doctor for you.</p>
               </div>
           </div>
-          <div style={{margin: "200px 0"}}/>
+          <div style={{margin: "120px 0"}}/>
           <div className={"homeGrid"}>
               <div className={"homeGridItem"} style={{width: "auto", background: "white"}}>
                   <p style={{verticalAlign: "middle"}}>Want to try ?</p>
