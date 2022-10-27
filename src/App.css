@@ -319,6 +319,7 @@ input:checked + .slider:before {
 /* select CSS */
 .select {
     width: 20%;
+    min-width: 115px;
     padding: 16px 20px;
     border: none;
     border-radius: 10px;
@@ -329,8 +330,8 @@ input:checked + .slider:before {
 
 .grid {
     display: grid;
-    grid-template-columns: 200px auto;
-    grid-gap: 12px;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-gap: 10px;
     grid-template-rows: auto;
 }
 
