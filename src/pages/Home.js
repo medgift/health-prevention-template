@@ -16,9 +16,8 @@ export default function Home({ currentUser }) {
                   <p>It will also help you to find the right doctor for you.</p>
               </div>
           </div>
-          <div style={{margin: "60px 0"}}/>
-          <h3 style={{textAlign: "left", fontFamily: "fantasy", fontStyle: "italic"}}>Recommended by 9/10 doctors </h3>
-          <div style={{margin: "60px 0"}}/>
+
+          <div style={{margin: "37px 0"}}/>
           <div className={"homeGrid"}>
               <div className={"homeGridItem"} style={{width: "auto", background: "white"}}>
                   <p style={{verticalAlign: "middle"}}>Want to try ?</p>
@@ -33,7 +32,10 @@ export default function Home({ currentUser }) {
                   <Link className={"homeGridButton"} to="/register">Create an account</Link>
               </div>
           </div>
-          <div style={{margin: "250px 0"}}/>
+          <div style={{margin: "37px 0"}}/>
+          <h3 className={"reveal"} style={{textAlign: "left", fontFamily: "fantasy", fontStyle: "italic"}}>Recommended
+              by 9/10 doctors </h3>
+          <div style={{margin: "200px 0"}}/>
       </div>
 
   );
