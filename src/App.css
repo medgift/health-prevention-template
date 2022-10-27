@@ -33,11 +33,11 @@
     width: 90%;
 }
 
-.appBar li {
+.appBar a {
     float: left;
 }
 
-.appBar li a {
+.appBar ul a {
     display: block;
     color: white;
     text-align: center;
@@ -45,8 +45,8 @@
     text-decoration: none;
 }
 
-.appBar li a:hover:not(.active) {
-    background-color: #1A73E8;
+.appBar a:hover:not(.active) {
+    background-color: #232323;
     color: white;
 }
 

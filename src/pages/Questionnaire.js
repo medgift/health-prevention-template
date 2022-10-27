@@ -114,28 +114,28 @@ class Question extends React.Component{
             case 5.1 : if(this.props.display5 === false){
                 Variables.prototype.Syst = this.props.normalValue;
                 //Debug---------------------------------------------------
-                console.log("Syst reset: " + Variables.prototype.Syst);
+                console.log("Syst at base value: " + Variables.prototype.Syst);
                 return null;
             }
                 break;
             case 6.1 : if(this.props.display6 === false){
                 Variables.prototype.Glyc = this.props.normalValue;
                 //Debug---------------------------------------------------
-                console.log("Glyc reset: " + Variables.prototype.Glyc);
+                console.log("Glyc at base value: " + Variables.prototype.Glyc);
                 return null;
             }
                 break;
             case 7.1: if(this.props.display7 === false){
                 Variables.prototype.Chol = this.props.normalValue;
                 //Debug---------------------------------------------------
-                console.log("Chol reset: " + Variables.prototype.Chol);
+                console.log("Chol at base value: " + Variables.prototype.Chol);
                 return null;
             }
                 break;
             case 7.2: if(this.props.display7 === false){
                 Variables.prototype.HDL = this.props.normalValue;
                 //Debug---------------------------------------------------
-                console.log("HDL reset: " + Variables.prototype.HDL);
+                console.log("HDL at base value: " + Variables.prototype.HDL);
                 return null;
             }
                 break;
@@ -170,9 +170,9 @@ class Question extends React.Component{
                                    min={this.props.choices[0]}
                                    max={this.props.choices[this.props.choices.length - 1]}
                                    step="0.1"
-                                   defaultValue={this.props.defaultValue}
+                                   defaultValue={this.props.normalValue}
                                    onChange={this.HandleInputChanges}/>
-                            &nbsp;{this.state.answer}
+                            &nbsp;{this.state.answer} {this.props.unit}
                         </>
                 );
             }else{
@@ -185,7 +185,7 @@ class Question extends React.Component{
                                step="1"
                                defaultValue={this.props.normalValue}
                                onChange={this.HandleInputChanges}/>
-                        &nbsp;{this.state.answer}
+                        &nbsp;{this.state.answer}  {this.props.unit}
                     </>
                 );
             }

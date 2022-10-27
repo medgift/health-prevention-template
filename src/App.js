@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, Link, NavLink} from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -24,23 +24,23 @@ class Navigate extends React.Component {
         let register = null;
         //used to only display login and register to unauthenticated user
         if (this.props.currentUser) {
-            LoginLogout = <a href="/logout">Logout</a>
+            LoginLogout = <NavLink to="/logout">Logout</NavLink>
         } else {
-            LoginLogout = <a href="/login">Login</a>
-            register = <li><a href="/register">Register</a></li>
+            LoginLogout = <NavLink to="/login">Login</NavLink>
+            register = <NavLink to="/register">Register</NavLink>
         }
 
         return (
             <div id="navBarDiv">
-                <a href="/home"><img id="icon" src={icon} alt="logo" /></a>
+                <NavLink to="/home"><img id="icon" src={icon} alt="logo" /></NavLink>
                 <nav className="navbar navbar-default appBar">
                     <div className="container-fluid">
                         <ul className="nav navbar-nav">
-                            <li><a href="/home">Home</a></li>
-                            <li><a href="/">Questionnaire</a></li>
-                            <li><a href="/editAvatar">Avatar</a></li>
+                            <NavLink to="/home">Home</NavLink>
+                            <NavLink  to="/questionnaire">Questionnaire</NavLink>
+                            <NavLink to="/editAvatar">Avatar</NavLink>
                             {register}
-                            <li>{LoginLogout}</li>
+                            {LoginLogout}
                         </ul>
                     </div>
                 </nav>
@@ -88,7 +88,7 @@ export default function App() {
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/logout" element={<Logout/>}/>
-                        <Route path="/" element={<QuestionList currentUser={currentUser}/>}></Route>
+                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser}/>}></Route>
                         <Route path="/admin" element={<NormalValueList currentUser={currentUser}></NormalValueList>}/>
                     </Routes>
                 </header>
