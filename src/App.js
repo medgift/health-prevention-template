@@ -1,23 +1,22 @@
 import React from "react";
 import "./App.css";
-import {Route, Routes, Link, NavLink} from "react-router-dom";
+import {Route, Routes, NavLink, Navigate} from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import QuestionList from "./pages/Questionnaire";
 import NormalValueList from "./pages/Admin";
-//import icon from "./icon.svg.png";
 import icon from "./hearth_icon.png"
 
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
 
 import EditAvatar from "./pages/EditAvatar";
-import {db} from "./initFirebase";
-import {useEffect, useState, Component} from "react";
+import {useEffect, useState} from "react";
 import Logout from "./pages/Logout";
+import PageNotFound from "./pages/404";
 
-class Navigate extends React.Component {
+class Nav extends React.Component {
 
     render() {
         let LoginLogout = null;
@@ -80,20 +79,24 @@ export default function App() {
     //Separation of editAvatar Route due to css display issues (text-align: center;)
     return (
         <div className="App">
-            <Navigate currentUser={currentUser}/>
+            <Nav currentUser={currentUser}/>
             <header className="App-header">
                 <header className="App-header-align">
                     <Routes>
+                        <Route exact path="/" element={<Navigate to="/home"></Navigate>}></Route>
                         <Route path="/home" element={<Home currentUser={currentUser}/>}/>
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/logout" element={<Logout/>}/>
                         <Route path="/questionnaire" element={<QuestionList currentUser={currentUser}/>}></Route>
                         <Route path="/admin" element={<NormalValueList currentUser={currentUser}></NormalValueList>}/>
+                        <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
+                        <Route path="*" element={<PageNotFound></PageNotFound>}/>
                     </Routes>
                 </header>
                 <Routes>
-                    <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
+
+
                 </Routes>
             </header>
 
