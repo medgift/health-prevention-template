@@ -340,14 +340,14 @@ input:checked + .slider:before {
 
 .homeGrid {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 47% 50%;
     grid-gap: 3vh;
     grid-template-rows: auto;
     margin: 0 0;
     margin-left: 0;
     margin-right: 25%;
     border-radius: 15px;
-    padding: 3vh;
+    padding: 3vh 3vh;
     background: #1a73e8;
     box-shadow: 7px 7px #114d9b;
 
