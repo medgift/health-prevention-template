@@ -7,11 +7,10 @@ import Home from "./pages/Home";
 import QuestionList from "./pages/Questionnaire";
 import NormalValueList from "./pages/Admin";
 import icon from "./hearth_icon.png"
-
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
-
 import EditAvatar from "./pages/EditAvatar";
+
 import {useEffect, useState} from "react";
 import Logout from "./pages/Logout";
 import PageNotFound from "./pages/404";
@@ -94,12 +93,7 @@ export default function App() {
                         <Route path="*" element={<PageNotFound></PageNotFound>}/>
                     </Routes>
                 </header>
-                <Routes>
-
-
-                </Routes>
             </header>
-
         </div>
     );
 }
