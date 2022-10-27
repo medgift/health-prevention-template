@@ -87,9 +87,9 @@ export default class EditAvatar extends React.Component {
     render() {
 
         return (
-            <div className="padded_div avatar">
+            <div className="padded_div avatarDiv">
                 <h1>Edit your Avatar</h1>
-                <NiceAvatar shape={"rounded"} style={{width: '10rem', height: '10rem'}} {...this.state.myConfig} />
+                <NiceAvatar id="avatar" shape={"rounded"} style={{width: '10rem', height: '10rem'}} {...this.state.myConfig} />
                 <br/>
                 <div className={"grid"}>
                     <label>Sex: </label>
@@ -175,6 +175,7 @@ export default class EditAvatar extends React.Component {
                 </div>
                 <button className={"formButton"} onClick={this.save}>Save</button>
             </div>
+
         )
     };
 
