@@ -46,7 +46,7 @@
 }
 
 .appBar a:hover:not(.active) {
-    background-color: #1A73E8;
+    background-color: #232323;
     color: white;
 }
 

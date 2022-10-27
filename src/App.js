@@ -37,7 +37,7 @@ class Navigate extends React.Component {
                     <div className="container-fluid">
                         <ul className="nav navbar-nav">
                             <NavLink to="/home">Home</NavLink>
-                            <NavLink  to="/">Questionnaire</NavLink>
+                            <NavLink  to="/questionnaire">Questionnaire</NavLink>
                             <NavLink to="/editAvatar">Avatar</NavLink>
                             {register}
                             {LoginLogout}
@@ -88,7 +88,7 @@ export default function App() {
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/logout" element={<Logout/>}/>
-                        <Route path="/" element={<QuestionList currentUser={currentUser}/>}></Route>
+                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser}/>}></Route>
                         <Route path="/admin" element={<NormalValueList currentUser={currentUser}></NormalValueList>}/>
                     </Routes>
                 </header>
