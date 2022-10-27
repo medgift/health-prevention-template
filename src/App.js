@@ -75,7 +75,6 @@ export default function App() {
         );
     }
 
-    //Separation of editAvatar Route due to css display issues (text-align: center;)
     return (
         <div className="App">
             <Nav currentUser={currentUser}/>
