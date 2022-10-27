@@ -35,6 +35,8 @@ export default class EditAvatar extends React.Component {
     async getPatient() {
         if (this.props.currentUser) {
             const pat = await PatientDB.prototype.getPatientById(this.props.currentUser.uid);
+            if (pat.avatarConfig == null)
+                return; //patient may not have an avatar yet
             const config = genConfig(pat.avatarConfig);
             this.setState({myConfig: config});
             console.log(config);
