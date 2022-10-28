@@ -60,7 +60,7 @@ export default function NormalValueList({currentUser}) {
             <form onSubmit={handleFormSubmit}>
                 <button
                     type="submit"
-                    className="formButton rightButton animatedButton"
+                    className="formButton rightButton animatedButton bigButton"
                 >Confirm
                 </button>
                 <br/>

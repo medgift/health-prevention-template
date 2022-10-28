@@ -3,6 +3,7 @@ import {QuestionDB} from "../DAL/QuestionDB";
 import {ResponseDB} from "../DAL/ResponseDB";
 import {ResponseDTO} from "../DTO/ResponseDTO";
 import {Variables} from "../Context/Variables";
+import {useNavigate} from "react-router-dom";
 
 
 // Manages a single question, its input and values
@@ -228,6 +229,9 @@ export default function QuestionList({currentUser}) {
     let [Display5, setDisplay5] = useState(false);
     let [Display6, setDisplay6] = useState(false);
     let [Display7, setDisplay7] = useState(false);
+    const navigate = useNavigate();
+
+    let title = currentUser ? "fill in the questionnaire to obtain custom results !" : "log in to save your answers"
 
     useEffect(() => {
         (async function loadQuestions() {
@@ -246,6 +250,8 @@ export default function QuestionList({currentUser}) {
             let userId = currentUser ? currentUser.uid : null ; //id is null if a guest fills the questionnaire
             let resDTO = new ResponseDTO(Date.now(), userId, responses);
             await ResponseDB.prototype.addResponses(resDTO);
+            //user shall be redirected to the results page
+            navigate("/view")
         }())
     };
 
@@ -253,7 +259,7 @@ export default function QuestionList({currentUser}) {
     return (
         <div>
         <div id="questionnaire">
-            <h3>Ready to jump in ?</h3>
+            <h3 style={{textAlign: "left"}}>{title}</h3>
             {questions.map((question) => (
                 <div key={question.questionNO}>
                         <Question {...question}
@@ -265,7 +271,7 @@ export default function QuestionList({currentUser}) {
             ))}
         </div>
             <button type="submit"
-            className="formButton rightButton questionButton animatedButton"
+            className="formButton questionButton animatedButton"
             onClick={HandleFormSubmit}>Confirm</button>
         </div>
     );
