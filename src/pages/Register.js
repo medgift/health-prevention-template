@@ -2,7 +2,6 @@ import UserForm from "../components/UserForm";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import {auth} from "../initFirebase";
 import {useNavigate} from "react-router-dom";
-import {onAuthStateChanged} from "firebase/auth";
 import {PatientDB} from "../DAL/PatientDB";
 import {useState} from "react";
 
@@ -24,20 +23,16 @@ export default function Register() {
 
         try {
             //create user in auth section
-            await createUserWithEmailAndPassword(auth, email, password);
-            navigate("/");
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+            //create a patient account, using auth generated id
+            let patient = {"FirstName": firstName, "LastName": lastName};
+            PatientDB.prototype.addPatient(userCredential.user.uid, patient);
+            navigate("/home");
         } catch (e) {
             console.error(e);
         }
     };
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            //create a patient account
-            let patient = {"FirstName": firstName, "LastName": lastName};
-            PatientDB.prototype.addPatient(user.uid, patient);
-        }
-    });
 
     return (
         <div className="padded_div register ">
