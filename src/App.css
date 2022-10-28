@@ -221,8 +221,6 @@
     padding: 1vh;
     color: white;
     text-align: center;
-    font-size: larger;
-    width: fit-content;
 
 }
 
@@ -235,6 +233,8 @@
     margin-right: 18%;
     margin-top: 2vh;
     margin-bottom: 5%;
+    font-size: larger;
+    width: fit-content;
 }
 
 #questionnaireTitle {
