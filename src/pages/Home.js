@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 export default function Home({ currentUser }) {
     window.addEventListener("scroll", reveal)
   return (
-      <div>
+      <div className="general">
           <h1 style={{textAlign: "left"}}>Welcome to the Health Prevention System</h1>
           <div className={"homeGrid"}>
               <div className={"homeGridItem"} style={{width: "auto", background: "white"}}>

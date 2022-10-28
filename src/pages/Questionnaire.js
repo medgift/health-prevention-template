@@ -258,13 +258,11 @@ export default function QuestionList({currentUser}) {
             <h2 id="questionnaireTitle">Questionnaire</h2>
             {questions.map((question) => (
                 <div key={question.questionNO}>
-                    <div className="padded_div question">
                         <Question {...question}
                                   display5={Display5} setdisplay5={setDisplay5}
                                   display6={Display6} setdisplay6={setDisplay6}
                                   display7={Display7} setdisplay7={setDisplay7}
                                   />
-                    </div>
                 </div>
             ))}
         </div>

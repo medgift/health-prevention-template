@@ -1,4 +1,6 @@
+
 .App {
+    background: #fff url(../src/White_Background_1_RF_RMPL-01.jpg) center center/cover no-repeat fixed;
 }
 
 .App-logo {
@@ -13,11 +15,15 @@
 }
 
 #navBarDiv {
-    background-color: black;
+    background-color: #001c46;
     max-width: 100%;
     margin: 0 auto;
     margin-left: auto;
     text-align: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
 }
 
 #icon {
@@ -46,7 +52,7 @@
 }
 
 .appBar a:hover:not(.active) {
-    background-color: #232323;
+    background-color: #111e6b;
     color: white;
 }
 
@@ -102,7 +108,6 @@
 }
 
 #questionnaire {
-    margin-top: 2%;
     display: table;
     column-count: 2;
     width: 45vw;
@@ -111,27 +116,43 @@
     flex-direction: column;
     margin-left: 0px;
     box-shadow: 0px 0px;
+
+    text-align: center;
+    margin-top: 20%;
+    padding-right: 100px;
+    padding-left: 100px;
+    background-color: #b2bbc7;
+    border-radius: 10px;
 }
 
 .questionDiv {
-    display: block;
+    /*color: white;
+    background-color: #3679f8;*/
+    font-size: larger;
+    border-radius: 20px;
+    overflow-clip: true;
+    margin-bottom: 20px;
+    text-align: left;
+    animation: 0.5s ease 0s 1 slideInFromUp;
+}
+@keyframes slideInFromUp {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 100;
+    }
 }
 
-.question {
-    border: 0;
-    padding: 0px;
-    min-width: 70vh;
-    box-shadow: 0px 0px;
-    max-width: 100%;
-    margin-left: 0px;
-    text-align: left;
-    min-height: 0px;
-}
 
 .questionTitle {
     min-width: 50%;
     max-width: 100%;
     margin-bottom: 2vh;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .questionTitleDiv {
@@ -142,10 +163,12 @@
 }
 
 .inputDiv {
-    display: flex;
+    display: inline-flex;
+    overflow-wrap: anywhere;
     width: 100%;
-    align-self: flex-end;
-    align-content: flex-end;
+    margin-left: 2%;
+    display: inline-flex;
+
 }
 
 .formInput {
@@ -193,10 +216,9 @@
     border-radius: 5px;
     padding: 1vh;
     color: white;
-    transition: all 0.2s ease-in-out;
     text-align: center;
     font-size: large;
-    width: 12vh;
+    width: fit-content;
 }
 
 .animatedButton:hover {
@@ -214,7 +236,8 @@
 }
 
 #questionnaireTitle {
-    text-align: left;
+    text-align: center;
+    font-size: 2.5em;
 }
 
 .centered_div {
@@ -224,21 +247,20 @@
 }
 
 .App-header {
-    background-color: white;
+    background-color: #eef0ff; /*Aller aussi modifier le .App au sommet du fichier*/
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    /*align-items: center;*/
     align-items: flex-start;
     margin-left: 21%;
-    justify-content: center;
     font-size: calc(10px + 2vmin);
     color: black;
+    background: #fff url(../src/White_Background_1_RF_RMPL-01.jpg) center center/cover no-repeat fixed;
 
 }
 
 .App-header-align {
-    text-align: center;
+
 }
 
 .App-link {
@@ -396,4 +418,8 @@ input:checked + .slider:before {
 .reveal.active {
     transform: translateX(0px);
     opacity: 1;
+}
+
+.general{
+    margin-top:8%;
 }
