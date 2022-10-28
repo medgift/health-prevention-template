@@ -419,3 +419,7 @@ input:checked + .slider:before {
     transform: translateX(0px);
     opacity: 1;
 }
+
+.general{
+    margin-top:8%;
+}
