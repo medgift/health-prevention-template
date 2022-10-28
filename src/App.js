@@ -17,6 +17,7 @@ import PageNotFound from "./pages/404";
 import {PatientDB} from "./DAL/PatientDB";
 import {AdminDB} from "./DAL/AdminDB";
 import {UserRoles} from "./DTO/UserRoles"
+import MyPage from "./pages/MyPage";
 
 class Nav extends React.Component {
 
@@ -39,6 +40,7 @@ class Nav extends React.Component {
                         <ul className="nav navbar-nav">
                             <NavLink to="/home">Home</NavLink>
                             <NavLink to="/questionnaire">Questionnaire</NavLink>
+                            <NavLink to="/view">Results</NavLink>
                             <NavLink to="/editAvatar">Avatar</NavLink>
                             {register}
                             {LoginLogout}
