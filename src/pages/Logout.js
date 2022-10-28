@@ -1,7 +1,7 @@
-import { useEffect } from "react";
-import { signOut } from "firebase/auth";
-import { auth } from "../initFirebase";
-import { useNavigate } from "react-router-dom";
+import {useEffect} from "react";
+import {signOut} from "firebase/auth";
+import {auth} from "../initFirebase";
+import {useNavigate} from "react-router-dom";
 
 export default function Logout() {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ export default function Logout() {
   useEffect(() => {
     async function logout() {
       await signOut(auth);
-      navigate("/questionnaire");
+      navigate("/home");
     }
 
     logout();
