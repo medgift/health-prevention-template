@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import {Route, Routes, NavLink, Navigate} from "react-router-dom";
+import {Route, Routes, NavLink, Navigate, useNavigate} from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -14,6 +14,9 @@ import EditAvatar from "./pages/EditAvatar";
 import {useEffect, useState} from "react";
 import Logout from "./pages/Logout";
 import PageNotFound from "./pages/404";
+import {PatientDB} from "./DAL/PatientDB";
+import {AdminDB} from "./DAL/AdminDB";
+import {UserRoles} from "./DTO/UserRoles"
 
 class Nav extends React.Component {
 
@@ -30,12 +33,12 @@ class Nav extends React.Component {
 
         return (
             <div id="navBarDiv">
-                <NavLink to="/home"><img id="icon" src={icon} alt="logo" /></NavLink>
+                <NavLink to="/home"><img id="icon" src={icon} alt="logo"/></NavLink>
                 <nav className="navbar navbar-default appBar">
                     <div className="container-fluid">
                         <ul className="nav navbar-nav">
                             <NavLink to="/home">Home</NavLink>
-                            <NavLink  to="/questionnaire">Questionnaire</NavLink>
+                            <NavLink to="/questionnaire">Questionnaire</NavLink>
                             <NavLink to="/editAvatar">Avatar</NavLink>
                             {register}
                             {LoginLogout}
@@ -49,21 +52,48 @@ class Nav extends React.Component {
 
 
 export default function App() {
-    /* Current user state */
-    const [currentUser, setCurrentUser] = useState(undefined)
+    /* Current user from firestore */
+    const [currentUser, setCurrentUser] = useState(undefined);
+    const [userRole, setUserRole] = useState(UserRoles.prototype.GUEST);
+    const [currentPatient, setCurrentPatient] = useState(undefined);
+    const navigate = useNavigate();
 
     /* Watch for authentication state changes */
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             console.log("User is", user);
             setCurrentUser(user);
-        });
 
+            //Search for users in the db
+            redirectUser(user, setCurrentPatient, setUserRole);
+        });
         // Unsubscribe from changes when App is unmounted
         return () => {
             unsubscribe();
         };
     }, []);
+
+    async function redirectUser(user, setCurrentPatient) {
+        if (user) {
+            console.log("SIGNING IN !*****************************")
+            //search for a patient in the db
+            let patient = await PatientDB.prototype.getPatientById(user.uid);
+            if (patient != null) {
+                setCurrentPatient(patient);
+                setUserRole(UserRoles.prototype.PATIENT);
+                navigate("/questionnaire");
+                return;
+            }
+            //search for an admin the db
+            let admin = await AdminDB.prototype.getAdminById(user.uid);
+            if (admin != null) {
+                navigate("/admin");
+                setUserRole(UserRoles.prototype.ADMIN);
+                return;
+            }
+            console.log("No admin or patients found");
+        }
+    }
 
     if (currentUser === undefined) {
         return (
@@ -87,8 +117,8 @@ export default function App() {
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/logout" element={<Logout/>}/>
                         <Route path="/questionnaire" element={<QuestionList currentUser={currentUser}/>}></Route>
-                        <Route path="/admin" element={<NormalValueList currentUser={currentUser}></NormalValueList>}/>
-                        <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
+                        <Route path="/admin" element={<NormalValueList currentUser={currentUser} userRole={userRole}></NormalValueList>}/>
+                        <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser} userRole={userRole}/>}/>
                         <Route path="*" element={<PageNotFound></PageNotFound>}/>
                     </Routes>
                 </header>
