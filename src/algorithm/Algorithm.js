@@ -1,5 +1,3 @@
-Math;
-
 /* Coefficients fournis */
 const coeffNoInfM ={age:0.3742,fume:0.6012,syst:0.2777,chol:0.1458, hdl:-0.2698,
     fumeT:-0.0755,systT:-0.0255,cholT:-0.0281,hdlT:0.0426};
@@ -30,11 +28,6 @@ const coeffDiabRisqueCalc=-13;
 const afinfTauxYes=1.3;
 const afinfTauxNo=1.0;
 
-/* Valeur qui modifie les pourcent lors de changement en "LIVE" */
-const modifAlimTauxInf = 6;
-const modifExerTauxInf = 9;
-const modifPoidTauxDia = 5;
-
 /* Valeur par défaut qu'un individu a au niveau de son risque de cancer (en décimal)*/
 const normalRiskCanc = 0.09;
 
@@ -60,7 +53,7 @@ const DiaAge2 = 55;
 const coeffSuppWaist=3;
 
 
-class Algo{
+export default class Algorithm{
     constructor(v){
         this.sexe=v[0];
         this.age=v[1];
@@ -87,6 +80,11 @@ class Algo{
         this.diaRate=0.0;
         this.canRate=0.0;
         this.Calculate();
+
+        /* Valeur qui modifie les pourcent lors de changement en "LIVE" */
+        this.modifAlimTauxInf = 6;
+        this.modifExerTauxInf = 9;
+        this.modifPoidTauxDia = 5;
     }
 
     Save(){
@@ -111,9 +109,9 @@ class Algo{
     }
 
     Calculate(){
-        this.CalculateInfarctus();
-        this.CalculateCancer();
-        this.CalculateDiabete();
+        this.infRate= this.CalculateInfarctus();
+        this.canRate=this.CalculateCancer();
+        this.diaRate=this.CalculateDiabete();
     }
 
     SetFume(fum){
@@ -123,15 +121,15 @@ class Algo{
     }
 
     SetAlim(ali){
-        //this.infRate+=this.alim-ali*modifAlimTauxInf;
-        this.alim=ali;
+        this.infRate+=this.alim-ali*this.modifAlimTauxInf;
+        return ali;
         //this.CalculateCancer();
         //this.CalculateDiabete();
     }
 
     SetSport(spo){
-        //this.infRate+=this.sport-spo*modifExerTauxInf;
-        this.sport=spo;
+        this.infRate+=this.sport-spo*this.modifExerTauxInf;
+        return spo;
         //this.CalculateDiabete();
         //this.CalculateCancer();
     }
@@ -142,9 +140,9 @@ class Algo{
     }
 
     SetPoids(pds){
-        //let perfPoids = 22*Math.pow(this.taille/100,2);
-        //this.diaRate-=(this.poids-(pds>perfPoids?pds:Math.floor(perfPoids)))*modifPoidTauxDia;
-        this.poids=pds;
+        let perfPoids = 22*Math.pow(this.taille/100,2);
+        this.diaRate-=(this.poids-(pds>perfPoids?pds:Math.floor(perfPoids)))*this.modifPoidTauxDia;
+        return pds;
         this.BMI = this.SetBMI();
     }
 
@@ -161,7 +159,7 @@ class Algo{
 
             let risk = 1-Math.pow(coeffInfRisqueCalc0,Math.pow(Math.E,sum-coeffInfRisqueCalc1));
 
-            this.infRate= risk*100;
+            return (risk*100);
         }else{
             //jamais eu d'infarctus ni avc
             let coeff = this.sexe?coeffNoInfM:coeffNoInfF;
@@ -177,7 +175,7 @@ class Algo{
 
             let correction = final_risk * (this.afinf?afinfTauxYes:afinfTauxNo);
 
-            this.infRate=correction*100;
+            return (correction*100);
         }
     }
 
@@ -185,10 +183,9 @@ class Algo{
         let coeff = this.sexe?coeffDiabM:coeffDiabF;
 
         let score = (this.age<DiaAge1?1:this.age<DiaAge2?3:6) + (this.BMI<DiaBMI0?0:this.BMI<DiaBMI1?1:this.BMI<DiaBMI2?3:6) +  (this.systBool>0?2:0) + (this.glycBool>0?5:0) + alimAnswersDiab-this.alim + sportAnswersDiab-this.sport + coeffSuppWaist;
-        console.log("score = " + score);
         let risk = Math.pow(score,3)*coeff[0] -  Math.pow(score,2)*coeff[1] +  score*coeff[2] - 3*Math.pow(Math.E, coeffDiabRisqueCalc);
-
-        this.diaRate=(risk>100?100:risk);
+        console.log(score);
+        return (risk>100?100:risk);
     }
 
     CalculateCancer(){
@@ -197,7 +194,7 @@ class Algo{
 
         let risk=result + normalRiskCanc;
 
-        this.canRate=risk*100;
+        return (risk*100);
     }
 
 }
