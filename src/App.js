@@ -17,6 +17,7 @@ import PageNotFound from "./pages/404";
 import {PatientDB} from "./DAL/PatientDB";
 import {AdminDB} from "./DAL/AdminDB";
 import {UserRoles} from "./DTO/UserRoles"
+import MyPage from "./pages/MyPage";
 
 class Nav extends React.Component {
 

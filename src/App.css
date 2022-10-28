@@ -1,6 +1,6 @@
 
 .App {
-    background: #fff url(../src/White_Background_1_RF_RMPL-01.jpg) center center/cover no-repeat fixed;
+    /*background: #fff url(../src/White_Background_1_RF_RMPL-01.jpg) center center/cover no-repeat fixed;*/
 }
 
 .App-logo {
@@ -19,6 +19,7 @@
     max-width: 100%;
     margin: 0 auto;
     margin-left: auto;
+
     text-align: center;
     position: fixed;
     top: 0;
@@ -249,7 +250,7 @@
 }
 
 .App-header {
-    background-color: #eef0ff; /*Aller aussi modifier le .App au sommet du fichier*/
+/*background-color: #eef0ff; /*Aller aussi modifier le .App au sommet du fichier*/
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -257,7 +258,7 @@
     margin-left: 21%;
     font-size: calc(10px + 2vmin);
     color: black;
-    background: #fff url(../src/White_Background_1_RF_RMPL-01.jpg) center center/cover no-repeat fixed;
+/*    background: #fff url(../src/White_Background_1_RF_RMPL-01.jpg) center center/cover no-repeat fixed;*/
 
 }
 
