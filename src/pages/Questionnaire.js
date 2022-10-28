@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {QuestionDB} from "../DAL/QuestionDB";
-import {Variables} from "../components/Variables";
 import {ResponseDB} from "../DAL/ResponseDB";
 import {ResponseDTO} from "../DTO/ResponseDTO";
+import {Variables} from "../Context/Variables";
 
 
 // Manages a single question, its input and values
@@ -28,77 +28,77 @@ class Question extends React.Component{
 
         //Assigns the value of the answer to the corresponding variable in Variables.js
         switch (this.props.variableName) {
-            case "Poids": Variables.prototype.Poids = value;
+            case "Poids": Variables.Poids = value;
                 break;
-            case "Alcool": Variables.prototype.Alcool = value;
+            case "Alcool": Variables.Alcool = value;
                 break;
-            case "GlycBool": Variables.prototype.GlycBool = value;
+            case "GlycBool": Variables.GlycBool = value;
                 //Display question 6.1 if answer is Yes
                 this.props.setdisplay6(current => !current);
                 break;
-            case "Alim": Variables.prototype.Alim = value;
+            case "Alim": Variables.Alim = value;
                 break;
-            case "Sport": Variables.prototype.Sport = value;
+            case "Sport": Variables.Sport = value;
                 break;
-            case "Inf": Variables.prototype.Inf = value;
+            case "Inf": Variables.Inf = value;
                 break;
-            case "Gender" : Variables.prototype.Gender = value;
+            case "Gender" : Variables.Gender = value;
                 break;
-            case "DIAB" : Variables.prototype.DIAB = value;
+            case "DIAB" : Variables.DIAB = value;
                 break;
-            case "Afcancer" : Variables.prototype.Afcancer = value;
+            case "Afcancer" : Variables.Afcancer = value;
                 break;
-            case "Avc" : Variables.prototype.Avc = value;
+            case "Avc" : Variables.Avc = value;
                 break;
-            case "Age" : Variables.prototype.Age = value;
+            case "Age" : Variables.Age = value;
                 break;
-            case "Afinf" : Variables.prototype.Afinf = value;
+            case "Afinf" : Variables.Afinf = value;
                 break;
-            case "SystBool" :Variables.prototype.SystBool = value;
+            case "SystBool" :Variables.SystBool = value;
                 //Display question 5.1 if answer is Yes
                 this.props.setdisplay5(current => !current);
                 break;
-            case "Fume" : Variables.prototype.Fume = value;
+            case "Fume" : Variables.Fume = value;
                 break;
-            case "Taille" : Variables.prototype.Taille = value;
+            case "Taille" : Variables.Taille = value;
                 break;
-            case "CholBool" : Variables.prototype.CholBool = value;
+            case "CholBool" : Variables.CholBool = value;
                 //Display question 7.1 and 7.2 if answer is Yes
                 this.props.setdisplay7(current => !current);
                 break;
-            case "Syst" : Variables.prototype.Syst = value;
+            case "Syst" : Variables.Syst = value;
                 break;
-            case "Glyc" : Variables.prototype.Glyc = value;
+            case "Glyc" : Variables.Glyc = value;
                 break;
-            case "Chol" : Variables.prototype.Chol = value;
+            case "Chol" : Variables.Chol = value;
                 break;
-            case "HDL" : Variables.prototype.HDL = value;
+            case "HDL" : Variables.HDL = value;
                 break;
         }
 
         //debug---------------------------------------------------
         console.log("Answer: " + target.value);
         console.log("Checked: " + target.checked);
-        console.log("Poids: " + Variables.prototype.Poids);
-        console.log("Alcool: " + Variables.prototype.Alcool);
-        console.log("GlycBool: " + Variables.prototype.GlycBool);
-        console.log("Alim: " + Variables.prototype.Alim);
-        console.log("Sport: " + Variables.prototype.Sport);
-        console.log("Inf: " + Variables.prototype.Inf);
-        console.log("Gender: " + Variables.prototype.Gender);
-        console.log("DIAB: " + Variables.prototype.DIAB);
-        console.log("Afcancer: " + Variables.prototype.Afcancer);
-        console.log("Avc: " + Variables.prototype.Avc);
-        console.log("Age: " + Variables.prototype.Age);
-        console.log("Afinf: " + Variables.prototype.Afinf);
-        console.log("SystBool: " + Variables.prototype.SystBool);
-        console.log("Fume: " + Variables.prototype.Fume);
-        console.log("Taille: " + Variables.prototype.Taille);
-        console.log("CholBool: " + Variables.prototype.CholBool);
-        console.log("Syst: " + Variables.prototype.Syst);
-        console.log("Glyc: " + Variables.prototype.Glyc);
-        console.log("Chol: " + Variables.prototype.Chol);
-        console.log("HDL: " + Variables.prototype.HDL);
+        console.log("Poids: " + Variables.Poids);
+        console.log("Alcool: " + Variables.Alcool);
+        console.log("GlycBool: " + Variables.GlycBool);
+        console.log("Alim: " + Variables.Alim);
+        console.log("Sport: " + Variables.Sport);
+        console.log("Inf: " + Variables.Inf);
+        console.log("Gender: " + Variables.Gender);
+        console.log("DIAB: " + Variables.DIAB);
+        console.log("Afcancer: " + Variables.Afcancer);
+        console.log("Avc: " + Variables.Avc);
+        console.log("Age: " + Variables.Age);
+        console.log("Afinf: " + Variables.Afinf);
+        console.log("SystBool: " + Variables.SystBool);
+        console.log("Fume: " + Variables.Fume);
+        console.log("Taille: " + Variables.Taille);
+        console.log("CholBool: " + Variables.CholBool);
+        console.log("Syst: " + Variables.Syst);
+        console.log("Glyc: " + Variables.Glyc);
+        console.log("Chol: " + Variables.Chol);
+        console.log("HDL: " + Variables.HDL);
         console.log();
         //debug---------------------------------------------------
     };
@@ -106,36 +106,35 @@ class Question extends React.Component{
 
     //Questions and inputs change depending on question type
     render() {
-
         let formattedQuestion;
 
         //these must be displayed only if the answer to the previous question is Yes
         switch (this.props.questionNO) {
             case 5.1 : if(this.props.display5 === false){
-                Variables.prototype.Syst = this.props.normalValue;
+                Variables.Syst = this.props.normalValue;
                 //Debug---------------------------------------------------
-                console.log("Syst reset: " + Variables.prototype.Syst);
+                console.log("Syst at base value: " + Variables.Syst);
                 return null;
             }
                 break;
             case 6.1 : if(this.props.display6 === false){
-                Variables.prototype.Glyc = this.props.normalValue;
+                Variables.Glyc = this.props.normalValue;
                 //Debug---------------------------------------------------
-                console.log("Glyc reset: " + Variables.prototype.Glyc);
+                console.log("Glyc at base value: " + Variables.Glyc);
                 return null;
             }
                 break;
             case 7.1: if(this.props.display7 === false){
-                Variables.prototype.Chol = this.props.normalValue;
+                Variables.Chol = this.props.normalValue;
                 //Debug---------------------------------------------------
-                console.log("Chol reset: " + Variables.prototype.Chol);
+                console.log("Chol at base value: " + Variables.Chol);
                 return null;
             }
                 break;
             case 7.2: if(this.props.display7 === false){
-                Variables.prototype.HDL = this.props.normalValue;
+                Variables.HDL = this.props.normalValue;
                 //Debug---------------------------------------------------
-                console.log("HDL reset: " + Variables.prototype.HDL);
+                console.log("HDL at base value: " + Variables.HDL);
                 return null;
             }
                 break;
@@ -170,9 +169,9 @@ class Question extends React.Component{
                                    min={this.props.choices[0]}
                                    max={this.props.choices[this.props.choices.length - 1]}
                                    step="0.1"
-                                   defaultValue={this.props.defaultValue}
+                                   defaultValue={this.props.normalValue}
                                    onChange={this.HandleInputChanges}/>
-                            &nbsp;{this.state.answer}
+                            &nbsp;{this.state.answer} {this.props.unit}
                         </>
                 );
             }else{
@@ -185,7 +184,7 @@ class Question extends React.Component{
                                step="1"
                                defaultValue={this.props.normalValue}
                                onChange={this.HandleInputChanges}/>
-                        &nbsp;{this.state.answer}
+                        &nbsp;{this.state.answer}  {this.props.unit}
                     </>
                 );
             }
@@ -245,7 +244,7 @@ export default function QuestionList({currentUser}) {
     let HandleFormSubmit = (event) => {
         event.preventDefault();
         (async function postResponses() {
-            let responses = {...Variables.prototype}; //put values from variables class in an array
+            let responses = {...Variables}; //put values from variables class in an array
             let userId = currentUser ? currentUser.uid : null ; //id is null if a guest fills the questionnaire
             let resDTO = new ResponseDTO(Date.now(), userId, responses);
             await ResponseDB.prototype.addResponses(resDTO);
@@ -259,12 +258,11 @@ export default function QuestionList({currentUser}) {
             <h2 id="questionnaireTitle">Questionnaire</h2>
             {questions.map((question) => (
                 <div key={question.questionNO}>
-                    <div className="padded_div question">
                         <Question {...question}
                                   display5={Display5} setdisplay5={setDisplay5}
                                   display6={Display6} setdisplay6={setDisplay6}
-                                  display7={Display7} setdisplay7={setDisplay7}/>
-                    </div>
+                                  display7={Display7} setdisplay7={setDisplay7}
+                                  />
                 </div>
             ))}
         </div>
@@ -279,45 +277,45 @@ function setDefaultValues(questions) {
 //Get the default values of the questions and set them in the Variables class
     questions.forEach(question => {
         switch (question.variableName) {
-            case "Poids": Variables.prototype.Poids = question.normalValue;
+            case "Poids": Variables.Poids = question.normalValue;
                 break;
-            case "Alcool": Variables.prototype.Alcool = question.normalValue;
+            case "Alcool": Variables.Alcool = question.normalValue;
                 break;
-            case "GlycBool": Variables.prototype.GlycBool = question.normalValue;
+            case "GlycBool": Variables.GlycBool = question.normalValue;
                 break;
-            case "Alim": Variables.prototype.Alim = question.normalValue;
+            case "Alim": Variables.Alim = question.normalValue;
                 break;
-            case "Sport": Variables.prototype.Sport = question.normalValue;
+            case "Sport": Variables.Sport = question.normalValue;
                 break;
-            case "Inf": Variables.prototype.Inf = question.normalValue;
+            case "Inf": Variables.Inf = question.normalValue;
                 break;
-            case "Gender" : Variables.prototype.Gender = question.normalValue;
+            case "Gender" : Variables.Gender = question.normalValue;
                 break;
-            case "DIAB" : Variables.prototype.DIAB = question.normalValue;
+            case "DIAB" : Variables.DIAB = question.normalValue;
                 break;
-            case "Afcancer" : Variables.prototype.Afcancer = question.normalValue;
+            case "Afcancer" : Variables.Afcancer = question.normalValue;
                 break;
-            case "Avc" : Variables.prototype.Avc = question.normalValue;
+            case "Avc" : Variables.Avc = question.normalValue;
                 break;
-            case "Age" : Variables.prototype.Age = question.normalValue;
+            case "Age" : Variables.Age = question.normalValue;
                 break;
-            case "Afinf" : Variables.prototype.Afinf = question.normalValue;
+            case "Afinf" : Variables.Afinf = question.normalValue;
                 break;
-            case "SystBool" :Variables.prototype.SystBool = question.normalValue;
+            case "SystBool" :Variables.SystBool = question.normalValue;
                 break;
-            case "Fume" : Variables.prototype.Fume = question.normalValue;
+            case "Fume" : Variables.Fume = question.normalValue;
                 break;
-            case "Taille" : Variables.prototype.Taille = question.normalValue;
+            case "Taille" : Variables.Taille = question.normalValue;
                 break;
-            case "CholBool" : Variables.prototype.CholBool = question.normalValue;
+            case "CholBool" : Variables.CholBool = question.normalValue;
                 break;
-            case "Syst" : Variables.prototype.Syst = question.normalValue;
+            case "Syst" : Variables.Syst = question.normalValue;
                 break;
-            case "Glyc" : Variables.prototype.Glyc = question.normalValue;
+            case "Glyc" : Variables.Glyc = question.normalValue;
                 break;
-            case "Chol" : Variables.prototype.Chol = question.normalValue;
+            case "Chol" : Variables.Chol = question.normalValue;
                 break;
-            case "HDL" : Variables.prototype.HDL = question.normalValue;
+            case "HDL" : Variables.HDL = question.normalValue;
                 break;
         }});
 }

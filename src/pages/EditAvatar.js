@@ -1,15 +1,13 @@
 import NiceAvatar, {genConfig} from "react-nice-avatar";
 import React from "react";
 import {PatientDB} from "../DAL/PatientDB";
-import {redirect} from "react-router-dom";
 
 export default class EditAvatar extends React.Component {
     constructor(props) {
         super(props);
 
-        if (this.props.currentUser) {
-            redirect("/");
-            return;
+        if (this.props.navigate == null) {
+            //navigate to login page
         }
 
         const defaultConfig = {
@@ -37,6 +35,8 @@ export default class EditAvatar extends React.Component {
     async getPatient() {
         if (this.props.currentUser) {
             const pat = await PatientDB.prototype.getPatientById(this.props.currentUser.uid);
+            if (pat.avatarConfig == null)
+                return; //patient may not have an avatar yet
             const config = genConfig(pat.avatarConfig);
             this.setState({myConfig: config});
             console.log(config);
@@ -45,8 +45,7 @@ export default class EditAvatar extends React.Component {
 
     componentDidMount() {
         if (this.props.currentUser) {
-            redirect("/")
-            return;
+            //navigate to login page
         }
         this.getPatient();
 
@@ -77,18 +76,22 @@ export default class EditAvatar extends React.Component {
 
     }
     save = async () => {
-        console.log(this.props.currentUser.uid & " " & this.state.myConfig)
-        await PatientDB.prototype.updateAvatar(this.props.currentUser.uid, this.state.myConfig)
-        alert("Avatar saved!")
+        if (this.props.currentUser == null) {
+            alert("Please login first");
+        } else {
+            console.log(this.props.currentUser.uid & " " & this.state.myConfig)
+            await PatientDB.prototype.updateAvatar(this.props.currentUser.uid, this.state.myConfig)
+            alert("Avatar saved!")
+        }
     }
 
 
     render() {
 
         return (
-            <div className="padded_div avatar">
+            <div className="padded_div avatarDiv">
                 <h1>Edit your Avatar</h1>
-                <NiceAvatar shape={"rounded"} style={{width: '10rem', height: '10rem'}} {...this.state.myConfig} />
+                <NiceAvatar id="avatar" shape={"rounded"} style={{width: '10rem', height: '10rem'}} {...this.state.myConfig} />
                 <br/>
                 <div className={"grid"}>
                     <label>Sex: </label>
@@ -172,8 +175,9 @@ export default class EditAvatar extends React.Component {
                         <option value={"polo"}>Polo</option>
                     </select>
                 </div>
-                <button className={"formButton"} onClick={this.save}>Save</button>
+                <button className={"formButton animatedButton"} onClick={this.save}>Save</button>
             </div>
+
         )
     };
 
