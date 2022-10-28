@@ -237,8 +237,6 @@ export default function QuestionList({currentUser}) {
             }())
     }, []);
 
-
-
     //Form Submission
     //Maybe change it to go to next couple of questions-----------------------------------------------------
     let HandleFormSubmit = (event) => {
@@ -255,7 +253,7 @@ export default function QuestionList({currentUser}) {
     return (
         <div>
         <div id="questionnaire">
-            <h2 id="questionnaireTitle">Questionnaire</h2>
+            <h3>Ready to jump in ?</h3>
             {questions.map((question) => (
                 <div key={question.questionNO}>
                         <Question {...question}

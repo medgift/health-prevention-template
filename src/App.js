@@ -117,8 +117,8 @@ export default function App() {
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/logout" element={<Logout/>}/>
                         <Route path="/questionnaire" element={<QuestionList currentUser={currentUser}/>}></Route>
-                        <Route path="/admin" element={<NormalValueList currentUser={currentUser} userRole={userRole}></NormalValueList>}/>
-                        <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser} userRole={userRole}/>}/>
+                        <Route path="/admin" element={<NormalValueList currentUser={currentUser}></NormalValueList>}/>
+                        <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                         <Route path="*" element={<PageNotFound></PageNotFound>}/>
                     </Routes>
                 </header>
