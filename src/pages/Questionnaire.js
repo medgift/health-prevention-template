@@ -247,7 +247,7 @@ export default function QuestionList({currentUser}) {
             let responses = {...Variables}; //put values from variables class in an array
             let userId = currentUser ? currentUser.uid : null ; //id is null if a guest fills the questionnaire
             let resDTO = new ResponseDTO(Date.now(), userId, responses);
-            await ResponseDB.addResponses(resDTO);
+            await ResponseDB.prototype.addResponses(resDTO);
         }())
     };
 
