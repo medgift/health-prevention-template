@@ -175,7 +175,7 @@ export default class EditAvatar extends React.Component {
                         <option value={"polo"}>Polo</option>
                     </select>
                 </div>
-                <button className={"formButton animatedButton"} onClick={this.save}>Save</button>
+                <button className={"formButton avatarButton animatedButton"} onClick={this.save}>Save</button>
             </div>
 
         )

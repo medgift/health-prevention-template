@@ -79,7 +79,7 @@ export default function Register() {
                 <br/>
                 <button
                     type="submit"
-                    className="formButton"
+                    className="formButton animatedButton avatarButton"
                 >Register
                 </button>
             </form>
