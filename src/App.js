@@ -90,6 +90,7 @@ export default function App() {
                         <Route path="/logout" element={<Logout/>}/>
                         <Route path="/" element={<QuestionList currentUser={currentUser}/>}></Route>
                         <Route path="/admin" element={<NormalValueList currentUser={currentUser}></NormalValueList>}/>
+                        <Route path="/view" element={<MyPage/>}/>
                     </Routes>
                 </header>
                 <Routes>
