@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./App.css";
-import {Route, Routes, NavLink, Navigate} from "react-router-dom";
+import {Navigate, NavLink, Route, Routes} from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -10,10 +10,9 @@ import icon from "./hearth_icon.png"
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
 import EditAvatar from "./pages/EditAvatar";
-
-import {useEffect, useState} from "react";
 import Logout from "./pages/Logout";
 import PageNotFound from "./pages/404";
+import Profile from "./pages/Profile";
 
 class Nav extends React.Component {
 
@@ -90,6 +89,7 @@ export default function App() {
                         <Route path="/admin" element={<NormalValueList currentUser={currentUser}></NormalValueList>}/>
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                         <Route path="*" element={<PageNotFound></PageNotFound>}/>
+                        <Route path={"/profile"} element={<Profile currentUser={currentUser}/>}/>
                     </Routes>
                 </header>
             </header>
