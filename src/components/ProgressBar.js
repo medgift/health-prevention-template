@@ -1,28 +1,28 @@
 import React from "react";
+import "../pages/MyPage.css"
 
 const ProgressBar = (props) => {
-    const { /*bgcolor,*/ now } = props;
+    const { bgcolor, now } = props;
 
     const containerStyles = {
-        height: 20,
-        width: '100%',
+        height: "3%",
+        width: '90%',
         backgroundColor: "#e0e0de",
-        borderRadius: 50,
-        margin: 50,
+        borderRadius: 5,
+        margin: "3%",
     }
 
     const fillerStyles = {
         height: '100%',
         width: `${now}%`,
-        backgroundColor: /*bgcolor*/"#09bbd9",
+        backgroundColor: `${bgcolor}`,
         borderRadius: 'inherit',
         transition: 'width 1s ease-in-out'
     }
 
     return (
-        <div style={containerStyles}>
-            <div style={fillerStyles}>
-            </div>
+        <div className={"progress"} style={containerStyles}>
+            {now<1?<></>:<div style={fillerStyles}/>}
         </div>
     );
 };

@@ -52,28 +52,8 @@ export default class EditAvatar extends React.Component {
     }
 
     //On Change Event for select-options
-    change = () => {
-        const config = {
-            sex: document.getElementById("sex").value,
-            faceColor: document.getElementById("faceColor").value,
-            hairColor: document.getElementById("hairColor").value,
-            hairStyle: document.getElementById("hairStyle").value,
-            hatColor: document.getElementById("hatColor").value,
-            hatStyle: document.getElementById("hatStyle").value,
-            eyeStyle: document.getElementById("eyeStyle").value,
-            eyeBrowStyle: document.getElementById("eyeBrowStyle").value,
-            glassesStyle: document.getElementById("glassesStyle").value,
-            noseStyle: document.getElementById("noseStyle").value,
-            mouthStyle: document.getElementById("mouthStyle").value,
-            shirtColor: document.getElementById("shirtColor").value,
-            shirtStyle: document.getElementById("shirtStyle").value,
-            bgColor: "white",
-
-        }
-        const myConfig = genConfig(config);
-        this.setState({myConfig: myConfig});
-
-
+    change = (e) => {
+        this.setState(s => ({myConfig: {...s.myConfig, [e.target.name]: e.target.value}}));
     }
     save = async () => {
         if (this.props.currentUser == null) {

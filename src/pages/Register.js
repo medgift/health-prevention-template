@@ -45,37 +45,45 @@ export default function Register() {
                     handleRegister(e, email, password, firstName, lastName);
                 }}
             >
-                <input className="formInput"
-                       type="text"
-                       placeholder="email"
-                       value={email}
-                       onChange={handleEmailChange}
-                       required
-                />
+                <div className={"input-group"}>
+                    <input className="formInput"
+                           type="text"
+                           value={email}
+                           onChange={handleEmailChange}
+                           required
+                    />
+                    <label for={"email"} class={"input-label"}>Email address</label>
+                </div>
                 <br/>
-                <input className="formInput"
-                       type="password"
-                       placeholder="password"
-                       value={password}
-                       onChange={handlePasswordChange}
-                       required
-                />
+                <div className={"input-group"}>
+                        <input className="formInput"
+                               type="password"
+                               value={password}
+                               onChange={handlePasswordChange}
+                               required
+                        />
+                        <label for={"password"} class={"input-label"}>Password</label>
+                </div>
                 <br/>
-                <input className="formInput"
-                       type="First name"
-                       placeholder="First name"
-                       value={firstName}
-                       onChange={handleFirstNameChange}
-                       required
-                />
+                <div className={"input-group"}>
+                        <input className="formInput"
+                               type="First name"
+                               value={firstName}
+                               onChange={handleFirstNameChange}
+                               required
+                        />
+                    <label for={"firstName"} class={"input-label"}>First Name</label>
+                </div>
                 <br/>
-                <input className="formInput"
-                       type="Last name"
-                       placeholder="Last name"
-                       value={lastName}
-                       onChange={handleLastNameChange}
-                       required
-                />
+                <div className={"input-group"}>
+                    <input className="formInput"
+                           type="Last name"
+                           value={lastName}
+                           onChange={handleLastNameChange}
+                           required
+                    />
+                    <label for={"lastName"} class={"input-label"}>Last Name</label>
+                </div>
                 <br/>
                 <button
                     type="submit"

@@ -102,8 +102,7 @@
 }
 
 .avatarDiv {
-    text-align: center;
-    margin-top: 5%;
+    margin-top: 10%;
     margin-bottom: 5%;
     padding-top: 0px;
     min-width: 50vw;
@@ -112,12 +111,6 @@
 
 #avatar {
     text-align: initial;
-}
-
-.bigButton {
-    height: 5vh;
-    width: 5vw;
-    font-size: large;
 }
 
 #questionnaire {
@@ -129,6 +122,7 @@
     margin-top: 5%;
     padding-right: 100px;
     padding-left: 100px;
+    background-color: #b2bbc7;
     border-radius: 10px;
 }
 
@@ -189,11 +183,44 @@
     display: inline-flex;
 }
 
+.input-group {
+    position: relative;
+}
+
 .formInput {
-    padding: 1.5vh;
-    font-size: large;
-    align-content: center;
-    margin: 1.5vh;
+    padding: 10px;
+    /*font-size: large;*/
+    /*align-content: center;
+    margin: 1.5vh;*/
+    font: inherit;
+
+    border: none;
+    border-radius: 4px;
+    font: inherit;
+    background-color: transparent;
+    outline: 2px solid #888;
+}
+
+.input-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(10px, 10px);
+    transition: transform .25s;
+    pointer-events: none;
+    color: #888;
+}
+
+.formInput:focus+.input-label,
+.formInput:valid+.input-label {
+    transform:translate(10px, -18px) scale(.8);
+    color: #444;
+    padding-inline: 5px;
+    background-color: #fff;
+}
+
+.formInput:is(:focus, :valid) {
+    outline-color: #888;
 }
 
 
@@ -224,9 +251,6 @@
     margin-bottom: 2%;
 }
 
-.rightButton {
-    float: right;
-}
 
 .formButton {
     margin-top: 1vh;
@@ -238,10 +262,11 @@
     padding: 1vh;
     color: white;
     text-align: center;
+
 }
 
 .animatedButton:hover {
-    background: #488fed;
+    zoom: 110%;
 }
 
 
@@ -265,7 +290,7 @@
 }
 
 .App-header {
-/*background-color: #eef0ff; /*Aller aussi modifier le .App au sommet du fichier*/
+    background-color: #eef0ff; /*Aller aussi modifier le .App au sommet du fichier*/
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -275,7 +300,6 @@
     color: black;
     margin-top: 5vh;
   /*  background: #fff url(../src/pages/question_background.webp) center center/cover no-repeat fixed;*/
-
 }
 
 .App-header-align {
@@ -381,7 +405,6 @@ input:checked + .slider:before {
 }
 
 .homeGrid {
-    margin-top: 0;
     display: grid;
     grid-template-columns: 47% 50%;
     grid-gap: 3vh;
