@@ -1,6 +1,7 @@
 
 .App {
     /*background: #fff url(../src/White_Background_1_RF_RMPL-01.jpg) center center/cover no-repeat fixed;*/
+    /*background: #ffff url(../src/pages/quetion_background.webp) center center/cover no-repeat fixed;*/
 }
 
 .App-logo {
@@ -121,25 +122,33 @@
 
 #questionnaire {
     background-color: rgba(72, 143, 237, 0.09);
-    display: table;
-    column-count: 2;
     width: 45vw;
-    flex-direction: column;
     margin-left: 0px;
     border: lightgrey 2px solid;
     box-shadow: 1px 1px;
-    text-align: center;
     margin-top: 5%;
     padding-right: 100px;
     padding-left: 100px;
     border-radius: 10px;
 }
 
+#questionGrid {
+    display: grid ;
+    grid-template-columns: 50% 50% ;
+    grid-gap: 10px;
+    grid-template-rows: auto;
+}
+
+#questionGrid-item {
+    display: inline !important;
+}
+
+
 .questionDiv {
-    /*color: white;
-    background-color: #3679f8;*/
-    font-size: larger;
-    border-radius: 20px;
+    font-size: medium;
+   /* border: 0.5px solid lightgray;*/
+    box-shadow: 0.5px 0.5px lightgray;
+    border-radius: 10px;
     overflow-clip: true;
     margin-bottom: 20px;
     text-align: left;
@@ -178,7 +187,6 @@
     width: 100%;
     margin-left: 2%;
     display: inline-flex;
-
 }
 
 .formInput {
@@ -266,7 +274,7 @@
     font-size: calc(10px + 2vmin);
     color: black;
     margin-top: 5vh;
-/*    background: #fff url(../src/White_Background_1_RF_RMPL-01.jpg) center center/cover no-repeat fixed;*/
+  /*  background: #fff url(../src/pages/question_background.webp) center center/cover no-repeat fixed;*/
 
 }
 

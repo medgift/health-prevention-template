@@ -21,5 +21,5 @@ export let Variables = React.createContext({
      CholBool: null,
      Chol: null,
      Glyc: null,
-     HDL: null,
+     HDL: null
 });
