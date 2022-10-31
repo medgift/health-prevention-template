@@ -4,6 +4,7 @@ import {Route, Routes, NavLink, Navigate, useNavigate} from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import MyPage from "./pages/MyPage";
 import QuestionList from "./pages/Questionnaire";
 import NormalValueList from "./pages/Admin";
 import icon from "./hearth_icon.png"
@@ -17,7 +18,6 @@ import PageNotFound from "./pages/404";
 import {PatientDB} from "./DAL/PatientDB";
 import {AdminDB} from "./DAL/AdminDB";
 import {UserRoles} from "./DTO/UserRoles"
-import MyPage from "./pages/MyPage";
 
 class Nav extends React.Component {
 
