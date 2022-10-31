@@ -98,6 +98,7 @@
     min-height: 40vh;
     width: 100%;
     margin-left: 0;
+    padding:10%;
     background-color: white;
 }
 
@@ -192,8 +193,8 @@
     /*font-size: large;*/
     /*align-content: center;
     margin: 1.5vh;*/
-    font: inherit;
 
+    font: inherit;
     border: none;
     border-radius: 4px;
     font: inherit;
