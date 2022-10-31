@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import {Route, Routes, NavLink, Navigate, useNavigate} from "react-router-dom";
+import {Route, Routes, NavLink, Navigate, useNavigate, useLocation} from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -58,7 +58,10 @@ export default function App() {
     const [currentUser, setCurrentUser] = useState(undefined);
     const [userRole, setUserRole] = useState(UserRoles.prototype.GUEST);
     const [currentPatient, setCurrentPatient] = useState(undefined);
+
+    //navigation
     const navigate = useNavigate();
+    const location = useLocation();
 
     /* Watch for authentication state changes */
     useEffect(() => {
@@ -77,13 +80,15 @@ export default function App() {
 
     async function redirectUser(user, setCurrentPatient) {
         if (user) {
-            console.log("SIGNING IN !*****************************")
+            console.log("signing in ...")
             //search for a patient in the db
             let patient = await PatientDB.prototype.getPatientById(user.uid);
             if (patient != null) {
                 setCurrentPatient(patient);
                 setUserRole(UserRoles.prototype.PATIENT);
-                navigate("/questionnaire");
+                //navigate to questionnaire only when the user is logging in
+                if (location.pathname.includes("login"))
+                    navigate("/questionnaire");
                 return;
             }
             //search for an admin the db
