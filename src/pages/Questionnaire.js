@@ -272,7 +272,7 @@ export default function QuestionList({currentUser}) {
     let HandleFormSubmit = (event) => {
         event.preventDefault();
         (async function postResponses() {
-            let responses = {...Variables}; //put values from variables class in an array
+            let responses = convertVariablesToMap(); //put values from variables context in a map
             let userId = currentUser ? currentUser.uid : null; //id is null if a guest fills the questionnaire
             let resDTO = new ResponseDTO(Date.now(), userId, responses);
             await ResponseDB.prototype.addResponses(resDTO);
@@ -372,4 +372,30 @@ function setDefaultValues(questions) {
                 break;
         }
     });
+}
+
+function convertVariablesToMap() {
+    let map = {
+        Poids : Variables.Poids,
+        Alcool: Variables.Alcool,
+        GlycBool: Variables.GlycBool,
+        Alim: Variables.Alim,
+        Sport: Variables.Sport,
+        Inf: Variables.Inf,
+        Gender: Variables.Gender,
+        DIAB: Variables.DIAB,
+        Afcancer: Variables.Afcancer,
+        Avc: Variables.Avc,
+        Age: Variables.Age,
+        Afinf: Variables.Afinf,
+        SystBool: Variables.SystBool,
+        Syst: Variables.Syst,
+        Fume: Variables.Fume,
+        Taille: Variables.Taille,
+        CholBool: Variables.CholBool,
+        Chol: Variables.Chol,
+        Glyc: Variables.Glyc,
+        HDL: Variables.HDL
+    }
+    return map;
 }
