@@ -140,14 +140,14 @@
 }
 
 #questionGrid-item {
-    display: inline !important;
+
 }
 
 
 .questionDiv {
     font-size: medium;
    /* border: 0.5px solid lightgray;*/
-    box-shadow: 0.5px 0.5px lightgray;
+   /* box-shadow: 0.5px 0.5px lightgray;*/
     border-radius: 10px;
     overflow-clip: true;
     margin-bottom: 20px;
@@ -156,7 +156,8 @@
 }
 @keyframes slideInFromUp {
     0% {
-        transform: translateY(-100%);
+        /*transform: translateY(-100%);*/
+        transform: rotateY(180deg);
         opacity: 0;
     }
     100% {
@@ -374,6 +375,7 @@ input:checked + .slider:before {
     grid-template-columns: 25% 25% 25% 25%;
     grid-gap: 10px;
     grid-template-rows: auto;
+
 }
 
 .grid-item {
