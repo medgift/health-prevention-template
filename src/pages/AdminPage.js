@@ -1,61 +1,72 @@
-//TODO create Admin page to create doctors 
-// make link with Firestore to create Doctors
-//TODO change the COefficients
-//Get the Data from Firestore and update it
-//TODO Admin Login -> authentication
 import Navbar from "../components/Navbar";
-import {doc, setDoc} from "firebase/firestore";
-import {auth, database} from "../initFirebase";
-import {createUserWithEmailAndPassword, onAuthStateChanged} from "firebase/auth";
-import React from "react";
-import { useState } from "react";
-import DoctorForm from "../components/DoctorForm";
+import React, { useState } from "react";
+import AdminCoef from "./AdminCoef";
+import AdminDoctorCreation from "./AdminDoctorCreation";
+import AdminVarTest from "./AdminVarTest";
 
 export default function AdminPage()  {
-   
-    //    const resetNewDoctor = () => {
-    //     this.setState({newDoctor : this.emptyDoctor});
-    // };
-    var created = false;
+     
+    const [isShown, setIsShown] = useState(false);
+    const [isShownVar, setIsShownVar] = useState(false);
+    const [isShownCoef, setIsShownCoef] = useState(false);
 
-    const createDoctor = async(e, email, password, firstname, lastname) => {
-        
-        e.preventDefault();
-
-        try {
-            await createUserWithEmailAndPassword(auth, email, password);
-
-            onAuthStateChanged(auth, async (user) => {
-                await setDoc(doc(database, "users", user.uid), {
-                    firstname: firstname,
-                    lastname: lastname,
-                    email: email,
-                    password: password,
-                    role: 2
-                });
-            });
-
-            //navigate("/");
-            //succeeded = true;
-            console.log("Doctor Created")
-            created = true;
-
-           // resetNewDoctor();
-            
-        } catch (e) {
-            console.error(e);
-            console.log("not Created")
-        }
-
+    const handleClickDoc = event => {
+        setIsShown(current => !current);
+        setIsShownCoef(false);
+        setIsShownVar(false);
     }
 
-    
+    const handleClickVar = event => {
+        setIsShownVar(current => !current);
+        setIsShownCoef(false); 
+        setIsShown(false);
+    }
+
+    const handleClickCoef = event => {
+        setIsShownCoef(current => !current);
+        setIsShown(false);
+        setIsShownVar(false);
+    }
+
+
     return (
         <>
             <Navbar/>
             <h1>Welcome Admin !!</h1>
-            <h2>Create Doctor : </h2>
-            <DoctorForm handleSubmit={createDoctor} submitButtonLabel="Create Doctor"/>
+            <button onClick={handleClickDoc}>Create Doctor</button>
+            {
+                isShown && 
+                (<>
+                <hr/>
+                    <AdminDoctorCreation/>
+                <hr/>
+                </>
+                )
+            }
+            <hr/>
+            <button onClick={handleClickVar}>Change Variables</button>
+            {
+                 
+                isShownVar && (
+                <>
+                <hr/>
+                    <AdminVarTest/>
+                <hr/>
+                </>
+                )
+                
+            }
+            <hr/>
+            <button onClick={handleClickCoef}>Change coefficient</button>
+            {
+                isShownCoef && (
+                <>
+                <hr/>
+                    <AdminCoef/>
+                <hr/>
+                </>
+                )
+            }
         </>
     );
     

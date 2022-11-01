@@ -13,7 +13,6 @@ import Info from "./pages/Info";
 import ShowResult from "./pages/ShowResult";
 import Navbar from "./components/Navbar";
 import AdminPage from "./pages/AdminPage";
-import AdminVar from "./pages/AdminVar";
 
 export default function App() {
   /* Current user state */
@@ -54,7 +53,6 @@ export default function App() {
           <Route path="/customization" element={<Customization/>}/>
           <Route path="/ShowResult" element={<ShowResult/>}/>
           <Route path="/AdminPage" element={<AdminPage/>}/>
-          <Route path="/AdminVar" element={<AdminVar/>}/>
         </Routes>
     </div>
   );
