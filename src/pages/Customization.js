@@ -1,17 +1,15 @@
 import React from "react";
-import Avatar from '../components/Avatar'
+// import AvatarCustom.js from '../components/AvatarCustom.js'
+// import  { Avatar } from '../components/AvatarCustom';
 
 export default class Customization extends React.Component {
-
-    
-
-      render(){
+    render() {
         return (
             <>
-                <h1>Customize your avatar</h1> 
-                <Avatar></Avatar>
+                <h1>Choose values</h1>
+                {/*<Avatar></Avatar>*/}
             </>
         )
-      }
+    }
 
 }
