@@ -114,8 +114,17 @@
     text-align: initial;
 }
 
+.bigButton {
+    width: 7vw;
+    font-size: large;
+}
+
+#avatarButtonDiv {
+    text-align: center;
+}
+
 #questionnaire {
-    background-color: rgba(72, 143, 237, 0.09);
+    /*background-color: rgba(72, 143, 237, 0.09);*/
     width: 45vw;
     margin-left: 0px;
     border: lightgrey 2px solid;
@@ -123,8 +132,13 @@
     margin-top: 5%;
     padding-right: 100px;
     padding-left: 100px;
-    background-color: #b2bbc7;
+    background-color: #f2f7fc;
     border-radius: 10px;
+}
+
+#questionnaireButtonDiv {
+    float: right;
+    margin-bottom: 2vh;
 }
 
 #questionGrid {
@@ -268,7 +282,7 @@
 }
 
 .animatedButton:hover {
-    zoom: 110%;
+    background: #488fed;
 }
 
 
@@ -292,7 +306,7 @@
 }
 
 .App-header {
-    background-color: #eef0ff; /*Aller aussi modifier le .App au sommet du fichier*/
+    background-color: white; /*Aller aussi modifier le .App au sommet du fichier*/
     min-height: 100vh;
     display: flex;
     flex-direction: column;
