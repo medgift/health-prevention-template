@@ -87,6 +87,7 @@ export default function App() {
                 setCurrentPatient(patient);
                 setUserRole(UserRoles.prototype.PATIENT);
                 //navigate to questionnaire only when the user is logging in
+                console.log("Log in page ? : " + location.pathname.includes("login"));
                 if (location.pathname.includes("login"))
                     navigate("/questionnaire");
                 return;
