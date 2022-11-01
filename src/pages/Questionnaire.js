@@ -331,10 +331,12 @@ export default function QuestionList({currentUser}) {
                     )).filter(q => q != null) /*null questions are questions that shouldn't be displayed (5, 6, and 7)*/}
                 </div>
             </div>
+            <div id="questionnaireButtonDiv">
             <button type="submit"
                     className="formButton questionButton animatedButton"
                     onClick={HandleFormSubmit}>Confirm
             </button>
+            </div>
         </div>
     );
 }
