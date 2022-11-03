@@ -99,3 +99,30 @@
     0% { opacity: 0; }
     100% { opacity: 1; }
 }
+
+/*circular progress bar*/
+
+.circle-background,
+.circle-progress {
+    fill: none;
+}
+
+.circle-background {
+    stroke: #e0e0de;
+}
+
+.circle-progress {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.circle-text {
+    font-size: 100%;
+    font-weight: bold;
+    animation: fadeIn 2s;
+}
+.disease {
+    font-size: 100% ;
+    margin: 3%;
+    margin-top: 13%;
+}

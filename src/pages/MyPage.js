@@ -1,19 +1,21 @@
 import React from "react";
 import Algorithm from "../algorithm/Algorithm";
 import ProgressBar from "../components/ProgressBar";
+import CircularProgressBar from "../components/CircularProgressBar"
 import _ from "lodash";
 import "./MyPage.css";
 
 
-const v = [1, 39 ,100 ,179 , 0, 110 , 0, 5.0, 0, 3.0, 2.0, 0, 0,/*avc*/ 0, 0, 0, 0  , 2 , 2, 2];
+const v = [1, 100 ,100 ,179 , 0, 110 , 0, 5.0, 0, 3.0, 2.0, 0, 0,/*avc*/ 0, 0, 0, 0  , 2 , 2, 2];
 
 export default class MyPage extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            algorithm: new Algorithm(v)
+            algorithm: new Algorithm(v),
         };
     }
+
     handleInputBool = (e) => {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
@@ -100,19 +102,19 @@ export default class MyPage extends React.Component {
                     <div className={"column"}>
                         <h2>Your situation</h2>
                         <p>*photo avatar*</p>
-                        <p className={"line"}>Sex: <text className={"variable"}>{this.state.algorithm.sexe?"Man":"Woman"}</text></p>
-                        <p className={"line"}>Age: <text className={"variable"}>{this.state.algorithm.age} years</text></p>
-                        <p className={"line"}>Height: <text className={"variable"}>{this.state.algorithm.taille} cm</text></p>
-                        <p className={"line"}>Syst: <text className={"variable"}>{this.state.algorithm.syst} mmHg</text></p>
-                        <p className={"line"}>Glyc: <text className={"variable"}>{this.state.algorithm.glyc} g/L</text></p>
-                        <p className={"line"}>Chol: <text className={"variable"}>{this.state.algorithm.chol} g/L</text></p>
-                        <p className={"line"}>HDL: <text className={"variable"}>{this.state.algorithm.hdl} g/L</text></p>
-                        <p className={"line"}>Diabete: <text className={"variable"}>{this.state.algorithm.diab?"Yes":"No"}</text></p>
-                        <p className={"line"}>Infarctus: <text className={"variable"}>{this.state.algorithm.inf?"Already have":"No"}</text></p>
-                        <p className={"line"}>AVC: <text className={"variable"}>{this.state.algorithm.avc?"Already have":"No"}</text></p>
+                        <p className={"line"}>Sex: <span className={"variable"}>{this.state.algorithm.sexe?"Man":"Woman"}</span></p>
+                        <p className={"line"}>Age: <span className={"variable"}>{this.state.algorithm.age} years</span></p>
+                        <p className={"line"}>Height: <span className={"variable"}>{this.state.algorithm.taille} cm</span></p>
+                        <p className={"line"}>Syst: <span className={"variable"}>{this.state.algorithm.syst} mmHg</span></p>
+                        <p className={"line"}>Glyc: <span className={"variable"}>{this.state.algorithm.glyc} g/L</span></p>
+                        <p className={"line"}>Chol: <span className={"variable"}>{this.state.algorithm.chol} g/L</span></p>
+                        <p className={"line"}>HDL: <span className={"variable"}>{this.state.algorithm.hdl} g/L</span></p>
+                        <p className={"line"}>Diabete: <span className={"variable"}>{this.state.algorithm.diab?"Yes":"No"}</span></p>
+                        <p className={"line"}>Infarctus: <span className={"variable"}>{this.state.algorithm.inf?"Already have":"No"}</span></p>
+                        <p className={"line"}>AVC: <span className={"variable"}>{this.state.algorithm.avc?"Already have":"No"}</span></p>
                         <h2>Family</h2>
-                        <p className={"line"}>Infarctus: <text className={"variable"}>{this.state.algorithm.avc?"Yes":"No"}</text></p>
-                        <p className={"line"}>Cancer: <text className={"variable"}>{this.state.algorithm.avc?"Yes":"No"}</text></p>
+                        <p className={"line"}>Infarctus: <span className={"variable"}>{this.state.algorithm.avc?"Yes":"No"}</span></p>
+                        <p className={"line"}>Cancer: <span className={"variable"}>{this.state.algorithm.avc?"Yes":"No"}</span></p>
 
                     </div>
                     <div className={"column"}>
@@ -122,7 +124,7 @@ export default class MyPage extends React.Component {
                         <div>
                         <label className={"labelView"}>Smoke: </label>
                         <input type={"checkbox"} checked={this.state.algorithm.fume} placeholder={`${this.state.algorithm.fume}`} name="fume"
-                                         onClick={this.handleInputBool}/></div>
+                                         onChange={this.handleInputBool}/></div>
                         <ProgressBar name={"fume"} min={0} max={1} bgcolor={"#1a73e8"} now={this.state.algorithm.fume*100/1}/>
 
                         <label className={"labelView"}>Healthy Food: </label>
@@ -169,15 +171,30 @@ export default class MyPage extends React.Component {
                     <div className={"column"}>
                         <h2>Your risks</h2>
                         <p>*photo avatar*</p>
-                        <p className={"line"}>Stroke: <text id={"result"} className={"variable"}>{Math.floor(this.state.algorithm.infRate)}%</text></p>
-                        <ProgressBar bgcolor={"#25FDE9"} now={this.state.algorithm.infRate}/>
-
-                        <p className={"line"}>Diabetes: <text id={"result"} className={"variable"}>{Math.floor(this.state.algorithm.diaRate)}%</text></p>
-                        <ProgressBar bgcolor={"#90EE90"} now={this.state.algorithm.diaRate}/>
-
-                        <p className={"line"}>Cancer: <text id={"result"} className={"variable"}>{Math.floor(this.state.algorithm.canRate)}%</text></p>
-                        <ProgressBar bgcolor={"#FFE436"} now={this.state.algorithm.canRate}/>
-
+                        <center>
+                            <h3 className={"disease"}>Infarctus rate</h3>
+                            <CircularProgressBar
+                                strokeWidth="13"
+                                sqSize="120"
+                                color={"#25FDE9"}
+                                percentage={Math.floor(this.state.algorithm.infRate)}/>
+                        </center>
+                        <center>
+                            <h3 className={"disease"}>Diabetes rate</h3>
+                            <CircularProgressBar
+                                strokeWidth="13"
+                                sqSize="120"
+                                color={"#90EE90"}
+                                percentage={Math.floor(this.state.algorithm.diaRate)}/>
+                        </center>
+                        <center>
+                            <h3 className={"disease"}>Cancer rate</h3>
+                            <CircularProgressBar
+                                strokeWidth="13"
+                                sqSize="120"
+                                color={"#FFE436"}
+                                percentage={Math.floor(this.state.algorithm.canRate)}/>
+                        </center>
                     </div>
                 </div>
 
