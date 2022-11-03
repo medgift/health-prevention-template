@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "../css/Questionnaire.css";
 import {QuestionDB} from "../DAL/QuestionDB";
 import {ResponseDB} from "../DAL/ResponseDB";
@@ -333,10 +333,10 @@ export default function QuestionList({currentUser}) {
                 </div>
             </div>
             <div id="questionnaireButtonDiv">
-                <button type="submit"
-                        className="formButton questionButton animatedButton"
-                        onClick={HandleFormSubmit}>Confirm
-                </button>
+            <button type="submit"
+                    className="formButton questionButton animatedButton"
+                    onClick={HandleFormSubmit}>Confirm
+            </button>
             </div>
         </div>
     );
