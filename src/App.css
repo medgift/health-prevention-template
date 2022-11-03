@@ -275,6 +275,13 @@ input:checked + .slider:before {
     grid-template-rows: auto;
 }
 
+.grid_3col {
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    grid-gap: 10px;
+    grid-template-rows: auto;
+}
+
 
 .grid-item {
 
