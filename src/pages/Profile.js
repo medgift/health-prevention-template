@@ -52,15 +52,38 @@ export default function Profile({currentUser}) {
                         style={{width: '10rem', height: '10rem'}} {...user?.avatarConfig || (defaultConfig)}/>
             <br/>
             <NavLink className={"homeGridButton"} to={"/editAvatar"}>Edit your avatar</NavLink>
+            <div style={{marginBottom: "20px"}}/>
+            <hr/>
             <div style={{marginBottom: "30px"}}/>
             <div className={"grid_2col"}>
                 <label>Firstname</label>
                 <input id={"firstName"} type="text" defaultValue={user?.firstName}/>
                 <label>Lastname</label>
                 <input id={"lastName"} type="text" defaultValue={user?.lastName}/>
+                <label>Current Doctor</label>
+                <input id={"currentDoctor"} type="text" readOnly/>
             </div>
-            <div style={{marginBottom: "20px"}}/>
+            <div style={{marginBottom: "30px"}}/>
             <button className={"homeGridButton"} onClick={save}>Save</button>
+            <hr/>
+            <div style={{marginBottom: "30px"}}/>
+            <div className={"grid_2col"}>
+                <label>Change/Choose Doctor</label>
+                <select defaultValue={"None"}>
+                    <option>None</option>
+                </select>
+            </div>
+            <button className={"homeGridButton"}>Submit Request</button>
+            <hr/>
+            <h2>Pending doctor requests</h2>
+            <div className={"grid_3col"}>
+                <label>Date</label>
+                <label>Doctor</label>
+                <label>Status</label>
+                {//TODO: add pending requests method
+                }
+            </div>
+
         </div>
     )
 

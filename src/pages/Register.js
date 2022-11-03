@@ -1,4 +1,3 @@
-import UserForm from "../components/UserForm";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import {auth} from "../initFirebase";
 import "../css/Register.css";

@@ -14,7 +14,7 @@
 
 }
 
-#result{
+#result {
     animation: fadeIn 2s;
 }
 
@@ -25,8 +25,9 @@
 .labelView {
     margin-left: 3%;
     font-size: 80%;
-    color:#444;
+    color: #444;
 }
+
 .choicesView {
     width: 90%;
     margin-left: 3%;
@@ -42,6 +43,7 @@
     margin-right: 5%;
     animation: fadeIn 2s;
 }
+
 .column {
     color: #444;
     width: 100%;
@@ -53,17 +55,17 @@
     line-height: 1;
 }
 
-.column h2{
+.column h2 {
     text-align: center;
     text-decoration: underline;
 }
 
-.column p{
+.column p {
     font-size: 80%;
 }
 
 .resetButton {
-    float:right;
+    float: right;
     margin: 7%;
     background: #1A73E8;
     backdrop-filter: blur(10px);
