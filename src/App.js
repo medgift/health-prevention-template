@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./App.css";
 import {Route, Routes, NavLink, Navigate, useNavigate, useLocation} from "react-router-dom";
 import Register from "./pages/Register";
@@ -11,10 +11,9 @@ import icon from "./hearth_icon.png"
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
 import EditAvatar from "./pages/EditAvatar";
-
-import {useEffect, useState} from "react";
 import Logout from "./pages/Logout";
 import PageNotFound from "./pages/404";
+import Profile from "./pages/Profile";
 import {PatientDB} from "./DAL/PatientDB";
 import {AdminDB} from "./DAL/AdminDB";
 import {UserRoles} from "./DTO/UserRoles"
@@ -24,9 +23,11 @@ class Nav extends React.Component {
     render() {
         let LoginLogout = null;
         let register = null;
+        let profile = null;
         //used to only display login and register to unauthenticated user
         if (this.props.currentUser) {
             LoginLogout = <NavLink to="/logout">Logout</NavLink>
+            profile = <NavLink to="/profile">Profile</NavLink>
         } else {
             LoginLogout = <NavLink to="/login">Login</NavLink>
             register = <NavLink to="/register">Register</NavLink>
@@ -42,6 +43,7 @@ class Nav extends React.Component {
                             <NavLink to="/questionnaire">Questionnaire</NavLink>
                             <NavLink to="/view">Results</NavLink>
                             <NavLink to="/editAvatar">Avatar</NavLink>
+                            {profile}
                             {register}
                             {LoginLogout}
                         </ul>
@@ -131,6 +133,7 @@ export default function App() {
                         <Route path="/view" element={<MyPage setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                         <Route path="*" element={<PageNotFound></PageNotFound>}/>
+                        <Route path={"/profile"} element={<Profile currentUser={currentUser}/>}/>
                     </Routes>
                 </header>
             </header>

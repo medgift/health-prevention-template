@@ -1,5 +1,5 @@
 import {doc, getDoc, setDoc, updateDoc} from "firebase/firestore";
-import {db, patientRef} from "../initFirebase";
+import {db} from "../initFirebase";
 import {patientConverter} from "../DTO/PatientDTO";
 
 class PatientDB {
@@ -17,6 +17,14 @@ class PatientDB {
         const p = doc(db, "Patient", patientId);
         await updateDoc(p, {
             AvatarConfig: avatarConfig
+        });
+    }
+
+    async updatePatientName(patientId, firstName, lastName) {
+        const p = doc(db, "Patient", patientId);
+        await updateDoc(p, {
+            FirstName: firstName,
+            LastName: lastName,
         });
     }
 }
