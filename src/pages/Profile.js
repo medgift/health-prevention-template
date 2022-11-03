@@ -71,5 +71,10 @@ export default function Profile({currentUser}) {
 
     }
 
+    async function getDoctors() {
+        const docs = await PatientDB.prototype.getDoctors(currentUser.uid);
+        console.log(docs);
+    }
+
 
 }
