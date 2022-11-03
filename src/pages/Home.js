@@ -4,6 +4,7 @@ import Questionnary from "./Questionnary";
 import Navbar from "../components/Navbar";
 
 export default function Home({currentUser}) {
+    
     return (
         <>
             {!currentUser ? (

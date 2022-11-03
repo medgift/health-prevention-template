@@ -17,6 +17,7 @@ import AdminPage from "./pages/AdminPage";
 export default function App() {
   /* Current user state */
   const [currentUser, setCurrentUser] = useState(undefined);
+  
 
   /* Watch for authentication state changes */
   useEffect(() => {
