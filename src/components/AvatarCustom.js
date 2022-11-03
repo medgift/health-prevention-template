@@ -1,108 +1,442 @@
-// import React, {Component, useEffect, useState} from "react";
-// import ReactDOM from "react-dom";
-//
-// import * as PropTypes from "prop-types";
-//
-// //'X-RapidAPI-Key': '78537ba732mshd0b4380b99a7eaap1c513cjsnb5f1e27752c4'
-// //'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
-// // const ped3 = "X-RapidAPI-Key': 'd3d5572e9cmsh9b7f676291565f0p1fe26cjsn81b8ccdb76d2'"
-// // const ped4 = "'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'"
-// // 'X-RapidAPI-Key': '96a4e87f9emsh328fe90239660d8p159ca6jsn0a17636b4501',
-// // 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
-// // 'X-RapidAPI-Key': 'd3d5572e9cmsh9b7f676291565f0p1fe26cjsn81b8ccdb76d2',
-// //     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
-//
-//
-// const optionsPost = {
-//     method: 'POST',
-//     headers: {
-//         'X-RapidAPI-Key': '96a4e87f9emsh328fe90239660d8p159ca6jsn0a17636b4501',
-//         'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
-//     }
-// };
-// const optionsPut = {
-//     method: 'PUT',
-//     headers: {
-//         'X-RapidAPI-Key': '96a4e87f9emsh328fe90239660d8p159ca6jsn0a17636b4501',
-//         'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
-//     }
-// };
-// const optionsGet = {
-//     method: 'GET',
-//     headers: {
-//         'X-RapidAPI-Key': '96a4e87f9emsh328fe90239660d8p159ca6jsn0a17636b4501',
-//         'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
-//     }
-// };
-//
-// function Avatar(){
-//     const [assets, setAssets] = useState([]);
-//     const [avatar, setAvatar] = useState('');
-//     const [key, setKey] = useState('');
-//     const [asset, setAsset] = useState('')
-//
-//
-//
-//         useEffect( async () =>{
-//             const res = await fetch('https://doppelme-avatars.p.rapidapi.com/avatar/1101', optionsPost);
-//             const data = await res.json();
-//             console.log("Avatar is ", data);
-//
-//             setAvatar(data.avatarSrc);
-//             setKey(data.doppelme_key)
-//
-//             console.log("AvatarKey :", avatar);
-//             console.log("AvatarSrc :", key);
-//         })
-//
-//
-//     function getAssets(){
-//         useEffect(async () => {
-//             const res = await fetch('https://doppelme-avatars.p.rapidapi.com/assets/1101/eye', optionsGet);
-//             const data = await res.json();
-//
-//             console.log("Assets are ", data);
-//
-//             const assets = data.asset_ids.map(a => {
-//                 return {key: a.id, description: a.description, img: a.thumbnailSrc};
-//             })
-//             setAssets(assets)
-//
-//             console.log("Assets urls :", assets);
-//         })
-//     }
-//
-//     function changeAssets(asset_id){
-//         const addUrl = 'https://doppelme-avatars.p.rapidapi.com/avatar/'+{key}+'/' + asset_id + '\'';
-//         useEffect(async () => {
-//             const res = await fetch(addUrl, optionsPut);
-//             const data = await res.json();
-//
-//             console.log("Change assets : ", data);
-//         })
-//     }
-//
-//         return(
-//             <>
-//                 <h1>Customize your avatar</h1>
-//                 <div>
-//                     {/*<button style="background: url("https://www.doppelme.com/225/asset.png")" onClick={}></button>*/}
-//                 </div>
-//                 <React.Fragment>
-//                     <ul>
-//                         {assets.map(assets =>(
-//                             <li key={assets.id}>
-//                                 {assets.description}
-//                                 <img alt="asset" src={assets.img} onClick={e => changeAssets(assets.id)}/>
-//                             </li>
-//                         ))}
-//                     </ul>
-//                     <ul>
-//                         <img src={avatar} alt="Avatar"/>
-//                     </ul>
-//                 </React.Fragment>
-//             </>
-//         );
-// }
-//
-// export default Avatar;
+import React, { useEffect, useState} from "react";
+import "react-color-palette/lib/css/styles.css";
+import { ColorPicker, useColor } from "react-color-palette";
+import PropTypes from "prop-types";
+import {auth, database} from "../initFirebase";
+import "firebase/compat/storage"
+import "firebase/compat/auth"
+import "firebase/compat/firestore"
+import {getDoc, doc, updateDoc} from 'firebase/firestore'
+
+// 'X-RapidAPI-Key': '78537ba732mshd0b4380b99a7eaap1c513cjsnb5f1e27752c4',
+// 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Key': '96a4e87f9emsh328fe90239660d8p159ca6jsn0a17636b4501',
+// 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Key': 'd3d5572e9cmsh9b7f676291565f0p1fe26cjsn81b8ccdb76d2',
+// 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Key': '7efcf51a94msh633475178167321p1e9398jsn94694871e69c',
+// 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Key': '53c0717abamsh12e9ecc41ba6cc7p1892ecjsn2fddd02797cb',
+//  'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Key': 'cd524b29efmsh084899770454f5bp1960fdjsn889dfc5a81d1',
+//     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Key': 'ec42c633f3msh677591c838efc1fp151e4cjsn921664ec7c15',
+//     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Key': 'd3d5572e9cmsh9b7f676291565f0p1fe26cjsn81b8ccdb76d2',
+// 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Key': '61e0e12657msh4081d0c61398c53p1dd63fjsn54be421afad9',
+//     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Key': '0a6c673840msh1410d11d7bc071ep1e6ca8jsn412b1141dd63',
+//     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Key': '97a90eb51emshf9eba9d69493f14p15110fjsne016918584d1',
+//     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Key': '576b52e05cmsh518fa0aa980ff0bp1debb8jsn5b3a2d557485',
+//     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+
+const optionsPost = {
+    method: 'POST',
+    headers: {
+        'X-RapidAPI-Key': '576b52e05cmsh518fa0aa980ff0bp1debb8jsn5b3a2d557485',
+        'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+
+    }
+};
+const optionsPut = {
+    method: 'PUT',
+    headers: {
+        'X-RapidAPI-Key': '576b52e05cmsh518fa0aa980ff0bp1debb8jsn5b3a2d557485',
+        'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+
+    }
+};
+const optionsGet = {
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Key': '576b52e05cmsh518fa0aa980ff0bp1debb8jsn5b3a2d557485',
+        'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+
+    }
+};
+
+ColorPicker.propTypes = {
+    color: PropTypes.any,
+    onChange: PropTypes.func,
+    width: PropTypes.number,
+    height: PropTypes.number
+};
+
+export default function Avatar() {
+    const  [down, setDown] = useState('');
+    const aut = auth.currentUser.uid;
+    const [avatar, setAvatar] = useState('');
+    const [key, setKey] = useState('');
+
+    useEffect(() => {
+        console.log(aut)
+        getAva();
+        async function getAva() {
+            const docRef = doc(database, "users/", aut);
+            const docSnap = await getDoc(docRef);
+            const ava = docSnap.get("avatarURL");
+            const ke = docSnap.get("avatarKey");
+            const ass = docSnap.get("avatarAsset");
+            const hai = docSnap.get("avatarHair");
+            const se = docSnap.get("avatarSex");
+
+            if (ava !== ''){
+                setAvatar(ava)
+                setKey(ke)
+                setAsset(ass)
+                setHair(hai)
+                setSex(se)
+                setShowFragment(true);
+                setDown('1')
+            }
+        }
+    }, [down])
+
+    //Wait the sex pick to display the interface
+    function handleSexClick(e) {
+        console.log("Sex ID : " + e.target.id);
+        setSex(e.target.id);
+        setChangeSex(true)
+        setShowFragment(true);
+    }
+
+    const [changeSex, setChangeSex] = useState(false)
+    const [sex, setSex] = useState('')
+    //Create new avatar
+    useEffect(() => {
+        if (changeSex)
+            fetchData()
+
+        async function fetchData() {
+            const res = await fetch('https://doppelme-avatars.p.rapidapi.com/avatar/' + sex, optionsPost);
+            const data = await res.json();
+            console.log("Avatar JSON : ", data);
+            setAvatar(data.avatarSrc);
+            console.log("AvatarSrc :", data.avatarSrc);
+            setKey(data.doppelme_key);
+            console.log("AvatarKey :", data.doppelme_key);
+            setChangeSex(false)
+        }
+    }, [sex]);
+
+
+    //Fetch asset list
+    const [assets, setAssets] = useState([]);
+    useEffect(() => {
+        fetchData()
+
+        async function fetchData() {
+            const res = await fetch('https://doppelme-avatars.p.rapidapi.com/assets/'+sex+'/eye', optionsGet);
+            const data = await res.json();
+            console.log("Assets JSON : ", data);
+            const assets = data.asset_ids.map(a => {
+                return {key: a.id, description: a.description, img: a.thumbnailSrc};
+            })
+            setAssets(assets)
+            console.log("Assets list :", assets);
+        }
+    }, [sex])
+
+    //Fetch hair list
+    const [hairs, setHairs] = useState([]);
+    useEffect(() => {
+        fetchHairs()
+
+        async function fetchHairs() {
+            const res = await fetch('https://doppelme-avatars.p.rapidapi.com/assets/'+sex+'/hair', optionsGet);
+            const data = await res.json();
+            console.log("Hairs JSON : ", data);
+            const hairs = data.asset_ids.map(a => {
+                return {key: a.id, description: a.description, img: a.thumbnailSrc};
+            })
+            setHairs(hairs)
+            console.log("Hairs list :", hairs);
+        }
+    }, [sex])
+
+
+    //Function to change the asset
+    const [oldAsset, setOldAsset] = useState('')
+    const [asset, setAsset] = useState('')
+    const [deleteAsset, setDeleteAsset] = useState(false)
+
+    function changeAsset(id) {
+        setOldAsset(asset)
+
+        if (asset == id.toString()) {
+            setDeleteAsset(true)
+            setAsset('')
+        } else if (oldAsset != '') {
+            setDeleteHair(true)
+            setAsset(id.toString())
+        } else {
+            setAsset(id)
+        }
+    }
+
+    useEffect(() => {
+        setAvatar('')
+        fetechDeletion()
+
+        async function fetechDeletion() {
+            console.log("Old asset2 : " + oldAsset)
+            console.log("New asset ID : " + asset)
+            if (deleteAsset) {
+                const removeUrl = 'https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/eye'
+                const res = await fetch(removeUrl, optionsPut);
+                const data = await res.json();
+                console.log("Delete asset : ", data);
+                if (asset != '') {
+                    fetchModification()
+                } else {
+                    setAvatar(data.avatarSrc)
+                }
+            } else fetchModification();
+        }
+
+        async function fetchModification() {
+            if (sex == '')
+                return
+            const addUrl = 'https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/' + asset;
+            const res = await fetch(addUrl, optionsPut);
+            const data = await res.json();
+            console.log("Change asset : ", data);
+            setAvatar(data.avatarSrc)
+        }
+
+        setDeleteAsset(false);
+    }, [asset])
+
+    //Function to change hair
+    const [oldHair, setOldHair] = useState('')
+    const [hair, setHair] = useState('')
+    const [deleteHair, setDeleteHair] = useState(false)
+
+    function changeHair(id) {
+        setOldHair(hair)
+
+        if (hair == id.toString()) {
+            setDeleteHair(true)
+            setHair('')
+        } else if (oldHair != '') {
+            setDeleteHair(true)
+            setHair(id.toString())
+        } else {
+            setHair(id)
+        }
+    }
+
+    useEffect(() => {
+        setAvatar('')
+        fetechDeletion()
+
+        async function fetechDeletion() {
+            console.log("Old hair : " + oldHair)
+            console.log("New hair ID : " + hair)
+            if (deleteHair) {
+                const removeUrl = 'https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/hair'
+                const res = await fetch(removeUrl, optionsPut);
+                const data = await res.json();
+                console.log("Delete hair : ", data);
+                if (hair != '') {
+                    fetchModification()
+                } else {
+                    setAvatar(data.avatarSrc)
+                }
+            } else fetchModification();
+        }
+
+        async function fetchModification() {
+            if (sex == '')
+                return
+            const addUrl = 'https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/' + hair;
+            const res = await fetch(addUrl, optionsPut);
+            const data = await res.json();
+            console.log("Change asset : ", data);
+            setAvatar(data.avatarSrc)
+        }
+
+        setDeleteAsset(false);
+    }, [hair])
+
+
+    //Color used in the ColorPicker
+    const [color, setColor] = useColor("hex", "");
+
+    //Function to change the asset color
+    const [assetColor, setAssetColor] = useState('');
+    const [displayAssetColorPicker, setDisplayAssetColorPicker] = useState(false);
+
+    function changeColorAsset() {
+        setDisplayAssetColorPicker(false)
+        setAssetColor(color.hex)
+        setAvatar('')
+        console.log("Asset color : " + color.hex)
+        console.log("New asset color : " + assetColor)
+    }
+
+    function handleAssetClick() {
+        setDisplayAssetColorPicker(!displayAssetColorPicker)
+    };
+    useEffect(() => {
+        if (assetColor != '')
+            fetchColorAsset()
+
+        async function fetchColorAsset() {
+            const newColor = assetColor.substring(1, 7)
+            const res = await fetch('https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/eye/' + newColor, optionsPut);
+            const data = await res.json();
+            console.log("Change color asset : ", data);
+            setAvatar(data.avatarSrc)
+        }
+    }, [assetColor])
+
+    //Function to change hair color
+    const [displayColorHairPicker, setDisplayColorHairPicker] = useState(false);
+    const [hairColor, setHairColor] = useState('');
+
+    function handleHairClick() {
+        setDisplayColorHairPicker(!displayColorHairPicker)
+    }
+
+    function changeColorHair() {
+        setDisplayColorHairPicker(false)
+        setHairColor(color.hex)
+        setAvatar('')
+        console.log("hair color : " + color.hex)
+        console.log("new hair  color : " + hairColor)
+    }
+
+    useEffect(() => {
+        if (hairColor != '')
+            fetchColorHair()
+
+        async function fetchColorHair() {
+            const newColor = hairColor.substring(1, 7);
+            const res = await fetch('https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/hair/' + newColor, optionsPut);
+            console.log('https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/hair/' + newColor)
+
+            const data = await res.json();
+            console.log("Change color skin : ", data);
+            setAvatar(data.avatarSrc)
+        }
+    }, [hairColor])
+
+    //Function to change skin color
+    const [displayColorSkinPicker, setDisplayColorSkinPicker] = useState(false);
+    const [skinColor, setSkinColor] = useState('');
+
+    function handleSkinClick() {
+        setDisplayColorSkinPicker(!displayColorSkinPicker)
+    };
+
+    function changeColorSkin() {
+        setDisplayColorSkinPicker(false)
+        console.log("Skin color : " + color.hex)
+        setSkinColor(color.hex)
+        console.log("New skin  color : " + skinColor)
+        setAvatar('')
+    }
+
+    useEffect(() => {
+        if (skinColor != '')
+            fetchColorSkin()
+
+        async function fetchColorSkin() {
+            const newColor = skinColor.substring(1, 7);
+            console.log("skin color : " + skinColor)
+            const res = await fetch('https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/skin/' + newColor, optionsPut);
+            console.log('https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/skin/' + newColor)
+
+            const data = await res.json();
+            console.log("Change color skin : ", data);
+            setAvatar(data.avatarSrc)
+        }
+    }, [skinColor])
+
+
+    function handleSaveClick() {
+        a();
+        async function a() {
+            const docRef = doc(database, "users", aut);
+            await updateDoc(docRef, {
+                avatarURL: avatar,
+                avatarKey: key,
+                avatarHair: hair,
+                avatarAsset: asset,
+                avatarSex: sex
+            });
+        }
+    }
+
+    const [showFragment, setShowFragment] = useState(false);
+    return (
+        <>
+            <div>
+                <button id='1101' alt="man" onClick={(e) => handleSexClick(e)}>Man</button>
+                <button id='1102' alt="woman" onClick={(e) => handleSexClick(e)}>Woman</button>
+            </div>
+            {showFragment ?
+                <React.Fragment>
+                    <h1>Assets List</h1>
+                    <div>
+                        <ul className='assetsList'>
+                            {assets.slice(1, 6).map((asset) => (
+                                <li key={asset.key} className='assetsImage'>
+                                    {asset.description}
+                                    <img alt="asset" src={asset.img}
+                                         onClick={() => changeAsset(asset.key.toString())}/>
+                                </li>
+                            ))}
+                        </ul>
+                        <ul className='assetsList'>
+                            {hairs.slice(1, 6).map((hair) => (
+                                <li key={hair.key} className='assetsImage'>
+                                    {hair.description}
+                                    <img alt="hair" src={hair.img} onClick={() => changeHair(hair.key)}/>
+                                </li>
+                            ))}
+                        </ul>
+
+                        <ul className='colorAvatar'>
+                            <li>
+                                <button alt="assetColor" onClick={handleAssetClick}>Pick Asset Color</button>
+                                {displayAssetColorPicker ? <div className='popover'>
+                                    <div className='cover' onClick={changeColorAsset}/>
+                                    <ColorPicker width={150} height={150}
+                                                 color={color}
+                                                 onChange={setColor} hideHSV hideHEX hideRGB/>
+                                </div> : null}
+
+                                <button alt="skinColor" onClick={handleSkinClick}>Pick Skin Color</button>
+                                {displayColorSkinPicker ? <div className='popover'>
+                                    <div className='cover' onClick={changeColorSkin}/>
+                                    <ColorPicker width={150} height={150}
+                                                 color={color}
+                                                 onChange={setColor} hideHSV hideHEX hideRGB/>
+                                </div> : null}
+
+                                <button alt="hairColor" onClick={handleHairClick}>Pick Hair Color</button>
+                                {displayColorHairPicker ? <div className='popover'>
+                                    <div className='cover' onClick={changeColorHair}/>
+                                    <ColorPicker width={150} height={150}
+                                                 color={color}
+                                                 onChange={setColor} hideHSV hideHEX hideRGB/>
+                                </div> : null}
+                            </li>
+                            <li>
+                                <img alt="Avatar" src={avatar}/>
+                            </li>
+                            <li>
+                                <button alt="saveAvatar" onClick={handleSaveClick}>Save</button>
+                            </li>
+                        </ul>
+                    </div>
+                </React.Fragment> : null}
+        </>
+    );
+}
+

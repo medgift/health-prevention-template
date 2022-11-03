@@ -12,6 +12,9 @@ export default function () {
                 <Link to="/ShowResult" className="App-link">
                     Result
                 </Link>
+                <Link to="/Customization" className="App-link">
+                    Custom Avatar
+                </Link>
             </div>
             <div className="navbar-profile" style={{float:"right"}}>
                 <button className="btn-profile">
