@@ -115,7 +115,7 @@
 }
 
 #questionnaire {
-    background-color: rgba(72, 143, 237, 0.09);
+    /*background-color: rgba(72, 143, 237, 0.09);*/
     width: 45vw;
     margin-left: 0px;
     border: lightgrey 2px solid;
@@ -123,8 +123,13 @@
     margin-top: 5%;
     padding-right: 100px;
     padding-left: 100px;
-    background-color: #b2bbc7;
+    background-color: #f2f7fc;
     border-radius: 10px;
+}
+
+#questionnaireButtonDiv {
+    float: right;
+    margin-bottom: 2vh;
 }
 
 #questionGrid {
@@ -135,14 +140,14 @@
 }
 
 #questionGrid-item {
-    display: inline !important;
+
 }
 
 
 .questionDiv {
     font-size: medium;
    /* border: 0.5px solid lightgray;*/
-    box-shadow: 0.5px 0.5px lightgray;
+   /* box-shadow: 0.5px 0.5px lightgray;*/
     border-radius: 10px;
     overflow-clip: true;
     margin-bottom: 20px;
@@ -151,7 +156,8 @@
 }
 @keyframes slideInFromUp {
     0% {
-        transform: translateY(-100%);
+        /*transform: translateY(-100%);*/
+        transform: rotateY(180deg);
         opacity: 0;
     }
     100% {
@@ -267,7 +273,7 @@
 }
 
 .animatedButton:hover {
-    zoom: 110%;
+    background: #488fed;
 }
 
 
@@ -291,7 +297,7 @@
 }
 
 .App-header {
-    background-color: #eef0ff; /*Aller aussi modifier le .App au sommet du fichier*/
+    background-color: white; /*Aller aussi modifier le .App au sommet du fichier*/
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -399,6 +405,7 @@ input:checked + .slider:before {
     grid-template-columns: 25% 25% 25% 25%;
     grid-gap: 10px;
     grid-template-rows: auto;
+
 }
 
 .grid-item {
@@ -466,4 +473,10 @@ input:checked + .slider:before {
 
 .general{
     margin-top:8%;
+}
+
+#passCheck {
+    font-size: 60%;
+    margin: 1%;
+    color: red;
 }

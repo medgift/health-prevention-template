@@ -63,9 +63,9 @@ export default function Register() {
                                required
                         />
                         <label for={"password"} class={"input-label"}>Password</label>
+                        <p id={"passCheck"}>{password.length<6?"the password must have 6 characters":""}</p>
                 </div>
-                <br/>
-                <div className={"input-group"}>
+                <div className={"input-group"} style={password.length<6?{marginTop:"7.2%"}:{marginTop:"15%"}}>
                         <input className="formInput"
                                type="First name"
                                value={firstName}
@@ -87,7 +87,7 @@ export default function Register() {
                 <br/>
                 <button
                     type="submit"
-                    className="formButton animatedButton avatarButton"
+                    className="formButton animatedButton"
                 >Register
                 </button>
             </form>

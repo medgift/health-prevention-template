@@ -1,5 +1,4 @@
 import React from "react";
-import "../pages/MyPage.css"
 
 const ProgressBar = (props) => {
     const { bgcolor, now } = props;
@@ -22,7 +21,7 @@ const ProgressBar = (props) => {
 
     return (
         <div className={"progress"} style={containerStyles}>
-            {now<1?<></>:<div style={fillerStyles}/>}
+            <div style={fillerStyles}/>
         </div>
     );
 };
