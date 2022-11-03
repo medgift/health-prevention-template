@@ -1,0 +1,101 @@
+.viewGrid {
+    display: grid;
+    grid-template-columns: 31.5% 31.5% 31.5%;
+    grid-gap: 2.5%;
+    width: 100%;
+    grid-template-rows: auto;
+    margin-top: 0;
+    margin-left: 0%;
+    border-radius: 15px;
+    padding: 2.5% 2.5%;
+    background: #1a73e8;
+    box-shadow: 7px 7px #114d9b;
+    height: max-content;
+
+}
+
+#result{
+    animation: fadeIn 2s;
+}
+
+.checkbox {
+    float: right;
+}
+
+.labelView {
+    margin-left: 3%;
+    font-size: 80%;
+    color:#444;
+}
+.choicesView {
+    width: 90%;
+    margin-left: 3%;
+    align-content: center;
+}
+
+.line {
+    width: inherit;
+}
+
+.variable {
+    float: right;
+    margin-right: 5%;
+    animation: fadeIn 2s;
+}
+.column {
+    color: #444;
+    width: 100%;
+    background: white;
+    border-radius: 5px;
+    padding: 1% 1%;
+    box-shadow: 7px 7px #488fed;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.column h2{
+    text-align: center;
+    text-decoration: underline;
+}
+
+.column p{
+    font-size: 80%;
+}
+
+.resetButton {
+    float:right;
+    margin: 7%;
+    background: #1A73E8;
+    backdrop-filter: blur(10px);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 1vh;
+    color: white;
+    transition: all 0.1s ease-in-out;
+    text-align: center;
+    font-size: large;
+    width: auto;
+    text-decoration: none;
+    box-shadow: 5px 5px #488fed;
+    animation: slideInFromRight 1.2s;
+}
+
+.resetButton:hover {
+    background: #488fed;
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(-75%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0%);
+        opacity: 100;
+    }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}

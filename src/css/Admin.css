@@ -1,0 +1,22 @@
+
+#admin {
+    max-width: 70%;
+    margin-bottom: 2%;
+}
+
+.normalValueDiv {
+    display: flex;
+    text-align: left;
+}
+
+.normalValueInput {
+    padding: 1vh;
+    font-size: medium;
+    margin-bottom: 1.5vh;
+}
+
+#normalValuesLabel {
+    margin-right: auto;
+    margin-left: 0px;
+    min-width: 60%;
+}

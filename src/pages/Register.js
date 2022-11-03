@@ -1,8 +1,8 @@
 import UserForm from "../components/UserForm";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import {auth} from "../initFirebase";
+import "../css/Register.css";
 import {useNavigate} from "react-router-dom";
-import {onAuthStateChanged} from "firebase/auth";
 import {PatientDB} from "../DAL/PatientDB";
 import {useState} from "react";
 
@@ -24,20 +24,16 @@ export default function Register() {
 
         try {
             //create user in auth section
-            await createUserWithEmailAndPassword(auth, email, password);
-            navigate("/");
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+            //create a patient account, using auth generated id
+            let patient = {"FirstName": firstName, "LastName": lastName};
+            PatientDB.prototype.addPatient(userCredential.user.uid, patient);
+            navigate("/home");
         } catch (e) {
             console.error(e);
         }
     };
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            //create a patient account
-            let patient = {"FirstName": firstName, "LastName": lastName};
-            PatientDB.prototype.addPatient(user.uid, patient);
-        }
-    });
 
     return (
         <div className="padded_div register ">
@@ -50,41 +46,49 @@ export default function Register() {
                     handleRegister(e, email, password, firstName, lastName);
                 }}
             >
-                <input className="formInput"
-                       type="text"
-                       placeholder="email"
-                       value={email}
-                       onChange={handleEmailChange}
-                       required
-                />
+                <div className={"input-group"}>
+                    <input className="formInput"
+                           type="text"
+                           value={email}
+                           onChange={handleEmailChange}
+                           required
+                    />
+                    <label for={"email"} class={"input-label"}>Email address</label>
+                </div>
                 <br/>
-                <input className="formInput"
-                       type="password"
-                       placeholder="password"
-                       value={password}
-                       onChange={handlePasswordChange}
-                       required
-                />
+                <div className={"input-group"}>
+                        <input className="formInput"
+                               type="password"
+                               value={password}
+                               onChange={handlePasswordChange}
+                               required
+                        />
+                        <label for={"password"} class={"input-label"}>Password</label>
+                </div>
                 <br/>
-                <input className="formInput"
-                       type="First name"
-                       placeholder="First name"
-                       value={firstName}
-                       onChange={handleFirstNameChange}
-                       required
-                />
+                <div className={"input-group"}>
+                        <input className="formInput"
+                               type="First name"
+                               value={firstName}
+                               onChange={handleFirstNameChange}
+                               required
+                        />
+                    <label for={"firstName"} class={"input-label"}>First Name</label>
+                </div>
                 <br/>
-                <input className="formInput"
-                       type="Last name"
-                       placeholder="Last name"
-                       value={lastName}
-                       onChange={handleLastNameChange}
-                       required
-                />
+                <div className={"input-group"}>
+                    <input className="formInput"
+                           type="Last name"
+                           value={lastName}
+                           onChange={handleLastNameChange}
+                           required
+                    />
+                    <label for={"lastName"} class={"input-label"}>Last Name</label>
+                </div>
                 <br/>
                 <button
                     type="submit"
-                    className="formButton"
+                    className="formButton animatedButton avatarButton"
                 >Register
                 </button>
             </form>
