@@ -406,6 +406,11 @@ input:checked + .slider:before {
 
 }
 
+.ignore-css {
+    margin-top: 60px;
+    margin-left: -26.6%;
+}
+
 
 
 .general{
