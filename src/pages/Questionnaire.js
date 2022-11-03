@@ -21,11 +21,16 @@ class Question extends React.Component {
         let value;
         if (target.type === 'checkbox') {
             //To change a True/False value into a 1/0 value
-            value = target.checked ? 1 : 0;
+            if(this.props.questionNO !== 5 && this.props.questionNO !== 6 && this.props.questionNO !== 7){
+                value = target.checked ? 1 : 0;
+            }
         } else {
             value = target.value;
         }
-        this.setState({answer: value});
+
+        if(this.props.questionNO !== 5 && this.props.questionNO !== 6 && this.props.questionNO !== 7){
+            this.setState({answer: value});
+        }
 
         //Assigns the value of the answer to the corresponding variable in Variables.js
         switch (this.props.variableName) {
@@ -36,9 +41,9 @@ class Question extends React.Component {
                 Variables.Alcool = value;
                 break;
             case "GlycBool":
-                Variables.GlycBool = value;
+                Variables.GlycBool = 1;
                 //Display question 6.1 if answer is Yes
-                this.props.setdisplay6(current => !current);
+                this.props.setdisplay6(true);
                 break;
             case "Alim":
                 Variables.Alim = value;
@@ -68,9 +73,9 @@ class Question extends React.Component {
                 Variables.Afinf = value;
                 break;
             case "SystBool" :
-                Variables.SystBool = value;
+                Variables.SystBool = 1;
                 //Display question 5.1 if answer is Yes
-                this.props.setdisplay5(current => !current);
+                this.props.setdisplay5(true);
                 break;
             case "Fume" :
                 Variables.Fume = value;
@@ -79,9 +84,9 @@ class Question extends React.Component {
                 Variables.Taille = value;
                 break;
             case "CholBool" :
-                Variables.CholBool = value;
+                Variables.CholBool = 1;
                 //Display question 7.1 and 7.2 if answer is Yes
-                this.props.setdisplay7(current => !current);
+                this.props.setdisplay7(true);
                 break;
             case "Syst" :
                 Variables.Syst = value;
@@ -97,9 +102,8 @@ class Question extends React.Component {
                 break;
         }
 
-        /*debug---------------------------------------------------
-        console.log("Answer: " + target.value);
-        console.log("Checked: " + target.checked);
+        //debug---------------------------------------------------
+        /*console.log();
         console.log("Poids: " + Variables.Poids);
         console.log("Alcool: " + Variables.Alcool);
         console.log("GlycBool: " + Variables.GlycBool);
@@ -120,22 +124,33 @@ class Question extends React.Component {
         console.log("Glyc: " + Variables.Glyc);
         console.log("Chol: " + Variables.Chol);
         console.log("HDL: " + Variables.HDL);
-        console.log();
-        /debug---------------------------------------------------*/
+        console.log();*/
+        //debug---------------------------------------------------
     };
 
 
     handleFlip = () => {
+        console.log();
         switch (this.props.questionNO) {
             case 5.1 :
+                Variables.SystBool = 0;
                 this.props.setdisplay5(false);
+               // console.log("FLIP! SystBool: " + Variables.SystBool);
                 break;
             case 6.1 :
+                Variables.GlycBool = 0;
                 this.props.setdisplay6(false);
+               // console.log("FLIP! GlycBool: " + Variables.GlycBool);
                 break;
             case 7.1 :
-            case 7.2 :
+                Variables.CholBool = 0;
                 this.props.setdisplay7(false);
+               // console.log("FLIP! CholBool: " + Variables.CholBool);
+                break;
+            case 7.2 :
+                Variables.CholBool = 0;
+                this.props.setdisplay7(false);
+              //  console.log("FLIP! CholBool: " + Variables.CholBool);
                 break;
         }
     }
