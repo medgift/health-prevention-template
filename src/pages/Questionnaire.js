@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
+import "../css/Questionnaire.css";
 import {QuestionDB} from "../DAL/QuestionDB";
 import {ResponseDB} from "../DAL/ResponseDB";
 import {ResponseDTO} from "../DTO/ResponseDTO";
@@ -97,7 +98,7 @@ class Question extends React.Component {
                 break;
         }
 
-        //debug---------------------------------------------------
+        /*debug---------------------------------------------------
         console.log("Answer: " + target.value);
         console.log("Checked: " + target.checked);
         console.log("Poids: " + Variables.Poids);
@@ -121,8 +122,24 @@ class Question extends React.Component {
         console.log("Chol: " + Variables.Chol);
         console.log("HDL: " + Variables.HDL);
         console.log();
-        //debug---------------------------------------------------
+        /debug---------------------------------------------------*/
     };
+
+
+    handleFlip = () => {
+        switch (this.props.questionNO) {
+            case 5.1 :
+                this.props.setdisplay5(false);
+                break;
+            case 6.1 :
+                this.props.setdisplay6(false);
+                break;
+            case 7.1 :
+            case 7.2 :
+                this.props.setdisplay7(false);
+                break;
+        }
+    }
 
 
     //Questions and inputs change depending on question type
@@ -131,7 +148,13 @@ class Question extends React.Component {
 
         //these must be displayed only if the answer to the previous question is Yes
         switch (this.props.questionNO) {
-            case 5.1 :
+
+            case 5 :
+                if (this.props.display5)
+                    return null;
+                break;
+
+            case 5.1:
                 if (this.props.display5 === false) {
                     Variables.Syst = this.props.normalValue;
                     //Debug---------------------------------------------------
@@ -139,6 +162,12 @@ class Question extends React.Component {
                     return null;
                 }
                 break;
+
+            case 6 :
+                if (this.props.display6)
+                    return null;
+                break;
+
             case 6.1 :
                 if (this.props.display6 === false) {
                     Variables.Glyc = this.props.normalValue;
@@ -147,6 +176,12 @@ class Question extends React.Component {
                     return null;
                 }
                 break;
+
+            case 7 :
+                if (this.props.display7)
+                    return null;
+                break;
+
             case 7.1:
                 if (this.props.display7 === false) {
                     Variables.Chol = this.props.normalValue;
@@ -190,6 +225,7 @@ class Question extends React.Component {
                 formattedQuestion = (
                     //Min and Max of range refer to the index in choices array of the question
                     <>
+                        <button className="flip" onClick={this.handleFlip}>Flip</button>
                         <input type="range"
                                min={this.props.choices[0]}
                                max={this.props.choices[this.props.choices.length - 1]}
@@ -201,8 +237,10 @@ class Question extends React.Component {
                 );
             } else {
                 formattedQuestion = (
-                    //Min and Max of range refer to the index in choices array of the question
                     <>
+                        {this.props.questionNO === 5.1 ?
+                            <button className="flip" onClick={this.handleFlip}>Flip</button> : null}
+                        {/*Min and Max of range refer to the index in choices array of the question*/}
                         <input type="range"
                                min={this.props.choices[0]}
                                max={this.props.choices[this.props.choices.length - 1]}
@@ -231,8 +269,7 @@ class Question extends React.Component {
             );
         }
 
-        if (formattedQuestion != null) {
-            return (
+        return (
             <div className="questionDiv">
                 <div className="questionTitleDiv">
                     <p className="questionTitle">{this.props.questionNO}. {this.props.text}</p>
@@ -244,7 +281,6 @@ class Question extends React.Component {
                 <br/>
             </div>
         );
-    }
     }
 };
 
@@ -288,20 +324,20 @@ export default function QuestionList({currentUser}) {
                 <h3 style={{textAlign: "left"}}>{title}</h3>
                 <div id="questionGrid">
                     {questions.map((question) => (
-                        <div key={question.questionNO}>
-                            <Question {...question}
-                                      display5={Display5} setdisplay5={setDisplay5}
-                                      display6={Display6} setdisplay6={setDisplay6}
-                                      display7={Display7} setdisplay7={setDisplay7}
-                            />
-                        </div>
-                    ))}
+                        <Question key={question.questionNO} {...question}
+                                  display5={Display5} setdisplay5={setDisplay5}
+                                  display6={Display6} setdisplay6={setDisplay6}
+                                  display7={Display7} setdisplay7={setDisplay7}
+                        />
+                    )).filter(q => q != null) /*null questions are questions that shouldn't be displayed (5, 6, and 7)*/}
                 </div>
             </div>
+            <div id="questionnaireButtonDiv">
             <button type="submit"
                     className="formButton questionButton animatedButton"
                     onClick={HandleFormSubmit}>Confirm
             </button>
+            </div>
         </div>
     );
 }
@@ -376,7 +412,7 @@ function setDefaultValues(questions) {
 
 function convertVariablesToMap() {
     let map = {
-        Poids : Variables.Poids,
+        Poids: Variables.Poids,
         Alcool: Variables.Alcool,
         GlycBool: Variables.GlycBool,
         Alim: Variables.Alim,
