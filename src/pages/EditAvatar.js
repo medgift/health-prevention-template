@@ -1,5 +1,6 @@
 import NiceAvatar, {genConfig} from "react-nice-avatar";
 import React from "react";
+import "../css/Avatar.css";
 import {PatientDB} from "../DAL/PatientDB";
 
 export default class EditAvatar extends React.Component {

@@ -1,0 +1,19 @@
+
+.avatarDiv {
+    margin-top: 10%;
+    margin-bottom: 5%;
+    padding-top: 0px;
+    min-width: 50vw;
+    background-color: white;
+}
+
+#avatar {
+    text-align: initial;
+}
+
+
+#avatarButtonDiv {
+    text-align: center;
+}
+
+

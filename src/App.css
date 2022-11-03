@@ -78,125 +78,9 @@
     box-shadow: 1px 1px #888888;
 }
 
-.register {
-    display: flex;
-    min-height: auto;
-    max-width: 60%;
-    min-width: 50%;
-    justify-content: center;
-    margin-top: 20%;
-    background-color: white;
-}
-
-.disclaimer {
-    font-size: medium;
-}
-
-.login {
-    margin-top: 60%;
-    text-align: center;
-    min-height: 40vh;
-    width: 100%;
-    margin-left: 0;
-    padding:10%;
-    background-color: white;
-}
-
-.avatarDiv {
-    margin-top: 10%;
-    margin-bottom: 5%;
-    padding-top: 0px;
-    min-width: 50vw;
-    background-color: white;
-}
-
-#avatar {
-    text-align: initial;
-}
-
 .bigButton {
     width: 7vw;
     font-size: large;
-}
-
-#avatarButtonDiv {
-    text-align: center;
-}
-
-#questionnaire {
-    /*background-color: rgba(72, 143, 237, 0.09);*/
-    width: 45vw;
-    margin-left: 0px;
-    border: lightgrey 2px solid;
-    box-shadow: 1px 1px;
-    margin-top: 5%;
-    padding-right: 100px;
-    padding-left: 100px;
-    background-color: #f2f7fc;
-    border-radius: 10px;
-}
-
-#questionnaireButtonDiv {
-    float: right;
-    margin-bottom: 2vh;
-}
-
-#questionGrid {
-    display: grid ;
-    grid-template-columns: 50% 50% ;
-    grid-gap: 10px;
-    grid-template-rows: auto;
-}
-
-#questionGrid-item {
-
-}
-
-
-.questionDiv {
-    font-size: medium;
-   /* border: 0.5px solid lightgray;*/
-   /* box-shadow: 0.5px 0.5px lightgray;*/
-    border-radius: 10px;
-    overflow-clip: true;
-    margin-bottom: 20px;
-    text-align: left;
-    animation: 0.5s ease 0s 1 slideInFromUp;
-}
-@keyframes slideInFromUp {
-    0% {
-        /*transform: translateY(-100%);*/
-        transform: rotateY(180deg);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 100;
-    }
-}
-
-
-.questionTitle {
-    min-width: 50%;
-    max-width: 100%;
-    margin-bottom: 2vh;
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
-.questionTitleDiv {
-    display: inline-flex;
-    margin: 0;
-    width: 100%;
-    align-content: flex-start;
-}
-
-.inputDiv {
-    display: inline-flex;
-    overflow-wrap: anywhere;
-    width: 100%;
-    margin-left: 2%;
-    display: inline-flex;
 }
 
 .input-group {
@@ -239,32 +123,9 @@
     outline-color: #888;
 }
 
-
-.normalValueDiv {
-    display: flex;
-    text-align: left;
-}
-
-.normalValueInput {
-    padding: 1vh;
-    font-size: medium;
-    margin-bottom: 1.5vh;
-}
-
-#normalValuesLabel {
-    margin-right: auto;
-    margin-left: 0px;
-    min-width: 60%;
-}
-
 .leftAlignedDiv {
     margin: 0 auto;
     margin-left: 0;
-}
-
-#admin {
-    max-width: 70%;
-    margin-bottom: 2%;
 }
 
 
@@ -285,18 +146,8 @@
     background: #488fed;
 }
 
-
-.questionButton {
-    margin-right: 18%;
-    margin-top: 2vh;
-    margin-bottom: 5%;
-    font-size: larger;
-    width: fit-content;
-}
-
-#questionnaireTitle {
-    text-align: center;
-    font-size: 2.5em;
+.rightButton {
+    float: right;
 }
 
 .centered_div {
@@ -421,65 +272,4 @@ input:checked + .slider:before {
 
 }
 
-.homeGrid {
-    display: grid;
-    grid-template-columns: 47% 50%;
-    grid-gap: 3vh;
-    grid-template-rows: auto;
-    margin: 0 0;
-    margin-left: 0;
-    margin-right: 25%;
-    border-radius: 15px;
-    padding: 3vh 3vh;
-    background: #1a73e8;
-    box-shadow: 7px 7px #114d9b;
 
-}
-
-.homeGridItem {
-    width: auto;
-    background: white;
-    max-width: max-content;
-    border-radius: 15px;
-    padding: 3vh 3vh;
-    box-shadow: 7px 7px #488fed;
-    vertical-align: middle;
-    line-height: 1;
-}
-
-.homeGridButton {
-    margin-top: 1vh;
-    background: #1A73E8;
-    backdrop-filter: blur(10px);
-    border: 1px solid transparent;
-    border-radius: 5px;
-    padding: 1vh;
-    color: white;
-    transition: all 0.2s ease-in-out;
-    text-align: center;
-    font-size: large;
-    width: 12vh;
-    text-decoration: none;
-    box-shadow: 5px 5px #488fed;
-
-}
-
-.homeGridButton:hover {
-    background: #488fed;
-}
-
-.reveal {
-    position: relative;
-    transform: translateX(-100px);
-    opacity: 0;
-    transition: 1s all ease;
-}
-
-.reveal.active {
-    transform: translateX(0px);
-    opacity: 1;
-}
-
-.general{
-    margin-top:8%;
-}

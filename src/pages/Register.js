@@ -1,6 +1,7 @@
 import UserForm from "../components/UserForm";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import {auth} from "../initFirebase";
+import "../css/Register.css";
 import {useNavigate} from "react-router-dom";
 import {PatientDB} from "../DAL/PatientDB";
 import {useState} from "react";

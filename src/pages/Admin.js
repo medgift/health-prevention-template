@@ -1,5 +1,6 @@
 import {Link, useNavigate} from "react-router-dom";
 import {QuestionDB} from "../DAL/QuestionDB";
+import "../css/Admin.css";
 import {useEffect, useState} from "react";
 import React from "react";
 import {AdminDB} from "../DAL/AdminDB";
