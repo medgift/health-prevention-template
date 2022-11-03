@@ -13,23 +13,27 @@ export default function UserForm({handleSubmit, submitButtonLabel}) {
                 handleSubmit(e, email, password);
             }}
         >
-            <input
-                className="formInput"
-                type="text"
-                placeholder="email"
-                value={email}
-                onChange={handleEmailChange}
-                required
-            />
+            <div className={"input-group"}>
+                <input
+                    className="formInput"
+                    type="text"
+                    value={email}
+                    onChange={handleEmailChange}
+                    required
+                />
+                <label for={"email"} class={"input-label"}>Email address</label>
+            </div>
             <br/>
-            <input
-                className="formInput"
-                type="password"
-                placeholder="password"
-                value={password}
-                onChange={handlePasswordChange}
-                required
-            />
+            <div className={"input-group"}>
+                <input
+                    className="formInput"
+                    type="password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    required
+                />
+                <label for={"email"} class={"input-label"}>Password</label>
+            </div>
             <br/>
             <button
                 type="submit"

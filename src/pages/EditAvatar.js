@@ -1,5 +1,6 @@
 import NiceAvatar, {genConfig} from "react-nice-avatar";
 import React from "react";
+import "../css/Avatar.css";
 import {PatientDB} from "../DAL/PatientDB";
 
 export default class EditAvatar extends React.Component {
@@ -52,28 +53,8 @@ export default class EditAvatar extends React.Component {
     }
 
     //On Change Event for select-options
-    change = () => {
-        const config = {
-            sex: document.getElementById("sex").value,
-            faceColor: document.getElementById("faceColor").value,
-            hairColor: document.getElementById("hairColor").value,
-            hairStyle: document.getElementById("hairStyle").value,
-            hatColor: document.getElementById("hatColor").value,
-            hatStyle: document.getElementById("hatStyle").value,
-            eyeStyle: document.getElementById("eyeStyle").value,
-            eyeBrowStyle: document.getElementById("eyeBrowStyle").value,
-            glassesStyle: document.getElementById("glassesStyle").value,
-            noseStyle: document.getElementById("noseStyle").value,
-            mouthStyle: document.getElementById("mouthStyle").value,
-            shirtColor: document.getElementById("shirtColor").value,
-            shirtStyle: document.getElementById("shirtStyle").value,
-            bgColor: "white",
-
-        }
-        const myConfig = genConfig(config);
-        this.setState({myConfig: myConfig});
-
-
+    change = (e) => {
+        this.setState(s => ({myConfig: {...s.myConfig, [e.target.name]: e.target.value}}));
     }
     save = async () => {
         if (this.props.currentUser == null) {
@@ -91,7 +72,8 @@ export default class EditAvatar extends React.Component {
         return (
             <div className="padded_div avatarDiv">
                 <h1>Edit your Avatar</h1>
-                <NiceAvatar id="avatar" shape={"rounded"} style={{width: '10rem', height: '10rem'}} {...this.state.myConfig} />
+                <NiceAvatar id="avatar" shape={"rounded"}
+                            style={{width: '10rem', height: '10rem'}} {...this.state.myConfig} />
                 <br/>
                 <div className={"grid"}>
                     <label>Sex: </label>
@@ -175,7 +157,10 @@ export default class EditAvatar extends React.Component {
                         <option value={"polo"}>Polo</option>
                     </select>
                 </div>
-                <button className={"formButton animatedButton"} onClick={this.save}>Save</button>
+                <div id="avatarButtonDiv">
+                    <button className={"formButton bigButton animatedButton centeredButton"} onClick={this.save}>Save
+                    </button>
+                </div>
             </div>
 
         )

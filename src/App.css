@@ -1,6 +1,7 @@
 
 .App {
-    background: #fff url(../src/White_Background_1_RF_RMPL-01.jpg) center center/cover no-repeat fixed;
+    /*background: #fff url(../src/White_Background_1_RF_RMPL-01.jpg) center center/cover no-repeat fixed;*/
+    /*background: #ffff url(../src/pages/quetion_background.webp) center center/cover no-repeat fixed;*/
 }
 
 .App-logo {
@@ -77,137 +78,54 @@
     box-shadow: 1px 1px #888888;
 }
 
-.register {
-    display: flex;
-    min-height: auto;
-    max-width: 60%;
-    min-width: 50%;
-    justify-content: center;
-    margin-top: 10%;
-    background-color: white;
+.bigButton {
+    width: 7vw;
+    font-size: large;
 }
 
-.disclaimer {
-    font-size: medium;
-}
-
-.login {
-    min-height: 40vh;
-    width: 100%;
-    margin-left: 0;
-    margin-top: 30%;
-    background-color: white;
-}
-
-.avatarDiv {
-    margin-top: 10%;
-    margin-bottom: 5%;
-    padding-top: 0px;
-    min-width: 50vw;
-    background-color: white;
-}
-
-#avatar {
-    text-align: initial;
-}
-
-#questionnaire {
-    display: table;
-    column-count: 2;
-    width: 45vw;
-    align-content: flex-start !important;
-    align-items: initial !important;
-    flex-direction: column;
-    margin-left: 0px;
-    box-shadow: 0px 0px;
-
-    text-align: center;
-    margin-top: 20%;
-    padding-right: 100px;
-    padding-left: 100px;
-    background-color: #b2bbc7;
-    border-radius: 10px;
-}
-
-.questionDiv {
-    /*color: white;
-    background-color: #3679f8;*/
-    font-size: larger;
-    border-radius: 20px;
-    overflow-clip: true;
-    margin-bottom: 20px;
-    text-align: left;
-    animation: 0.5s ease 0s 1 slideInFromUp;
-}
-@keyframes slideInFromUp {
-    0% {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 100;
-    }
-}
-
-
-.questionTitle {
-    min-width: 50%;
-    max-width: 100%;
-    margin-bottom: 2vh;
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
-.questionTitleDiv {
-    display: inline-flex;
-    margin: 0;
-    width: 100%;
-    align-content: flex-start;
-}
-
-.inputDiv {
-    display: inline-flex;
-    overflow-wrap: anywhere;
-    width: 100%;
-    margin-left: 2%;
-    display: inline-flex;
-
+.input-group {
+    position: relative;
 }
 
 .formInput {
-    padding: 1.5vh;
-    font-size: large;
-    align-content: center;
-    margin: 1.5vh;
+    padding: 10px;
+    /*font-size: large;*/
+    /*align-content: center;
+    margin: 1.5vh;*/
+
+    font: inherit;
+    border: none;
+    border-radius: 4px;
+    font: inherit;
+    background-color: transparent;
+    outline: 2px solid #888;
 }
 
-
-.normalValueDiv {
-    display: flex;
-    text-align: left;
+.input-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(10px, 10px);
+    transition: transform .25s;
+    pointer-events: none;
+    color: #888;
 }
 
-.normalValueInput {
-    padding: 1vh;
-    font-size: medium;
-    margin-bottom: 1.5vh;
+.formInput:focus + .input-label,
+.formInput:valid + .input-label {
+    transform: translate(10px, -18px) scale(.8);
+    color: #444;
+    padding-inline: 5px;
+    background-color: #fff;
 }
 
-#normalValuesLabel {
-    margin-right: auto;
-    margin-left: 0px;
-    min-width: 60%;
+.formInput:is(:focus, :valid) {
+    outline-color: #888;
 }
 
 .leftAlignedDiv {
     margin: 0 auto;
     margin-left: 0;
-}
-
-#admin {
-    max-width: 70%;
-    margin-bottom: 2%;
 }
 
 
@@ -221,25 +139,15 @@
     padding: 1vh;
     color: white;
     text-align: center;
-    font-size: larger;
-    width: fit-content;
 
 }
 
 .animatedButton:hover {
-    zoom: 110%;
+    background: #488fed;
 }
 
-
-.questionButton {
-    margin-right: 18%;
-    margin-top: 2vh;
-    margin-bottom: 5%;
-}
-
-#questionnaireTitle {
-    text-align: center;
-    font-size: 2.5em;
+.rightButton {
+    float: right;
 }
 
 .centered_div {
@@ -249,7 +157,7 @@
 }
 
 .App-header {
-    background-color: #eef0ff; /*Aller aussi modifier le .App au sommet du fichier*/
+    background-color: white; /*Aller aussi modifier le .App au sommet du fichier*/
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -257,8 +165,8 @@
     margin-left: 21%;
     font-size: calc(10px + 2vmin);
     color: black;
-    background: #fff url(../src/White_Background_1_RF_RMPL-01.jpg) center center/cover no-repeat fixed;
-
+    margin-top: 5vh;
+    /*  background: #fff url(../src/pages/question_background.webp) center center/cover no-repeat fixed;*/
 }
 
 .App-header-align {
@@ -414,22 +322,8 @@ input:checked + .slider:before {
 
 }
 
-.homeGridButton:hover {
-    background: #488fed;
+.grid-item {
+
 }
 
-.reveal {
-    position: relative;
-    transform: translateX(-100px);
-    opacity: 0;
-    transition: 1s all ease;
-}
 
-.reveal.active {
-    transform: translateX(0px);
-    opacity: 1;
-}
-
-.general{
-    margin-top:8%;
-}

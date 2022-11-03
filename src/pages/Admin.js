@@ -1,7 +1,7 @@
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {QuestionDB} from "../DAL/QuestionDB";
-import {useEffect, useState} from "react";
-import React from "react";
+import "../css/Admin.css";
+import React, {useEffect, useState} from "react";
 import {AdminDB} from "../DAL/AdminDB";
 
 let normalValues;
@@ -60,7 +60,7 @@ export default function NormalValueList({currentUser}) {
             <form onSubmit={handleFormSubmit}>
                 <button
                     type="submit"
-                    className="formButton rightButton animatedButton"
+                    className="formButton rightButton animatedButton bigButton"
                 >Confirm
                 </button>
                 <br/>
