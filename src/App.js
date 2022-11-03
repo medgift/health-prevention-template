@@ -19,9 +19,11 @@ class Nav extends React.Component {
     render() {
         let LoginLogout = null;
         let register = null;
+        let profile = null;
         //used to only display login and register to unauthenticated user
         if (this.props.currentUser) {
             LoginLogout = <NavLink to="/logout">Logout</NavLink>
+            profile = <NavLink to="/profile">Profile</NavLink>
         } else {
             LoginLogout = <NavLink to="/login">Login</NavLink>
             register = <NavLink to="/register">Register</NavLink>
@@ -36,6 +38,7 @@ class Nav extends React.Component {
                             <NavLink to="/home">Home</NavLink>
                             <NavLink  to="/questionnaire">Questionnaire</NavLink>
                             <NavLink to="/editAvatar">Avatar</NavLink>
+                            {profile}
                             {register}
                             {LoginLogout}
                         </ul>

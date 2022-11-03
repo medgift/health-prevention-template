@@ -36,6 +36,14 @@ export default function Profile({currentUser}) {
 
     }, []);
 
+    async function save() {
+        const firstName = document.getElementById("firstName").value;
+        const lastName = document.getElementById("lastName").value;
+        await PatientDB.prototype.updatePatientName(currentUser.uid, firstName, lastName);
+        alert("Profile saved!")
+
+    }
+
 
     return (
         <div className={"padded_div avatarDiv"}>
@@ -43,14 +51,16 @@ export default function Profile({currentUser}) {
             <NiceAvatar id="avatar" shape={"rounded"}
                         style={{width: '10rem', height: '10rem'}} {...user?.avatarConfig || (defaultConfig)}/>
             <br/>
-            <NavLink className={"homeGridButton"} to={"/editAvatar"}>Edit Avatar</NavLink>
-            <div style={{marginBottom: "20px"}}/>
+            <NavLink className={"homeGridButton"} to={"/editAvatar"}>Edit your avatar</NavLink>
+            <div style={{marginBottom: "30px"}}/>
             <div className={"grid_2col"}>
                 <label>Firstname</label>
-                <input type="text" value={user?.firstName}/>
+                <input id={"firstName"} type="text" defaultValue={user?.firstName}/>
                 <label>Lastname</label>
-                <input type="text" value={user?.lastName}/>
+                <input id={"lastName"} type="text" defaultValue={user?.lastName}/>
             </div>
+            <div style={{marginBottom: "20px"}}/>
+            <button className={"homeGridButton"} onClick={save}>Save</button>
         </div>
     )
 
