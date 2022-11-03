@@ -45,14 +45,15 @@ export default function AdminCoef(){
         <>
  
           <form onSubmit={onSubmitForm}>
-            {Object.keys(coefs).map((doc, index) => {
+            {Object.keys(coefs).map((doc) => {
               return(
                 <div key={doc.id}>
                   <h3>{doc}</h3>
                   
-                  {Object.keys(coefs[doc]).map((coefField, index) => {
+                  {Object.keys(coefs[doc]).map((coefField) => {
                     return(
                       <div>
+                        <div>{coefField}</div>
                         <input 
                         type="number"
                         defaultValue={coefs[doc][coefField]}

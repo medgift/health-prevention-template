@@ -17,6 +17,7 @@ export default function AdminVarTest(){
         query.forEach((doc)=>{
           docsT[doc.id] = doc.data();
         })
+        console.log(docsT)
         setVars(docsT);
         setBusy(false);
       })
@@ -46,16 +47,15 @@ export default function AdminVarTest(){
         <>
  
           <form onSubmit={onSubmitForm}>
-            {Object.keys(vars).map((doc, index) => {
+            {Object.keys(vars).map((doc) => {
               return(
                 <div key={doc.id}>
                   <h3>{doc}</h3>
                   
-                  {Object.keys(vars[doc]).map((varField, index) => {
+                  {Object.keys(vars[doc]).map((varField) => {
                     return(
                       <div>
-                        {/* {console.log("je suis la - " + vars[doc.id])} */}
-                        {/* <div>{vars[doc]}</div> */}
+                        <div>{varField}</div>
                         <input 
                         type="number"
                         defaultValue={vars[doc][varField]}
@@ -88,3 +88,6 @@ export function Loader() {
     );
   }
 
+  export function getObjKey(obj, value) {
+    return Object.keys(obj).find(key => obj[key] === value);
+  }
