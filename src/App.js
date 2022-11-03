@@ -13,6 +13,7 @@ import Info from "./pages/Info";
 import ShowResult from "./pages/ShowResult";
 import Navbar from "./components/Navbar";
 import AdminPage from "./pages/AdminPage";
+import Page404 from "./pages/Page404";
 
 export default function App() {
   /* Current user state */
@@ -54,6 +55,7 @@ export default function App() {
           <Route path="/customization" element={<Customization/>}/>
           <Route path="/ShowResult" element={<ShowResult/>}/>
           <Route path="/AdminPage" element={<AdminPage/>}/>
+          <Route path="*" element={<Page404/>}/>
         </Routes>
     </div>
   );
