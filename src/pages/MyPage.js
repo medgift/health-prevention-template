@@ -14,6 +14,11 @@ export default class MyPage extends React.Component {
             algorithm: new Algorithm(v)
         };
     }
+
+    componentDidMount() {
+        this.props.setBackgroundImage(null);
+    }
+
     handleInputBool = (e) => {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
