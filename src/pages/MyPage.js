@@ -4,7 +4,6 @@ import ProgressBar from "../components/ProgressBar";
 import _ from "lodash";
 import "./MyPage.css";
 
-
 const v = [1, 39 ,100 ,179 , 0, 110 , 0, 5.0, 0, 3.0, 2.0, 0, 0,/*avc*/ 0, 0, 0, 0  , 2 , 2, 2];
 
 export default class MyPage extends React.Component {
@@ -87,7 +86,7 @@ export default class MyPage extends React.Component {
             clonedAlgorithm.Reset();
             return {algorithm: clonedAlgorithm};
         })
-    }
+    };
 
 
 
@@ -95,7 +94,7 @@ export default class MyPage extends React.Component {
         return (
             <>
                 <h1>Your results</h1>
-
+                {this.patientID} test
                 <div className={"viewGrid"}>
                     <div className={"column"}>
                         <h2>Your situation</h2>

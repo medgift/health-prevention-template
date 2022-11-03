@@ -18,6 +18,8 @@ import PageNotFound from "./pages/404";
 import {PatientDB} from "./DAL/PatientDB";
 import {AdminDB} from "./DAL/AdminDB";
 import {UserRoles} from "./DTO/UserRoles"
+import {DoctorDB} from "./DAL/DoctorDB";
+import DoctorPage from "./pages/Doctor";
 
 class Nav extends React.Component {
 
@@ -92,6 +94,15 @@ export default function App() {
                     navigate("/questionnaire");
                 return;
             }
+
+            //search for a doctor in the db
+            let doctor = await DoctorDB.prototype.getDoctorById(user.uid);
+            if (doctor != null) {
+                navigate("/doctor");
+                setUserRole(UserRoles.prototype.DOCTOR);
+                return;
+            }
+
             //search for an admin the db
             let admin = await AdminDB.prototype.getAdminById(user.uid);
             if (admin != null) {
@@ -99,6 +110,7 @@ export default function App() {
                 setUserRole(UserRoles.prototype.ADMIN);
                 return;
             }
+
             console.log("No admin or patients found");
         }
     }
@@ -126,6 +138,7 @@ export default function App() {
                         <Route path="/logout" element={<Logout/>}/>
                         <Route path="/questionnaire" element={<QuestionList currentUser={currentUser}/>}></Route>
                         <Route path="/admin" element={<NormalValueList currentUser={currentUser}></NormalValueList>}/>
+                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser}/>} />
                         <Route path="/view" element={<MyPage/>}/>
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                         <Route path="*" element={<PageNotFound></PageNotFound>}/>
