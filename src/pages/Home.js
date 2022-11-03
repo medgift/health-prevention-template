@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom";
+import "../css/Home.css";
 
 export default function Home({ currentUser }) {
     window.addEventListener("scroll", reveal)
