@@ -60,6 +60,8 @@ export default function App() {
     const [currentUser, setCurrentUser] = useState(undefined);
     const [userRole, setUserRole] = useState(UserRoles.prototype.GUEST);
     const [currentPatient, setCurrentPatient] = useState(undefined);
+    const [backgroundImage, setBackgroundImage] = useState(null);
+
 
     //navigation
     const navigate = useNavigate();
@@ -116,19 +118,19 @@ export default function App() {
     }
 
     return (
-        <div className="App">
-            <Nav currentUser={currentUser}/>
+        <div id="body" className="App" style={{ backgroundImage:`url(${backgroundImage})` }}>
+            <Nav currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>
             <header className="App-header">
                 <header className="App-header-align">
                     <Routes>
                         <Route exact path="/" element={<Navigate to="/home"></Navigate>}></Route>
-                        <Route path="/home" element={<Home currentUser={currentUser}/>}/>
-                        <Route path="/register" element={<Register/>}/>
-                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/home" element={<Home currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}/>
+                        <Route path="/register" element={<Register setBackgroundImage={setBackgroundImage}/>}/>
+                        <Route path="/login" element={<Login setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/logout" element={<Logout/>}/>
-                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser}/>}></Route>
-                        <Route path="/admin" element={<NormalValueList currentUser={currentUser}></NormalValueList>}/>
-                        <Route path="/view" element={<MyPage/>}/>
+                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}></Route>
+                        <Route path="/admin" element={<NormalValueList currentUser={currentUser} setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
+                        <Route path="/view" element={<MyPage setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                         <Route path="*" element={<PageNotFound></PageNotFound>}/>
                         <Route path={"/profile"} element={<Profile currentUser={currentUser}/>}/>
@@ -138,3 +140,4 @@ export default function App() {
         </div>
     );
 }
+

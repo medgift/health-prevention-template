@@ -9,6 +9,10 @@
     pointer-events: none;
 }
 
+#body {
+    background: center center/cover no-repeat fixed;
+}
+
 @media (prefers-reduced-motion: no-preference) {
     .App-logo {
         animation: App-logo-spin infinite 20s linear;
@@ -280,7 +284,6 @@
 }
 
 .App-header {
-    background-color: white; /*Aller aussi modifier le .App au sommet du fichier*/
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -289,7 +292,6 @@
     font-size: calc(10px + 2vmin);
     color: black;
     margin-top: 5vh;
-  /*  background: #fff url(../src/pages/question_background.webp) center center/cover no-repeat fixed;*/
 }
 
 .App-header-align {

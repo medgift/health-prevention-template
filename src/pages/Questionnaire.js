@@ -5,6 +5,7 @@ import {ResponseDB} from "../DAL/ResponseDB";
 import {ResponseDTO} from "../DTO/ResponseDTO";
 import {Variables} from "../Context/Variables";
 import {useNavigate} from "react-router-dom";
+import questionBg from "./paint_bg.jpg"
 
 
 // Manages a single question, its input and values
@@ -286,12 +287,16 @@ class Question extends React.Component {
 
 //To manage questions
 
-export default function QuestionList({currentUser}) {
+export default function QuestionList({currentUser, setBackgroundImage}) {
     let [questions, setQuestions] = useState([]);
     let [Display5, setDisplay5] = useState(false);
     let [Display6, setDisplay6] = useState(false);
     let [Display7, setDisplay7] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(()=> {
+        setBackgroundImage(questionBg);
+    }, []);
 
     let title = currentUser ? "fill in the questionnaire to obtain custom results !" : "log in to save your answers"
 
