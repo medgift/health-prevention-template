@@ -1,26 +1,26 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {DoctorDB} from "../DAL/DoctorDB";
 import {PatientDB} from "../DAL/PatientDB";
 import MyPage from "./MyPage";
-
+import {RoleContext, AvailableRoles} from "../Context/UserRoles"
 
 export default function DoctorPage({currentUser}) {
     const navigate = useNavigate();
     let doctor = null;
     let [patients, setPatients] = useState([]);
     let [idSelectedPatient, setIdSelectedPatient] = useState(null);
+    const userRoleContext = useContext(RoleContext);
 
     useEffect(() => {
         //prohibit the access to non-doctor users
-        isADoctorConnected();
+        if (userRoleContext.role !== AvailableRoles.DOCTOR)
+            navigate("/");
+        loadDoctor();
+
     }, []);
 
-    async function isADoctorConnected() {
-        if (!currentUser) {
-            navigate("/");
-            return;
-        }
+    async function loadDoctor() {
         //search for a doctor the db
         //if found, set the doctor variable
         doctor = await DoctorDB.prototype.getDoctorById(currentUser.uid);
