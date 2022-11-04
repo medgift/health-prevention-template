@@ -4,7 +4,8 @@ import NiceAvatar from "react-nice-avatar";
 import {PatientDB} from "../DAL/PatientDB";
 import {DoctorDB} from "../DAL/DoctorDB";
 
-export default function Profile({currentUser}) {
+
+export default function Profile({currentUser, setBackgroundImage}) {
     const navigate = useNavigate();
     const [user, setUser] = React.useState(null);
     const [doctors, setDoctors] = React.useState([]);
@@ -27,6 +28,7 @@ export default function Profile({currentUser}) {
     };
 
     useEffect(() => {
+        setBackgroundImage(null);
         if (!currentUser) {
             navigate("/login");
             return;
@@ -95,7 +97,7 @@ export default function Profile({currentUser}) {
     )
 
     async function getPatient() {
-        const pat = await PatientDB.prototype.getPatientById(currentUser.uid).then();
+        const pat = await PatientDB.prototype.getPatientById(currentUser.uid);
         console.log(pat);
         pat.prevDoctor = pat.doctorId;
         setUser(pat);
@@ -112,15 +114,17 @@ export default function Profile({currentUser}) {
         const doctorId = document.getElementById("selectDoctor").value;
         if (doctorId === "none") {
             await PatientDB.prototype.updatePatientDoctor(currentUser.uid, null);
-            if (user.prevDoctor != null) {
+            if (user?.prevDoctor != null) {
                 await DoctorDB.prototype.removePatientFromDoctor(user.prevDoctor, currentUser.uid);
+                alert("Doctor removed!");
             }
             setUser({...user, ["prevDoctor"]: null});
-            alert("Doctor removed!");
         } else {
             await PatientDB.prototype.updatePatientDoctor(currentUser.uid, doctorId);
             await DoctorDB.prototype.addPatientToDoctor(doctorId, currentUser.uid);
-            await DoctorDB.prototype.removePatientFromDoctor(user.prevDoctor, currentUser.uid);
+            if (user.prevDoctor != null) {
+                await DoctorDB.prototype.removePatientFromDoctor(user.prevDoctor, currentUser.uid);
+            }
             setUser({...user, ["prevDoctor"]: doctorId});
             alert("Doctor changed!");
         }
@@ -133,8 +137,9 @@ export default function Profile({currentUser}) {
         let options = [];
         for (const doct of doctors) {
             const d = doct.data();
-            let text = "Dr. " + d.FirstName + " " + d.LastName;
+            let text = "Dr. " + d.firstName + " " + d.lastName;
             options.push(<option value={doct.id}>{text}</option>)
+            console.log(d);
         }
         return options;
 

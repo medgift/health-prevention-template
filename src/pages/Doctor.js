@@ -6,24 +6,25 @@ import {PatientDB} from "../DAL/PatientDB";
 import MyPage from "./MyPage";
 import "../css/Doctor.css";
 
+import {RoleContext, AvailableRoles} from "../Context/UserRoles";
 
 export default function DoctorPage({currentUser, setBackgroundImage}) {
     const navigate = useNavigate();
     let doctor = null;
     let [patients, setPatients] = useState([]);
     let [idSelectedPatient, setIdSelectedPatient] = useState(null);
+    const userRoleContext = useContext(RoleContext);
 
     useEffect(() => {
         setBackgroundImage(null);
         //prohibit the access to non-doctor users
-        isADoctorConnected();
+        if (userRoleContext.role !== AvailableRoles.DOCTOR)
+            navigate("/");
+        loadDoctor();
+
     }, []);
 
-    async function isADoctorConnected() {
-        if (!currentUser) {
-            navigate("/");
-            return;
-        }
+    async function loadDoctor() {
         //search for a doctor the db
         //if found, set the doctor variable
         doctor = await DoctorDB.prototype.getDoctorById(currentUser.uid);
@@ -38,7 +39,7 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
 
     async function loadPatients() {
         console.log("Loading patients")
-        for(let i = 0; i < doctor.patients.length; i++) {
+        for (let i = 0; i < doctor.patients.length; i++) {
             let p = await PatientDB.prototype.getPatientById(doctor.patients[i]);
             p.id = doctor.patients[i];
             setPatients((patients) => [...patients, p]);

@@ -1,6 +1,10 @@
+import {useEffect} from "react";
 
 
-export default function PageNotFound() {
+export default function PageNotFound({setBackgroundImage}) {
+    useEffect(() => {
+        setBackgroundImage(null);
+    }, []);
     return (
         <div className={"ignore-css"}>
             <center>
