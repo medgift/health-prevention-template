@@ -1,7 +1,7 @@
 import React from "react";
 
 const ProgressBar = (props) => {
-    const { bgcolor, now } = props;
+    const {bgcolor, now} = props;
 
     const containerStyles = {
         height: "3%",

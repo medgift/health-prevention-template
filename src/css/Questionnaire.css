@@ -18,8 +18,8 @@
 }
 
 #questionGrid {
-    display: grid ;
-    grid-template-columns: 50% 50% ;
+    display: grid;
+    grid-template-columns: 50% 50%;
     grid-gap: 10px;
     grid-template-rows: auto;
 }
@@ -46,6 +46,7 @@
     text-align: left;
     animation: 0.5s ease 0s 1 slideInFromUp;
 }
+
 @keyframes slideInFromUp {
     0% {
         /*transform: translateY(-100%);*/

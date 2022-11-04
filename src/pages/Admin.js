@@ -1,18 +1,19 @@
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {QuestionDB} from "../DAL/QuestionDB";
 import "../css/Admin.css";
-import {useEffect, useState} from "react";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {AdminDB} from "../DAL/AdminDB";
 
 let normalValues;
 
-export default function NormalValueList({currentUser}) {
+export default function NormalValueList({currentUser, setBackgroundImage}) {
     const navigate = useNavigate();
     let [questions, setQuestions] = useState([]);
     useEffect(() => {
         //prohibit the access to non-admin users
         isAnAdminConnected();
+
+        setBackgroundImage(null);
 
         (async function loadQuestions() {
             console.log("Loading question")
@@ -40,7 +41,7 @@ export default function NormalValueList({currentUser}) {
             }
             i++;
         }
-        window.location.reload(); //reload page to re-fetch normal values
+        alert('Changes saved');
     }
 
     async function isAnAdminConnected() {
@@ -57,7 +58,7 @@ export default function NormalValueList({currentUser}) {
 
     return (
         <div id="admin" className="leftAlignedDiv">
-            <h2>Admin page, act wisely ...</h2>
+            <h2>Edit normal variables</h2>
             <form onSubmit={handleFormSubmit}>
                 <button
                     type="submit"

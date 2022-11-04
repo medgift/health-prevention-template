@@ -1,12 +1,12 @@
-import UserForm from "../components/UserForm";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import {auth} from "../initFirebase";
 import "../css/Register.css";
 import {useNavigate} from "react-router-dom";
 import {PatientDB} from "../DAL/PatientDB";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import simpleBlueBg from "./simple_blue_background.webp";
 
-export default function Register() {
+export default function Register({setBackgroundImage}) {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
@@ -14,13 +14,46 @@ export default function Register() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
 
-    const handleEmailChange = (e) => setEmail(e.target.value);
-    const handlePasswordChange = (e) => setPassword(e.target.value);
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+    }
+    const handlePasswordChange = (e) => {
+        validatePassword(e.target.value);
+        setPassword(e.target.value);
+    }
     const handleFirstNameChange = (e) => setFirstName(e.target.value);
     const handleLastNameChange = (e) => setLastName(e.target.value);
 
+    useEffect(() => {
+        setBackgroundImage(simpleBlueBg);
+    }, []);
+
+    function validateEmail(email) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+            document.getElementById("emailCheck").innerText = "";
+            return true;
+        } else {
+            document.getElementById("emailCheck").innerText = "Invalid mail address.";
+            return false;
+        }
+    }
+
+    function validatePassword(password) {
+        if (password.length < 6) {
+            document.getElementById("passCheck").innerText = "the password must have 6 characters";
+            return false;
+        } else {
+            document.getElementById("passCheck").innerText = "";
+            return true;
+        }
+    }
+
     const handleRegister = async (e, email, password, firstName, lastName) => {
         e.preventDefault();
+
+        //register is aborted if the mail or password doesn't comply with the app rules
+        if (!validateEmail(email) || !validatePassword(password))
+            return;
 
         try {
             //create user in auth section
@@ -54,25 +87,26 @@ export default function Register() {
                            required
                     />
                     <label for={"email"} class={"input-label"}>Email address</label>
+                    <p id={"emailCheck"} className="inputValidation"></p>
                 </div>
                 <br/>
                 <div className={"input-group"}>
-                        <input className="formInput"
-                               type="password"
-                               value={password}
-                               onChange={handlePasswordChange}
-                               required
-                        />
-                        <label for={"password"} class={"input-label"}>Password</label>
-                        <p id={"passCheck"}>{password.length<6?"the password must have 6 characters":""}</p>
+                    <input className="formInput"
+                           type="password"
+                           value={password}
+                           onChange={handlePasswordChange}
+                           required
+                    />
+                    <label for={"password"} class={"input-label"}>Password</label>
+                    <p id={"passCheck"} className="inputValidation"></p>
                 </div>
-                <div className={"input-group"} style={password.length<6?{marginTop:"7.2%"}:{marginTop:"15%"}}>
-                        <input className="formInput"
-                               type="First name"
-                               value={firstName}
-                               onChange={handleFirstNameChange}
-                               required
-                        />
+                <div className={"input-group"} style={password.length < 6 ? {marginTop: "7.2%"} : {marginTop: "15%"}}>
+                    <input className="formInput"
+                           type="First name"
+                           value={firstName}
+                           onChange={handleFirstNameChange}
+                           required
+                    />
                     <label for={"firstName"} class={"input-label"}>First Name</label>
                 </div>
                 <br/>

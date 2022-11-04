@@ -7,14 +7,16 @@ class PatientDTO {
     }
 
     toString() {
-        return this.firstName + " " + this.lastName + " " + this.doctorId + " " + this.avatarConfig ;
+        return this.firstName + " " + this.lastName + " " + this.doctorId + " " + this.avatarConfig;
     }
 }
 
 const patientConverter = {
     toFirestore(patient) {
-        return {FirstName: patient.firstName, LastName: patient.lastName,
-                DoctorId: patient.doctorId, AvatarConfig: patient.avatarConfig};
+        return {
+            FirstName: patient.firstName, LastName: patient.lastName,
+            DoctorId: patient.doctorId, AvatarConfig: patient.avatarConfig
+        };
     },
     fromFirestore(
         snapshot,
