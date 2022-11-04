@@ -102,6 +102,12 @@
     outline: 2px solid #888;
 }
 
+.inputValidation {
+    font-size: 60%;
+    margin: 1%;
+    color: red;
+}
+
 .input-label {
     font-size: medium;
     position: absolute;

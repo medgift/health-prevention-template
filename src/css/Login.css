@@ -11,6 +11,10 @@
     align-content: center;
 }
 
+#loginValidation {
+    margin-bottom: 2vh;
+}
+
 .input-label {
     text-align: center;
     align-self: center;
