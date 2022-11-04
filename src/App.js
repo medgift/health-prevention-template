@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "./App.css";
 import {Route, Routes, NavLink, Navigate, useNavigate, useLocation} from "react-router-dom";
 import Register from "./pages/Register";
@@ -16,7 +16,7 @@ import PageNotFound from "./pages/404";
 import Profile from "./pages/Profile";
 import {PatientDB} from "./DAL/PatientDB";
 import {AdminDB} from "./DAL/AdminDB";
-import {UserRoles} from "./DTO/UserRoles"
+import {RoleContext, AvailableRoles} from "./Context/UserRoles"
 import {DoctorDB} from "./DAL/DoctorDB";
 import DoctorPage from "./pages/Doctor";
 
@@ -60,9 +60,9 @@ class Nav extends React.Component {
 export default function App() {
     /* Current user from firestore */
     const [currentUser, setCurrentUser] = useState(undefined);
-    const [userRole, setUserRole] = useState(UserRoles.prototype.GUEST);
     const [currentPatient, setCurrentPatient] = useState(undefined);
     const [backgroundImage, setBackgroundImage] = useState(null);
+    const userRoleContext = useContext(RoleContext);
 
     //navigation
     const navigate = useNavigate();
@@ -75,7 +75,7 @@ export default function App() {
             setCurrentUser(user);
 
             //Search for users in the db
-            redirectUser(user, setCurrentPatient, setUserRole);
+            redirectUser(user, setCurrentPatient);
         });
         // Unsubscribe from changes when App is unmounted
         return () => {
@@ -90,11 +90,18 @@ export default function App() {
             let patient = await PatientDB.prototype.getPatientById(user.uid);
             if (patient != null) {
                 setCurrentPatient(patient);
-                setUserRole(UserRoles.prototype.PATIENT);
-                //navigate to questionnaire only when the user is logging in
-                console.log("Log in page ? : " + location.pathname.includes("login"));
-                if (location.pathname.includes("login"))
+                console.log(userRoleContext.role);
+                userRoleContext.role = AvailableRoles.PATIENT;
+                console.log(userRoleContext.role);
+                // redirect the user when the auth changes
+                // manually map the route to allow display of the 404 page
+                console.log(location.pathname);
+                let loc = location.pathname;
+                if (loc === ("/login") || loc === "/home" || loc === "/" ||
+                    loc === "/questionnaire" || loc === "/view" || loc === "/register"
+                    || loc === "/profile") {
                     navigate("/questionnaire");
+                }
                 return;
             }
 
@@ -102,7 +109,7 @@ export default function App() {
             let doctor = await DoctorDB.prototype.getDoctorById(user.uid);
             if (doctor != null) {
                 navigate("/doctor");
-                setUserRole(UserRoles.prototype.DOCTOR);
+                userRoleContext.role = AvailableRoles.DOCTOR;
                 return;
             }
 
@@ -110,7 +117,7 @@ export default function App() {
             let admin = await AdminDB.prototype.getAdminById(user.uid);
             if (admin != null) {
                 navigate("/admin");
-                setUserRole(UserRoles.prototype.ADMIN);
+                userRoleContext.role = AvailableRoles.PATIENT;
                 return;
             }
             console.log("Cannot find user in DB.")
@@ -128,20 +135,23 @@ export default function App() {
     }
 
     return (
-        <div id="body" className="App" style={{ backgroundImage:`url(${backgroundImage})` }}>
+        <div id="body" className="App" style={{backgroundImage: `url(${backgroundImage})`}}>
             <Nav currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>
             <header className="App-header">
                 <header className="App-header-align">
                     <Routes>
                         <Route exact path="/" element={<Navigate to="/home"></Navigate>}></Route>
-                        <Route path="/home" element={<Home currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}/>
+                        <Route path="/home"
+                               element={<Home currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/register" element={<Register setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/login" element={<Login setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/logout" element={<Logout/>}/>
-                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}></Route>
-                        <Route path="/admin" element={<NormalValueList currentUser={currentUser} setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
+                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser}
+                                                                            setBackgroundImage={setBackgroundImage}/>}></Route>
+                        <Route path="/admin" element={<NormalValueList currentUser={currentUser}
+                                                                       setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
                         <Route path="/view" element={<MyPage setBackgroundImage={setBackgroundImage}/>}/>
-                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser}/>} />
+                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser}/>}/>
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                         <Route path="*" element={<PageNotFound></PageNotFound>}/>
                         <Route path={"/profile"} element={<Profile currentUser={currentUser}/>}/>
