@@ -1,28 +1,29 @@
 class DoctorDTO {
-    constructor(firstName, lastName) {
-        this.FirstName = firstName;
-        this.LastName = lastName;
+    constructor(firstName, lastName, patients) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.patients = patients;
     }
 
     toString() {
-        return "Dr." + this.FirstName + " " + this.LastName;
-
+        return this.firstName + this.lastName + this.patients;
     }
 }
 
 const doctorConverter = {
     toFirestore(doctor) {
-        return {FirstName: doctor.firstName, LastName: doctor.lastName};
+        return {
+            FirstName: doctor.firstName, LastName: doctor.lastName, Patients: doctor.patients
+        };
     },
     fromFirestore(
         snapshot,
         options
     ) {
         const data = snapshot.data(options);
-        return new DoctorDTO(data.FirstName, data.LastName);
-
+        return new DoctorDTO(data.FirstName, data.LastName, data.Patients);
     }
-
 };
+
 export {doctorConverter};
-export {DoctorDTO};
+export {DoctorDTO}

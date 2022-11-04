@@ -11,10 +11,15 @@ const v = [1, 100 ,100 ,179 , 0, 110 , 0, 5.0, 0, 3.0, 2.0, 0, 0,/*avc*/ 0, 0, 0
 export default class MyPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             algorithm: new Algorithm(v),
         };
     }
+
+    componentDidMount() {
+        this.props.setBackgroundImage(null);
+    }
+
 
     handleInputBool = (e) => {
         this.setState(s => {

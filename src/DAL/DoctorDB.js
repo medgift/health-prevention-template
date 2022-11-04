@@ -21,6 +21,10 @@ class DoctorDB {
         await updateDoc(doc(db, "Doctor", doctorId), {Patients: arrayUnion(patientId)});
 
     }
+
+    async getPatientsOfDoctor(docUid) {
+
+    }
 }
 
 export {DoctorDB};

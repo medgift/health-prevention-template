@@ -1,7 +1,6 @@
-import {doc, getDoc, collection} from "firebase/firestore";
+import {doc, getDoc} from "firebase/firestore";
 import {db} from "../initFirebase";
 import {adminConverter} from "../DTO/AdminDTO";
-import {patientConverter} from "../DTO/PatientDTO";
 
 export class AdminDB {
     async getAdminById(uid) {
