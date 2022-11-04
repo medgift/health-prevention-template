@@ -64,7 +64,6 @@ export default function App() {
     const [currentPatient, setCurrentPatient] = useState(undefined);
     const [backgroundImage, setBackgroundImage] = useState(null);
 
-
     //navigation
     const navigate = useNavigate();
     const location = useLocation();
@@ -114,7 +113,7 @@ export default function App() {
                 setUserRole(UserRoles.prototype.ADMIN);
                 return;
             }
-            console.log("No admin or patients found");
+            console.log("Cannot find user in DB.")
         }
     }
 

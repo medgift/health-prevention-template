@@ -94,19 +94,22 @@
 
 .formInput {
     padding: 10px;
-    /*font-size: large;*/
-    /*align-content: center;
-    margin: 1.5vh;*/
-
     font: inherit;
     border: none;
     border-radius: 4px;
-    font: inherit;
+    font-size: large;
     background-color: transparent;
     outline: 2px solid #888;
 }
 
+.inputValidation {
+    font-size: 60%;
+    margin: 1%;
+    color: red;
+}
+
 .input-label {
+    font-size: medium;
     position: absolute;
     top: 0;
     left: 0;
@@ -297,8 +300,3 @@ input:checked + .slider:before {
     margin-top:8%;
 }
 
-#passCheck {
-    font-size: 60%;
-    margin: 1%;
-    color: red;
-}
