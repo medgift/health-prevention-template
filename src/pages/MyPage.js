@@ -18,12 +18,11 @@ export default class MyPage extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
+        this.props.setBackgroundImage(null);
         if (this.props.patientId === null) {
             return;
         }
         this.loadResponses();
-        this.props.setBackgroundImage(null);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

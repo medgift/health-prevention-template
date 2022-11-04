@@ -31,13 +31,15 @@ class Nav extends React.Component {
         //used to only display login and register to unauthenticated user
         if (this.props.currentUser) {
             LoginLogout = <NavLink to="/logout">Logout</NavLink>
-            profile = <NavLink to="/profile">Profile</NavLink>
         } else {
             LoginLogout = <NavLink to="/login">Login</NavLink>
             register = <NavLink to="/register">Register</NavLink>
         }
-        if(this.context.role === "doctor"){
+        if(this.context.role === AvailableRoles.DOCTOR){
             docPage = <NavLink to="/doctor">Patients</NavLink>
+        }
+        if(this.context.role === AvailableRoles.PATIENT) {
+            profile = <NavLink to="/profile">Profile</NavLink>
         }
 
         return (
@@ -128,7 +130,7 @@ export default function App() {
             </div>
         );
     }
-
+    let patientId = currentUser ? currentUser.uid : null;
     return (
         <div id="body" className="App" style={{backgroundImage: `url(${backgroundImage})`}}>
             <Nav currentUser={currentUser} setBackgroundImage={setBackgroundImage} />
@@ -144,7 +146,7 @@ export default function App() {
                                                                             setBackgroundImage={setBackgroundImage}/>}></Route>
                         <Route path="/admin" element={<NormalValueList currentUser={currentUser}
                                                                        setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
-                        <Route path="/view" element={<MyPage patientId={currentUser ? currentUser.uid : null} setBackgroundImage={setBackgroundImage}/>}/>
+                        <Route path="/view" element={<MyPage patientId={patientId} setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/doctor" element={<DoctorPage currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>} />
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                         <Route path="*"
