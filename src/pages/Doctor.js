@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {DoctorDB} from "../DAL/DoctorDB";
 import {PatientDB} from "../DAL/PatientDB";
 import MyPage from "./MyPage";
-import {RoleContext, AvailableRoles} from "../Context/UserRoles"
+import {RoleContext, AvailableRoles} from "../Context/UserRoles";
 
 export default function DoctorPage({currentUser}) {
     const navigate = useNavigate();
