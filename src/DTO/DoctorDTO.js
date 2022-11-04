@@ -4,6 +4,7 @@ class DoctorDTO {
         this.lastName = lastName;
         this.patients = patients;
     }
+
     toString() {
         return this.firstName + this.lastName + this.patients;
     }
@@ -11,7 +12,8 @@ class DoctorDTO {
 
 const doctorConverter = {
     toFirestore(doctor) {
-        return {FirstName: doctor.firstName, LastName: doctor.lastName, Patients: doctor.patients
+        return {
+            FirstName: doctor.firstName, LastName: doctor.lastName, Patients: doctor.patients
         };
     },
     fromFirestore(

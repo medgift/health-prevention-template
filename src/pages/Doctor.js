@@ -1,9 +1,7 @@
 import {AdminDB} from "../DAL/AdminDB";
 import {useEffect, useState} from "react";
-import {Link, Route, Routes, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {DoctorDB} from "../DAL/DoctorDB";
-import {QuestionDB} from "../DAL/QuestionDB";
-import {forEach} from "react-bootstrap/ElementChildren";
 import {PatientDB} from "../DAL/PatientDB";
 import MyPage from "./MyPage";
 import "../css/DocPage.css";
@@ -19,7 +17,7 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
         setBackgroundImage(null);
         //prohibit the access to non-doctor users
         isADoctorConnected();
-    },[]);
+    }, []);
 
     async function isADoctorConnected() {
         if (!currentUser) {
@@ -51,7 +49,7 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
         setIdSelectedPatient(idPatient);
     }
 
-    return(
+    return (
         <div className={"DocDiv"}>
             <h2>Welcome back, Doctor</h2>
             <h3>Patients</h3>

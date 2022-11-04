@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "./App.css";
-import {Route, Routes, NavLink, Navigate, useNavigate, useLocation} from "react-router-dom";
+import {Navigate, NavLink, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -51,7 +51,6 @@ class Nav extends React.Component {
                             <NavLink to="/view">Results</NavLink>
                             <NavLink to="/editAvatar">Avatar</NavLink>
                             {profile}
-                            {docPage}
                             {register}
                             {LoginLogout}
                         </ul>
@@ -121,7 +120,7 @@ export default function App() {
                 setUserRole(UserRoles.prototype.ADMIN);
                 return;
             }
-            console.log("No admin or patients found");
+            console.log("Cannot find user in DB.")
         }
     }
 
@@ -136,8 +135,8 @@ export default function App() {
     }
 
     return (
-        <div id="body" className="App" style={{ backgroundImage:`url(${backgroundImage})` }}>
-            <Nav currentUser={currentUser} setBackgroundImage={setBackgroundImage} isDoctor={isDoctor}/>
+        <div id="body" className="App" style={{backgroundImage: `url(${backgroundImage})`}}>
+            <Nav currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>
             <header className="App-header">
                 <header className="App-header-align">
                     <Routes>

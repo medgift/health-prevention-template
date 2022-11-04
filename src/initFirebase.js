@@ -1,6 +1,6 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import {doc, getFirestore, collection} from "firebase/firestore";
+import {initializeApp} from "firebase/app";
+import {getAuth} from "firebase/auth";
+import {collection, getFirestore} from "firebase/firestore";
 import {questionConverter} from "./DTO/QuestionDTO";
 import {responseConverter} from "./DTO/ResponseDTO";
 import {patientConverter} from "./DTO/PatientDTO";

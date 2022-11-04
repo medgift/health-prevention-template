@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import "../css/Questionnaire.css";
 import {QuestionDB} from "../DAL/QuestionDB";
 import {ResponseDB} from "../DAL/ResponseDB";
@@ -23,14 +23,14 @@ class Question extends React.Component {
         let value;
         if (target.type === 'checkbox') {
             //To change a True/False value into a 1/0 value
-            if(this.props.questionNO !== 5 && this.props.questionNO !== 6 && this.props.questionNO !== 7){
+            if (this.props.questionNO !== 5 && this.props.questionNO !== 6 && this.props.questionNO !== 7) {
                 value = target.checked ? 1 : 0;
             }
         } else {
             value = target.value;
         }
 
-        if(this.props.questionNO !== 5 && this.props.questionNO !== 6 && this.props.questionNO !== 7){
+        if (this.props.questionNO !== 5 && this.props.questionNO !== 6 && this.props.questionNO !== 7) {
             this.setState({answer: value});
         }
 
@@ -137,22 +137,22 @@ class Question extends React.Component {
             case 5.1 :
                 Variables.SystBool = 0;
                 this.props.setdisplay5(false);
-               // console.log("FLIP! SystBool: " + Variables.SystBool);
+                // console.log("FLIP! SystBool: " + Variables.SystBool);
                 break;
             case 6.1 :
                 Variables.GlycBool = 0;
                 this.props.setdisplay6(false);
-               // console.log("FLIP! GlycBool: " + Variables.GlycBool);
+                // console.log("FLIP! GlycBool: " + Variables.GlycBool);
                 break;
             case 7.1 :
                 Variables.CholBool = 0;
                 this.props.setdisplay7(false);
-               // console.log("FLIP! CholBool: " + Variables.CholBool);
+                // console.log("FLIP! CholBool: " + Variables.CholBool);
                 break;
             case 7.2 :
                 Variables.CholBool = 0;
                 this.props.setdisplay7(false);
-              //  console.log("FLIP! CholBool: " + Variables.CholBool);
+                //  console.log("FLIP! CholBool: " + Variables.CholBool);
                 break;
         }
     }
@@ -309,7 +309,7 @@ export default function QuestionList({currentUser, setBackgroundImage}) {
     let [Display7, setDisplay7] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(()=> {
+    useEffect(() => {
         setBackgroundImage(questionBg);
     }, []);
 
