@@ -1,5 +1,5 @@
 class DoctorDTO {
-    constructor(uid, firstName, lastName, patients) {
+    constructor(firstName, lastName) {
         this.FirstName = firstName;
         this.LastName = lastName;
     }

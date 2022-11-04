@@ -42,7 +42,6 @@ class Nav extends React.Component {
                             <NavLink to="/home">Home</NavLink>
                             <NavLink to="/questionnaire">Questionnaire</NavLink>
                             <NavLink to="/view">Results</NavLink>
-                            <NavLink to="/editAvatar">Avatar</NavLink>
                             {profile}
                             {register}
                             {LoginLogout}
