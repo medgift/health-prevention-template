@@ -47,17 +47,17 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
         setIdSelectedPatient(doctor.patients[0]);
     }
 
-    function patientButtonPress (idPatient) {
-        setIdSelectedPatient(idPatient);
+    const patientButtonPress = (e) => {
+        setIdSelectedPatient(e.target.value);
     }
 
     return (
         <div className={"DocDiv"}>
             <h2>Welcome back, Doctor</h2>
             <h3 className={"PatientListTitle"}>Your patients:</h3>
-            <select className={"PatientList"}>
+            <select className={"PatientList"} onChange={patientButtonPress}>
                 {patients.map((p) => (
-                    <option  key={p} className={"patientButtonBody"} onClick={(e) => patientButtonPress(p.id)}>
+                    <option  value={p.id} key={p} className={"patientButtonBody"}>
                         {p.firstName} {p.lastName}
                     </option>
                     ))}
