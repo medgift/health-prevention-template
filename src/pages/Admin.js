@@ -1,18 +1,21 @@
 import {Link, useNavigate} from "react-router-dom";
 import {QuestionDB} from "../DAL/QuestionDB";
 import "../css/Admin.css";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import React from "react";
 import {AdminDB} from "../DAL/AdminDB";
+import {RoleContext, AvailableRoles} from "../Context/UserRoles"
 
 let normalValues;
 
 export default function NormalValueList({currentUser, setBackgroundImage}) {
     const navigate = useNavigate();
+    const userRoleContext = useContext(RoleContext);
     let [questions, setQuestions] = useState([]);
     useEffect(() => {
         //prohibit the access to non-admin users
-        isAnAdminConnected();
+        if (userRoleContext.role !== AvailableRoles.ADMIN)
+            navigate("/");
 
         setBackgroundImage(null);
 
@@ -43,18 +46,6 @@ export default function NormalValueList({currentUser, setBackgroundImage}) {
             i++;
         }
         alert('Changes saved');
-    }
-
-    async function isAnAdminConnected() {
-        if (!currentUser) {
-            navigate("/");
-            return;
-        }
-        //search for an admin the db
-        let admin = await AdminDB.prototype.getAdminById(currentUser.uid);
-        if (typeof admin === "undefined") {
-            navigate("/");
-        }
     }
 
     return (
