@@ -1,0 +1,15 @@
+
+.column {
+    float: left;
+    width: 50%;
+    border-radius:  25%;
+    margin: 0px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+
+}

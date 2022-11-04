@@ -1,7 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {auth} from "../initFirebase";
 
-export default function () {
+export default function Navbar() {
 
     return (
         <nav className="navbar">
@@ -9,11 +10,11 @@ export default function () {
                 <Link to="/" className="App-link">
                     Questionnary
                 </Link>
-                <Link to="/ShowResult" className="App-link">
-                    Result
-                </Link>
                 <Link to="/Customization" className="App-link">
                     Custom Avatar
+                </Link>
+                <Link to="/UserProfilePage" className="App-link">
+                    Profile
                 </Link>
             </div>
             <div className="navbar-profile" style={{float:"right"}}>
@@ -35,10 +36,20 @@ export default function () {
                     </svg>
                 </button>
                 <div className="dropdown-content">
-                    <a href="#">Profile</a>
-                    <Link to="/logout" className="App-link">
-                        Logout
-                    </Link>
+                    {!auth.currentUser ? (
+                        <Link to="/login" className="App-link">
+                            Login
+                        </Link>
+                    ) : (
+                        <>
+                            <Link to="/profile" className="App-link">
+                                Profile
+                            </Link>
+                            <Link to="/logout" className="App-link">
+                                Logout
+                            </Link>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>

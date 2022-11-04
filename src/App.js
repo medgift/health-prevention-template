@@ -13,7 +13,11 @@ import Info from "./pages/Info";
 import ShowResult from "./pages/ShowResult";
 import Navbar from "./components/Navbar";
 import AdminPage from "./pages/AdminPage";
+import UserProfilePage from "./pages/UserProfilePage";
 import Page404 from "./pages/Page404";
+import Questionnary from "./pages/Questionnary";
+import ResultPage from "./pages/ResultPage";
+import Profile_nb from "./pages/Profile_nb";
 
 export default function App() {
   /* Current user state */
@@ -55,6 +59,10 @@ export default function App() {
           <Route path="/customization" element={<Customization/>}/>
           <Route path="/ShowResult" element={<ShowResult/>}/>
           <Route path="/AdminPage" element={<AdminPage/>}/>
+          <Route path="/questionnary" element={<Questionnary/>}/>
+          <Route path="/ResultPage" element={<ResultPage/>}/>
+          <Route path="/profile" element={<Profile_nb/>}/>
+          <Route path="/UserProfilePage" element={<UserProfilePage/>}/>
           <Route path="*" element={<Page404/>}/>
         </Routes>
     </div>

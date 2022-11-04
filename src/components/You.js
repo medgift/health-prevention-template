@@ -1,6 +1,11 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import {collection, doc, getDocs} from "firebase/firestore";
+import {auth, database} from "../initFirebase";
 
-function You({values, setValues}) {
+function You({nextStep, values, setValues}) {
+
+    const [errors, setErrors] = useState({});
+    const [isSubmit, setIsSubmit] = useState(false);
 
     let handleChange = (event) => {
         const target = event.target;
@@ -9,11 +14,33 @@ function You({values, setValues}) {
         setValues({...values, [name]: value})
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setErrors(validate(values));
+        setIsSubmit(true);
+    };
+
+    useEffect(() => {
+        if(Object.keys(errors).length === 0 && isSubmit) {
+            nextStep();
+        }
+    }, [errors])
+
+    const validate = (values) => {
+        const errors = {};
+        if(!values.sexe) {
+            errors.error = "All fields with * are required!";
+        }
+        return errors;
+    }
+
     return (
         <>
+        <p className="error"> { errors.error }</p>
+        <form className="form-container" onSubmit={ handleSubmit }>
             <div style={{display: "grid", marginRight: "175px"}}>
                 <div className="number-group">
-                    <span className="question">Sex</span>
+                    <span className="question">Sex*</span>
                     <div className="input-wrapper">
                         <div className="input-container">
                             <input type="radio"
@@ -44,8 +71,8 @@ function You({values, setValues}) {
                         </div>
                     </div>
                 </div>
-                <div className="number-group">
-                    <span className="question">Age</span>
+                <div className="number-group age">
+                    <span className="question">Age*</span>
                     <input type="number"
                            id="age"
                            name="age"
@@ -55,7 +82,7 @@ function You({values, setValues}) {
                     />
                 </div>
 
-                <div className="number-group">
+                <div className="number-group weight">
                     <span className="question">Weight</span>
                     <input type="number"
                            id="poids"
@@ -66,8 +93,8 @@ function You({values, setValues}) {
                     />
                 </div>
 
-                <div className="number-group">
-                    <span className="question">Height</span>
+                <div className="number-group height">
+                    <span className="question">Height*</span>
                     <input type="number"
                            id="taille"
                            name="taille"
@@ -79,7 +106,7 @@ function You({values, setValues}) {
             </div>
             <div style={{display: "grid"}}>
                 <div className="radio-tile-group">
-                    <span className="question">Do you have you a high tension?</span>
+                    <span className="question">Do you have you a high tension?*</span>
                     <div className="input-wrapper">
                         <div className="input-container">
                             <input type="radio"
@@ -112,7 +139,7 @@ function You({values, setValues}) {
                 </div>
 
                 <div className="radio-tile-group">
-                    <span className="question">Do you have high blood sugar?</span>
+                    <span className="question">Do you have high blood sugar?*</span>
                     <div className="input-wrapper">
                         <div className="input-container">
                             <input type="radio"
@@ -145,7 +172,7 @@ function You({values, setValues}) {
                 </div>
 
                 <div className="radio-tile-group">
-                    <span className="question">Do you have high cholesterol?</span>
+                    <span className="question">Do you have high cholesterol?*</span>
                     <div className="input-wrapper">
                         <div className="input-container">
                             <input type="radio"
@@ -178,7 +205,7 @@ function You({values, setValues}) {
                 </div>
 
                 <div className="radio-tile-group">
-                    <span className="question">Do you have diabetes?</span>
+                    <span className="question">Do you have diabetes?*</span>
                     <div className="input-wrapper">
                         <div className="input-container">
                             <input type="radio"
@@ -211,7 +238,7 @@ function You({values, setValues}) {
                 </div>
 
                 <div className="radio-tile-group">
-                    <span className="question">Have you already had a heart attack?</span>
+                    <span className="question">Have you already had a heart attack?*</span>
                     <div className="input-wrapper">
                         <div className="input-container">
                             <input type="radio"
@@ -244,7 +271,7 @@ function You({values, setValues}) {
                 </div>
 
                 <div className="radio-tile-group">
-                    <span className="question">Have you already had a stroke?</span>
+                    <span className="question">Have you already had a stroke?*</span>
                     <div className="input-wrapper">
                         <div className="input-container">
                             <input type="radio"
@@ -276,6 +303,12 @@ function You({values, setValues}) {
                     </div>
                 </div>
             </div>
+            <footer>
+                <button type="submit">
+                    Next
+                </button>
+            </footer>
+        </form>
         </>
     )
 
