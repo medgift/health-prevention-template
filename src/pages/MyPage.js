@@ -19,7 +19,7 @@ export default class MyPage extends React.Component {
 
     async componentDidMount() {
         console.log(this.props);
-        let response = await ResponseDB.prototype.getResponsesByUser(this.props.currentUser.uid);
+        let response = await ResponseDB.prototype.getResponsesByUser(this.props.patientId);
         let list = response[0].responses;
         let answers = [list.Gender,list.Age,list.Poids,list.Taille,list.SystBool,
             list.Syst,list.GlycBool,list.Glyc,list.CholBool,list.Chol,list.HDL,list.DIAB,
