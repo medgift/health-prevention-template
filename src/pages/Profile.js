@@ -4,7 +4,8 @@ import NiceAvatar from "react-nice-avatar";
 import {PatientDB} from "../DAL/PatientDB";
 import {DoctorDB} from "../DAL/DoctorDB";
 
-export default function Profile({currentUser}) {
+
+export default function Profile({currentUser, setBackgroundImage}) {
     const navigate = useNavigate();
     const [user, setUser] = React.useState(null);
     const [doctors, setDoctors] = React.useState([]);
@@ -27,6 +28,7 @@ export default function Profile({currentUser}) {
     };
 
     useEffect(() => {
+        setBackgroundImage(null);
         if (!currentUser) {
             navigate("/login");
             return;
@@ -95,7 +97,7 @@ export default function Profile({currentUser}) {
     )
 
     async function getPatient() {
-        const pat = await PatientDB.prototype.getPatientById(currentUser.uid).then();
+        const pat = await PatientDB.prototype.getPatientById(currentUser.uid);
         console.log(pat);
         pat.prevDoctor = pat.doctorId;
         setUser(pat);
@@ -133,8 +135,9 @@ export default function Profile({currentUser}) {
         let options = [];
         for (const doct of doctors) {
             const d = doct.data();
-            let text = "Dr. " + d.FirstName + " " + d.LastName;
+            let text = "Dr. " + d.firstName + " " + d.lastName;
             options.push(<option value={doct.id}>{text}</option>)
+            console.log(d);
         }
         return options;
 
