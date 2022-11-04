@@ -26,6 +26,8 @@ class Nav extends React.Component {
         let LoginLogout = null;
         let register = null;
         let profile = null;
+        let docPage = null;
+
         //used to only display login and register to unauthenticated user
         if (this.props.currentUser) {
             LoginLogout = <NavLink to="/logout">Logout</NavLink>
@@ -33,6 +35,9 @@ class Nav extends React.Component {
         } else {
             LoginLogout = <NavLink to="/login">Login</NavLink>
             register = <NavLink to="/register">Register</NavLink>
+        }
+        if(this.props.isDoctor){
+            docPage = <NavLink to="/doctor">Patients</NavLink>
         }
 
         return (
@@ -46,6 +51,7 @@ class Nav extends React.Component {
                             <NavLink to="/view">Results</NavLink>
                             <NavLink to="/editAvatar">Avatar</NavLink>
                             {profile}
+                            {docPage}
                             {register}
                             {LoginLogout}
                         </ul>
@@ -63,7 +69,7 @@ export default function App() {
     const [userRole, setUserRole] = useState(UserRoles.prototype.GUEST);
     const [currentPatient, setCurrentPatient] = useState(undefined);
     const [backgroundImage, setBackgroundImage] = useState(null);
-
+    let isDoctor = useState(false);
 
     //navigation
     const navigate = useNavigate();
@@ -104,6 +110,7 @@ export default function App() {
             if (doctor != null) {
                 navigate("/doctor");
                 setUserRole(UserRoles.prototype.DOCTOR);
+                isDoctor = true;
                 return;
             }
 
@@ -130,7 +137,7 @@ export default function App() {
 
     return (
         <div id="body" className="App" style={{ backgroundImage:`url(${backgroundImage})` }}>
-            <Nav currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>
+            <Nav currentUser={currentUser} setBackgroundImage={setBackgroundImage} isDoctor={isDoctor}/>
             <header className="App-header">
                 <header className="App-header-align">
                     <Routes>
@@ -142,7 +149,7 @@ export default function App() {
                         <Route path="/questionnaire" element={<QuestionList currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}></Route>
                         <Route path="/admin" element={<NormalValueList currentUser={currentUser} setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
                         <Route path="/view" element={<MyPage setBackgroundImage={setBackgroundImage}/>}/>
-                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser}/>} />
+                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>} />
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                         <Route path="*" element={<PageNotFound></PageNotFound>}/>
                         <Route path={"/profile"} element={<Profile currentUser={currentUser}/>}/>

@@ -1,0 +1,22 @@
+.DocDiv{
+    margin-top: 70px;
+}
+
+.PatientButton{
+    border: 0px;
+    border-radius: 7px;
+    width: inherit;
+    height: 30px;
+    margin-bottom: 6px; ;
+}
+
+.PatientList{
+    overflow: auto;
+    height: 30px;
+    column-count: 3;
+    width: 30vw;
+}
+
+.patientButtonBody{
+    width: inherit;
+}
