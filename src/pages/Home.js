@@ -1,10 +1,17 @@
 import {Link} from "react-router-dom";
+import "../css/Home.css";
+import {useEffect} from "react";
 
-export default function Home({ currentUser }) {
+export default function Home({ currentUser, setBackgroundImage }) {
+
+    useEffect(()=> {
+        setBackgroundImage(null);
+    }, []);
+
     window.addEventListener("scroll", reveal)
   return (
       <div className="general">
-          <h1 style={{textAlign: "left"}}>Welcome to the Health Prevention System</h1>
+          <h2 style={{textAlign: "left"}}>Welcome to the Health Prevention System</h2>
           <div className={"homeGrid"}>
               <div className={"homeGridItem"} style={{width: "auto", background: "white"}}>
                   <img src={"health-checkup.png"}

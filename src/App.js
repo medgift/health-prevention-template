@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./App.css";
 import {Route, Routes, NavLink, Navigate, useNavigate, useLocation} from "react-router-dom";
 import Register from "./pages/Register";
@@ -11,10 +11,9 @@ import icon from "./hearth_icon.png"
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
 import EditAvatar from "./pages/EditAvatar";
-
-import {useEffect, useState} from "react";
 import Logout from "./pages/Logout";
 import PageNotFound from "./pages/404";
+import Profile from "./pages/Profile";
 import {PatientDB} from "./DAL/PatientDB";
 import {AdminDB} from "./DAL/AdminDB";
 import {UserRoles} from "./DTO/UserRoles"
@@ -26,9 +25,11 @@ class Nav extends React.Component {
     render() {
         let LoginLogout = null;
         let register = null;
+        let profile = null;
         //used to only display login and register to unauthenticated user
         if (this.props.currentUser) {
             LoginLogout = <NavLink to="/logout">Logout</NavLink>
+            profile = <NavLink to="/profile">Profile</NavLink>
         } else {
             LoginLogout = <NavLink to="/login">Login</NavLink>
             register = <NavLink to="/register">Register</NavLink>
@@ -44,6 +45,7 @@ class Nav extends React.Component {
                             <NavLink to="/questionnaire">Questionnaire</NavLink>
                             <NavLink to="/view">Results</NavLink>
                             <NavLink to="/editAvatar">Avatar</NavLink>
+                            {profile}
                             {register}
                             {LoginLogout}
                         </ul>
@@ -60,6 +62,8 @@ export default function App() {
     const [currentUser, setCurrentUser] = useState(undefined);
     const [userRole, setUserRole] = useState(UserRoles.prototype.GUEST);
     const [currentPatient, setCurrentPatient] = useState(undefined);
+    const [backgroundImage, setBackgroundImage] = useState(null);
+
 
     //navigation
     const navigate = useNavigate();
@@ -110,7 +114,6 @@ export default function App() {
                 setUserRole(UserRoles.prototype.ADMIN);
                 return;
             }
-
             console.log("No admin or patients found");
         }
     }
@@ -126,22 +129,23 @@ export default function App() {
     }
 
     return (
-        <div className="App">
-            <Nav currentUser={currentUser}/>
+        <div id="body" className="App" style={{ backgroundImage:`url(${backgroundImage})` }}>
+            <Nav currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>
             <header className="App-header">
                 <header className="App-header-align">
                     <Routes>
                         <Route exact path="/" element={<Navigate to="/home"></Navigate>}></Route>
-                        <Route path="/home" element={<Home currentUser={currentUser}/>}/>
-                        <Route path="/register" element={<Register/>}/>
-                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/home" element={<Home currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}/>
+                        <Route path="/register" element={<Register setBackgroundImage={setBackgroundImage}/>}/>
+                        <Route path="/login" element={<Login setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/logout" element={<Logout/>}/>
-                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser}/>}></Route>
-                        <Route path="/admin" element={<NormalValueList currentUser={currentUser}></NormalValueList>}/>
+                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}></Route>
+                        <Route path="/admin" element={<NormalValueList currentUser={currentUser} setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
+                        <Route path="/view" element={<MyPage setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/doctor" element={<DoctorPage currentUser={currentUser}/>} />
-                        <Route path="/view" element={<MyPage/>}/>
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                         <Route path="*" element={<PageNotFound></PageNotFound>}/>
+                        <Route path={"/profile"} element={<Profile currentUser={currentUser}/>}/>
                     </Routes>
                 </header>
             </header>

@@ -1,11 +1,14 @@
 import UserForm from "../components/UserForm";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import {auth} from "../initFirebase";
+import "../css/Register.css";
 import {useNavigate} from "react-router-dom";
 import {PatientDB} from "../DAL/PatientDB";
 import {useState} from "react";
+import {useEffect} from "react";
+import simpleBlueBg from "./simple_blue_background.webp";
 
-export default function Register() {
+export default function Register({setBackgroundImage}) {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
@@ -17,6 +20,10 @@ export default function Register() {
     const handlePasswordChange = (e) => setPassword(e.target.value);
     const handleFirstNameChange = (e) => setFirstName(e.target.value);
     const handleLastNameChange = (e) => setLastName(e.target.value);
+
+    useEffect(()=> {
+        setBackgroundImage(simpleBlueBg);
+    }, []);
 
     const handleRegister = async (e, email, password, firstName, lastName) => {
         e.preventDefault();
@@ -63,9 +70,9 @@ export default function Register() {
                                required
                         />
                         <label for={"password"} class={"input-label"}>Password</label>
+                        <p id={"passCheck"}>{password.length<6?"the password must have 6 characters":""}</p>
                 </div>
-                <br/>
-                <div className={"input-group"}>
+                <div className={"input-group"} style={password.length<6?{marginTop:"7.2%"}:{marginTop:"15%"}}>
                         <input className="formInput"
                                type="First name"
                                value={firstName}
@@ -87,7 +94,7 @@ export default function Register() {
                 <br/>
                 <button
                     type="submit"
-                    className="formButton animatedButton avatarButton"
+                    className="formButton animatedButton"
                 >Register
                 </button>
             </form>

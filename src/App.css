@@ -9,6 +9,10 @@
     pointer-events: none;
 }
 
+#body {
+    background: center center/cover no-repeat fixed;
+}
+
 @media (prefers-reduced-motion: no-preference) {
     .App-logo {
         animation: App-logo-spin infinite 20s linear;
@@ -78,6 +82,7 @@
     box-shadow: 1px 1px #888888;
 }
 
+
 .register {
     display: flex;
     min-height: auto;
@@ -112,15 +117,6 @@
 
 #avatar {
     text-align: initial;
-}
-
-.bigButton {
-    width: 7vw;
-    font-size: large;
-}
-
-#avatarButtonDiv {
-    text-align: center;
 }
 
 #questionnaire {
@@ -199,6 +195,12 @@
     display: inline-flex;
 }
 
+.bigButton {
+    width: 7vw;
+    font-size: large;
+
+}
+
 .input-group {
     position: relative;
 }
@@ -239,32 +241,9 @@
     outline-color: #888;
 }
 
-
-.normalValueDiv {
-    display: flex;
-    text-align: left;
-}
-
-.normalValueInput {
-    padding: 1vh;
-    font-size: medium;
-    margin-bottom: 1.5vh;
-}
-
-#normalValuesLabel {
-    margin-right: auto;
-    margin-left: 0px;
-    min-width: 60%;
-}
-
 .leftAlignedDiv {
     margin: 0 auto;
     margin-left: 0;
-}
-
-#admin {
-    max-width: 70%;
-    margin-bottom: 2%;
 }
 
 
@@ -294,9 +273,8 @@
     width: fit-content;
 }
 
-#questionnaireTitle {
-    text-align: center;
-    font-size: 2.5em;
+.rightButton {
+    float: right;
 }
 
 .centered_div {
@@ -306,7 +284,6 @@
 }
 
 .App-header {
-    background-color: white; /*Aller aussi modifier le .App au sommet du fichier*/
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -315,7 +292,6 @@
     font-size: calc(10px + 2vmin);
     color: black;
     margin-top: 5vh;
-  /*  background: #fff url(../src/pages/question_background.webp) center center/cover no-repeat fixed;*/
 }
 
 .App-header-align {
@@ -414,72 +390,37 @@ input:checked + .slider:before {
     grid-template-columns: 25% 25% 25% 25%;
     grid-gap: 10px;
     grid-template-rows: auto;
-
 }
 
 .grid-item {
 
 }
 
-.homeGrid {
+.grid_2col {
     display: grid;
-    grid-template-columns: 47% 50%;
-    grid-gap: 3vh;
+    grid-template-columns: 50% 50%;
+    grid-gap: 10px;
     grid-template-rows: auto;
-    margin: 0 0;
-    margin-left: 0;
-    margin-right: 25%;
-    border-radius: 15px;
-    padding: 3vh 3vh;
-    background: #1a73e8;
-    box-shadow: 7px 7px #114d9b;
+}
+
+
+.grid-item {
 
 }
 
-.homeGridItem {
-    width: auto;
-    background: white;
-    max-width: max-content;
-    border-radius: 15px;
-    padding: 3vh 3vh;
-    box-shadow: 7px 7px #488fed;
-    vertical-align: middle;
-    line-height: 1;
+.ignore-css {
+    margin-top: 60px;
+    margin-left: -26.6%;
 }
 
-.homeGridButton {
-    margin-top: 1vh;
-    background: #1A73E8;
-    backdrop-filter: blur(10px);
-    border: 1px solid transparent;
-    border-radius: 5px;
-    padding: 1vh;
-    color: white;
-    transition: all 0.2s ease-in-out;
-    text-align: center;
-    font-size: large;
-    width: 12vh;
-    text-decoration: none;
-    box-shadow: 5px 5px #488fed;
 
-}
-
-.homeGridButton:hover {
-    background: #488fed;
-}
-
-.reveal {
-    position: relative;
-    transform: translateX(-100px);
-    opacity: 0;
-    transition: 1s all ease;
-}
-
-.reveal.active {
-    transform: translateX(0px);
-    opacity: 1;
-}
 
 .general{
     margin-top:8%;
+}
+
+#passCheck {
+    font-size: 60%;
+    margin: 1%;
+    color: red;
 }

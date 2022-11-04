@@ -1,11 +1,14 @@
 import {signInWithEmailAndPassword} from "firebase/auth";
 import {auth} from "../initFirebase";
+import "../css/Login.css";
 import UserForm from "../components/UserForm";
-import {useNavigate} from "react-router-dom";
+import simpleBlueBg from "./simple_blue_background.webp";
+import {useEffect} from "react";
 
-
-export default function Login() {
-    const navigate = useNavigate();
+export default function Login({setBackgroundImage}) {
+    useEffect(()=> {
+        setBackgroundImage(simpleBlueBg);
+    }, []);
 
     const handleLogin = async (e, email, password) => {
         e.preventDefault();
