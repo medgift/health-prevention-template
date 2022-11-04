@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "./App.css";
-import {Route, Routes, NavLink, Navigate, useNavigate, useLocation} from "react-router-dom";
+import {Navigate, NavLink, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -44,7 +44,6 @@ class Nav extends React.Component {
                             <NavLink to="/home">Home</NavLink>
                             <NavLink to="/questionnaire">Questionnaire</NavLink>
                             <NavLink to="/view">Results</NavLink>
-                            <NavLink to="/editAvatar">Avatar</NavLink>
                             {profile}
                             {register}
                             {LoginLogout}
@@ -128,20 +127,23 @@ export default function App() {
     }
 
     return (
-        <div id="body" className="App" style={{ backgroundImage:`url(${backgroundImage})` }}>
+        <div id="body" className="App" style={{backgroundImage: `url(${backgroundImage})`}}>
             <Nav currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>
             <header className="App-header">
                 <header className="App-header-align">
                     <Routes>
                         <Route exact path="/" element={<Navigate to="/home"></Navigate>}></Route>
-                        <Route path="/home" element={<Home currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}/>
+                        <Route path="/home"
+                               element={<Home currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/register" element={<Register setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/login" element={<Login setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/logout" element={<Logout/>}/>
-                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}></Route>
-                        <Route path="/admin" element={<NormalValueList currentUser={currentUser} setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
+                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser}
+                                                                            setBackgroundImage={setBackgroundImage}/>}></Route>
+                        <Route path="/admin" element={<NormalValueList currentUser={currentUser}
+                                                                       setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
                         <Route path="/view" element={<MyPage setBackgroundImage={setBackgroundImage}/>}/>
-                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser}/>} />
+                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser}/>}/>
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                         <Route path="*" element={<PageNotFound></PageNotFound>}/>
                         <Route path={"/profile"} element={<Profile currentUser={currentUser}/>}/>

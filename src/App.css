@@ -284,6 +284,60 @@ input:checked + .slider:before {
     grid-template-rows: auto;
 }
 
+.grid_3col {
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    grid-gap: 10px;
+    grid-template-rows: auto;
+}
+
+
+.grid-item {
+
+}
+
+.homeGrid {
+    display: grid;
+    grid-template-columns: 47% 50%;
+    grid-gap: 3vh;
+    grid-template-rows: auto;
+    margin: 0 0;
+    margin-left: 0;
+    margin-right: 25%;
+    border-radius: 15px;
+    padding: 3vh 3vh;
+    background: #1a73e8;
+    box-shadow: 7px 7px #114d9b;
+
+}
+
+.homeGridItem {
+    width: auto;
+    background: white;
+    max-width: max-content;
+    border-radius: 15px;
+    padding: 3vh 3vh;
+    box-shadow: 7px 7px #488fed;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.homeGridButton {
+    margin-top: 1vh;
+    background: #1A73E8;
+    backdrop-filter: blur(10px);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 1vh;
+    color: white;
+    transition: all 0.2s ease-in-out;
+    text-align: center;
+    font-size: large;
+    width: 12vh;
+    text-decoration: none;
+    box-shadow: 5px 5px #488fed;
+
+}
 
 .grid-item {
 

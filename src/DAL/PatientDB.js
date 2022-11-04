@@ -27,6 +27,14 @@ class PatientDB {
             LastName: lastName,
         });
     }
+
+    async updatePatientDoctor(patientId, doctorId) {
+        const p = doc(db, "Patient", patientId);
+        await updateDoc(p, {
+            DoctorId: doctorId
+        });
+    }
+
 }
 
 export {PatientDB};
