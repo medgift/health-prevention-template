@@ -3,8 +3,16 @@
     margin-top: 60%;
     text-align: center;
     min-height: 40vh;
+    min-width: 15vw;
     width: 100%;
     margin-left: 0;
     padding:10%;
     background-color: white;
+    align-content: center;
+}
+
+.input-label {
+    text-align: center;
+    align-self: center;
+    margin-left: 10%;
 }
