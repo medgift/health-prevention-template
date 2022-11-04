@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {DoctorDB} from "../DAL/DoctorDB";
 import {PatientDB} from "../DAL/PatientDB";
 import MyPage from "./MyPage";
-import "../css/DocPage.css";
+import "../css/Doctor.css";
 
 
 export default function DoctorPage({currentUser, setBackgroundImage}) {
@@ -52,17 +52,15 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
     return (
         <div className={"DocDiv"}>
             <h2>Welcome back, Doctor</h2>
-            <h3>Patients</h3>
-            <td className={"PatientList"}>
+            <h3 className={"PatientListTitle"}>Your patients:</h3>
+            <select className={"PatientList"}>
                 {patients.map((p) => (
-                    <tbody  key={p} className={"patientButtonBody"}>
-                        <button to={"/view"} className={"PatientButton"} onClick={(e) => patientButtonPress(p.id)}>
-                        {p.firstName} {p.lastName}</button>
-                    </tbody>
+                    <option  key={p} className={"patientButtonBody"} onClick={(e) => patientButtonPress(p.id)}>
+                        {p.firstName} {p.lastName}
+                    </option>
                     ))}
-            </td>
+            </select>
             {idSelectedPatient !== null && <MyPage idPatient={idSelectedPatient} setBackgroundImage={setBackgroundImage}/>}
         </div>
-
     );
 }

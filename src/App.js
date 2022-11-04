@@ -51,6 +51,7 @@ class Nav extends React.Component {
                             <NavLink to="/view">Results</NavLink>
                             <NavLink to="/editAvatar">Avatar</NavLink>
                             {profile}
+                            {docPage}
                             {register}
                             {LoginLogout}
                         </ul>
@@ -136,7 +137,7 @@ export default function App() {
 
     return (
         <div id="body" className="App" style={{backgroundImage: `url(${backgroundImage})`}}>
-            <Nav currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>
+            <Nav currentUser={currentUser} setBackgroundImage={setBackgroundImage} isDoctor={isDoctor}/>
             <header className="App-header">
                 <header className="App-header-align">
                     <Routes>
