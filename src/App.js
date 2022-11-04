@@ -50,7 +50,6 @@ class Nav extends React.Component {
                             <NavLink to="/questionnaire">Questionnaire</NavLink>
                             <NavLink to="/view">Results</NavLink>
                             {profile}
-                            {docPage}
                             {register}
                             {LoginLogout}
                         </ul>
@@ -65,10 +64,8 @@ class Nav extends React.Component {
 export default function App() {
     /* Current user from firestore */
     const [currentUser, setCurrentUser] = useState(undefined);
-    const [userRole, setUserRole] = useState(UserRoles.prototype.GUEST);
     const [currentPatient, setCurrentPatient] = useState(undefined);
     const [backgroundImage, setBackgroundImage] = useState(null);
-    let isDoctor = useState(false);
     const userRoleContext = useContext(RoleContext);
 
     //navigation
@@ -107,8 +104,6 @@ export default function App() {
             if (doctor != null) {
                 userRoleContext.role = AvailableRoles.DOCTOR;
                 navigate("/doctor");
-                setUserRole(UserRoles.prototype.DOCTOR);
-                isDoctor = true;
                 return;
             }
 
@@ -144,10 +139,12 @@ export default function App() {
                         <Route path="/register" element={<Register setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/login" element={<Login setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/logout" element={<Logout/>}/>
-                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}></Route>
-                        <Route path="/admin" element={<NormalValueList currentUser={currentUser} setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
-                        <Route path="/view" element={<MyPage setBackgroundImage={setBackgroundImage}/>}/>
-                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>} />
+                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser}
+                                                                            setBackgroundImage={setBackgroundImage}/>}></Route>
+                        <Route path="/admin" element={<NormalValueList currentUser={currentUser}
+                                                                       setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
+                        <Route path="/view" element={<MyPage patientId={currentUser ? currentUser.uid : null} setBackgroundImage={setBackgroundImage}/>}/>
+                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser}/>} />
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                         <Route path="*"
                                element={<PageNotFound setBackgroundImage={setBackgroundImage}></PageNotFound>}/>
