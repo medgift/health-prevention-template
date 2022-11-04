@@ -3,8 +3,13 @@ import Family from "../components/Family";
 import You from "../components/You";
 import Habits from "../components/Habits";
 import WriteAnswer from "./WriteAnswer";
+import {auth} from "../initFirebase";
+import Navbar from "../components/Navbar";
+import {useNavigate} from "react-router-dom";
 
 export default function Questionnary() {
+
+    const navigate = useNavigate();
 
     const allAnswers = new WriteAnswer();
 
@@ -30,26 +35,23 @@ export default function Questionnary() {
 
     // go back to previous step
     const prevStep = (e) => {
-        e.preventDefault();
         setStep(step - 1)
     }
 
     // proceed to the next step
     const nextStep = (e) => {
-        e.preventDefault();
         if (step === formTitles.length - 1) {
-            allAnswers.updatePersonalData(
-                values.sexe, values.age, values.poids, values.taille, values.syst, values.glyc, values.chol, values.diab, values.inf, values.avc
-            );
-            allAnswers.updateFamilyData(
-                values.afinf, values.afcancer
-            );
-            allAnswers.updateHabitsData(
-                values.fume, values.alim, values.sport, values.alcool
-            );
-            allAnswers.calculateFinalData();
-            allAnswers.WriteResult();
+
+            //navigate('/ResultPage')
+            navigate('/ResultPage', {
+                state: {
+                    values: values,
+                }
+            });
+
+            //navigate("/ResultPage");
         } else {
+
             setStep(step + 1)
         }
     }
@@ -58,15 +60,15 @@ export default function Questionnary() {
         switch (step) {
             case 0:
                 return (
-                    <You values={ values } setValues={ setValues }/>
+                    <You nextStep={ nextStep } values={ values } setValues={ setValues }/>
                 )
             case 1:
                 return (
-                    <Family values={ values } setValues={ setValues }/>
+                    <Family nextStep={ nextStep } prevStep={ prevStep } values={ values } setValues={ setValues }/>
                 )
             case 2:
                 return (
-                    <Habits values={ values } setValues={ setValues }/>
+                    <Habits nextStep={ nextStep } prevStep={ prevStep } values={ values } setValues={ setValues }/>
                 )
             case 4:
                 return (
@@ -83,25 +85,19 @@ export default function Questionnary() {
     const formTitles = ["You", "Your family", "Your habits"];
 
     return (
-        <div className="form">
-            <div className="progress-bar">
-                <span style={{width: step === 0 ? "33.3%" : step === 1 ? "66.6%" : "102%"}}></span>
+        <>
+            <Navbar/>
+            <div className="box">
+                <div className="form">
+                    <div className="progress-bar">
+                        <span style={{width: step === 0 ? "33.3%" : step === 1 ? "66.6%" : "102%"}}></span>
+                    </div>
+                    <header>
+                        <h1>{formTitles[step]}</h1>
+                    </header>
+                    { displayStep(step) }
+                </div>
             </div>
-            <header>
-                <h1>{formTitles[step]}</h1>
-            </header>
-            <div className="form-container">
-                {displayStep(step)}
-            </div>
-            <footer>
-                {!(step === 0) ?
-                    <button
-                        onClick={prevStep}>Prev</button> : <span></span>
-                }
-                <button
-                    onClick={nextStep}>{step === formTitles.length - 1 ? "Submit" : "Next"}
-                </button>
-            </footer>
-        </div>
+        </>
     );
 }

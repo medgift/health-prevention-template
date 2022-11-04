@@ -1,6 +1,9 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
-function Family({values, setValues}) {
+function Family({nextStep, prevStep, values, setValues}) {
+
+    const [errors, setErrors] = useState({});
+    const [isSubmit, setIsSubmit] = useState(false);
 
     let handleChange = (event) => {
         const target = event.target;
@@ -9,10 +12,33 @@ function Family({values, setValues}) {
         setValues({...values, [name]: value})
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setErrors(validate(values));
+        setIsSubmit(true);
+    };
+
+    useEffect(() => {
+        if(Object.keys(errors).length === 0 && isSubmit) {
+            nextStep();
+        }
+    }, [errors])
+
+    const validate = (values) => {
+        const errors = {};
+        if(!values.afinf || !values.afcancer) {
+            errors.error = "All fields with * are required!";
+        }
+        return errors;
+    }
+
     return (
+        <>
+        <form className="form-container" onSubmit={ handleSubmit }>
         <div className="family">
+            <p className="error"> { errors.error }</p>
             <div className="radio-tile-group">
-                <span className="question">A parent (father before 55, mother before 65) with heart attack?</span>
+                <span className="question">A parent (father before 55, mother before 65) with heart attack?*</span>
                 <div className="input-wrapper">
                     <div className="input-container">
                         <input type="radio"
@@ -45,7 +71,7 @@ function Family({values, setValues}) {
             </div>
 
             <div className="radio-tile-group">
-                <span className="question">A close relative (father, mother, brothers or sisters) with cancer?</span>
+                <span className="question">A close relative (father, mother, brothers or sisters) with cancer?*</span>
                 <div className="input-wrapper">
                     <div className="input-container">
                         <input type="radio"
@@ -76,7 +102,17 @@ function Family({values, setValues}) {
                     </div>
                 </div>
             </div>
+            <footer>
+                <button onClick={ prevStep }>
+                    Prev
+                </button>
+                <button type="submit">
+                    Next
+                </button>
+            </footer>
         </div>
+        </form>
+</>
     )
 
 }

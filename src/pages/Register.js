@@ -3,6 +3,7 @@ import {createUserWithEmailAndPassword, onAuthStateChanged} from "firebase/auth"
 import {auth, database} from "../initFirebase";
 import {useNavigate} from "react-router-dom";
 import {doc, setDoc} from "firebase/firestore";
+import Navbar from "../components/Navbar";
 
 export default function Register() {
     const navigate = useNavigate();
@@ -28,11 +29,14 @@ export default function Register() {
     };
 
     return (
-        <div className="Content">
-            <div className="Login-Form">
-                <h1>Register</h1>
-                <UserForm handleSubmit={handleRegister} submitButtonLabel="Register"/>
+        <>
+            <Navbar/>
+            <div className="box">
+                <div className="form">
+                    <h1>Register</h1>
+                    <UserForm handleSubmit={handleRegister} submitButtonLabel="Register"/>
+                </div>
             </div>
-        </div>
+        </>
     );
 }

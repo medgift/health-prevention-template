@@ -1,6 +1,6 @@
 import React  from "react";
-import {doc, setDoc} from "firebase/firestore";
-import {database} from "../initFirebase";
+import {collection, doc, setDoc, addDoc, getDocs, getDoc} from "firebase/firestore";
+import {auth, database} from "../initFirebase";
 
 
 export default class WriteAnswer extends React.Component{
@@ -54,6 +54,7 @@ export default class WriteAnswer extends React.Component{
         this.afinf = afinf;
         this.afCancer = afcancer;
     }
+
     updateHabitsData = (smoke,food,sport,alcool) =>{
         this.smoke = smoke;
         this.alim = food;
@@ -77,15 +78,19 @@ export default class WriteAnswer extends React.Component{
         //TODO changement point sport etc...
     }
 
-    async WriteResult() {
-        try {
-            await setDoc(doc(database, "answers/"  + 3), {
+    async WriteResult(uid) {
+        try{
+
+            const date = new Date();
+
+            const colRef = doc(collection(doc(database, "users/", uid), "answers/"), date.toLocaleDateString() + " " + date.toLocaleTimeString())
+
+            await setDoc(colRef, {
                 afcancer: this.afCancer,
                 afinf: this.afinf,
                 age: this.age,
                 alcool: this.alcoolAlgo,
                 avc: this.avc,
-                date: Date.now(),
                 diab: this.diab,
                 diet: this.alimAlgo,
                 glyc: this.glycAlgo,
@@ -97,16 +102,51 @@ export default class WriteAnswer extends React.Component{
                 smoking: this.smoke,
                 sport: this.sportAlgo,
                 syst: this.systAlgo,
-                RISK:{
+                /*RISK:{
                     resultCancer: 0,
                     resultDiabete: 0,
                     resultInfarctus: 0,
                     resultNonInfarctus: 0
-                }
+                }*/
             });
             console.log("Write success")
         } catch (e) {
             console.log(e)
         }
     }
+
+    async readAnswers(date) {
+
+        const docRef = doc(database, "users/", auth.currentUser.uid, "answers/", date.toString());
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            console.log("Age " + docSnap.data().age)
+            this.sex = docSnap.data().sex;
+            this.age = docSnap.data().age;
+            this.weight = docSnap.data().weight;
+            this.height = docSnap.data().heigt;
+            this.syst = docSnap.data().syst;
+            this.glyc = docSnap.data().glyc;
+            this.chol = docSnap.data().chol;
+            this.diab = docSnap.data().diab;
+            this.inf = docSnap.data().inf;
+            this.avc = docSnap.data().avc;
+
+            this.afinf = docSnap.data().afinf;
+            this.afCancer = docSnap.data().afcancer;
+
+            this.smoke = docSnap.data().smoke;
+            this.alim = docSnap.data().food;
+            this.sport = docSnap.data().sport;
+            this.alcool = docSnap.data().alcool;
+
+            this.calculateFinalData();
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+
+    }
+
 }

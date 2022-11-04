@@ -14,11 +14,13 @@ import ShowResult from "./pages/ShowResult";
 import Navbar from "./components/Navbar";
 import AdminPage from "./pages/AdminPage";
 import Page404 from "./pages/Page404";
+import Questionnary from "./pages/Questionnary";
+import ResultPage from "./pages/ResultPage";
+import Profile_nb from "./pages/Profile_nb";
 
 export default function App() {
   /* Current user state */
   const [currentUser, setCurrentUser] = useState(undefined);
-  
 
   /* Watch for authentication state changes */
   useEffect(() => {
@@ -55,6 +57,9 @@ export default function App() {
           <Route path="/customization" element={<Customization/>}/>
           <Route path="/ShowResult" element={<ShowResult/>}/>
           <Route path="/AdminPage" element={<AdminPage/>}/>
+          <Route path="/questionnary" element={<Questionnary/>}/>
+          <Route path="/ResultPage" element={<ResultPage/>}/>
+          <Route path="/profile" element={<Profile_nb/>}/>
           <Route path="*" element={<Page404/>}/>
         </Routes>
     </div>

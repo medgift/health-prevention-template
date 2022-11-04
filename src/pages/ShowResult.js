@@ -20,7 +20,6 @@ export default class ShowResult extends React.Component {
         this.userAnswer.updateHabitsData(1,2,3,2)
 
         this.userAnswer.calculateFinalData()
-
     }
 
     async WriteResult() {
