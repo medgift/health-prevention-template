@@ -36,7 +36,7 @@ import {getDoc, doc, updateDoc} from 'firebase/firestore'
 const optionsPost = {
     method: 'POST',
     headers: {
-        'X-RapidAPI-Key': '576b52e05cmsh518fa0aa980ff0bp1debb8jsn5b3a2d557485',
+        'X-RapidAPI-Key': '53c0717abamsh12e9ecc41ba6cc7p1892ecjsn2fddd02797cb',
         'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 
     }
@@ -44,7 +44,7 @@ const optionsPost = {
 const optionsPut = {
     method: 'PUT',
     headers: {
-        'X-RapidAPI-Key': '576b52e05cmsh518fa0aa980ff0bp1debb8jsn5b3a2d557485',
+        'X-RapidAPI-Key': '53c0717abamsh12e9ecc41ba6cc7p1892ecjsn2fddd02797cb',
         'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 
     }
@@ -52,7 +52,7 @@ const optionsPut = {
 const optionsGet = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Key': '576b52e05cmsh518fa0aa980ff0bp1debb8jsn5b3a2d557485',
+        'X-RapidAPI-Key': '53c0717abamsh12e9ecc41ba6cc7p1892ecjsn2fddd02797cb',
         'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 
     }
@@ -82,8 +82,7 @@ export default function Avatar() {
             const ass = docSnap.get("avatarAsset");
             const hai = docSnap.get("avatarHair");
             const se = docSnap.get("avatarSex");
-
-            if (ava !== ''){
+            if (ava !== avatar && typeof ava != "undefined"){
                 setAvatar(ava)
                 setKey(ke)
                 setAsset(ass)
@@ -129,7 +128,7 @@ export default function Avatar() {
         fetchData()
 
         async function fetchData() {
-            const res = await fetch('https://doppelme-avatars.p.rapidapi.com/assets/'+sex+'/eye', optionsGet);
+            const res = await fetch('https://doppelme-avatars.p.rapidapi.com/assets/1101/eye', optionsGet);
             const data = await res.json();
             console.log("Assets JSON : ", data);
             const assets = data.asset_ids.map(a => {
@@ -138,7 +137,7 @@ export default function Avatar() {
             setAssets(assets)
             console.log("Assets list :", assets);
         }
-    }, [sex])
+    }, [])
 
     //Fetch hair list
     const [hairs, setHairs] = useState([]);
@@ -146,7 +145,7 @@ export default function Avatar() {
         fetchHairs()
 
         async function fetchHairs() {
-            const res = await fetch('https://doppelme-avatars.p.rapidapi.com/assets/'+sex+'/hair', optionsGet);
+            const res = await fetch('https://doppelme-avatars.p.rapidapi.com/assets/1101/hair', optionsGet);
             const data = await res.json();
             console.log("Hairs JSON : ", data);
             const hairs = data.asset_ids.map(a => {
@@ -155,7 +154,7 @@ export default function Avatar() {
             setHairs(hairs)
             console.log("Hairs list :", hairs);
         }
-    }, [sex])
+    }, [])
 
 
     //Function to change the asset
@@ -178,12 +177,11 @@ export default function Avatar() {
     }
 
     useEffect(() => {
+        let ava = avatar;
         setAvatar('')
         fetechDeletion()
 
         async function fetechDeletion() {
-            console.log("Old asset2 : " + oldAsset)
-            console.log("New asset ID : " + asset)
             if (deleteAsset) {
                 const removeUrl = 'https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/eye'
                 const res = await fetch(removeUrl, optionsPut);
@@ -192,7 +190,14 @@ export default function Avatar() {
                 if (asset != '') {
                     fetchModification()
                 } else {
-                    setAvatar(data.avatarSrc)
+                    if (data.avatarSrc === '') {
+                        setAvatar(ava)
+                    }
+                    else {
+                        setAvatar(data.avatarSrc)
+                    }
+                    console.log("Old asset2 : " + oldAsset)
+                    console.log("New asset ID : " + asset)
                 }
             } else fetchModification();
         }
@@ -204,7 +209,14 @@ export default function Avatar() {
             const res = await fetch(addUrl, optionsPut);
             const data = await res.json();
             console.log("Change asset : ", data);
-            setAvatar(data.avatarSrc)
+            if (typeof data.avatarSrc == "undefined") {
+                setAvatar(ava)
+            }
+            else {
+                setAvatar(data.avatarSrc)
+            }
+            console.log("Old asset3 : " + oldAsset)
+            console.log("New asset ID : " + asset)
         }
 
         setDeleteAsset(false);
@@ -230,25 +242,26 @@ export default function Avatar() {
     }
 
     useEffect(() => {
+        let ava = avatar;
         setAvatar('')
         fetechDeletion()
 
         async function fetechDeletion() {
-            console.log("Old hair : " + oldHair)
-            console.log("New hair ID : " + hair)
             if (deleteHair) {
                 const removeUrl = 'https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/hair'
                 const res = await fetch(removeUrl, optionsPut);
                 const data = await res.json();
                 console.log("Delete hair : ", data);
-                if (hair != '') {
-                    fetchModification()
+                if (typeof data.avatarSrc == "undefined") {
+                    setAvatar(ava)
+
                 } else {
                     setAvatar(data.avatarSrc)
                 }
+                console.log("Old hair : " + oldHair)
+                console.log("New hair ID : " + hair)
             } else fetchModification();
         }
-
         async function fetchModification() {
             if (sex == '')
                 return
@@ -256,10 +269,17 @@ export default function Avatar() {
             const res = await fetch(addUrl, optionsPut);
             const data = await res.json();
             console.log("Change asset : ", data);
-            setAvatar(data.avatarSrc)
+            if (typeof data.avatarSrc == "undefined") {
+                setAvatar(ava)
+            }
+            else {
+                setAvatar(data.avatarSrc)
+            }
+            console.log("Old hair : " + oldHair)
+            console.log("New hair ID : " + hair)
         }
 
-        setDeleteAsset(false);
+        setDeleteHair(false);
     }, [hair])
 
 
@@ -306,8 +326,6 @@ export default function Avatar() {
         setDisplayColorHairPicker(false)
         setHairColor(color.hex)
         setAvatar('')
-        console.log("hair color : " + color.hex)
-        console.log("new hair  color : " + hairColor)
     }
 
     useEffect(() => {
@@ -347,7 +365,7 @@ export default function Avatar() {
 
         async function fetchColorSkin() {
             const newColor = skinColor.substring(1, 7);
-            console.log("skin color : " + skinColor)
+            console.log("Skin color : " + skinColor)
             const res = await fetch('https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/skin/' + newColor, optionsPut);
             console.log('https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/skin/' + newColor)
 
@@ -357,7 +375,7 @@ export default function Avatar() {
         }
     }, [skinColor])
 
-
+    //Function to save avatar values
     function handleSaveClick() {
         a();
         async function a() {
@@ -369,6 +387,11 @@ export default function Avatar() {
                 avatarAsset: asset,
                 avatarSex: sex
             });
+            console.log("Avatar: " + avatar)
+            console.log("Key: " + key)
+            console.log("Hair: " + hair)
+            console.log("Asset: " + asset)
+            console.log("Sex: " + sex)
         }
     }
 

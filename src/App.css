@@ -374,3 +374,45 @@ footer {
 }
 
 
+.assetsList{
+  margin: 2px;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+  display:flex;
+  flexDirection:row;
+  listStyleType:none;
+  maxWidth:100%;
+  resize: both;
+  overflow: auto;
+  justify-content: space-between
+
+}
+
+.assetsImage{
+  display: flex;
+  justify-content: space-between
+}
+
+.colorAvatar{
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  /*border:10px grey;*/
+  /*padding:0px;*/
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.popover {
+  position: absolute;
+}
+
+.cover {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0
+}
