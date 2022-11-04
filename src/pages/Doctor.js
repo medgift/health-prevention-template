@@ -1,5 +1,5 @@
 import {AdminDB} from "../DAL/AdminDB";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {DoctorDB} from "../DAL/DoctorDB";
 import {PatientDB} from "../DAL/PatientDB";
@@ -44,6 +44,7 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
             p.id = doctor.patients[i];
             setPatients((patients) => [...patients, p]);
         }
+        setIdSelectedPatient(doctor.patients[0]);
     }
 
     function patientButtonPress (idPatient) {
@@ -61,7 +62,7 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
                     </option>
                     ))}
             </select>
-            {idSelectedPatient !== null && <MyPage idPatient={idSelectedPatient} setBackgroundImage={setBackgroundImage}/>}
+            <MyPage patientId={idSelectedPatient} setBackgroundImage={setBackgroundImage}/>
         </div>
     );
 }
