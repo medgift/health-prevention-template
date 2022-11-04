@@ -31,13 +31,15 @@ class Nav extends React.Component {
         //used to only display login and register to unauthenticated user
         if (this.props.currentUser) {
             LoginLogout = <NavLink to="/logout">Logout</NavLink>
-            profile = <NavLink to="/profile">Profile</NavLink>
         } else {
             LoginLogout = <NavLink to="/login">Login</NavLink>
             register = <NavLink to="/register">Register</NavLink>
         }
-        if(this.context.role === "doctor"){
+        if(this.context.role === AvailableRoles.DOCTOR){
             docPage = <NavLink to="/doctor">Patients</NavLink>
+        }
+        if(this.context.role === AvailableRoles.PATIENT) {
+            profile = <NavLink to="/profile">Profile</NavLink>
         }
 
         return (
