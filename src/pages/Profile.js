@@ -114,15 +114,17 @@ export default function Profile({currentUser, setBackgroundImage}) {
         const doctorId = document.getElementById("selectDoctor").value;
         if (doctorId === "none") {
             await PatientDB.prototype.updatePatientDoctor(currentUser.uid, null);
-            if (user.prevDoctor != null) {
+            if (user?.prevDoctor != null) {
                 await DoctorDB.prototype.removePatientFromDoctor(user.prevDoctor, currentUser.uid);
+                alert("Doctor removed!");
             }
             setUser({...user, ["prevDoctor"]: null});
-            alert("Doctor removed!");
         } else {
             await PatientDB.prototype.updatePatientDoctor(currentUser.uid, doctorId);
             await DoctorDB.prototype.addPatientToDoctor(doctorId, currentUser.uid);
-            await DoctorDB.prototype.removePatientFromDoctor(user.prevDoctor, currentUser.uid);
+            if (user.prevDoctor != null) {
+                await DoctorDB.prototype.removePatientFromDoctor(user.prevDoctor, currentUser.uid);
+            }
             setUser({...user, ["prevDoctor"]: doctorId});
             alert("Doctor changed!");
         }
