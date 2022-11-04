@@ -4,17 +4,31 @@ import ProgressBar from "../components/ProgressBar";
 import CircularProgressBar from "../components/CircularProgressBar"
 import _ from "lodash";
 import "./MyPage.css";
+import {QuestionDB} from "../DAL/QuestionDB";
+import {ResponseDB} from "../DAL/ResponseDB";
 
 
-const v = [1, 100 ,100 ,179 , 0, 110 , 0, 5.0, 0, 3.0, 2.0, 0, 0,/*avc*/ 0, 0, 0, 0  , 2 , 2, 2];
-
+const v = [1, 46 ,100 ,179 , 0, 110 , 0, 5.0, 0, 3.0, 2.0, 0, 0,/*avc*/ 0, 0, 0, 0  , 2 , 2, 2];
 export default class MyPage extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            algorithm: new Algorithm(v),
+            algorithm: new Algorithm(v)
         };
     }
+
+    async componentDidMount() {
+        console.log(this.props);
+        let response = await ResponseDB.prototype.getResponsesByUser(this.props.currentUser.uid);
+        let list = response[0].responses;
+        let answers = [list.Gender,list.Age,list.Poids,list.Taille,list.SystBool,
+            list.Syst,list.GlycBool,list.Glyc,list.CholBool,list.Chol,list.HDL,list.DIAB,
+            list.Inf,list.Avc,list.Afinf,list.Afcancer,list.Fume,list.Alim,list.Sport,list.Alcool]
+        this.setState({
+            algorithm: new Algorithm(answers)
+        })
+    }
+
 
     handleInputBool = (e) => {
         this.setState(s => {
