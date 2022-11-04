@@ -90,31 +90,23 @@ export default function App() {
             if (patient != null) {
                 setCurrentPatient(patient);
                 userRoleContext.role = AvailableRoles.PATIENT;
-                // redirect the user when the auth changes
-                // manually map the route to allow display of the 404 page
-                console.log(location.pathname);
-                let loc = location.pathname;
-                if (loc === ("/login") || loc === "/home" || loc === "/" ||
-                    loc === "/questionnaire" || loc === "/view" || loc === "/register"
-                    || loc === "/profile") {
-                    navigate("/questionnaire");
-                }
+                navigate("/questionnaire");
                 return;
             }
 
             //search for a doctor in the db
             let doctor = await DoctorDB.prototype.getDoctorById(user.uid);
             if (doctor != null) {
-                navigate("/doctor");
                 userRoleContext.role = AvailableRoles.DOCTOR;
+                navigate("/doctor");
                 return;
             }
 
             //search for an admin the db
             let admin = await AdminDB.prototype.getAdminById(user.uid);
             if (admin != null) {
+                userRoleContext.role = AvailableRoles.ADMIN;
                 navigate("/admin");
-                userRoleContext.role = AvailableRoles.PATIENT;
                 return;
             }
             console.log("Cannot find user in DB.")
@@ -143,8 +135,10 @@ export default function App() {
                         <Route path="/register" element={<Register setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/login" element={<Login setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/logout" element={<Logout/>}/>
-                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}></Route>
-                        <Route path="/admin" element={<NormalValueList currentUser={currentUser} setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
+                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser}
+                                                                            setBackgroundImage={setBackgroundImage}/>}></Route>
+                        <Route path="/admin" element={<NormalValueList currentUser={currentUser}
+                                                                       setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
                         <Route path="/view" element={<MyPage setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/doctor" element={<DoctorPage currentUser={currentUser}/>} />
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>

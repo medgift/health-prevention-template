@@ -14,8 +14,10 @@ export default function NormalValueList({currentUser, setBackgroundImage}) {
     let [questions, setQuestions] = useState([]);
     useEffect(() => {
         //prohibit the access to non-admin users
-        if (userRoleContext.role !== AvailableRoles.ADMIN)
+        if (userRoleContext.role !== AvailableRoles.ADMIN) {
             navigate("/");
+            return;
+        }
 
         setBackgroundImage(null);
 
