@@ -35,11 +35,13 @@ export default function Questionnary() {
 
     // go back to previous step
     const prevStep = (e) => {
+        e.preventDefault();
         setStep(step - 1)
     }
 
     // proceed to the next step
     const nextStep = (e) => {
+        e.preventDefault();
         if (step === formTitles.length - 1) {
 
             //navigate('/ResultPage')
@@ -60,15 +62,15 @@ export default function Questionnary() {
         switch (step) {
             case 0:
                 return (
-                    <You nextStep={ nextStep } values={ values } setValues={ setValues }/>
+                    <You values={ values } setValues={ setValues }/>
                 )
             case 1:
                 return (
-                    <Family nextStep={ nextStep } prevStep={ prevStep } values={ values } setValues={ setValues }/>
+                    <Family values={ values } setValues={ setValues }/>
                 )
             case 2:
                 return (
-                    <Habits nextStep={ nextStep } prevStep={ prevStep } values={ values } setValues={ setValues }/>
+                    <Habits values={ values } setValues={ setValues }/>
                 )
             case 4:
                 return (

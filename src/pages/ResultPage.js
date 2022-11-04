@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "./ShowResult.css"
+import "../ShowResult.css"
 import MyImage from "../img/avatar-gf34ddc003_1280.png";
 import Algorithm from "./Algorithm";
 import WriteAnswer from "./WriteAnswer";

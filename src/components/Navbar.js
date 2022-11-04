@@ -13,6 +13,9 @@ export default function Navbar() {
                 <Link to="/Customization" className="App-link">
                     Custom Avatar
                 </Link>
+                <Link to="/UserProfilePage" className="App-link">
+                    Profile
+                </Link>
             </div>
             <div className="navbar-profile" style={{float:"right"}}>
                 <button className="btn-profile">
