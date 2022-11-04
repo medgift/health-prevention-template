@@ -1,11 +1,9 @@
-import UserForm from "../components/UserForm";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import {auth} from "../initFirebase";
 import "../css/Register.css";
 import {useNavigate} from "react-router-dom";
 import {PatientDB} from "../DAL/PatientDB";
-import {useState} from "react";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import simpleBlueBg from "./simple_blue_background.webp";
 
 export default function Register({setBackgroundImage}) {

@@ -44,7 +44,6 @@ class Nav extends React.Component {
                             <NavLink to="/home">Home</NavLink>
                             <NavLink to="/questionnaire">Questionnaire</NavLink>
                             <NavLink to="/view">Results</NavLink>
-                            <NavLink to="/editAvatar">Avatar</NavLink>
                             {profile}
                             {register}
                             {LoginLogout}
@@ -90,9 +89,7 @@ export default function App() {
             let patient = await PatientDB.prototype.getPatientById(user.uid);
             if (patient != null) {
                 setCurrentPatient(patient);
-                console.log(userRoleContext.role);
                 userRoleContext.role = AvailableRoles.PATIENT;
-                console.log(userRoleContext.role);
                 // redirect the user when the auth changes
                 // manually map the route to allow display of the 404 page
                 console.log(location.pathname);
@@ -146,15 +143,15 @@ export default function App() {
                         <Route path="/register" element={<Register setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/login" element={<Login setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/logout" element={<Logout/>}/>
-                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser}
-                                                                            setBackgroundImage={setBackgroundImage}/>}></Route>
-                        <Route path="/admin" element={<NormalValueList currentUser={currentUser}
-                                                                       setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
+                        <Route path="/questionnaire" element={<QuestionList currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}></Route>
+                        <Route path="/admin" element={<NormalValueList currentUser={currentUser} setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
                         <Route path="/view" element={<MyPage setBackgroundImage={setBackgroundImage}/>}/>
-                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser}/>}/>
+                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser}/>} />
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
-                        <Route path="*" element={<PageNotFound></PageNotFound>}/>
-                        <Route path={"/profile"} element={<Profile currentUser={currentUser}/>}/>
+                        <Route path="*"
+                               element={<PageNotFound setBackgroundImage={setBackgroundImage}></PageNotFound>}/>
+                        <Route path={"/profile"}
+                               element={<Profile currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}/>
                     </Routes>
                 </header>
             </header>

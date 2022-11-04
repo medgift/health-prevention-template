@@ -1,9 +1,6 @@
-import {AdminDB} from "../DAL/AdminDB";
 import {useEffect, useState} from "react";
-import {Link, Route, Routes, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {DoctorDB} from "../DAL/DoctorDB";
-import {QuestionDB} from "../DAL/QuestionDB";
-import {forEach} from "react-bootstrap/ElementChildren";
 import {PatientDB} from "../DAL/PatientDB";
 import MyPage from "./MyPage";
 
@@ -17,7 +14,7 @@ export default function DoctorPage({currentUser}) {
     useEffect(() => {
         //prohibit the access to non-doctor users
         isADoctorConnected();
-    },[]);
+    }, []);
 
     async function isADoctorConnected() {
         if (!currentUser) {
@@ -38,7 +35,7 @@ export default function DoctorPage({currentUser}) {
 
     async function loadPatients() {
         console.log("Loading patients")
-        for(let i = 0; i < doctor.patients.length; i++) {
+        for (let i = 0; i < doctor.patients.length; i++) {
             let p = await PatientDB.prototype.getPatientById(doctor.patients[i]);
             p.id = doctor.patients[i];
             setPatients((patients) => [...patients, p]);
@@ -46,23 +43,23 @@ export default function DoctorPage({currentUser}) {
     }
 
     //TODO: boutton pour changer de patient (idpatient)
-    function patientButtonPress (idPatient) {
+    function patientButtonPress(idPatient) {
         console.log("Patient button pressed: " + idPatient);
         setIdSelectedPatient(idPatient);
         console.log("idSelectedPatient: " + idSelectedPatient);
     }
 
-    return(
+    return (
         <div className={"DocDiv"}>
             <h2>Doctor page</h2>
             <h3>Patients</h3>
             <div className={"PatientList"}>
                 {patients.map((p) => (
-                    <div  key={p}>
+                    <div key={p}>
                         <button to={"/view"} className={"PatientButton"} onClick={(e) => patientButtonPress(p.id)}>
-                        {p.firstName} {p.lastName} {p.id}</button>
+                            {p.firstName} {p.lastName} {p.id}</button>
                     </div>
-                    ))}
+                ))}
             </div>
             {idSelectedPatient !== null && <MyPage idPatient={idSelectedPatient}/>}
         </div>

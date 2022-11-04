@@ -2,10 +2,13 @@ import {NavLink, useNavigate} from "react-router-dom";
 import React, {useEffect} from "react";
 import NiceAvatar from "react-nice-avatar";
 import {PatientDB} from "../DAL/PatientDB";
+import {DoctorDB} from "../DAL/DoctorDB";
 
-export default function Profile({currentUser}) {
+
+export default function Profile({currentUser, setBackgroundImage}) {
     const navigate = useNavigate();
     const [user, setUser] = React.useState(null);
+    const [doctors, setDoctors] = React.useState([]);
     const defaultConfig = {
         "sex": "man",
         "faceColor": "#f5d6a1",
@@ -25,6 +28,7 @@ export default function Profile({currentUser}) {
     };
 
     useEffect(() => {
+        setBackgroundImage(null);
         if (!currentUser) {
             navigate("/login");
             return;
@@ -32,6 +36,7 @@ export default function Profile({currentUser}) {
 
         }
         getPatient();
+        getDoctors();
 
 
     }, []);
@@ -44,6 +49,11 @@ export default function Profile({currentUser}) {
 
     }
 
+    const handleChange = (e) => {
+        const doctorId = document.getElementById("selectDoctor").value;
+        setUser({...user, ["doctorId"]: doctorId});
+    }
+
 
     return (
         <div className={"padded_div avatarDiv"}>
@@ -52,6 +62,8 @@ export default function Profile({currentUser}) {
                         style={{width: '10rem', height: '10rem'}} {...user?.avatarConfig || (defaultConfig)}/>
             <br/>
             <NavLink className={"homeGridButton"} to={"/editAvatar"}>Edit your avatar</NavLink>
+            <div style={{marginBottom: "20px"}}/>
+            <hr/>
             <div style={{marginBottom: "30px"}}/>
             <div className={"grid_2col"}>
                 <label>Firstname</label>
@@ -59,15 +71,75 @@ export default function Profile({currentUser}) {
                 <label>Lastname</label>
                 <input id={"lastName"} type="text" defaultValue={user?.lastName}/>
             </div>
-            <div style={{marginBottom: "20px"}}/>
+            <div style={{marginBottom: "30px"}}/>
             <button className={"homeGridButton"} onClick={save}>Save</button>
+            <hr/>
+            <div style={{marginBottom: "30px"}}/>
+            <div className={"grid_2col"}>
+                <label>Change/Choose Doctor</label>
+                <select id={"selectDoctor"} value={user?.doctorId} onChange={handleChange}>
+                    <option value={"none"}>None</option>
+                    {optionsDoctors()}
+                </select>
+            </div>
+            <button className={"homeGridButton"} onClick={submitDoctor}>Submit Request</button>
+            {/*<hr/>
+            <h2>Pending doctor requests</h2>
+            <div className={"grid_3col"}>
+                <label>Date</label>
+                <label>Doctor</label>
+                <label>Status</label>
+                {//TODO: add pending requests method
+                }
+            </div>*/}
+
         </div>
     )
 
     async function getPatient() {
-        const pat = await PatientDB.prototype.getPatientById(currentUser.uid).then();
+        const pat = await PatientDB.prototype.getPatientById(currentUser.uid);
         console.log(pat);
+        pat.prevDoctor = pat.doctorId;
         setUser(pat);
+
+    }
+
+    async function getDoctors() {
+        const docs = await DoctorDB.prototype.getAllDoctors();
+        setDoctors(docs);
+
+    }
+
+    async function submitDoctor() {
+        const doctorId = document.getElementById("selectDoctor").value;
+        if (doctorId === "none") {
+            await PatientDB.prototype.updatePatientDoctor(currentUser.uid, null);
+            if (user.prevDoctor != null) {
+                await DoctorDB.prototype.removePatientFromDoctor(user.prevDoctor, currentUser.uid);
+            }
+            setUser({...user, ["prevDoctor"]: null});
+            alert("Doctor removed!");
+        } else {
+            await PatientDB.prototype.updatePatientDoctor(currentUser.uid, doctorId);
+            await DoctorDB.prototype.addPatientToDoctor(doctorId, currentUser.uid);
+            await DoctorDB.prototype.removePatientFromDoctor(user.prevDoctor, currentUser.uid);
+            setUser({...user, ["prevDoctor"]: doctorId});
+            alert("Doctor changed!");
+        }
+        navigate("/profile")
+        //Cheat trick to refresh page because state don't like to be re-updated after being set a null value
+
+    }
+
+    function optionsDoctors() {
+        let options = [];
+        for (const doct of doctors) {
+            const d = doct.data();
+            let text = "Dr. " + d.firstName + " " + d.lastName;
+            options.push(<option value={doct.id}>{text}</option>)
+            console.log(d);
+        }
+        return options;
 
     }
 

@@ -3,14 +3,13 @@ import {auth} from "../initFirebase";
 import "../css/Login.css";
 import UserForm from "../components/UserForm";
 import simpleBlueBg from "./simple_blue_background.webp";
-import {useEffect} from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function Login({setBackgroundImage}) {
 
     const [loginMessage, setLoginMessage] = useState("");
 
-    useEffect(()=> {
+    useEffect(() => {
         setBackgroundImage(simpleBlueBg);
     }, []);
 
