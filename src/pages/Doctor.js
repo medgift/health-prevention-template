@@ -12,6 +12,7 @@ export default function DoctorPage({currentUser}) {
     const navigate = useNavigate();
     let doctor = null;
     let [patients, setPatients] = useState([]);
+    let [idSelectedPatient, setIdSelectedPatient] = useState(null);
 
     useEffect(() => {
         //prohibit the access to non-doctor users
@@ -44,6 +45,12 @@ export default function DoctorPage({currentUser}) {
         }
     }
 
+    //TODO: boutton pour changer de patient (idpatient)
+    function patientButtonPress (idPatient) {
+        console.log("Patient button pressed: " + idPatient);
+        setIdSelectedPatient(idPatient);
+        console.log("idSelectedPatient: " + idSelectedPatient);
+    }
 
     return(
         <div className={"DocDiv"}>
@@ -52,11 +59,13 @@ export default function DoctorPage({currentUser}) {
             <div className={"PatientList"}>
                 {patients.map((p) => (
                     <div  key={p}>
-                        <Link to={"/view"} className={"PatientDiv"}>
-                        {p.firstName} {p.lastName} {p.id}</Link>
+                        <button to={"/view"} className={"PatientButton"} onClick={(e) => patientButtonPress(p.id)}>
+                        {p.firstName} {p.lastName} {p.id}</button>
                     </div>
                     ))}
             </div>
+            {idSelectedPatient !== null && <MyPage idPatient={idSelectedPatient}/>}
         </div>
+
     );
 }

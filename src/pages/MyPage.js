@@ -94,7 +94,7 @@ export default class MyPage extends React.Component {
         return (
             <>
                 <h1>Your results</h1>
-                {this.patientID} test
+                {this.props.idPatient} test
                 <div className={"viewGrid"}>
                     <div className={"column"}>
                         <h2>Your situation</h2>
