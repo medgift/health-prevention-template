@@ -7,7 +7,7 @@ import Customization from "./pages/Customization";
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Logout from "./pages/Logout";
 import Info from "./pages/Info";
 import ShowResult from "./pages/ShowResult";
@@ -17,11 +17,12 @@ import UserProfilePage from "./pages/UserProfilePage";
 import Page404 from "./pages/Page404";
 import Questionnary from "./pages/Questionnary";
 import ResultPage from "./pages/ResultPage";
-import Profile_nb from "./pages/Profile_nb";
+//import Profile_nb from "./pages/Profile_nb";
 
 export default function App() {
   /* Current user state */
   const [currentUser, setCurrentUser] = useState(undefined);
+
   
 
   /* Watch for authentication state changes */
@@ -61,10 +62,15 @@ export default function App() {
           <Route path="/AdminPage" element={<AdminPage/>}/>
           <Route path="/questionnary" element={<Questionnary/>}/>
           <Route path="/ResultPage" element={<ResultPage/>}/>
-          <Route path="/profile" element={<Profile_nb/>}/>
+          {/* <Route path="/profile" element={<Profile_nb/>}/> */}
           <Route path="/UserProfilePage" element={<UserProfilePage/>}/>
           <Route path="*" element={<Page404/>}/>
         </Routes>
     </div>
   );
 }
+
+export const Context = createContext({
+  role : null,
+  setRole: () => {},
+})
