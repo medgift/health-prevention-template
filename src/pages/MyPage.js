@@ -17,22 +17,32 @@ export default class MyPage extends React.Component {
         };
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         console.log(this.props);
         if (this.props.patientId === null) {
             return;
         }
-        let response = await ResponseDB.prototype.getResponsesByUser(this.props.patientId);
-        let list = response[0].responses;
-        let answers = [list.Gender,list.Age,list.Poids,list.Taille,list.SystBool,
-            list.Syst,list.GlycBool,list.Glyc,list.CholBool,list.Chol,list.HDL,list.DIAB,
-            list.Inf,list.Avc,list.Afinf,list.Afcancer,list.Fume,list.Alim,list.Sport,list.Alcool]
-        this.setState({
-            algorithm: new Algorithm(answers)
-        })
+        this.loadResponses();
         this.props.setBackgroundImage(null);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.patientId !== this.props.patientId) {
+            this.loadResponses();
+        }
+    }
+
+    async loadResponses() {
+        let response = await ResponseDB.prototype.getResponsesByUser(this.props.patientId);
+        console.log("responses "+response);
+        let list = response[0].responses;
+        let answers = [list.Gender, list.Age, list.Poids, list.Taille, list.SystBool,
+            list.Syst, list.GlycBool, list.Glyc, list.CholBool, list.Chol, list.HDL, list.DIAB,
+            list.Inf, list.Avc, list.Afinf, list.Afcancer, list.Fume, list.Alim, list.Sport, list.Alcool]
+        this.setState({
+            algorithm: new Algorithm(answers)
+        })
+    }
 
     handleInputBool = (e) => {
         this.setState(s => {
@@ -100,7 +110,6 @@ export default class MyPage extends React.Component {
 
         })
     }
-
     reset = () => {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
@@ -114,7 +123,6 @@ export default class MyPage extends React.Component {
         return (
             <>
                 <h1>Your results</h1>
-
                 <div className={"viewGrid"}>
                     <div className={"column"}>
                         <h2>Your situation</h2>
