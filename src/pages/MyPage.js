@@ -127,8 +127,8 @@ export default class MyPage extends React.Component {
                         <p className={"line"}>Infarctus: <span className={"variable"}>{this.state.algorithm.inf?"Already have":"No"}</span></p>
                         <p className={"line"}>AVC: <span className={"variable"}>{this.state.algorithm.avc?"Already have":"No"}</span></p>
                         <h2>Family</h2>
-                        <p className={"line"}>Infarctus: <span className={"variable"}>{this.state.algorithm.avc?"Yes":"No"}</span></p>
-                        <p className={"line"}>Cancer: <span className={"variable"}>{this.state.algorithm.avc?"Yes":"No"}</span></p>
+                        <p className={"line"}>Infarctus: <span className={"variable"}>{this.state.algorithm.afinf?"Yes":"No"}</span></p>
+                        <p className={"line"}>Cancer: <span className={"variable"}>{this.state.algorithm.afcancer?"Yes":"No"}</span></p>
 
                     </div>
                     <div className={"column"}>
