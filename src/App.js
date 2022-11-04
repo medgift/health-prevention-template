@@ -146,8 +146,10 @@ export default function App() {
                                                                         setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/doctor" element={<DoctorPage currentUser={currentUser}/>}/>
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
-                        <Route path="*" element={<PageNotFound></PageNotFound>}/>
-                        <Route path={"/profile"} element={<Profile currentUser={currentUser}/>}/>
+                        <Route path="*"
+                               element={<PageNotFound setBackgroundImage={setBackgroundImage}></PageNotFound>}/>
+                        <Route path={"/profile"}
+                               element={<Profile currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}/>
                     </Routes>
                 </header>
             </header>
