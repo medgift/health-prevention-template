@@ -4,16 +4,18 @@ import ProgressBar from "../components/ProgressBar";
 import CircularProgressBar from "../components/CircularProgressBar"
 import _ from "lodash";
 import "./MyPage.css";
-import {QuestionDB} from "../DAL/QuestionDB";
 import {ResponseDB} from "../DAL/ResponseDB";
+import NiceAvatar, {genConfig} from "react-nice-avatar";
+import {PatientDB} from "../DAL/PatientDB";
 
 
-const v = [1, 46 ,100 ,179 , 0, 110 , 0, 5.0, 0, 3.0, 2.0, 0, 0,/*avc*/ 0, 0, 0, 0  , 2 , 2, 2];
+const v = [1, 46, 100, 179, 0, 110, 0, 5.0, 0, 3.0, 2.0, 0, 0,/*avc*/ 0, 0, 0, 0, 2, 2, 2];
 export default class MyPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state={
-            algorithm: new Algorithm(v)
+        this.state = {
+            algorithm: new Algorithm(v),
+            config: null
         };
     }
 
@@ -31,6 +33,7 @@ export default class MyPage extends React.Component {
             algorithm: new Algorithm(answers)
         })
         this.props.setBackgroundImage(null);
+        this.getAvatar();
     }
 
 
@@ -109,6 +112,16 @@ export default class MyPage extends React.Component {
         })
     }
 
+    async getAvatar() {
+        const patientData = await PatientDB.prototype.getPatientById(this.props.patientId);
+        patientData.avatarConfig.mouthStyle = "sad";
+        const myConfig = genConfig(patientData.avatarConfig);
+        this.setState({
+            config: myConfig
+        })
+        console.log(myConfig);
+    }
+
 
     render() {
         return (
@@ -118,26 +131,43 @@ export default class MyPage extends React.Component {
                 <div className={"viewGrid"}>
                     <div className={"column"}>
                         <h2>Your situation</h2>
-                        <p>*photo avatar*</p>
-                        <p className={"line"}>Sex: <span className={"variable"}>{this.state.algorithm.sexe?"Man":"Woman"}</span></p>
-                        <p className={"line"}>Age: <span className={"variable"}>{this.state.algorithm.age} years</span></p>
-                        <p className={"line"}>Height: <span className={"variable"}>{this.state.algorithm.taille} cm</span></p>
-                        <p className={"line"}>Syst: <span className={"variable"}>{this.state.algorithm.syst} mmHg</span></p>
-                        <p className={"line"}>Glyc: <span className={"variable"}>{this.state.algorithm.glyc} g/L</span></p>
-                        <p className={"line"}>Chol: <span className={"variable"}>{this.state.algorithm.chol} g/L</span></p>
-                        <p className={"line"}>HDL: <span className={"variable"}>{this.state.algorithm.hdl} g/L</span></p>
-                        <p className={"line"}>Diabete: <span className={"variable"}>{this.state.algorithm.diab?"Yes":"No"}</span></p>
-                        <p className={"line"}>Infarctus: <span className={"variable"}>{this.state.algorithm.inf?"Already have":"No"}</span></p>
-                        <p className={"line"}>AVC: <span className={"variable"}>{this.state.algorithm.avc?"Already have":"No"}</span></p>
+                        <div className={"divAvatar"}>
+                            <NiceAvatar className={"avatar"} {...this.state.config}/>
+                            <img className={"imgAvatar"} src={"heart.png"}/>
+                        </div>
+                        <p className={"line"}>Sex: <span
+                            className={"variable"}>{this.state.algorithm.sexe ? "Man" : "Woman"}</span></p>
+                        <p className={"line"}>Age: <span className={"variable"}>{this.state.algorithm.age} years</span>
+                        </p>
+                        <p className={"line"}>Height: <span
+                            className={"variable"}>{this.state.algorithm.taille} cm</span></p>
+                        <p className={"line"}>Syst: <span className={"variable"}>{this.state.algorithm.syst} mmHg</span>
+                        </p>
+                        <p className={"line"}>Glyc: <span className={"variable"}>{this.state.algorithm.glyc} g/L</span>
+                        </p>
+                        <p className={"line"}>Chol: <span className={"variable"}>{this.state.algorithm.chol} g/L</span>
+                        </p>
+                        <p className={"line"}>HDL: <span className={"variable"}>{this.state.algorithm.hdl} g/L</span>
+                        </p>
+                        <p className={"line"}>Diabete: <span
+                            className={"variable"}>{this.state.algorithm.diab ? "Yes" : "No"}</span></p>
+                        <p className={"line"}>Infarctus: <span
+                            className={"variable"}>{this.state.algorithm.inf ? "Already have" : "No"}</span></p>
+                        <p className={"line"}>AVC: <span
+                            className={"variable"}>{this.state.algorithm.avc ? "Already have" : "No"}</span></p>
                         <h2>Family</h2>
-                        <p className={"line"}>Infarctus: <span className={"variable"}>{this.state.algorithm.avc?"Yes":"No"}</span></p>
-                        <p className={"line"}>Cancer: <span className={"variable"}>{this.state.algorithm.avc?"Yes":"No"}</span></p>
+                        <p className={"line"}>Infarctus: <span
+                            className={"variable"}>{this.state.algorithm.avc ? "Yes" : "No"}</span></p>
+                        <p className={"line"}>Cancer: <span
+                            className={"variable"}>{this.state.algorithm.avc ? "Yes" : "No"}</span></p>
 
                     </div>
                     <div className={"column"}>
                         <h2>Your rhythm</h2>
-                        <p>*photo avatar*</p>
-
+                        <div className={"divAvatar"}>
+                            <NiceAvatar className={"avatar"} {...this.state.config}/>
+                            <img className={"imgAvatar"} src={"heart.png"}/>
+                        </div>
                         <div>
                             <label className={"labelView"}>Smoke: </label>
                             <input type={"checkbox"} checked={this.state.algorithm.fume}
@@ -197,7 +227,10 @@ export default class MyPage extends React.Component {
                     </div>
                     <div className={"column"}>
                         <h2>Your risks</h2>
-                        <p>*photo avatar*</p>
+                        <div className={"divAvatar"}>
+                            <NiceAvatar className={"avatar"} {...this.state.config}/>
+                            <img className={"imgAvatar"} src={"heart.png"}/>
+                        </div>
                         <center>
                             <h3 className={"disease"}>Infarctus rate</h3>
                             <CircularProgressBar

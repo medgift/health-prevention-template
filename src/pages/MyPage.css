@@ -123,8 +123,36 @@
     font-weight: bold;
     animation: fadeIn 2s;
 }
+
 .disease {
-    font-size: 100% ;
+    font-size: 100%;
     margin: 3%;
     margin-top: 13%;
+}
+
+.avatar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.divAvatar {
+    width: 70%;
+    border: black 1px solid;
+    padding-top: 70%;
+    position: relative;
+    margin-left: 15%;
+}
+
+.imgAvatar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    width: 100%;
+
 }
