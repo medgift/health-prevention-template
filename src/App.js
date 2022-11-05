@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import "./App.css";
-import {Route, Routes, NavLink, Navigate, useNavigate, useLocation} from "react-router-dom";
+import {Navigate, NavLink, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -16,7 +16,7 @@ import PageNotFound from "./pages/404";
 import Profile from "./pages/Profile";
 import {PatientDB} from "./DAL/PatientDB";
 import {AdminDB} from "./DAL/AdminDB";
-import {RoleContext, AvailableRoles} from "./Context/UserRoles"
+import {AvailableRoles, RoleContext} from "./Context/UserRoles"
 import {DoctorDB} from "./DAL/DoctorDB";
 import DoctorPage from "./pages/Doctor";
 
@@ -26,13 +26,20 @@ class Nav extends React.Component {
         let LoginLogout = null;
         let register = null;
         let profile = null;
+        let docPage = null;
+
         //used to only display login and register to unauthenticated user
         if (this.props.currentUser) {
             LoginLogout = <NavLink to="/logout">Logout</NavLink>
-            profile = <NavLink to="/profile">Profile</NavLink>
         } else {
             LoginLogout = <NavLink to="/login">Login</NavLink>
             register = <NavLink to="/register">Register</NavLink>
+        }
+        if (this.context.role === AvailableRoles.DOCTOR) {
+            docPage = <NavLink to="/doctor">Patients</NavLink>
+        }
+        if (this.context.role === AvailableRoles.PATIENT) {
+            profile = <NavLink to="/profile">Profile</NavLink>
         }
 
         return (
@@ -45,6 +52,7 @@ class Nav extends React.Component {
                             <NavLink to="/questionnaire">Questionnaire</NavLink>
                             <NavLink to="/view">Results</NavLink>
                             {profile}
+                            {docPage}
                             {register}
                             {LoginLogout}
                         </ul>
@@ -55,6 +63,7 @@ class Nav extends React.Component {
     };
 }
 
+Nav.contextType = RoleContext;
 
 export default function App() {
     /* Current user from firestore */
@@ -122,7 +131,7 @@ export default function App() {
             </div>
         );
     }
-
+    let patientId = currentUser ? currentUser.uid : null;
     return (
         <div id="body" className="App" style={{backgroundImage: `url(${backgroundImage})`}}>
             <Nav currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>
@@ -139,8 +148,10 @@ export default function App() {
                                                                             setBackgroundImage={setBackgroundImage}/>}></Route>
                         <Route path="/admin" element={<NormalValueList currentUser={currentUser}
                                                                        setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
-                        <Route path="/view" element={<MyPage patientId={currentUser ? currentUser.uid : null} setBackgroundImage={setBackgroundImage}/>}/>
-                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser}/>} />
+                        <Route path="/view"
+                               element={<MyPage patientId={patientId} setBackgroundImage={setBackgroundImage}/>}/>
+                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser}
+                                                                   setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                         <Route path="*"
                                element={<PageNotFound setBackgroundImage={setBackgroundImage}></PageNotFound>}/>
