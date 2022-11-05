@@ -8,7 +8,7 @@ import {ResponseDB} from "../DAL/ResponseDB";
 import NiceAvatar, {genConfig} from "react-nice-avatar";
 import {PatientDB} from "../DAL/PatientDB";
 
-
+let drinkStatus;
 const v = [1, 46, 100, 179, 0, 110, 0, 5.0, 0, 3.0, 2.0, 0, 0,/*avc*/ 0, 0, 0, 0, 2, 2, 2];
 export default class MyPage extends React.Component {
     constructor(props) {
@@ -25,11 +25,16 @@ export default class MyPage extends React.Component {
             return;
         }
         this.loadResponses();
+        this.getAvatar();
+        this.updateSmoke();
+        this.updateDrinks();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.patientId !== this.props.patientId) {
             this.loadResponses();
+            this.updateSmoke();
+            this.updateDrinks();
         }
     }
 
@@ -42,8 +47,8 @@ export default class MyPage extends React.Component {
             list.Inf, list.Avc, list.Afinf, list.Afcancer, list.Fume, list.Alim, list.Sport, list.Alcool]
         this.setState({
             algorithm: new Algorithm(answers)
-        })
-        this.getAvatar();
+        });
+
     }
 
 
@@ -58,6 +63,9 @@ export default class MyPage extends React.Component {
             clonedAlgorithm.canRate = clonedAlgorithm.CalculateCancer();
             return {algorithm: clonedAlgorithm};
         });
+        this.updateSmoke();
+
+
     }
 
     changeAlim = (e) => {
@@ -112,6 +120,8 @@ export default class MyPage extends React.Component {
             return {algorithm: clonedAlgorithm};
 
         })
+        drinkStatus = e.target.value;
+        this.updateDrinks();
     }
     reset = () => {
         this.setState(s => {
@@ -119,16 +129,53 @@ export default class MyPage extends React.Component {
             clonedAlgorithm.Reset();
             return {algorithm: clonedAlgorithm};
         })
+        this.updateSmoke();
+        this.updateDrinks();
+
     }
 
     async getAvatar() {
         const patientData = await PatientDB.prototype.getPatientById(this.props.patientId);
-        patientData.avatarConfig.mouthStyle = "sad";
+        patientData.avatarConfig.mouthStyle = "peace";
+        patientData.avatarConfig.shape = null;
+        patientData.avatarConfig.bgColor = "gray";
         const myConfig = genConfig(patientData.avatarConfig);
         this.setState({
             config: myConfig
         })
-        console.log(myConfig);
+    }
+
+    setDrinksHidden() {
+        document.getElementById("drink1Img").style.visibility = "hidden"
+        document.getElementById("drink2Img").style.visibility = "hidden"
+        document.getElementById("drink3Img").style.visibility = "hidden"
+    }
+
+    updateDrinks() {
+        this.setDrinksHidden();
+        switch (drinkStatus) {
+            case "0":
+                document.getElementById("drink3Img").style.visibility = "visible"
+                break;
+            case "1":
+                document.getElementById("drink2Img").style.visibility = "visible"
+                break;
+            case "2":
+                document.getElementById("drink1Img").style.visibility = "visible"
+                break;
+        }
+        this.forceUpdate();
+
+    }
+
+    updateSmoke() {
+        if (!this.state.algorithm.fume) {
+            document.getElementById("smokeImg").style.visibility = "visible"
+
+        } else {
+            document.getElementById("smokeImg").style.visibility = "hidden"
+
+        }
     }
 
 
@@ -140,8 +187,8 @@ export default class MyPage extends React.Component {
                     <div className={"column"}>
                         <h2>Your situation</h2>
                         <div className={"divAvatar"}>
-                            <NiceAvatar className={"avatar"} {...this.state.config}/>
-                            <img className={"imgAvatar"} src={"heart.png"}/>
+                            <NiceAvatar className={"avatar"} shape={"rounded"}
+                                        bgColor={"lightgray"} {...this.state.config}/>
                         </div>
                         <p className={"line"}>Sex: <span
                             className={"variable"}>{this.state.algorithm.sexe ? "Man" : "Woman"}</span></p>
@@ -173,8 +220,12 @@ export default class MyPage extends React.Component {
                     <div className={"column"}>
                         <h2>Your rhythm</h2>
                         <div className={"divAvatar"}>
-                            <NiceAvatar className={"avatar"} {...this.state.config}/>
-                            <img className={"imgAvatar"} src={"heart.png"}/>
+                            <NiceAvatar className={"avatar"} shape={"rounded"}
+                                        bgColor={"lightgray"} {...this.state.config}/>
+                            <img id={"drink1Img"} className={"imgAvatar"} src={"results/drink1.png"}/>
+                            <img id={"drink2Img"} className={"imgAvatar"} src={"results/drink2.png"}/>
+                            <img id={"drink3Img"} className={"imgAvatar"} src={"results/drink3.png"}/>
+                            <img id={"smokeImg"} className={"imgAvatar"} src={"results/smoke.png"}/>
                         </div>
                         <div>
                             <label className={"labelView"}>Smoke: </label>
@@ -236,7 +287,8 @@ export default class MyPage extends React.Component {
                     <div className={"column"}>
                         <h2>Your risks</h2>
                         <div className={"divAvatar"}>
-                            <NiceAvatar className={"avatar"} {...this.state.config}/>
+                            <NiceAvatar className={"avatar"} shape={"rounded"}
+                                        bgColor={"lightgray"} {...this.state.config}/>
                             <img className={"imgAvatar"} src={"heart.png"}/>
                         </div>
                         <center>
