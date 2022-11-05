@@ -1,10 +1,27 @@
 import Navbar from "../components/Navbar";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AdminCoef from "./AdminCoef";
 import AdminDoctorCreation from "./AdminDoctorCreation";
 import AdminVarTest from "./AdminVarTest";
+import { auth } from "../initFirebase";
+import { Context } from "../App.js"
+import {useNavigate} from "react-router-dom";
+
 
 export default function AdminPage()  {
+    const navigate = useNavigate();
+    const role = useContext(Context);
+
+    useEffect(() => {
+        userRole();
+    }, []);
+
+    const userRole = () => {
+        if(auth.currentUser && role.role !== 8){
+            navigate("/")
+        }
+        
+    }
      
     const [isShown, setIsShown] = useState(false);
     const [isShownVar, setIsShownVar] = useState(false);

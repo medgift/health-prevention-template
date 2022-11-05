@@ -71,6 +71,6 @@ export default function App() {
 }
 
 export const Context = createContext({
-  role : null,
+  role : 0,
   setRole: () => {},
 })

@@ -4,9 +4,12 @@ import UserForm from "../components/UserForm";
 import {useNavigate} from "react-router-dom";
 import {doc, getDoc} from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
+import { Context } from "../App";
+import { useContext } from "react";
 
 export default function Login() {
   const navigate = useNavigate();
+  let {setRole} = useContext(Context);
 
   //Get User
   //Compare Role
@@ -19,6 +22,7 @@ export default function Login() {
       
       await signInWithEmailAndPassword(auth, email, password)
       let role = await getRole(email);
+      setRole(role); 
       console.log(role)
 
       switch(role){
