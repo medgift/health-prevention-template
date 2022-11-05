@@ -4,8 +4,9 @@ import MyImage from "../img/avatar-gf34ddc003_1280.png";
 import Algorithm from "./Algorithm";
 import WriteAnswer from "./WriteAnswer";
 import {useLocation} from "react-router-dom";
-import {auth} from "../initFirebase";
+import {auth, database} from "../initFirebase";
 import Navbar from "../components/Navbar";
+import {doc, getDoc} from "firebase/firestore";
 
 function ResultPage() {
 
@@ -97,29 +98,149 @@ function ResultPage() {
         allAnswers.WriteResult(auth.currentUser.uid).then(r => {})
     }
 
+    const [avatar, setAvatar] = useState("")
+
+    useEffect(() =>{
+        getAvatar();
+        async function getAvatar() {
+            const docRef = doc(database, "users/", auth.currentUser.uid);
+            const docSnap = await getDoc(docRef);
+            const ava = docSnap.get("avatarURL");
+            setAvatar(ava);
+            console.log(ava)
+        }
+    }, [])
+
+    const [risk, setRisk] =useState('')
+    useEffect(() =>{
+        calculateRisk()
+        function calculateRisk(){
+            const riskCalc = cancerRisk //6-15 + 25-50
+            if (riskCalc < 35)
+                setRisk('low')
+            else if (riskCalc < 42)
+                setRisk('medium')
+            else
+                setRisk('high')
+
+            console.log(riskCalc)
+    }
+    });
+
+    const [actualState, setActualState] = useState('')
+    useEffect(() =>{
+        calculateRisk()
+        function calculateRisk(){
+            const riskCalc = cancerRisk //6-15 + 25-50
+            if (riskCalc < 35)
+                setActualState('low')
+            else if (riskCalc < 42)
+                setActualState('medium')
+            else
+                setActualState('high')
+
+            console.log(riskCalc)
+        }
+    }, []);
+
+
     return (
         <>
             <Navbar/>
             <div className="box">
                 <div className="row" style={{display: "flex"}}>
                     <div className="column">
-                        <div className="topBackground">
-                            <p>Your informations</p>
-                            <img src={MyImage} width="200px" height="200px"></img>
-                        </div>
-                        <div className="allColumnText">
-                            <p>age {allAnswers.age}</p>
-                            <p>sexe {allAnswers.sex < 1 ? "Femme" : "Homme"}</p>
-                            <p>taille {allAnswers.height}</p>
-                            <p>poids {allAnswers.weight}</p>
-                        </div>
+                        {actualState === 'low' ?
+                            <div className="backgroundLow">
+                                <p>Your habits</p>
+                                {avatar !== "" && typeof avatar != "undefined" ?
+                                    <div> {actualState === 'low' ?
+                                        <img src={avatar} className={"imageLow"}/> :
+                                        actualState === 'medium' ?
+                                            <img src={avatar} className={"imageMedium"}/> :
+                                            <img src={avatar} className={"imageBig"}/>
+                                    }</div>  :
+                                    <img src={MyImage} width="200px" height="200px"></img>
+                                }
+                            </div>
+                            :
+                            actualState === 'medium' ?
+                                <div className="backgroundMedium">
+                                    <p>Your habits</p>
+                                    {avatar !== "" && typeof avatar != "undefined" ?
+                                        <div> {actualState === 'low' ?
+                                            <img src={avatar} className={"imageLow"}/> :
+                                            actualState === 'medium' ?
+                                                <img src={avatar} className={"imageMedium"}/> :
+                                                <img src={avatar} className={"imageBig"}/>
+                                        }</div>  :
+                                        <img src={MyImage} width="200px" height="200px"></img>
+                                    }
+                                </div>
+                                :
+                                <div className="backgroundHigh">
+                                    <p>Your habits</p>
+                                    {avatar !== "" && typeof avatar != "undefined" ?
+                                        <div> {actualState === 'low' ?
+                                            <img src={avatar} className={"imageLow"}/> :
+                                            actualState === 'medium' ?
+                                                <img src={avatar} className={"imageMedium"}/> :
+                                                <img src={avatar} className={"imageBig"}/>
+                                        }</div>  :
+                                        <img src={MyImage} width="200px" height="200px"></img>
+                                    }
+                                </div>
+                        }
+                            <div className="allColumnText">
+                                <p>age {allAnswers.age}</p>
+                                <p>sexe {allAnswers.sex < 1 ? "Femme" : "Homme"}</p>
+                                <p>taille {allAnswers.height}</p>
+                                <p>poids {allAnswers.weight}</p>
+                            </div>
                     </div>
 
                     <div className="column">
-                        <div className="topBackground">
-                            <p>Your habits</p>
-                            <img src={MyImage} width="200px" height="200px"></img>
-                        </div>
+                        {actualState === 'low' ?
+                            <div className="backgroundLow">
+                                <p>Your habits</p>
+                                {avatar !== "" && typeof avatar != "undefined" ?
+                                    <div> {actualState === 'low' ?
+                                        <img src={avatar} className={"imageLow"}/> :
+                                        actualState === 'medium' ?
+                                            <img src={avatar} className={"imageMedium"}/> :
+                                            <img src={avatar} className={"imageBig"}/>
+                                    }</div>  :
+                                    <img src={MyImage} width="200px" height="200px"></img>
+                                }
+                            </div>
+                            :
+                            actualState === 'medium' ?
+                                <div className="backgroundMedium">
+                                    <p>Your habits</p>
+                                    {avatar !== "" && typeof avatar != "undefined" ?
+                                        <div> {actualState === 'low' ?
+                                            <img src={avatar} className={"imageLow"}/> :
+                                            actualState === 'medium' ?
+                                                <img src={avatar} className={"imageMedium"}/> :
+                                                <img src={avatar} className={"imageBig"}/>
+                                        }</div>  :
+                                        <img src={MyImage} width="200px" height="200px"></img>
+                                    }
+                                </div>
+                                :
+                                <div className="backgroundHigh">
+                                    <p>Your habits</p>
+                                    {avatar !== "" && typeof avatar != "undefined" ?
+                                        <div> {actualState === 'low' ?
+                                            <img src={avatar} className={"imageLow"}/> :
+                                            actualState === 'medium' ?
+                                                <img src={avatar} className={"imageMedium"}/> :
+                                                <img src={avatar} className={"imageBig"}/>
+                                        }</div>  :
+                                        <img src={MyImage} width="200px" height="200px"></img>
+                                    }
+                                </div>
+                        }
 
                         <div className="allColumnText">
                             <div className="textAndSlider">
@@ -150,11 +271,52 @@ function ResultPage() {
                         </div>
                     </div>
 
+
+
                     <div className="column">
-                        <div className="topBackground">
-                            <p>Your risks</p>
-                            <img src={MyImage} width="200px" height="200px"></img>
-                        </div>
+                            {risk === 'low' ?
+                                 <div className="backgroundLow">
+                                     <p>Your risks</p>
+                                     {avatar !== "" && typeof avatar != "undefined" ?
+                                     <div> {risk === 'low' ?
+                                         <img src={avatar} className={"imageLow"}/> :
+                                         risk === 'medium' ?
+                                             <img src={avatar} className={"imageMedium"}/> :
+                                             <img src={avatar} className={"imageBig"}/>
+                                     }</div>  :
+                                     <img src={MyImage} width="200px" height="200px"></img>
+                                 }
+                                 </div>
+                                :
+                                risk === 'medium' ?
+                                     <div className="backgroundMedium">
+                                         <p>Your risks</p>
+                                         {avatar !== "" && typeof avatar != "undefined" ?
+                                             <div> {risk === 'low' ?
+                                                 <img src={avatar} className={"imageLow"}/> :
+                                                 risk === 'medium' ?
+                                                     <img src={avatar} className={"imageMedium"}/> :
+                                                     <img src={avatar} className={"imageBig"}/>
+                                             }</div>  :
+                                             <img src={MyImage} width="200px" height="200px"></img>
+                                         }
+                                     </div>
+                                    :
+                                    <div className="backgroundHigh">
+                                        <p>Your risks</p>
+                                        {avatar !== "" && typeof avatar != "undefined" ?
+                                            <div> {risk === 'low' ?
+                                                <img src={avatar} className={"imageLow"}/> :
+                                                risk === 'medium' ?
+                                                    <img src={avatar} className={"imageMedium"}/> :
+                                                    <img src={avatar} className={"imageBig"}/>
+                                            }</div>  :
+                                            <img src={MyImage} width="200px" height="200px"></img>
+                                        }
+                                    </div>
+                            }
+
+
                         <div className="allColumnText">
                             <p>Maladie Cardiaque {nonInfarctusRisk} %</p>
                             <p>Attaque Cérébrale {infarctusRisk} %</p>

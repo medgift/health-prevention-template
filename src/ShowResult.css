@@ -31,7 +31,48 @@
 
 }
 
-.topBackground{
-    background: aqua;
-    margin-bottom: 30px;
+
+.backgroundLow{
+    background: lawngreen;
+    margin-bottom: 60px;
+    width: 100%;
+    height: 35%;
+}
+
+.backgroundMedium{
+    background: yellow;
+    margin-bottom: 60px;
+    width: 100%;
+    height: 35%;
+
+}
+
+.backgroundHigh{
+    background: red;
+    margin-bottom: 60px;
+    width: 100%;
+    height: 35%;
+
+}
+
+.imagLow{
+    width:72px;
+    height:180px;
+
+}
+
+.imageMedium{
+    width:107px;
+    height:180px;
+    transform: rotate(45deg);
+    transform-origin: 60% 70%;
+    opacity: 50%;
+}
+
+.imageBig{
+    width:142px;
+    height:180px;
+    transform: rotate(90deg);
+    transform-origin:35% 65%;
+    opacity: 10%;
 }
