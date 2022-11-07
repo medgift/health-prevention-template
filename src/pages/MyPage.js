@@ -1,18 +1,46 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Algorithm from "../algorithm/Algorithm";
 import ProgressBar from "../components/ProgressBar";
 import CircularProgressBar from "../components/CircularProgressBar"
 import _ from "lodash";
 import "./MyPage.css";
-import {QuestionDB} from "../DAL/QuestionDB";
 import {ResponseDB} from "../DAL/ResponseDB";
 
+export function ResultHistoric({patientId, setBackgroundImage}) {
+    const [userResponses, setUserResponses] = useState([]);
+    useEffect(() => {
+        async function loadResponses() {
+            setUserResponses(await ResponseDB.prototype.getResponsesByUser(patientId));
+        }
+        loadResponses();
+    }, [patientId]);
+    return <>
+        {userResponses.map((r) => (
+            <MyPage key={r.dateFilled.seconds} patientResponse={r} setBackgroundImage={setBackgroundImage}/>
+        ))}
+    </>
+}
 
-const v = [1, 46 ,100 ,179 , 0, 110 , 0, 5.0, 0, 3.0, 2.0, 0, 0,/*avc*/ 0, 0, 0, 0  , 2 , 2, 2];
-export default class MyPage extends React.Component {
+export default function LatestResult({patientId, setBackgroundImage}) {
+    const [latestResponse, setLatestResponse] = useState(null);
+    useEffect(() => {
+        async function loadLatestResponse() {
+            setLatestResponse(await ResponseDB.prototype.getLatestResponseByUser(patientId));
+        }
+        loadLatestResponse();
+    }, [patientId]);
+    return <>
+        <MyPage patientResponse={latestResponse} setBackgroundImage={setBackgroundImage}/>
+    </>
+}
+
+
+const v = [1, 46, 100, 179, 0, 110, 0, 5.0, 0, 3.0, 2.0, 0, 0,/*avc*/ 0, 0, 0, 0, 2, 2, 2];
+
+export class MyPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             algorithm: new Algorithm(v),
             date: "Want you very own result ? Fill in the questionnaire !"
         };
@@ -20,38 +48,35 @@ export default class MyPage extends React.Component {
 
     componentDidMount() {
         this.props.setBackgroundImage(null);
-        if (this.props.patientId === null) {
-            return;
-        }
-        this.loadResponses();
+        this.updateState();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.patientId !== this.props.patientId) {
-            this.loadResponses();
+        if (prevProps.patientResponse !== this.props.patientResponse) {
+            this.updateState();
         }
     }
 
-    async loadResponses() {
-        let latestResponse = await ResponseDB.prototype.getLatestResponseByUser(this.props.patientId);
-        if (typeof latestResponse === "undefined")
-           return; //patient has not filled in a questionnaire yet, display default data
-        console.log(latestResponse)
-        let dateTemp = new Date(latestResponse.dateFilled.seconds  * 1000);
-        this.state.date = this.formatDate(dateTemp);
-        let list = latestResponse.responses;
+    updateState() {
+        //if patient has not filled in a questionnaire yet, display default data
+        if (this.props.patientResponse === null || this.props.patientResponse === undefined){
+            return;
+        }
+        this.state.date = this.formatDate(this.props.patientResponse.dateFilled);
+        let list = this.props.patientResponse.responses;
         let answers = [list.Gender, list.Age, list.Poids, list.Taille, list.SystBool,
             list.Syst, list.GlycBool, list.Glyc, list.CholBool, list.Chol, list.HDL, list.DIAB,
             list.Inf, list.Avc, list.Afinf, list.Afcancer, list.Fume, list.Alim, list.Sport, list.Alcool]
         this.setState({
             algorithm: new Algorithm(answers)
-        })
+        });
     }
 
-    formatDate(date) {
+    formatDate(dateSeconds) {
+        let date = new Date(dateSeconds.seconds * 1000);
         //month in js goes from 0-11 that's why one is added for proper display
-        return "Filled on the " + date.getDate() + "/" + (date.getMonth()+1) + "/" +
-            date.getFullYear() + " at " +date.getHours() + ":" + date.getMinutes();
+        return "Filled on the " + date.getDate() + "/" + (date.getMonth() + 1) + "/" +
+            date.getFullYear() + " at " + date.getHours() + ":" + date.getMinutes();
     }
 
     handleInputBool = (e) => {
@@ -137,19 +162,31 @@ export default class MyPage extends React.Component {
                     <div className={"column"}>
                         <h2>Your situation</h2>
                         <p>*photo avatar*</p>
-                        <p className={"line"}>Sex: <span className={"variable"}>{this.state.algorithm.sexe?"Man":"Woman"}</span></p>
-                        <p className={"line"}>Age: <span className={"variable"}>{this.state.algorithm.age} years</span></p>
-                        <p className={"line"}>Height: <span className={"variable"}>{this.state.algorithm.taille} cm</span></p>
-                        <p className={"line"}>Syst: <span className={"variable"}>{this.state.algorithm.syst} mmHg</span></p>
-                        <p className={"line"}>Glyc: <span className={"variable"}>{this.state.algorithm.glyc} g/L</span></p>
-                        <p className={"line"}>Chol: <span className={"variable"}>{this.state.algorithm.chol} g/L</span></p>
-                        <p className={"line"}>HDL: <span className={"variable"}>{this.state.algorithm.hdl} g/L</span></p>
-                        <p className={"line"}>Diabete: <span className={"variable"}>{this.state.algorithm.diab?"Yes":"No"}</span></p>
-                        <p className={"line"}>Infarctus: <span className={"variable"}>{this.state.algorithm.inf?"Already have":"No"}</span></p>
-                        <p className={"line"}>AVC: <span className={"variable"}>{this.state.algorithm.avc?"Already have":"No"}</span></p>
+                        <p className={"line"}>Sex: <span
+                            className={"variable"}>{this.state.algorithm.sexe ? "Man" : "Woman"}</span></p>
+                        <p className={"line"}>Age: <span className={"variable"}>{this.state.algorithm.age} years</span>
+                        </p>
+                        <p className={"line"}>Height: <span
+                            className={"variable"}>{this.state.algorithm.taille} cm</span></p>
+                        <p className={"line"}>Syst: <span className={"variable"}>{this.state.algorithm.syst} mmHg</span>
+                        </p>
+                        <p className={"line"}>Glyc: <span className={"variable"}>{this.state.algorithm.glyc} g/L</span>
+                        </p>
+                        <p className={"line"}>Chol: <span className={"variable"}>{this.state.algorithm.chol} g/L</span>
+                        </p>
+                        <p className={"line"}>HDL: <span className={"variable"}>{this.state.algorithm.hdl} g/L</span>
+                        </p>
+                        <p className={"line"}>Diabete: <span
+                            className={"variable"}>{this.state.algorithm.diab ? "Yes" : "No"}</span></p>
+                        <p className={"line"}>Infarctus: <span
+                            className={"variable"}>{this.state.algorithm.inf ? "Already have" : "No"}</span></p>
+                        <p className={"line"}>AVC: <span
+                            className={"variable"}>{this.state.algorithm.avc ? "Already have" : "No"}</span></p>
                         <h2>Family</h2>
-                        <p className={"line"}>Infarctus: <span className={"variable"}>{this.state.algorithm.avc?"Yes":"No"}</span></p>
-                        <p className={"line"}>Cancer: <span className={"variable"}>{this.state.algorithm.avc?"Yes":"No"}</span></p>
+                        <p className={"line"}>Infarctus: <span
+                            className={"variable"}>{this.state.algorithm.avc ? "Yes" : "No"}</span></p>
+                        <p className={"line"}>Cancer: <span
+                            className={"variable"}>{this.state.algorithm.avc ? "Yes" : "No"}</span></p>
 
                     </div>
                     <div className={"column"}>
