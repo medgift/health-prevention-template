@@ -9,7 +9,7 @@ import { useContext } from "react";
 
 export default function Login() {
   const navigate = useNavigate();
-  let {setRole} = useContext(Context);
+  const {setRole} = useContext(Context);
 
   //Get User
   //Compare Role
@@ -22,7 +22,7 @@ export default function Login() {
       
       await signInWithEmailAndPassword(auth, email, password)
       let role = await getRole(email);
-      setRole(role); 
+      setRole(role);
       console.log(role)
 
       switch(role){
@@ -66,3 +66,4 @@ export default function Login() {
       </div>
   );
 }
+

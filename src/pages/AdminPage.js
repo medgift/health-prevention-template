@@ -9,19 +9,19 @@ import {useNavigate} from "react-router-dom";
 
 
 export default function AdminPage()  {
-    const navigate = useNavigate();
-    const role = useContext(Context);
+    // const navigate = useNavigate();
+    // const role = useContext(Context);
 
-    useEffect(() => {
-        userRole();
-    }, []);
+    // useEffect(() => {
+    //     userRole();
+    // }, []);
 
-    const userRole = () => {
-        if(auth.currentUser && role.role !== 8){
-            navigate("/")
-        }
+    // const userRole = () => {
+    //     if(auth.currentUser && role.role !== 8){
+    //         navigate("/")
+    //     }
         
-    }
+    // }
      
     const [isShown, setIsShown] = useState(false);
     const [isShownVar, setIsShownVar] = useState(false);

@@ -4,7 +4,6 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Customization from "./pages/Customization";
-
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
 import { createContext, useEffect, useState } from "react";
@@ -71,6 +70,6 @@ export default function App() {
 }
 
 export const Context = createContext({
-  role : 0,
+  role : -1,
   setRole: () => {},
 })
