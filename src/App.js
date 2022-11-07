@@ -19,6 +19,7 @@ import {AdminDB} from "./DAL/AdminDB";
 import {RoleContext, AvailableRoles} from "./Context/UserRoles"
 import {DoctorDB} from "./DAL/DoctorDB";
 import DoctorPage from "./pages/Doctor";
+import LatestResult from "./pages/MyPage";
 
 class Nav extends React.Component {
 
@@ -146,7 +147,7 @@ export default function App() {
                                                                             setBackgroundImage={setBackgroundImage}/>}></Route>
                         <Route path="/admin" element={<NormalValueList currentUser={currentUser}
                                                                        setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
-                        <Route path="/view" element={<MyPage patientId={patientId} setBackgroundImage={setBackgroundImage}/>}/>
+                        <Route path="/view" element={<LatestResult patientId={patientId} setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/doctor" element={<DoctorPage currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>} />
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                         <Route path="*"

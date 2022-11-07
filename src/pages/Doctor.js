@@ -3,7 +3,7 @@ import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {DoctorDB} from "../DAL/DoctorDB";
 import {PatientDB} from "../DAL/PatientDB";
-import MyPage from "./MyPage";
+import MyPage, {ResultHistoric, ResultList} from "./MyPage";
 import "../css/Doctor.css";
 
 import {RoleContext, AvailableRoles} from "../Context/UserRoles";
@@ -47,7 +47,7 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
         setIdSelectedPatient(doctor.patients[0]);
     }
 
-    const patientButtonPress = (e) => {
+    const patientButtonPress = async (e) => {
         setIdSelectedPatient(e.target.value);
     }
 
@@ -57,12 +57,12 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
             <h3 className={"PatientListTitle"}>Your patients:</h3>
             <select className={"PatientList"} onChange={patientButtonPress}>
                 {patients.map((p) => (
-                    <option  value={p.id} key={p} className={"patientButtonBody"}>
+                    <option value={p.id} key={p} className={"patientButtonBody"}>
                         {p.firstName} {p.lastName}
                     </option>
-                    ))}
+                ))}
             </select>
-            <MyPage patientId={idSelectedPatient} setBackgroundImage={setBackgroundImage}/>
+            <ResultHistoric patientId={idSelectedPatient} setBackgroundImage={setBackgroundImage}/>
         </div>
     );
 }
