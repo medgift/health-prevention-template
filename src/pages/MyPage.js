@@ -33,6 +33,8 @@ export default class MyPage extends React.Component {
 
     async loadResponses() {
         let latestResponse = await ResponseDB.prototype.getLatestResponseByUser(this.props.patientId);
+        if (latestResponse === undefined)
+           return; //patient has not filled in a questionnaire yet, display default data
         let list = latestResponse.responses;
         let answers = [list.Gender, list.Age, list.Poids, list.Taille, list.SystBool,
             list.Syst, list.GlycBool, list.Glyc, list.CholBool, list.Chol, list.HDL, list.DIAB,
