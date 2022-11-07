@@ -13,7 +13,8 @@ export default class MyPage extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            algorithm: new Algorithm(v)
+            algorithm: new Algorithm(v),
+            date: "Want you very own result ? Fill in the questionnaire !"
         };
     }
 
@@ -33,8 +34,11 @@ export default class MyPage extends React.Component {
 
     async loadResponses() {
         let latestResponse = await ResponseDB.prototype.getLatestResponseByUser(this.props.patientId);
-        if (latestResponse === undefined)
+        if (typeof latestResponse === "undefined")
            return; //patient has not filled in a questionnaire yet, display default data
+        console.log(latestResponse)
+        let dateTemp = new Date(latestResponse.dateFilled.seconds  * 1000);
+        this.state.date = this.formatDate(dateTemp);
         let list = latestResponse.responses;
         let answers = [list.Gender, list.Age, list.Poids, list.Taille, list.SystBool,
             list.Syst, list.GlycBool, list.Glyc, list.CholBool, list.Chol, list.HDL, list.DIAB,
@@ -42,6 +46,12 @@ export default class MyPage extends React.Component {
         this.setState({
             algorithm: new Algorithm(answers)
         })
+    }
+
+    formatDate(date) {
+        //month in js goes from 0-11 that's why one is added for proper display
+        return "Filled on the " + date.getDate() + "/" + (date.getMonth()+1) + "/" +
+            date.getFullYear() + " at " +date.getHours() + ":" + date.getMinutes();
     }
 
     handleInputBool = (e) => {
@@ -122,7 +132,7 @@ export default class MyPage extends React.Component {
     render() {
         return (
             <>
-                <h1>Your results</h1>
+                <h5>{this.state.date}</h5>
                 <div className={"viewGrid"}>
                     <div className={"column"}>
                         <h2>Your situation</h2>
