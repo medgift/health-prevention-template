@@ -1,26 +1,30 @@
-import {useEffect, useState} from "react";
+import {AdminDB} from "../DAL/AdminDB";
+import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {DoctorDB} from "../DAL/DoctorDB";
 import {PatientDB} from "../DAL/PatientDB";
-import MyPage from "./MyPage";
+import MyPage, {ResultHistoric, ResultList} from "./MyPage";
+import "../css/Doctor.css";
 
+import {RoleContext, AvailableRoles} from "../Context/UserRoles";
 
-export default function DoctorPage({currentUser}) {
+export default function DoctorPage({currentUser, setBackgroundImage}) {
     const navigate = useNavigate();
     let doctor = null;
     let [patients, setPatients] = useState([]);
     let [idSelectedPatient, setIdSelectedPatient] = useState(null);
+    const userRoleContext = useContext(RoleContext);
 
     useEffect(() => {
+        setBackgroundImage(null);
         //prohibit the access to non-doctor users
-        isADoctorConnected();
+        if (userRoleContext.role !== AvailableRoles.DOCTOR)
+            navigate("/");
+        loadDoctor();
+
     }, []);
 
-    async function isADoctorConnected() {
-        if (!currentUser) {
-            navigate("/");
-            return;
-        }
+    async function loadDoctor() {
         //search for a doctor the db
         //if found, set the doctor variable
         doctor = await DoctorDB.prototype.getDoctorById(currentUser.uid);
@@ -40,29 +44,25 @@ export default function DoctorPage({currentUser}) {
             p.id = doctor.patients[i];
             setPatients((patients) => [...patients, p]);
         }
+        setIdSelectedPatient(doctor.patients[0]);
     }
 
-    //TODO: boutton pour changer de patient (idpatient)
-    function patientButtonPress(idPatient) {
-        console.log("Patient button pressed: " + idPatient);
-        setIdSelectedPatient(idPatient);
-        console.log("idSelectedPatient: " + idSelectedPatient);
+    const patientButtonPress = async (e) => {
+        setIdSelectedPatient(e.target.value);
     }
 
     return (
         <div className={"DocDiv"}>
-            <h2>Doctor page</h2>
-            <h3>Patients</h3>
-            <div className={"PatientList"}>
+            <h2>Welcome back, Doctor</h2>
+            <h3 className={"PatientListTitle"}>Your patients:</h3>
+            <select className={"PatientList"} onChange={patientButtonPress}>
                 {patients.map((p) => (
-                    <div key={p}>
-                        <button to={"/view"} className={"PatientButton"} onClick={(e) => patientButtonPress(p.id)}>
-                            {p.firstName} {p.lastName} {p.id}</button>
-                    </div>
+                    <option value={p.id} key={p} className={"patientButtonBody"}>
+                        {p.firstName} {p.lastName}
+                    </option>
                 ))}
-            </div>
-            {idSelectedPatient !== null && <MyPage idPatient={idSelectedPatient}/>}
+            </select>
+            <ResultHistoric patientId={idSelectedPatient} setBackgroundImage={setBackgroundImage}/>
         </div>
-
     );
 }

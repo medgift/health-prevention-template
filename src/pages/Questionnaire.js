@@ -330,7 +330,7 @@ export default function QuestionList({currentUser, setBackgroundImage}) {
         (async function postResponses() {
             let responses = convertVariablesToMap(); //put values from variables context in a map
             let userId = currentUser ? currentUser.uid : null; //id is null if a guest fills the questionnaire
-            let resDTO = new ResponseDTO(Date.now(), userId, responses);
+            let resDTO = new ResponseDTO(new Date(), userId, responses);
             await ResponseDB.prototype.addResponses(resDTO);
             //user shall be redirected to the results page
             navigate("/view")

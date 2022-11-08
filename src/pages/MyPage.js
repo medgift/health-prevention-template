@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Algorithm from "../algorithm/Algorithm";
 import ProgressBar from "../components/ProgressBar";
 import CircularProgressBar from "../components/CircularProgressBar"
@@ -7,29 +7,78 @@ import "./MyPage.css";
 import {QuestionDB} from "../DAL/QuestionDB";
 import {ResponseDB} from "../DAL/ResponseDB";
 
+export function ResultHistoric({patientId, setBackgroundImage}) {
+    const [userResponses, setUserResponses] = useState([]);
+    useEffect(() => {
+        async function loadResponses() {
+            setUserResponses(await ResponseDB.prototype.getResponsesByUser(patientId));
+        }
+        loadResponses();
+    }, [patientId]);
+    return <>
+        {userResponses.map((r) => (
+            <MyPage key={r.dateFilled.seconds} patientResponse={r} setBackgroundImage={setBackgroundImage}/>
+        ))}
+    </>
+}
 
-const v = [1, 46 ,100 ,179 , 0, 110 , 0, 5.0, 0, 3.0, 2.0, 0, 0,/*avc*/ 0, 0, 0, 0  , 2 , 2, 2];
-export default class MyPage extends React.Component {
+export default function LatestResult({patientId, setBackgroundImage}) {
+    const [latestResponse, setLatestResponse] = useState(null);
+    useEffect(() => {
+        async function loadLatestResponse() {
+            setLatestResponse(await ResponseDB.prototype.getLatestResponseByUser(patientId));
+        }
+        loadLatestResponse();
+    }, [patientId]);
+    return <>
+        <MyPage patientResponse={latestResponse} setBackgroundImage={setBackgroundImage}/>
+    </>
+}
+
+
+const v = [1, 46, 100, 179, 0, 110, 0, 5.0, 0, 3.0, 2.0, 0, 0,/*avc*/ 0, 0, 0, 0, 2, 2, 2];
+
+export class MyPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state={
-            algorithm: new Algorithm(v)
+        this.state = {
+            algorithm: new Algorithm(v),
+            date: "Want you very own result ? Fill in the questionnaire !"
         };
     }
 
-    async componentDidMount() {
-        console.log(this.props);
-        let response = await ResponseDB.prototype.getResponsesByUser(this.props.currentUser.uid);
-        let list = response[0].responses;
-        let answers = [list.Gender,list.Age,list.Poids,list.Taille,list.SystBool,
-            list.Syst,list.GlycBool,list.Glyc,list.CholBool,list.Chol,list.HDL,list.DIAB,
-            list.Inf,list.Avc,list.Afinf,list.Afcancer,list.Fume,list.Alim,list.Sport,list.Alcool]
-        this.setState({
-            algorithm: new Algorithm(answers)
-        })
+    componentDidMount() {
         this.props.setBackgroundImage(null);
+        this.updateState();
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.patientResponse !== this.props.patientResponse) {
+            this.updateState();
+        }
+    }
+
+    updateState() {
+        //if patient has not filled in a questionnaire yet, display default data
+        if (this.props.patientResponse === null || this.props.patientResponse === undefined){
+            return;
+        }
+        this.state.date = this.formatDate(this.props.patientResponse.dateFilled);
+        let list = this.props.patientResponse.responses;
+        let answers = [list.Gender, list.Age, list.Poids, list.Taille, list.SystBool,
+            list.Syst, list.GlycBool, list.Glyc, list.CholBool, list.Chol, list.HDL, list.DIAB,
+            list.Inf, list.Avc, list.Afinf, list.Afcancer, list.Fume, list.Alim, list.Sport, list.Alcool]
+        this.setState({
+            algorithm: new Algorithm(answers)
+        });
+    }
+
+    formatDate(dateSeconds) {
+        let date = new Date(dateSeconds.seconds * 1000);
+        //month in js goes from 0-11 that's why one is added for proper display
+        return "Filled on the " + date.getDate() + "/" + (date.getMonth() + 1) + "/" +
+            date.getFullYear() + " at " + date.getHours() + ":" + date.getMinutes();
+    }
 
     handleInputBool = (e) => {
         this.setState(s => {
@@ -110,8 +159,7 @@ export default class MyPage extends React.Component {
     render() {
         return (
             <>
-                <h1>Your results</h1>
-
+                <h5>{this.state.date}</h5>
                 <div className={"viewGrid"}>
                     <div className={"column"}>
                         <h2>Your situation</h2>
