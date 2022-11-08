@@ -16,11 +16,18 @@ import UserProfilePage from "./pages/UserProfilePage";
 import Page404 from "./pages/Page404";
 import Questionnary from "./pages/Questionnary";
 import ResultPage from "./pages/ResultPage";
+import { useMemo } from "react";
+
 //import Profile_nb from "./pages/Profile_nb";
 
 export default function App() {
   /* Current user state */
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [role, setRole] = useState('');
+  const roleValue = useMemo(
+        () => ({ role, setRole }),
+        [role]
+    );
 
   
 
@@ -49,6 +56,7 @@ export default function App() {
 
   return (
     <div className="App">
+      <Context.Provider value={roleValue}>
         <Routes>
           <Route path="/" element={<Home currentUser={currentUser} />} />
           <Route path="/nav" element={<Navbar />} />
@@ -60,12 +68,13 @@ export default function App() {
           <Route path="/ShowResult" element={<ShowResult/>}/>
           <Route path="/AdminPage" element={<AdminPage/>}/>
           <Route path="/questionnary" element={<Questionnary/>}/>
-          <Route path="/ResultPage" element={<ResultPage/>}/>
-          {/* <Route path="/profile" element={<Profile_nb/>}/> */}
-          <Route path="/UserProfilePage" element={<UserProfilePage/>}/>
+          <Route path="/ResultPage" element={<ResultPage/>}/>       
+          <Route path="/UserProfilePage" element={<UserProfilePage/>}/>      
           <Route path="*" element={<Page404/>}/>
         </Routes>
+        </Context.Provider>
     </div>
+    
   );
 }
 
