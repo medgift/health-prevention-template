@@ -24,10 +24,11 @@ export default class MyPage extends React.Component {
         if (this.props.patientId === null) {
             return;
         }
-        this.loadResponses();
+        this.loadResponses().then();
         this.getAvatar();
         this.updateSmoke();
         this.updateDrinks();
+
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -127,10 +128,12 @@ export default class MyPage extends React.Component {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
             clonedAlgorithm.Reset();
+            drinkStatus = clonedAlgorithm.alcool;
             return {algorithm: clonedAlgorithm};
         })
         this.updateSmoke();
         this.updateDrinks();
+
 
     }
 
