@@ -6,6 +6,7 @@ import {doc, getDoc} from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { Context } from "../App";
 import { useContext } from "react";
+import Navbar from "../components/Navbar";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -61,12 +62,16 @@ export default function Login() {
   }
 
   return (
-      <div className="Content">
-        <div className="Login-Form">
-      <h1>Login</h1>
-      <UserForm handleSubmit={handleLogin} submitButtonLabel="Login" or="register" />
-    </div>
-      </div>
+      <>
+          <Navbar/>
+          <div className="box">
+              <div className="wrapper">
+                  <h1>Login</h1>
+                  <UserForm handleSubmit={handleLogin} submitButtonLabel="Login" or="register" />
+              </div>
+          </div>
+      </>
+
   );
 }
 

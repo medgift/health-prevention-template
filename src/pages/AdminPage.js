@@ -1,11 +1,12 @@
 import Navbar from "../components/Navbar";
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import AdminCoef from "./AdminCoef";
 import AdminDoctorCreation from "./AdminDoctorCreation";
 import AdminVarTest from "./AdminVarTest";
-import { auth } from "../initFirebase";
-import { Context } from "../App.js"
+import {auth} from "../initFirebase";
+import {Context} from "../App.js"
 import {useNavigate} from "react-router-dom";
+import setBodyColor from "../components/setBackground";
 import NavbarAdmin from "../components/NavbarAdmin";
 
 
@@ -32,7 +33,7 @@ export default function AdminPage()  {
 
     const handleClickVar = event => {
         setIsShownVar(current => !current);
-        setIsShownCoef(false); 
+        setIsShownCoef(false);
         setIsShown(false);
     }
 
@@ -83,5 +84,5 @@ export default function AdminPage()  {
             }
         </>
     );
-    
+
 }

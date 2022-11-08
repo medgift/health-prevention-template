@@ -32,7 +32,7 @@ export default function Register() {
         <>
             <Navbar/>
             <div className="box">
-                <div className="form">
+                <div className="wrapper">
                     <h1>Register</h1>
                     <UserForm handleSubmit={handleRegister} submitButtonLabel="Register"/>
                 </div>

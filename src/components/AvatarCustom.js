@@ -1,12 +1,13 @@
-import React, { useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import "react-color-palette/lib/css/styles.css";
-import { ColorPicker, useColor } from "react-color-palette";
+import {ColorPicker, useColor} from "react-color-palette";
 import PropTypes from "prop-types";
 import {auth, database} from "../initFirebase";
 import "firebase/compat/storage"
 import "firebase/compat/auth"
 import "firebase/compat/firestore"
 import {getDoc, doc, updateDoc} from 'firebase/firestore'
+import Navbar from "./Navbar";
 
 // 'X-RapidAPI-Key': '53c0717abamsh12e9ecc41ba6cc7p1892ecjsn2fddd02797cb',
 //     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
@@ -38,7 +39,7 @@ import {getDoc, doc, updateDoc} from 'firebase/firestore'
 const optionsPost = {
     method: 'POST',
     headers: {
-        'X-RapidAPI-Key': '96a4e87f9emsh328fe90239660d8p159ca6jsn0a17636b4501',
+        'X-RapidAPI-Key': '576b52e05cmsh518fa0aa980ff0bp1debb8jsn5b3a2d557485',
         'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 
     }
@@ -46,7 +47,7 @@ const optionsPost = {
 const optionsPut = {
     method: 'PUT',
     headers: {
-        'X-RapidAPI-Key': '96a4e87f9emsh328fe90239660d8p159ca6jsn0a17636b4501',
+        'X-RapidAPI-Key': '576b52e05cmsh518fa0aa980ff0bp1debb8jsn5b3a2d557485',
         'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 
     }
@@ -54,7 +55,7 @@ const optionsPut = {
 const optionsGet = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Key': '96a4e87f9emsh328fe90239660d8p159ca6jsn0a17636b4501',
+        'X-RapidAPI-Key': '576b52e05cmsh518fa0aa980ff0bp1debb8jsn5b3a2d557485',
         'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 
     }
@@ -68,7 +69,7 @@ ColorPicker.propTypes = {
 };
 
 export default function Avatar() {
-    const  [down, setDown] = useState('');
+    const [down, setDown] = useState('');
     const aut = auth.currentUser.uid;
     const [avatar, setAvatar] = useState('');
     const [key, setKey] = useState('');
@@ -76,6 +77,7 @@ export default function Avatar() {
     useEffect(() => {
         console.log(aut)
         getAva();
+
         async function getAva() {
             const docRef = doc(database, "users/", aut);
             const docSnap = await getDoc(docRef);
@@ -84,7 +86,7 @@ export default function Avatar() {
             const ass = docSnap.get("avatarAsset");
             const hai = docSnap.get("avatarHair");
             const se = docSnap.get("avatarSex");
-            if (ava !== avatar && typeof ava != "undefined"){
+            if (ava !== avatar && typeof ava != "undefined") {
                 setAvatar(ava)
                 setKey(ke)
                 setAsset(ass)
@@ -194,8 +196,7 @@ export default function Avatar() {
                 } else {
                     if (data.avatarSrc === '') {
                         setAvatar(ava)
-                    }
-                    else {
+                    } else {
                         setAvatar(data.avatarSrc)
                     }
                     console.log("Old asset2 : " + oldAsset)
@@ -213,8 +214,7 @@ export default function Avatar() {
             console.log("Change asset : ", data);
             if (typeof data.avatarSrc == "undefined") {
                 setAvatar(ava)
-            }
-            else {
+            } else {
                 setAvatar(data.avatarSrc)
             }
             console.log("Old asset3 : " + oldAsset)
@@ -264,6 +264,7 @@ export default function Avatar() {
                 console.log("New hair ID : " + hair)
             } else fetchModification();
         }
+
         async function fetchModification() {
             if (sex == '')
                 return
@@ -273,8 +274,7 @@ export default function Avatar() {
             console.log("Change asset : ", data);
             if (typeof data.avatarSrc == "undefined") {
                 setAvatar(ava)
-            }
-            else {
+            } else {
                 setAvatar(data.avatarSrc)
             }
             console.log("Old hair : " + oldHair)
@@ -380,6 +380,7 @@ export default function Avatar() {
     //Function to save avatar values
     function handleSaveClick() {
         a();
+
         async function a() {
             const docRef = doc(database, "users", aut);
             await updateDoc(docRef, {
@@ -398,66 +399,67 @@ export default function Avatar() {
     }
 
     const [showFragment, setShowFragment] = useState(false);
+
     return (
         <>
-            <div>
+            <div className="buttons">
                 <button id='1101' alt="man" onClick={(e) => handleSexClick(e)}>Man</button>
                 <button id='1102' alt="woman" onClick={(e) => handleSexClick(e)}>Woman</button>
+                <button alt="assetColor" onClick={handleAssetClick}>Pick Asset Color</button>
+                {displayAssetColorPicker ? <div className='popover'>
+                    <div className='cover' onClick={changeColorAsset}/>
+                    <ColorPicker width={150} height={150}
+                                 color={color}
+                                 onChange={setColor} hideHSV hideHEX hideRGB/>
+                </div> : null}
+
+                <button alt="skinColor" onClick={handleSkinClick}>Pick Skin Color</button>
+                {displayColorSkinPicker ? <div className='popover'>
+                    <div className='cover' onClick={changeColorSkin}/>
+                    <ColorPicker width={150} height={150}
+                                 color={color}
+                                 onChange={setColor} hideHSV hideHEX hideRGB/>
+                </div> : null}
+
+                <button alt="hairColor" onClick={handleHairClick}>Pick Hair Color</button>
+                {displayColorHairPicker ? <div className='popover'>
+                    <div className='cover' onClick={changeColorHair}/>
+                    <ColorPicker width={150} height={150}
+                                 color={color}
+                                 onChange={setColor} hideHSV hideHEX hideRGB/>
+                </div> : null}
             </div>
             {showFragment ?
                 <React.Fragment>
-                    <h1>Assets List</h1>
+                    <div className='colorAvatar'>
+                        <li>
+                            <img alt="Avatar" src={avatar}/>
+                        </li>
+                        <li>
+                            <button alt="saveAvatar" onClick={handleSaveClick}>Save</button>
+                        </li>
+                    </div>
+                    <h2>Select your accessories</h2>
                     <div>
                         <ul className='assetsList'>
                             {assets.slice(1, 6).map((asset) => (
                                 <li key={asset.key} className='assetsImage'>
-                                    {asset.description}
-                                    <img alt="asset" src={asset.img}
+                                    { /* asset.description */}
+                                    <img alt="asset" className="assetsImage img" src={asset.img}
                                          onClick={() => changeAsset(asset.key.toString())}/>
                                 </li>
                             ))}
                         </ul>
+                    </div>
+                    <h2>Select your hairs</h2>
+                    <div>
                         <ul className='assetsList'>
                             {hairs.slice(1, 6).map((hair) => (
                                 <li key={hair.key} className='assetsImage'>
-                                    {hair.description}
-                                    <img alt="hair" src={hair.img} onClick={() => changeHair(hair.key)}/>
+                                    { /* hair.description */}
+                                    <img alt="hair" className="assetsImage img" src={hair.img} onClick={() => changeHair(hair.key)}/>
                                 </li>
                             ))}
-                        </ul>
-
-                        <ul className='colorAvatar'>
-                            <li>
-                                <button alt="assetColor" onClick={handleAssetClick}>Pick Asset Color</button>
-                                {displayAssetColorPicker ? <div className='popover'>
-                                    <div className='cover' onClick={changeColorAsset}/>
-                                    <ColorPicker width={150} height={150}
-                                                 color={color}
-                                                 onChange={setColor} hideHSV hideHEX hideRGB/>
-                                </div> : null}
-
-                                <button alt="skinColor" onClick={handleSkinClick}>Pick Skin Color</button>
-                                {displayColorSkinPicker ? <div className='popover'>
-                                    <div className='cover' onClick={changeColorSkin}/>
-                                    <ColorPicker width={150} height={150}
-                                                 color={color}
-                                                 onChange={setColor} hideHSV hideHEX hideRGB/>
-                                </div> : null}
-
-                                <button alt="hairColor" onClick={handleHairClick}>Pick Hair Color</button>
-                                {displayColorHairPicker ? <div className='popover'>
-                                    <div className='cover' onClick={changeColorHair}/>
-                                    <ColorPicker width={150} height={150}
-                                                 color={color}
-                                                 onChange={setColor} hideHSV hideHEX hideRGB/>
-                                </div> : null}
-                            </li>
-                            <li>
-                                <img alt="Avatar" src={avatar}/>
-                            </li>
-                            <li>
-                                <button alt="saveAvatar" onClick={handleSaveClick}>Save</button>
-                            </li>
                         </ul>
                     </div>
                 </React.Fragment> : null}

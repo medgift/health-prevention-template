@@ -8,16 +8,13 @@ export default function Navbar() {
         <nav className="navbar">
             <div className="navbar-links">
                 <Link to="/" className="App-link">
-                    Questionnary
+                    Home
                 </Link>
-                <Link to="/Customization" className="App-link">
-                    Custom Avatar
-                </Link>
-                <Link to="/UserProfilePage" className="App-link">
-                    Profile
+                <Link to="/questionnary" className="App-link">
+                    Survey
                 </Link>
             </div>
-            <div className="navbar-profile" style={{float:"right"}}>
+            <div className="navbar-profile" style={{float: "right"}}>
                 <button className="btn-profile">
                     <svg
                         width="24"
@@ -42,7 +39,10 @@ export default function Navbar() {
                         </Link>
                     ) : (
                         <>
-                            <Link to="/profile" className="App-link">
+                            <Link to="/Customization" className="App-link">
+                                Custom Avatar
+                            </Link>
+                            <Link to="/UserProfilePage" className="App-link">
                                 Profile
                             </Link>
                             <Link to="/logout" className="App-link">

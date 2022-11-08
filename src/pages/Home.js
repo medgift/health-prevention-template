@@ -7,44 +7,34 @@ import { auth } from "../initFirebase";
 import { Context } from "../App.js"
 import {useNavigate} from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
+import React from "react";
+import setBodyColor from "../components/setBackground";
 
 export default function Home() {
 
-    return (
-        <>
-            <Navbar/>
-            <div className="box">
-                <div className="form">
-                    <div className="form-home">
-                        <div>
-                            <h1>Welcome</h1>
-                            <p style={{marginBottom: "40px", textAlign: "justify"}}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut
-                                labore
-                                et dolore magna aliqua. At tellus at urna condimentum mattis. In vitae turpis massa sed
-                                elementum
-                                tempus egestas. Egestas congue quisque egestas diam in arcu. Vitae sapien pellentesque
-                                habitant
-                                morbi tristique senectus et netus. Penatibus et magnis dis parturient. Tellus mauris a
-                                diam
-                                maecenas
-                                sed. Et ligula ullamcorper malesuada proin libero nunc consequat interdum varius. Erat
-                                velit
-                                scelerisque in dictum. Suspendisse faucibus interdum posuere lorem ipsum. Accumsan lacus
-                                vel
-                                facilisis volutpat est velit egestas dui.
-                            </p>
-                            <Link to="/questionnary" className="Home-link">
-                                Start the questionnary
-                            </Link>
-                        </div>
-                        <img src={require('../health_home.webp')} style={{height: "400px"}}></img>
-                    </div>
+    setBodyColor({color1: "#0473D5", color2: "#7DB4E5"})
 
+    return (<>
+        <Navbar/>
+        <div className="box">
+            <div className="wrapper">
+                <div className="form-home">
+                    <div>
+                        <h1>Welcome</h1>
+                        <p style={{marginBottom: "40px", textAlign: "justify"}}>
+                            To fill in the questionnaire you have to press the button below. If you are not logged in,
+                            your data will not be saved. To log in, you can click on the "person icon" in the upper
+                            right corner and a submenu will open where you can log in.
+                        </p>
+                        <Link to="/questionnary" className="Home-link">
+                            Start the questionnary
+                        </Link>
+                    </div>
+                    <img src={require('../health_home.webp')}></img>
                 </div>
             </div>
-        </>
+        </div>
+    </>
         /*
         <>
             {!currentUser ? (
@@ -59,6 +49,5 @@ export default function Home() {
                     </div>
                 </>
             )}
-        </>*/
-    );
+        </>*/);
 }
