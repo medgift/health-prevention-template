@@ -4,6 +4,7 @@ import ProgressBar from "../components/ProgressBar";
 import CircularProgressBar from "../components/CircularProgressBar"
 import _ from "lodash";
 import "./MyPage.css";
+import {QuestionDB} from "../DAL/QuestionDB";
 import {ResponseDB} from "../DAL/ResponseDB";
 
 export function ResultHistoric({patientId, setBackgroundImage}) {
@@ -145,6 +146,7 @@ export class MyPage extends React.Component {
 
         })
     }
+
     reset = () => {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
@@ -162,31 +164,19 @@ export class MyPage extends React.Component {
                     <div className={"column"}>
                         <h2>Your situation</h2>
                         <p>*photo avatar*</p>
-                        <p className={"line"}>Sex: <span
-                            className={"variable"}>{this.state.algorithm.sexe ? "Man" : "Woman"}</span></p>
-                        <p className={"line"}>Age: <span className={"variable"}>{this.state.algorithm.age} years</span>
-                        </p>
-                        <p className={"line"}>Height: <span
-                            className={"variable"}>{this.state.algorithm.taille} cm</span></p>
-                        <p className={"line"}>Syst: <span className={"variable"}>{this.state.algorithm.syst} mmHg</span>
-                        </p>
-                        <p className={"line"}>Glyc: <span className={"variable"}>{this.state.algorithm.glyc} g/L</span>
-                        </p>
-                        <p className={"line"}>Chol: <span className={"variable"}>{this.state.algorithm.chol} g/L</span>
-                        </p>
-                        <p className={"line"}>HDL: <span className={"variable"}>{this.state.algorithm.hdl} g/L</span>
-                        </p>
-                        <p className={"line"}>Diabete: <span
-                            className={"variable"}>{this.state.algorithm.diab ? "Yes" : "No"}</span></p>
-                        <p className={"line"}>Infarctus: <span
-                            className={"variable"}>{this.state.algorithm.inf ? "Already have" : "No"}</span></p>
-                        <p className={"line"}>AVC: <span
-                            className={"variable"}>{this.state.algorithm.avc ? "Already have" : "No"}</span></p>
+                        <p className={"line"}>Sex: <span className={"variable"}>{this.state.algorithm.sexe?"Man":"Woman"}</span></p>
+                        <p className={"line"}>Age: <span className={"variable"}>{this.state.algorithm.age} years</span></p>
+                        <p className={"line"}>Height: <span className={"variable"}>{this.state.algorithm.taille} cm</span></p>
+                        <p className={"line"}>Syst: <span className={"variable"}>{this.state.algorithm.syst} mmHg</span></p>
+                        <p className={"line"}>Glyc: <span className={"variable"}>{this.state.algorithm.glyc} g/L</span></p>
+                        <p className={"line"}>Chol: <span className={"variable"}>{this.state.algorithm.chol} g/L</span></p>
+                        <p className={"line"}>HDL: <span className={"variable"}>{this.state.algorithm.hdl} g/L</span></p>
+                        <p className={"line"}>Diabete: <span className={"variable"}>{this.state.algorithm.diab?"Yes":"No"}</span></p>
+                        <p className={"line"}>Infarctus: <span className={"variable"}>{this.state.algorithm.inf?"Already have":"No"}</span></p>
+                        <p className={"line"}>AVC: <span className={"variable"}>{this.state.algorithm.avc?"Already have":"No"}</span></p>
                         <h2>Family</h2>
-                        <p className={"line"}>Infarctus: <span
-                            className={"variable"}>{this.state.algorithm.avc ? "Yes" : "No"}</span></p>
-                        <p className={"line"}>Cancer: <span
-                            className={"variable"}>{this.state.algorithm.avc ? "Yes" : "No"}</span></p>
+                        <p className={"line"}>Infarctus: <span className={"variable"}>{this.state.algorithm.afinf?"Yes":"No"}</span></p>
+                        <p className={"line"}>Cancer: <span className={"variable"}>{this.state.algorithm.afcancer?"Yes":"No"}</span></p>
 
                     </div>
                     <div className={"column"}>

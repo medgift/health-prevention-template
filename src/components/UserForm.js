@@ -21,7 +21,7 @@ export default function UserForm({handleSubmit, submitButtonLabel}) {
                     onChange={handleEmailChange}
                     required
                 />
-                <label for={"email"} class={"input-label"}>Email address</label>
+                <label htmlFor={"email"} className={"input-label"}>Email address</label>
             </div>
             <br/>
             <div className={"input-group"}>

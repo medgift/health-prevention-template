@@ -14,7 +14,7 @@ export default function Register({setBackgroundImage}) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [emailMessage, setEmailMessage] = useState("");
-    const [passwordMessage, setPasswordMessage] = useState("");
+    const [passwordMessage, setPasswordMessage] = useState("The password must have 6 characters.");
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -72,7 +72,7 @@ export default function Register({setBackgroundImage}) {
 
     return (
         <div className="padded_div register ">
-            <div>
+            <div className={"createPatient"}>
                 <h3>Create a patient account to save your data !</h3>
                 <p className="disclaimer">*Only patients can save their answers and custom avatar.</p>
             </div>
@@ -88,11 +88,10 @@ export default function Register({setBackgroundImage}) {
                            onChange={handleEmailChange}
                            required
                     />
-                    <label for={"email"} class={"input-label"}>Email address</label>
+                    <label htmlFor={"email"} className={"input-label"}>Email address</label>
                     <p className="inputValidation">{emailMessage}</p>
                 </div>
-                <br/>
-                <div className={"input-group"}>
+                <div className={"input-group"} style={emailMessage.length > 0  ? {marginTop: "7.2%"} : {marginTop: "15%"}}>
                     <input className="formInput"
                            type="password"
                            value={password}
