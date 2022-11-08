@@ -31,13 +31,25 @@
     z-index: 1;
 }
 
-#icon {
+.navImage {
     float: left;
     height: 40px;
     margin-top: 10px;
     min-width: 15px;
     margin-left: 21%;
-    margin-right: 0.5%;
+    margin-right: 1%;
+}
+
+/*Displayed only when the screen width is too thin*/
+.hamburger {
+    display: none;
+    float: left;
+    height: 27px;
+    padding: 10px;
+    margin-top: 10px;
+    min-width: 15px;
+    margin-left: 2%;
+    margin-right: 1%;
 }
 
 .appBar {
@@ -70,6 +82,35 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
+}
+
+@media (max-width: 900px) {
+
+    /*hamburger goes visible*/
+    .hamburger {
+        display: block;
+    }
+
+    /*app logo goes invisible*/
+    .navImage {
+        display: none;
+        float: none;
+    }
+
+    .appBar ul a {
+        padding: 12px;
+        width: 100%
+    }
+
+    .appBar ul {
+        width: 100vw;
+    }
+
+    /*navbar links goes invisible*/
+    .appBarClosed ul {
+        display: none;
+    }
+
 }
 
 .padded_div {
