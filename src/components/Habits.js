@@ -1,6 +1,48 @@
 import React, {useEffect, useState} from "react";
 
-function Habits({nextStep, values, setValues}) {
+
+export const switchAlim = (param) => {
+    switch (param) {
+        case '0':
+            return 'never';
+        case '1':
+            return 'not often';
+        case '2':
+            return 'often';
+        case '3':
+            return 'most of the time';
+    }
+}
+
+export const switchSport = (param) => {
+    switch (param) {
+        case '0':
+            return 'not often';
+        case '1':
+            return '30min of sport 2-3 days a week';
+        case '2':
+            return '30min of sport 5 days a week';
+        case '3':
+            return '>2 hours of intense sport per week';
+    }
+}
+
+export const switchAlcool = (param) => {
+    switch (param) {
+        case '0':
+            return 'every day';
+        case '1':
+            return '3 to 6 times a week';
+        case '2':
+            return '1 to 2 times a week';
+        case '3':
+            return 'less than a day a week';
+        case '4':
+            return "I don't drink";
+    }
+}
+
+function Habits({prevStep, nextStep, values, setValues}) {
 
     const [errors, setErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
@@ -35,22 +77,45 @@ function Habits({nextStep, values, setValues}) {
 
     return (
         <>
-            <form className="form-container" onSubmit={handleSubmit}>
-                <div className="family">
-                    <p className="error"> {errors.error}</p>
-                    fume
-                    <input
-                        class="slider"
-                        id="typeinp"
-                        type="range"
-                        name="fume"
-                        min="0" max="1"
-                        value={values.fume}
-                        onChange={handleChange}
-                        step="1"/>
-                    {values.fume}
-                    <br/>
-                    Feed
+            <form className="form-container-habits" onSubmit={handleSubmit}>
+                <p className="error"> {errors.error}</p>
+                <div className="radio-tile-group">
+                    <span className="question">Did you ever smoke regularly at a point in your life?*</span>
+                    <div className="input-wrapper">
+                        <div className="input-container">
+                            <input type="radio"
+                                   id="yes"
+                                   className="radio-button"
+                                   name="fume"
+                                   value="1"
+                                   checked={values.fume === "1"}
+                                   onChange={handleChange}
+                            />
+                            <div className="radio-tile">
+                                <label htmlFor="yes" className="radio-tile-label">Yes</label>
+                            </div>
+                        </div>
+
+                        <div className="input-container">
+                            <input type="radio"
+                                   id="no"
+                                   className="radio-button"
+                                   name="fume"
+                                   value="0"
+                                   checked={values.fume === "0"}
+                                   onChange={handleChange}
+                            />
+                            <div className="radio-tile">
+                                <label htmlFor="no" className="radio-tile-label">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="slider-wrapper">
+                    <span className="question">How often do you eat fruits, vegetables, olive oil, nuts, fatty fishes and little meat, cream and cold cuts?*</span>
+                    <div className="slider-values">
+                        {switchAlim(values.alim)}
+                    </div>
                     <input
                         class="slider"
                         id="typeinp"
@@ -60,10 +125,14 @@ function Habits({nextStep, values, setValues}) {
                         value={values.alim}
                         onChange={handleChange}
                         step="1"/>
-                    {values.alim}
-                    <br/>
-                    sport
+                </div>
+                <div className="slider-wrapper">
+                    <span className="question">How often do you do physical activities per week?</span>
+                    <div className="slider-values">
+                        {switchSport(values.sport)}
+                    </div>
                     <input
+                        class="slider"
                         id="typeinp"
                         type="range"
                         name="sport"
@@ -71,10 +140,14 @@ function Habits({nextStep, values, setValues}) {
                         value={values.sport}
                         onChange={handleChange}
                         step="1"/>
-                    {values.sport}
-                    <br/>
-                    alcool
+                </div>
+                <div className="slider-wrapper">
+                    <span className="question">How often do you consume alcohol per week?</span>
+                    <div className="slider-values">
+                        {switchAlcool(values.alcool)}
+                    </div>
                     <input
+                        class="slider"
                         id="typeinp"
                         type="range"
                         name="alcool"
@@ -82,13 +155,15 @@ function Habits({nextStep, values, setValues}) {
                         value={values.alcool}
                         onChange={handleChange}
                         step="1"/>
-                    {values.alcool}
-                    <footer>
-                        <button type="submit">
-                            Submit
-                        </button>
-                    </footer>
                 </div>
+                <footer>
+                    <button onClick={prevStep}>
+                        Prev
+                    </button>
+                    <button onSubmit={handleSubmit}>
+                        Submit
+                    </button>
+                </footer>
             </form>
         </>
     )

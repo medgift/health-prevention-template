@@ -38,7 +38,7 @@ function You({nextStep, values, setValues}) {
         <>
         <p className="error"> { errors.error }</p>
         <form className="form-container" onSubmit={ handleSubmit }>
-            <div style={{display: "grid", marginRight: "175px"}}>
+            <div className="form-container-inner-left">
                 <div className="number-group">
                     <span className="question">Sex*</span>
                     <div className="input-wrapper">
@@ -83,7 +83,7 @@ function You({nextStep, values, setValues}) {
                 </div>
 
                 <div className="number-group weight">
-                    <span className="question">Weight</span>
+                    <span className="question">Weight*</span>
                     <input type="number"
                            id="poids"
                            name="poids"
@@ -104,7 +104,7 @@ function You({nextStep, values, setValues}) {
                     />
                 </div>
             </div>
-            <div style={{display: "grid"}}>
+            <div className="form-container-inner-right">
                 <div className="radio-tile-group">
                     <span className="question">Do you have you a high tension?*</span>
                     <div className="input-wrapper">
@@ -304,7 +304,7 @@ function You({nextStep, values, setValues}) {
                 </div>
             </div>
             <footer>
-                <button type="submit">
+                <button onSubmit={handleSubmit}>
                     Next
                 </button>
             </footer>

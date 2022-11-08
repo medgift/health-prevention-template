@@ -1,14 +1,15 @@
 import Navbar from "../components/Navbar";
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import AdminCoef from "./AdminCoef";
 import AdminDoctorCreation from "./AdminDoctorCreation";
 import AdminVarTest from "./AdminVarTest";
-import { auth } from "../initFirebase";
-import { Context } from "../App.js"
+import {auth} from "../initFirebase";
+import {Context} from "../App.js"
 import {useNavigate} from "react-router-dom";
+import setBodyColor from "../components/setBackground";
 
 
-export default function AdminPage()  {
+export default function AdminPage() {
     // const navigate = useNavigate();
     // const role = useContext(Context);
 
@@ -20,9 +21,11 @@ export default function AdminPage()  {
     //     if(auth.currentUser && role.role !== 8){
     //         navigate("/")
     //     }
-        
+
     // }
-     
+
+    setBodyColor({color1: "#04d527", color2: "#b6e57d"})
+
     const [isShown, setIsShown] = useState(false);
     const [isShownVar, setIsShownVar] = useState(false);
     const [isShownCoef, setIsShownCoef] = useState(false);
@@ -35,7 +38,7 @@ export default function AdminPage()  {
 
     const handleClickVar = event => {
         setIsShownVar(current => !current);
-        setIsShownCoef(false); 
+        setIsShownCoef(false);
         setIsShown(false);
     }
 
@@ -49,42 +52,46 @@ export default function AdminPage()  {
     return (
         <>
             <Navbar/>
-            <h1>Welcome Admin !!</h1>
-            <button onClick={handleClickDoc}>Create Doctor</button>
-            {
-                isShown && 
-                (<>
-                <hr/>
-                    <AdminDoctorCreation/>
-                <hr/>
-                </>
-                )
-            }
-            <hr/>
-            <button onClick={handleClickVar}>Change Variables</button>
-            {
-                 
-                isShownVar && (
-                <>
-                <hr/>
-                    <AdminVarTest/>
-                <hr/>
-                </>
-                )
-                
-            }
-            <hr/>
-            <button onClick={handleClickCoef}>Change coefficient</button>
-            {
-                isShownCoef && (
-                <>
-                <hr/>
-                    <AdminCoef/>
-                <hr/>
-                </>
-                )
-            }
+            <div className="box">
+                <div className="wrapper">
+                    <h1>Welcome Admin !!</h1>
+                    <button onClick={handleClickDoc}>Create Doctor</button>
+                    {
+                        isShown &&
+                        (<>
+                                <hr/>
+                                <AdminDoctorCreation/>
+                                <hr/>
+                            </>
+                        )
+                    }
+                    <hr/>
+                    <button onClick={handleClickVar}>Change Variables</button>
+                    {
+
+                        isShownVar && (
+                            <>
+                                <hr/>
+                                <AdminVarTest/>
+                                <hr/>
+                            </>
+                        )
+
+                    }
+                    <hr/>
+                    <button onClick={handleClickCoef}>Change coefficient</button>
+                    {
+                        isShownCoef && (
+                            <>
+                                <hr/>
+                                <AdminCoef/>
+                                <hr/>
+                            </>
+                        )
+                    }
+                </div>
+            </div>
         </>
     );
-    
+
 }

@@ -5,23 +5,24 @@
     fill: red;
 }
 
+/*
 .allColumnText{
     border-color: #282c34;
     border-radius: 2px;
     border-style: groove;
-}
+}*/
 
 .child{
     display: inline-block;
 }
 
-
+/*
 .column {
     float: left;
     width: 33.33%;
     border-radius:  25%;
     margin: 75px;
-}
+}*/
 
 /* Clear floats after the columns */
 .row:after {
@@ -32,28 +33,29 @@
 }
 
 
+/*
 .backgroundLow{
     background: lawngreen;
     margin-bottom: 60px;
     width: 100%;
     height: 35%;
-}
+}*/
 
+/*
 .backgroundMedium{
     background: yellow;
     margin-bottom: 60px;
     width: 100%;
     height: 35%;
+}*/
 
-}
-
+/*
 .backgroundHigh{
     background: red;
     margin-bottom: 60px;
     width: 100%;
     height: 35%;
-
-}
+}*/
 
 .imagLow{
     width:72px;

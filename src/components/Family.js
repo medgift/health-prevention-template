@@ -106,7 +106,7 @@ function Family({nextStep, prevStep, values, setValues}) {
                 <button onClick={ prevStep }>
                     Prev
                 </button>
-                <button type="submit">
+                <button onSubmit={ handleSubmit }>
                     Next
                 </button>
             </footer>

@@ -1,28 +1,29 @@
 
     
 .message {
-    margin-top: 5;
-    padding: 2;
+    margin-top: 5px;
+    padding: 2px;
     font-size: 16px;
     text-align: center; }
     
 
-    #title404{
-    margin: 0;
-    padding: 0;
-    font-size: 11em;
-    transform: skewY(-5deg);
-    transition: 0.4s ease-in-out all;
-
+    .message > h1 {
+        margin: 0;
+        padding: 0;
+        font-size: 11em;
+        transform: skewY(-5deg);
+        transition: 0.4s ease-in-out all;
     }
-    #h3404 {
+
+    .message > h3 {
     color: black;
     font-size: 2em;
     font-weight: lighter;
     line-height: 1;
 
     }
-    #h2404{
+
+    .message > h2{
     color: black;
     font-size: 4em;
     font-weight: lighter;

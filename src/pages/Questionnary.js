@@ -41,7 +41,7 @@ export default function Questionnary() {
 
     // proceed to the next step
     const nextStep = (e) => {
-        e.preventDefault();
+        //e.preventDefault();
         if (step === formTitles.length - 1) {
 
             //navigate('/ResultPage')
@@ -53,7 +53,6 @@ export default function Questionnary() {
 
             //navigate("/ResultPage");
         } else {
-
             setStep(step + 1)
         }
     }
@@ -62,15 +61,15 @@ export default function Questionnary() {
         switch (step) {
             case 0:
                 return (
-                    <You values={ values } setValues={ setValues }/>
+                    <You nextStep={ nextStep } values={ values } setValues={ setValues }/>
                 )
             case 1:
                 return (
-                    <Family values={ values } setValues={ setValues }/>
+                    <Family nextStep={ nextStep } prevStep={ prevStep } values={ values } setValues={ setValues }/>
                 )
             case 2:
                 return (
-                    <Habits values={ values } setValues={ setValues }/>
+                    <Habits nextStep={ nextStep } prevStep={ prevStep } values={ values } setValues={ setValues }/>
                 )
             case 4:
                 return (
@@ -90,7 +89,7 @@ export default function Questionnary() {
         <>
             <Navbar/>
             <div className="box">
-                <div className="form">
+                <div className="wrapper">
                     <div className="progress-bar">
                         <span style={{width: step === 0 ? "33.3%" : step === 1 ? "66.6%" : "102%"}}></span>
                     </div>

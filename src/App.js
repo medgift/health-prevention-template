@@ -16,6 +16,7 @@ import UserProfilePage from "./pages/UserProfilePage";
 import Page404 from "./pages/Page404";
 import Questionnary from "./pages/Questionnary";
 import ResultPage from "./pages/ResultPage";
+import Profile_nb from "./pages/Profile_nb";
 //import Profile_nb from "./pages/Profile_nb";
 
 export default function App() {
@@ -40,8 +41,8 @@ export default function App() {
   if (currentUser === undefined) {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1>Loading...</h1>
+        <header className="Loading-Screen">
+          <div className="loader"></div>
         </header>
       </div>
     );
@@ -61,7 +62,7 @@ export default function App() {
           <Route path="/AdminPage" element={<AdminPage/>}/>
           <Route path="/questionnary" element={<Questionnary/>}/>
           <Route path="/ResultPage" element={<ResultPage/>}/>
-          {/* <Route path="/profile" element={<Profile_nb/>}/> */}
+          <Route path="/profile" element={<Profile_nb/>}/>
           <Route path="/UserProfilePage" element={<UserProfilePage/>}/>
           <Route path="*" element={<Page404/>}/>
         </Routes>
