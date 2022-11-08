@@ -3,7 +3,10 @@ import Login from "./Login";
 import Questionnary from "./Questionnary";
 import Navbar from "../components/Navbar";
 import Welcome from "./Welcome";
-import React from "react";
+import { auth } from "../initFirebase";
+import { Context } from "../App.js"
+import {useNavigate} from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
 
 export default function Home() {
 

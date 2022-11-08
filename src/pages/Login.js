@@ -9,7 +9,7 @@ import { useContext } from "react";
 
 export default function Login() {
   const navigate = useNavigate();
-  const {setRole} = useContext(Context);
+  const {role ,setRole} = useContext(Context);
 
   //Get User
   //Compare Role
@@ -28,10 +28,14 @@ export default function Login() {
       switch(role){
         case 8 : navigate("/AdminPage")
           return;
+        case 1 : navigate("/")
+          return;
+        case 2 : navigate("/")
+          return;
         //case 2 : navigate("/DoctorPAge")
         //  return;
         default : navigate("/")
-          return;
+          
       }
 
       
@@ -48,7 +52,6 @@ export default function Login() {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         console.log("voici le role " + doc.get("role"))
-        //role = doc.data().role;
         role = doc.get("role");
       });
 

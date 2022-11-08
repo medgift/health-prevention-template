@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {collection, getDoc, getDocs, query} from "firebase/firestore";
 import {doc, updateDoc} from "firebase/firestore";
 import {auth, database} from "../initFirebase";
@@ -7,7 +7,8 @@ import {onAuthStateChanged} from "firebase/auth";
 import "../UserProfilPage.css"
 import {tab} from "@testing-library/user-event/dist/tab";
 import {findRenderedDOMComponentWithClass} from "react-dom/test-utils";
-
+import {useNavigate} from "react-router-dom";
+import { Context } from "../App";
 
 
 export class doctor{
@@ -23,8 +24,18 @@ export default function UserProfilePage() {
     const [IsChoosable,setChoosableState ] = useState(false)
     const [listAllowedDoctor, setList] = useState([])
     const [listRemovedDoctor, setRemoveList] = useState([])
-    var listAllowed
+    const navigate = useNavigate();
+    const {role} = useContext(Context);
+    console.log("user " + role.role)
 
+    useEffect(() => {
+        if (!auth.currentUser) {
+            navigate("/login");
+            return;
+        }
+    }, []);
+
+    var listAllowed
     const [currentUser, setCurrentUser] = useState(undefined);
     var userID
 
