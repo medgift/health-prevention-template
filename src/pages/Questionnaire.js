@@ -313,7 +313,7 @@ export default function QuestionList({currentUser, setBackgroundImage}) {
         setBackgroundImage(questionBg);
     }, []);
 
-    let title = currentUser ? "fill in the questionnaire to obtain custom results !" : "log in to save your answers"
+    let title = currentUser ? "Fill in the questionnaire to obtain custom results !" : "Log in to save your answers."
 
     useEffect(() => {
         (async function loadQuestions() {
