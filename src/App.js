@@ -148,10 +148,8 @@ export default function App() {
                                                                             setBackgroundImage={setBackgroundImage}/>}></Route>
                         <Route path="/admin" element={<NormalValueList currentUser={currentUser}
                                                                        setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
-                        <Route path="/view"
-                               element={<MyPage patientId={patientId} setBackgroundImage={setBackgroundImage}/>}/>
-                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser}
-                                                                   setBackgroundImage={setBackgroundImage}/>}/>
+                        <Route path="/view" element={<LatestResult patientId={patientId} setBackgroundImage={setBackgroundImage}/>}/>
+                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>} />
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                         <Route path="*"
                                element={<PageNotFound setBackgroundImage={setBackgroundImage}></PageNotFound>}/>

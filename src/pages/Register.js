@@ -13,6 +13,8 @@ export default function Register({setBackgroundImage}) {
     const [password, setPassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [emailMessage, setEmailMessage] = useState("");
+    const [passwordMessage, setPasswordMessage] = useState("");
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -30,21 +32,21 @@ export default function Register({setBackgroundImage}) {
 
     function validateEmail(email) {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-            document.getElementById("emailCheck").innerText = "";
+            setEmailMessage("");
             return true;
         } else {
-            document.getElementById("emailCheck").innerText = "Invalid mail address.";
+            setEmailMessage("Invalid mail address.");
             return false;
         }
     }
 
     function validatePassword(password) {
-        if (password.length < 6) {
-            document.getElementById("passCheck").innerText = "the password must have 6 characters";
-            return false;
-        } else {
-            document.getElementById("passCheck").innerText = "";
+        if (password.length >= 6) {
+            setPasswordMessage("");
             return true;
+        } else {
+            setPasswordMessage("The password must have 6 characters.");
+            return false;
         }
     }
 
@@ -87,7 +89,7 @@ export default function Register({setBackgroundImage}) {
                            required
                     />
                     <label for={"email"} class={"input-label"}>Email address</label>
-                    <p id={"emailCheck"} className="inputValidation"></p>
+                    <p className="inputValidation">{emailMessage}</p>
                 </div>
                 <br/>
                 <div className={"input-group"}>
@@ -98,7 +100,7 @@ export default function Register({setBackgroundImage}) {
                            required
                     />
                     <label for={"password"} class={"input-label"}>Password</label>
-                    <p id={"passCheck"} className="inputValidation"></p>
+                    <p className="inputValidation">{passwordMessage}</p>
                 </div>
                 <div className={"input-group"} style={password.length < 6 ? {marginTop: "7.2%"} : {marginTop: "15%"}}>
                     <input className="formInput"
