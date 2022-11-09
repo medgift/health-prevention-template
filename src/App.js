@@ -37,6 +37,10 @@ class Nav extends React.Component {
         }));
     };
 
+    closeNavBar = () => {
+        this.setState({isNavBarOpen: false});
+    }
+
     render() {
         let LoginLogout = null;
         let register = null;
@@ -45,16 +49,16 @@ class Nav extends React.Component {
 
         //used to only display login and register to unauthenticated user
         if (this.props.currentUser) {
-            LoginLogout = <NavLink to="/logout" onClick={() => this.toggleNavBarOpen()}>Logout</NavLink>
+            LoginLogout = <NavLink to="/logout" onClick={() => this.closeNavBar()}>Logout</NavLink>
         } else {
-            LoginLogout = <NavLink to="/login" onClick={() => this.toggleNavBarOpen()}>Login</NavLink>
-            register = <NavLink to="/register" onClick={() => this.toggleNavBarOpen()}>Register</NavLink>
+            LoginLogout = <NavLink to="/login" onClick={() => this.closeNavBar()}>Login</NavLink>
+            register = <NavLink to="/register" onClick={() => this.closeNavBar()}>Register</NavLink>
         }
         if (this.context.role === AvailableRoles.DOCTOR) {
-            docPage = <NavLink to="/doctor" onClick={() => this.toggleNavBarOpen()}>Patients</NavLink>
+            docPage = <NavLink to="/doctor" onClick={() => this.closeNavBar()}>Patients</NavLink>
         }
         if (this.context.role === AvailableRoles.PATIENT) {
-            profile = <NavLink to="/profile" onClick={() => this.toggleNavBarOpen()}>Profile</NavLink>
+            profile = <NavLink to="/profile" onClick={() => this.closeNavBar()}>Profile</NavLink>
         }
 
         //initial navbar and icon state
@@ -64,9 +68,9 @@ class Nav extends React.Component {
             <nav className= {this.state.isNavBarOpen ? "appBar" : "appBar appBarClosed"}>
                 <div className="container-fluid">
                     <ul className="nav navbar-nav">
-                        <NavLink to="/home" onClick={() => this.toggleNavBarOpen()}>Home</NavLink>
-                        <NavLink to="/questionnaire" onClick={() => this.toggleNavBarOpen()}>Questionnaire</NavLink>
-                        <NavLink to="/view" onClick={() => this.toggleNavBarOpen()}>Results</NavLink>
+                        <NavLink to="/home" onClick={() => this.closeNavBar()}>Home</NavLink>
+                        <NavLink to="/questionnaire" onClick={() => this.closeNavBar()}>Questionnaire</NavLink>
+                        <NavLink to="/view" onClick={() => this.closeNavBar()}>Results</NavLink>
                         {profile}
                         {docPage}
                         {register}
