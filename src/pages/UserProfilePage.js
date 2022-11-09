@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import {collection, getDoc, getDocs, query} from "firebase/firestore";
+import {collection, getDoc, getDocs, query,} from "firebase/firestore";
 import {doc, updateDoc} from "firebase/firestore";
 import {auth, database} from "../initFirebase";
 import Navbar from "../components/Navbar";
@@ -23,6 +23,7 @@ export default function UserProfilePage() {
     const [IsChoosable, setChoosableState] = useState(false)
     const [listAllowedDoctor, setList] = useState([])
     const [listRemovedDoctor, setRemoveList] = useState([])
+    const [document, setDocument] = useState([])
     const navigate = useNavigate();
     const {role} = useContext(Context);
     console.log("user " + role.role)

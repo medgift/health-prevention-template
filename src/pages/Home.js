@@ -7,7 +7,6 @@ import { auth } from "../initFirebase";
 import { Context } from "../App.js"
 import {useNavigate} from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
-import React from "react";
 import setBodyColor from "../components/setBackground";
 
 export default function Home() {
