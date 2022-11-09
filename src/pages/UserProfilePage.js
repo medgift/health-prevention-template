@@ -1,12 +1,14 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {collection, getDoc, getDocs, query} from "firebase/firestore";
 import {doc, updateDoc} from "firebase/firestore";
 import {auth, database} from "../initFirebase";
 import Navbar from "../components/Navbar";
 import {onAuthStateChanged} from "firebase/auth";
 import "../UserProfilPage.css"
+import {tab} from "@testing-library/user-event/dist/tab";
+import {findRenderedDOMComponentWithClass} from "react-dom/test-utils";
 import {useNavigate} from "react-router-dom";
-import {Context} from "../App";
+import { Context } from "../App";
 
 export class doctor {
     idDoctor: string;
@@ -21,7 +23,6 @@ export default function UserProfilePage() {
     const [IsChoosable, setChoosableState] = useState(false)
     const [listAllowedDoctor, setList] = useState([])
     const [listRemovedDoctor, setRemoveList] = useState([])
-    const [document, setDocument] = useState([])
     const navigate = useNavigate();
     const {role} = useContext(Context);
     console.log("user " + role.role)
@@ -45,16 +46,16 @@ export default function UserProfilePage() {
     }
 
     // access the db collection
-    async function getHistoryOfUsers() {
+    async function getHistory() {
         const colRef = collection(doc(database, "users/", auth.currentUser.uid), "answers/");
         const querySnapshot = await getDocs(colRef);
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach((doc)=>{
             setDocument(oldDates => [...oldDates, doc]);
         })
     };
 
     useEffect(() => {
-        getHistoryOfUsers()
+        getHistory()
     }, []);
 
     async function getAllDoctors() {
@@ -178,24 +179,23 @@ export default function UserProfilePage() {
             <div className="box">
                 <div className="wrapper">
                     <h1>Profile</h1>
-                    <h2 style={{marginTop: "30px"}}>Your results:</h2>
-                    <div>{document.map(
+                    <h2 style={{ marginTop: "30px" }}>Your results:</h2>
+                    <div>{ document.map(
                         e =>
                             <details>
-                                <summary>{e.id}</summary>
+                                <summary>{ e.id }</summary>
                                 {
                                     Object.entries(e.data()).map(([key, value]) => {
-                                        return (key.includes("result") ?
-                                            <p style={{color: "red"}}> {key} : {value} </p> : <p> {key} : {value} </p>)
+                                        return (<p> {key} : {value} </p>)
                                     })
                                 }
                             </details>
                     )}
                     </div>
-                    <h2 style={{marginTop: "30px"}}>Choose which doctor can see your result</h2>
+                    <h2 style={{ marginTop: "30px" }}>Choose which doctor can see your result</h2>
                     <div>
                         <div style={{listStyle: "none"}}>{allDoctors.map((doc, index) => (
-                            <li key={index} className="row" style={{marginBottom: "20px"}}>
+                            <li key={index} className="row" style={{ marginBottom: "20px"}}>
                                 <p className="column">{doc.firstname} {doc.lastname}</p>
                                 {doc.allowed ?
                                     <input className="column" type="checkbox" value={doc.idDoctor}
