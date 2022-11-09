@@ -8,10 +8,13 @@ import {auth, database} from "../initFirebase";
 import Navbar from "../components/Navbar";
 import {doc, getDoc} from "firebase/firestore";
 import Habits, {switchAlcool, switchAlim, switchSport} from "../components/Habits";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 function ResultPage() {
 
     const location = useLocation();
+    const mySwal = withReactContent(Swal);
     //let date = location.state.test;
     let values = location.state.values;
 
@@ -96,8 +99,12 @@ function ResultPage() {
 
 
     const SaveChanges = () => {
-        allAnswers.WriteResult(auth.currentUser.uid).then(r => {
-        })
+        allAnswers.updateResults(cancerRisk, diabeteRisk, infarctusRisk, nonInfarctusRisk);
+        allAnswers.WriteResult(auth.currentUser.uid).then(r => {})
+        mySwal.fire({
+            title: <strong>Your data are saved in the database</strong>,
+            icon: 'success'
+        }).then(r => {})
     }
 
     const [avatar, setAvatar] = useState("")
@@ -199,12 +206,14 @@ function ResultPage() {
                             }
 
                             <div className="allColumnText">
+                                <h2 className="title-results">Your results</h2>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                 incididunt ut labore et dolore magna aliqua. Risus pretium quam vulputate dignissim.
                                 Tellus cras adipiscing enim eu turpis egestas pretium aenean pharetra.
                             </div>
 
                             <div className="allColumnText">
+                                <h2 className="title-results">Your personal details</h2>
                                 <p>age {allAnswers.age}</p>
                                 <p>sexe {allAnswers.sex < 1 ? "Femme" : "Homme"}</p>
                                 <p>taille {allAnswers.height}</p>
@@ -215,8 +224,8 @@ function ResultPage() {
                         </div>
 
                         <div className="column">
-
                             <div className="allColumnText">
+                                <h2 className="title-results">Your habits</h2>
                                 <div className="textAndSlider">
                                     <p className="child" style={{alignSelf: "start"}}> Fumeur <br/> {smokeValue}</p>
                                     <input type="range" min="0" max="1" onChange={changeSmoke} value={smokeValue}
@@ -338,6 +347,7 @@ function ResultPage() {
                             }
 
                             <div className="allColumnText">
+                                <h2 className="title-results">Your risks</h2>
                                 <p>Maladie Cardiaque {nonInfarctusRisk} %</p>
                                 <p>Attaque Cérébrale {infarctusRisk} %</p>
                                 <p>Diabète {diabeteRisk} %</p>

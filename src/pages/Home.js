@@ -7,7 +7,6 @@ import { auth } from "../initFirebase";
 import { Context } from "../App.js"
 import {useNavigate} from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
-import React from "react";
 import setBodyColor from "../components/setBackground";
 
 export default function Home() {
@@ -20,7 +19,8 @@ export default function Home() {
             <div className="wrapper">
                 <div className="form-home">
                     <div>
-                        <h1>Welcome</h1>
+                        <h1 style={{ marginTop: "0px" }}>Welcome</h1>
+                        <h2>Health prevention questionnary</h2>
                         <p style={{marginBottom: "40px", textAlign: "justify"}}>
                             To fill in the questionnaire you have to press the button below. If you are not logged in,
                             your data will not be saved. To log in, you can click on the "person icon" in the upper
