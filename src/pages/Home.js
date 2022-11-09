@@ -31,11 +31,9 @@ export default function Home({currentUser, setBackgroundImage}) {
                 </div>
                 <div className={"homeGridItem reveal"} style={{width: "auto", background: "white", textAlign: "left"}}>
                     <Link className={"homeGridButton"} to="/questionnaire">Respond to the questionnaire anonymously</Link>
-                    <br/>
-                    <br/>
+                    <br className={"breakButton"}/>
                     <Link className={"homeGridButton"} to="/login">Connect</Link>
-                    <br/>
-                    <br/>
+                    <br className={"breakButton"}/>
                     <Link className={"homeGridButton"} to="/register">Create an account</Link>
                 </div>
             </div>

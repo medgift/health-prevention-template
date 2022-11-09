@@ -265,11 +265,11 @@ export class MyPage extends React.Component {
                             className={"variable"}>{this.state.algorithm.taille} cm</span></p>
                         <p className={"line"}>Syst: <span className={"variable"}>{this.state.algorithm.syst} mmHg</span>
                         </p>
-                        <p className={"line"}>Glyc: <span className={"variable"}>{this.state.algorithm.glyc} g/L</span>
+                        <p className={"line"}>Glyc: <span className={"variable"}>{this.state.algorithm.glyc} mmol/L</span>
                         </p>
-                        <p className={"line"}>Chol: <span className={"variable"}>{this.state.algorithm.chol} g/L</span>
+                        <p className={"line"}>Chol: <span className={"variable"}>{this.state.algorithm.chol} mmol/L</span>
                         </p>
-                        <p className={"line"}>HDL: <span className={"variable"}>{this.state.algorithm.hdl} g/L</span>
+                        <p className={"line"}>HDL: <span className={"variable"}>{this.state.algorithm.hdl} mmol/L</span>
                         </p>
                         <p className={"line"}>Diabete: <span
                             className={"variable"}>{this.state.algorithm.diab ? "Yes" : "No"}</span></p>
@@ -343,12 +343,12 @@ export class MyPage extends React.Component {
                         <ProgressBar name={"alcool"} min={0} max={4} bgcolor={"#1a73e8"}
                                      now={this.state.algorithm.alcool * 100 / 4}/>
                         {
-                            this.state.algorithm.poids != this.state.algorithm.defaultPoids ||
+                            (this.state.algorithm.poids != this.state.algorithm.defaultPoids ||
                             this.state.algorithm.alim != this.state.algorithm.defaultAlim ||
                             this.state.algorithm.sport != this.state.algorithm.defaultSport ||
                             this.state.algorithm.alcool != this.state.algorithm.defaultAlcool ||
-                            this.state.algorithm.fume != this.state.algorithm.defaultFume ?
-                                <button className={"resetButton"} onClick={this.reset}>Reset my rhythm</button> : <></>
+                            this.state.algorithm.fume != this.state.algorithm.defaultFume) &&
+                                <button className={"resetButton"} onClick={this.reset}>Reset my rhythm</button>
                         }
                     </div>
                     <div className={"column"}>
