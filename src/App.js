@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Customization from "./pages/Customization";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
-import { createContext, useEffect, useState } from "react";
+import {createContext, useEffect, useState} from "react";
 import Logout from "./pages/Logout";
 import Info from "./pages/Info";
 import ShowResult from "./pages/ShowResult";
@@ -16,19 +16,11 @@ import UserProfilePage from "./pages/UserProfilePage";
 import Page404 from "./pages/Page404";
 import Questionnary from "./pages/Questionnary";
 import ResultPage from "./pages/ResultPage";
-import Profile_nb from "./pages/Profile_nb";
-import { useMemo } from "react";
-
 //import Profile_nb from "./pages/Profile_nb";
 
 export default function App() {
   /* Current user state */
   const [currentUser, setCurrentUser] = useState(undefined);
-  const [role, setRole] = useState('');
-  const roleValue = useMemo(
-        () => ({ role, setRole }),
-        [role]
-    );
 
   
 
@@ -57,7 +49,6 @@ export default function App() {
 
   return (
     <div className="App">
-      <Context.Provider value={roleValue}>
         <Routes>
           <Route path="/" element={<Home currentUser={currentUser} />} />
           <Route path="/nav" element={<Navbar />} />
@@ -72,11 +63,12 @@ export default function App() {
           <Route path="/ResultPage" element={<ResultPage/>}/>
           <Route path="/profile" element={<Profile_nb/>}/>
           <Route path="/UserProfilePage" element={<UserProfilePage/>}/>
+          <Route path="/DoctorPage" element={<DoctorPage/>}/>
           <Route path="*" element={<Page404/>}/>
         </Routes>
         </Context.Provider>
     </div>
-    
+
   );
 }
 
