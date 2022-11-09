@@ -8,7 +8,6 @@ import {ResponseDB} from "../DAL/ResponseDB";
 import NiceAvatar, {genConfig} from "react-nice-avatar";
 import {PatientDB} from "../DAL/PatientDB";
 
-let drinkStatus;
 export function ResultHistoric({patientId, setBackgroundImage}) {
     const [userResponses, setUserResponses] = useState([]);
     useEffect(() => {
@@ -47,19 +46,32 @@ export class MyPage extends React.Component {
             algorithm: new Algorithm(v),
             config: null,
             date: "Want you very own result ? Fill in the questionnaire !"
-        };
+        }
+
     }
+
 
     componentDidMount() {
         this.props.setBackgroundImage(null);
         this.updateState();
         this.getAvatar();
+        this.updateSmoke();
+        this.updateDrinks();
+        this.updateCanRate();
+        this.updateDiaRate();
+        this.updateInfRate();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.patientResponse !== this.props.patientResponse) {
             this.updateState();
         }
+        this.getAvatar();
+        this.updateSmoke();
+        this.updateDrinks();
+        this.updateCanRate();
+        this.updateDiaRate();
+        this.updateInfRate();
     }
 
     updateState() {
@@ -75,8 +87,6 @@ export class MyPage extends React.Component {
         this.setState({
             algorithm: new Algorithm(answers)
         });
-        this.updateSmoke();
-        this.updateDrinks();
     }
 
     formatDate(dateSeconds) {
@@ -97,7 +107,6 @@ export class MyPage extends React.Component {
             clonedAlgorithm.canRate = clonedAlgorithm.CalculateCancer();
             return {algorithm: clonedAlgorithm};
         });
-        this.updateSmoke();
 
 
     }
@@ -114,6 +123,7 @@ export class MyPage extends React.Component {
             clonedAlgorithm.diaRate = clonedAlgorithm.CalculateDiabete();
             return {algorithm: clonedAlgorithm};
         });
+
     };
 
     changeSport = (e) => {
@@ -154,24 +164,18 @@ export class MyPage extends React.Component {
             return {algorithm: clonedAlgorithm};
 
         })
-        drinkStatus = e.target.value;
-        this.updateDrinks();
     }
     reset = () => {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
             clonedAlgorithm.Reset();
-            drinkStatus = clonedAlgorithm.alcool;
             return {algorithm: clonedAlgorithm};
         })
-        this.updateSmoke();
-        this.updateDrinks();
-
 
     }
 
     async getAvatar() {
-        const patientData = await PatientDB.prototype.getPatientById(this.props.patientId);
+        const patientData = await PatientDB.prototype.getPatientById(this.props.patientResponse.userId);
         patientData.avatarConfig.mouthStyle = "peace";
         patientData.avatarConfig.shape = null;
         patientData.avatarConfig.bgColor = "gray";
@@ -189,7 +193,7 @@ export class MyPage extends React.Component {
 
     updateDrinks() {
         this.setDrinksHidden();
-        switch (drinkStatus) {
+        switch (this.state.algorithm.alcool) {
             case "0":
                 document.getElementById("drink3Img").style.visibility = "visible"
                 break;
@@ -200,16 +204,45 @@ export class MyPage extends React.Component {
                 document.getElementById("drink1Img").style.visibility = "visible"
                 break;
         }
-        this.forceUpdate();
 
     }
 
     updateSmoke() {
-        if (!this.state.algorithm.fume) {
+        if (this.state.algorithm.fume) {
             document.getElementById("smokeImg").style.visibility = "visible"
 
         } else {
             document.getElementById("smokeImg").style.visibility = "hidden"
+
+        }
+    }
+
+    updateDiaRate() {
+        if (this.state.algorithm.diaRate > 50) {
+            document.getElementById("diabeteImg").style.visibility = "visible"
+
+        } else {
+            document.getElementById("diabeteImg").style.visibility = "hidden"
+
+        }
+    }
+
+    updateCanRate() {
+        if (this.state.algorithm.canRate > 50) {
+            document.getElementById("cancerImg").style.visibility = "visible"
+
+        } else {
+            document.getElementById("cancerImg").style.visibility = "hidden"
+
+        }
+    }
+
+    updateInfRate() {
+        if (this.state.algorithm.infRate > 50) {
+            document.getElementById("infarctusImg").style.visibility = "visible"
+
+        } else {
+            document.getElementById("infarctusImg").style.visibility = "hidden"
 
         }
     }
@@ -317,7 +350,7 @@ export class MyPage extends React.Component {
                             this.state.algorithm.sport != this.state.algorithm.defaultSport ||
                             this.state.algorithm.alcool != this.state.algorithm.defaultAlcool ||
                             this.state.algorithm.fume != this.state.algorithm.defaultFume ?
-                                <button className={"resetButton"} onClick={this.reset}>Reset my rythm</button> : <></>
+                                <button className={"resetButton"} onClick={this.reset}>Reset my rhythm</button> : <></>
                         }
                     </div>
                     <div className={"column"}>
@@ -325,7 +358,9 @@ export class MyPage extends React.Component {
                         <div className={"divAvatar"}>
                             <NiceAvatar className={"avatar"} shape={"rounded"}
                                         bgColor={"lightgray"} {...this.state.config}/>
-                            <img className={"imgAvatar"} src={"heart.png"}/>
+                            <img id={"infarctusImg"} className={"imgAvatar"} src={"results/heart.png"}/>
+                            <img id={"diabeteImg"} className={"imgAvatar"} src={"results/sugar.png"}/>
+                            <img id={"cancerImg"} className={"imgAvatar"} src={"results/cancer.png"}/>
                         </div>
                         <center>
                             <h3 className={"disease"}>Infarctus rate</h3>

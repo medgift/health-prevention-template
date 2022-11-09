@@ -4,7 +4,7 @@ import {Navigate, NavLink, Route, Routes, useLocation, useNavigate} from "react-
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import MyPage from "./pages/MyPage";
+import LatestResult from "./pages/MyPage";
 import QuestionList from "./pages/Questionnaire";
 import NormalValueList from "./pages/Admin";
 import icon from "./hearth_icon.png"
