@@ -14,8 +14,8 @@
     .register {
         display: block;
         min-height: auto;
-        max-width: 60%;
-        min-width: 50%;
+        max-width: 70%;
+        min-width: 60%;
         justify-content: center;
         margin-top: 20%;
         background-color: white;

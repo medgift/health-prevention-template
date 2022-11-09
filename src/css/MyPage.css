@@ -36,11 +36,12 @@
 
 .line {
     width: inherit;
+    margin-left: 5%;
 }
 
 .variable {
     float: right;
-    margin-right: 5%;
+    margin-right: 9%;
     animation: fadeIn 2s;
 }
 
@@ -156,20 +157,34 @@
 
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
+    .App-header-align{
+        margin-left: -10%;
+    }
+    .viewGrid {
+        width: 80%;
+    }
+}
+
+@media (max-width: 800px) {
+    .App-header-align{
+        margin-left: -20%;
+    }
     .viewGrid{
         display: block;
         width: 100%;
         grid-template-rows: auto;
         margin-top: 0;
-        margin-left: 0%;
+        margin-left:0;
         border-radius: 15px;
         padding: 2.5% 2.5%;
         background: #1a73e8;
         box-shadow: 7px 7px #114d9b;
         height: max-content;
     }
+
     .column{
+        font-size: 100%;
         color: #444;
         width: 90%;
         background: white;
