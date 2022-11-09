@@ -23,6 +23,7 @@ export default function UserProfilePage() {
     const [IsChoosable, setChoosableState] = useState(false)
     const [listAllowedDoctor, setList] = useState([])
     const [listRemovedDoctor, setRemoveList] = useState([])
+    const [document, setDocument] = useState([])
     const navigate = useNavigate();
     const {role} = useContext(Context);
     console.log("user " + role.role)
@@ -186,7 +187,7 @@ export default function UserProfilePage() {
                                 <summary>{ e.id }</summary>
                                 {
                                     Object.entries(e.data()).map(([key, value]) => {
-                                        return (<p> {key} : {value} </p>)
+                                        return (key.includes("result") ? <p style={{ color: "red" }}> {key} : {value} </p> : <p> {key} : {value} </p>)
                                     })
                                 }
                             </details>
