@@ -153,7 +153,7 @@ export default class Algorithm {
         let score = (this.age < DiaAge1 ? 1 : this.age < DiaAge2 ? 3 : 6) + (this.BMI < DiaBMI0 ? 0 : this.BMI < DiaBMI1 ? 1 : this.BMI < DiaBMI2 ? 3 : 6) + (this.systBool > 0 ? 2 : 0) + (this.glycBool > 0 ? 5 : 0) + alimAnswersDiab - this.alim + sportAnswersDiab - this.sport + coeffSuppWaist;
         let risk = Math.pow(score, 3) * coeff[0] - Math.pow(score, 2) * coeff[1] + score * coeff[2] - 3 * Math.pow(Math.E, coeffDiabRisqueCalc);
         console.log(score);
-        return (risk > 100 ? 100 : risk);
+        return risk;
     }
 
     CalculateCancer() {

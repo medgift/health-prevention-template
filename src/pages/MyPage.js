@@ -3,7 +3,7 @@ import Algorithm from "../algorithm/Algorithm";
 import ProgressBar from "../components/ProgressBar";
 import CircularProgressBar from "../components/CircularProgressBar"
 import _ from "lodash";
-import "./MyPage.css";
+import "../css/MyPage.css";
 import {ResponseDB} from "../DAL/ResponseDB";
 import NiceAvatar, {genConfig} from "react-nice-avatar";
 import {PatientDB} from "../DAL/PatientDB";
@@ -366,7 +366,7 @@ export class MyPage extends React.Component {
                                 strokeWidth="13"
                                 sqSize="120"
                                 color={"#25FDE9"}
-                                percentage={Math.floor(this.state.algorithm.infRate)}/>
+                                percentage={this.state.algorithm.infRate>100 ? 100:Math.floor(this.state.algorithm.infRate)}/>
                         </center>
                         <center>
                             <h3 className={"disease"}>Diabetes rate</h3>
@@ -374,7 +374,7 @@ export class MyPage extends React.Component {
                                 strokeWidth="13"
                                 sqSize="120"
                                 color={"#90EE90"}
-                                percentage={Math.floor(this.state.algorithm.diaRate)}/>
+                                percentage={this.state.algorithm.diaRate>100 ? 100:Math.floor(this.state.algorithm.diaRate)}/>
                         </center>
                         <center>
                             <h3 className={"disease"}>Cancer rate</h3>
@@ -382,7 +382,7 @@ export class MyPage extends React.Component {
                                 strokeWidth="13"
                                 sqSize="120"
                                 color={"#FFE436"}
-                                percentage={Math.floor(this.state.algorithm.canRate)}/>
+                                percentage={this.state.algorithm.canRate>100 ? 100: Math.floor(this.state.algorithm.canRate)}/>
                         </center>
                     </div>
                 </div>
