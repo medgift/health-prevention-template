@@ -8,6 +8,7 @@ import LatestResult from "./pages/MyPage";
 import QuestionList from "./pages/Questionnaire";
 import NormalValueList from "./pages/Admin";
 import icon from "./hearth_icon.png"
+import expand from "./expand_navbar.jpg"
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
 import EditAvatar from "./pages/EditAvatar";
@@ -22,6 +23,23 @@ import DoctorPage from "./pages/Doctor";
 
 class Nav extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            isNavBarOpen: false
+        }
+    }
+
+    toggleNavBarOpen = () => {
+        this.setState((prevState) => ({
+            isNavBarOpen: !prevState.isNavBarOpen
+        }));
+    };
+
+    closeNavBar = () => {
+        this.setState({isNavBarOpen: false});
+    }
+
     render() {
         let LoginLogout = null;
         let register = null;
@@ -30,34 +48,40 @@ class Nav extends React.Component {
 
         //used to only display login and register to unauthenticated user
         if (this.props.currentUser) {
-            LoginLogout = <NavLink to="/logout">Logout</NavLink>
+            LoginLogout = <NavLink to="/logout" onClick={() => this.closeNavBar()}>Logout</NavLink>
         } else {
-            LoginLogout = <NavLink to="/login">Login</NavLink>
-            register = <NavLink to="/register">Register</NavLink>
+            LoginLogout = <NavLink to="/login" onClick={() => this.closeNavBar()}>Login</NavLink>
+            register = <NavLink to="/register" onClick={() => this.closeNavBar()}>Register</NavLink>
         }
         if (this.context.role === AvailableRoles.DOCTOR) {
-            docPage = <NavLink to="/doctor">Patients</NavLink>
+            docPage = <NavLink to="/doctor" onClick={() => this.closeNavBar()}>Patients</NavLink>
         }
         if (this.context.role === AvailableRoles.PATIENT) {
-            profile = <NavLink to="/profile">Profile</NavLink>
+            profile = <NavLink to="/profile" onClick={() => this.closeNavBar()}>Profile</NavLink>
         }
+
+        //initial navbar and icon state
+        let navbar = <>
+            <NavLink to="/home"><img className="navImage" src={icon} alt="logo"/></NavLink>
+            <img className="hamburger" src={expand} alt="logo" onClick={() => this.toggleNavBarOpen()}/>
+            <nav className={this.state.isNavBarOpen ? "appBar" : "appBar appBarClosed"}>
+                <div className="container-fluid">
+                    <ul className="nav navbar-nav">
+                        <NavLink to="/home" onClick={() => this.closeNavBar()}>Home</NavLink>
+                        <NavLink to="/questionnaire" onClick={() => this.closeNavBar()}>Questionnaire</NavLink>
+                        <NavLink to="/view" onClick={() => this.closeNavBar()}>Results</NavLink>
+                        {profile}
+                        {docPage}
+                        {register}
+                        {LoginLogout}
+                    </ul>
+                </div>
+            </nav>
+        </>;
 
         return (
             <div id="navBarDiv">
-                <NavLink to="/home"><img id="icon" src={icon} alt="logo"/></NavLink>
-                <nav className="navbar navbar-default appBar">
-                    <div className="container-fluid">
-                        <ul className="nav navbar-nav">
-                            <NavLink to="/home">Home</NavLink>
-                            <NavLink to="/questionnaire">Questionnaire</NavLink>
-                            <NavLink to="/view">Results</NavLink>
-                            {profile}
-                            {docPage}
-                            {register}
-                            {LoginLogout}
-                        </ul>
-                    </div>
-                </nav>
+                {navbar}
             </div>
         )
     };
@@ -148,8 +172,10 @@ export default function App() {
                                                                             setBackgroundImage={setBackgroundImage}/>}></Route>
                         <Route path="/admin" element={<NormalValueList currentUser={currentUser}
                                                                        setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
-                        <Route path="/view" element={<LatestResult patientId={patientId} setBackgroundImage={setBackgroundImage}/>}/>
-                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>} />
+                        <Route path="/view"
+                               element={<LatestResult patientId={patientId} setBackgroundImage={setBackgroundImage}/>}/>
+                        <Route path="/doctor" element={<DoctorPage currentUser={currentUser}
+                                                                   setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
                         <Route path="*"
                                element={<PageNotFound setBackgroundImage={setBackgroundImage}></PageNotFound>}/>

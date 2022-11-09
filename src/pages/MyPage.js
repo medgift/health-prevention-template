@@ -107,8 +107,6 @@ export class MyPage extends React.Component {
             clonedAlgorithm.canRate = clonedAlgorithm.CalculateCancer();
             return {algorithm: clonedAlgorithm};
         });
-
-
     }
 
     changeAlim = (e) => {
@@ -123,7 +121,6 @@ export class MyPage extends React.Component {
             clonedAlgorithm.diaRate = clonedAlgorithm.CalculateDiabete();
             return {algorithm: clonedAlgorithm};
         });
-
     };
 
     changeSport = (e) => {
@@ -165,6 +162,7 @@ export class MyPage extends React.Component {
 
         })
     }
+
     reset = () => {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
@@ -281,9 +279,9 @@ export class MyPage extends React.Component {
                             className={"variable"}>{this.state.algorithm.avc ? "Already have" : "No"}</span></p>
                         <h2>Family</h2>
                         <p className={"line"}>Infarctus: <span
-                            className={"variable"}>{this.state.algorithm.avc ? "Yes" : "No"}</span></p>
+                            className={"variable"}>{this.state.algorithm.afinf ? "Yes" : "No"}</span></p>
                         <p className={"line"}>Cancer: <span
-                            className={"variable"}>{this.state.algorithm.avc ? "Yes" : "No"}</span></p>
+                            className={"variable"}>{this.state.algorithm.afcancer ? "Yes" : "No"}</span></p>
 
                     </div>
                     <div className={"column"}>
