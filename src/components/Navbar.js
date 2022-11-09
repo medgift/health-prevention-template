@@ -13,6 +13,9 @@ export default function Navbar() {
                 <Link to="/questionnary" className="App-link">
                     Survey
                 </Link>
+                <Link to="/DoctorPage" className="App-link">
+                    Doctor page
+                </Link>
             </div>
             <div className="navbar-profile" style={{float: "right"}}>
                 <button className="btn-profile">

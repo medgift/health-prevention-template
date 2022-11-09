@@ -33,8 +33,8 @@ export default function Login() {
           return;
         case 2 : navigate("/")
           return;
-        //case 2 : navigate("/DoctorPAge")
-        //  return;
+        case 2 : navigate("/DoctorPage")
+         return;
         default : navigate("/")
           
       }

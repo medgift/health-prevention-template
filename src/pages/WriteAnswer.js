@@ -1,6 +1,7 @@
 import React  from "react";
-import {collection, doc, setDoc, addDoc, getDocs, getDoc} from "firebase/firestore";
+import {collection, doc, setDoc, addDoc, getDocs, getDoc,query} from "firebase/firestore";
 import {auth, database} from "../initFirebase";
+import {doctor} from "./UserProfilePage";
 
 
 export default class WriteAnswer extends React.Component{
@@ -125,7 +126,7 @@ export default class WriteAnswer extends React.Component{
             this.sex = docSnap.data().sex;
             this.age = docSnap.data().age;
             this.weight = docSnap.data().weight;
-            this.height = docSnap.data().heigt;
+            this.height = docSnap.data().height;
             this.syst = docSnap.data().syst;
             this.glyc = docSnap.data().glyc;
             this.chol = docSnap.data().chol;
