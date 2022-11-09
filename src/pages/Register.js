@@ -91,7 +91,8 @@ export default function Register({setBackgroundImage}) {
                     <label htmlFor={"email"} className={"input-label"}>Email address</label>
                     <p className="inputValidation">{emailMessage}</p>
                 </div>
-                <div className={"input-group"} style={emailMessage.length > 0  ? {marginTop: "7.2%"} : {marginTop: "15%"}}>
+                <div className={"input-group"}
+                     style={emailMessage.length > 0 ? {marginTop: "7.2%"} : {marginTop: "15%"}}>
                     <input className="formInput"
                            type="password"
                            value={password}

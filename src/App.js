@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from "react";
 import "./App.css";
-import {Route, Routes, NavLink, Navigate, useNavigate, useLocation} from "react-router-dom";
+import {Navigate, NavLink, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import MyPage from "./pages/MyPage";
+import LatestResult from "./pages/MyPage";
 import QuestionList from "./pages/Questionnaire";
 import NormalValueList from "./pages/Admin";
 import icon from "./hearth_icon.png"
@@ -17,10 +17,9 @@ import PageNotFound from "./pages/404";
 import Profile from "./pages/Profile";
 import {PatientDB} from "./DAL/PatientDB";
 import {AdminDB} from "./DAL/AdminDB";
-import {RoleContext, AvailableRoles} from "./Context/UserRoles"
+import {AvailableRoles, RoleContext} from "./Context/UserRoles"
 import {DoctorDB} from "./DAL/DoctorDB";
 import DoctorPage from "./pages/Doctor";
-import LatestResult from "./pages/MyPage";
 
 class Nav extends React.Component {
 
@@ -64,8 +63,8 @@ class Nav extends React.Component {
         //initial navbar and icon state
         let navbar = <>
             <NavLink to="/home"><img className="navImage" src={icon} alt="logo"/></NavLink>
-            <img className="hamburger" src={expand} alt="logo" onClick={() => this.toggleNavBarOpen()} />
-            <nav className= {this.state.isNavBarOpen ? "appBar" : "appBar appBarClosed"}>
+            <img className="hamburger" src={expand} alt="logo" onClick={() => this.toggleNavBarOpen()}/>
+            <nav className={this.state.isNavBarOpen ? "appBar" : "appBar appBarClosed"}>
                 <div className="container-fluid">
                     <ul className="nav navbar-nav">
                         <NavLink to="/home" onClick={() => this.closeNavBar()}>Home</NavLink>

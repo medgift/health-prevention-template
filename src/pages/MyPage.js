@@ -4,8 +4,9 @@ import ProgressBar from "../components/ProgressBar";
 import CircularProgressBar from "../components/CircularProgressBar"
 import _ from "lodash";
 import "./MyPage.css";
-import {QuestionDB} from "../DAL/QuestionDB";
 import {ResponseDB} from "../DAL/ResponseDB";
+import NiceAvatar, {genConfig} from "react-nice-avatar";
+import {PatientDB} from "../DAL/PatientDB";
 
 export function ResultHistoric({patientId, setBackgroundImage}) {
     const [userResponses, setUserResponses] = useState([]);
@@ -43,19 +44,34 @@ export class MyPage extends React.Component {
         super(props);
         this.state = {
             algorithm: new Algorithm(v),
+            config: null,
             date: "Want you very own result ? Fill in the questionnaire !"
-        };
+        }
+
     }
+
 
     componentDidMount() {
         this.props.setBackgroundImage(null);
         this.updateState();
+        this.getAvatar();
+        this.updateSmoke();
+        this.updateDrinks();
+        this.updateCanRate();
+        this.updateDiaRate();
+        this.updateInfRate();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.patientResponse !== this.props.patientResponse) {
             this.updateState();
         }
+        this.getAvatar();
+        this.updateSmoke();
+        this.updateDrinks();
+        this.updateCanRate();
+        this.updateDiaRate();
+        this.updateInfRate();
     }
 
     updateState() {
@@ -153,6 +169,80 @@ export class MyPage extends React.Component {
             clonedAlgorithm.Reset();
             return {algorithm: clonedAlgorithm};
         })
+
+    }
+
+    async getAvatar() {
+        const patientData = await PatientDB.prototype.getPatientById(this.props.patientResponse.userId);
+        patientData.avatarConfig.mouthStyle = "peace";
+        patientData.avatarConfig.shape = null;
+        patientData.avatarConfig.bgColor = "gray";
+        const myConfig = genConfig(patientData.avatarConfig);
+        this.setState({
+            config: myConfig
+        })
+    }
+
+    setDrinksHidden() {
+        document.getElementById("drink1Img").style.visibility = "hidden"
+        document.getElementById("drink2Img").style.visibility = "hidden"
+        document.getElementById("drink3Img").style.visibility = "hidden"
+    }
+
+    updateDrinks() {
+        this.setDrinksHidden();
+        switch (this.state.algorithm.alcool) {
+            case "0":
+                document.getElementById("drink3Img").style.visibility = "visible"
+                break;
+            case "1":
+                document.getElementById("drink2Img").style.visibility = "visible"
+                break;
+            case "2":
+                document.getElementById("drink1Img").style.visibility = "visible"
+                break;
+        }
+
+    }
+
+    updateSmoke() {
+        if (this.state.algorithm.fume) {
+            document.getElementById("smokeImg").style.visibility = "visible"
+
+        } else {
+            document.getElementById("smokeImg").style.visibility = "hidden"
+
+        }
+    }
+
+    updateDiaRate() {
+        if (this.state.algorithm.diaRate > 50) {
+            document.getElementById("diabeteImg").style.visibility = "visible"
+
+        } else {
+            document.getElementById("diabeteImg").style.visibility = "hidden"
+
+        }
+    }
+
+    updateCanRate() {
+        if (this.state.algorithm.canRate > 50) {
+            document.getElementById("cancerImg").style.visibility = "visible"
+
+        } else {
+            document.getElementById("cancerImg").style.visibility = "hidden"
+
+        }
+    }
+
+    updateInfRate() {
+        if (this.state.algorithm.infRate > 50) {
+            document.getElementById("infarctusImg").style.visibility = "visible"
+
+        } else {
+            document.getElementById("infarctusImg").style.visibility = "hidden"
+
+        }
     }
 
 
@@ -163,26 +253,47 @@ export class MyPage extends React.Component {
                 <div className={"viewGrid"}>
                     <div className={"column"}>
                         <h2>Your situation</h2>
-                        <p>*photo avatar*</p>
-                        <p className={"line"}>Sex: <span className={"variable"}>{this.state.algorithm.sexe?"Man":"Woman"}</span></p>
-                        <p className={"line"}>Age: <span className={"variable"}>{this.state.algorithm.age} years</span></p>
-                        <p className={"line"}>Height: <span className={"variable"}>{this.state.algorithm.taille} cm</span></p>
-                        <p className={"line"}>Syst: <span className={"variable"}>{this.state.algorithm.syst} mmHg</span></p>
-                        <p className={"line"}>Glyc: <span className={"variable"}>{this.state.algorithm.glyc} g/L</span></p>
-                        <p className={"line"}>Chol: <span className={"variable"}>{this.state.algorithm.chol} g/L</span></p>
-                        <p className={"line"}>HDL: <span className={"variable"}>{this.state.algorithm.hdl} g/L</span></p>
-                        <p className={"line"}>Diabete: <span className={"variable"}>{this.state.algorithm.diab?"Yes":"No"}</span></p>
-                        <p className={"line"}>Infarctus: <span className={"variable"}>{this.state.algorithm.inf?"Already have":"No"}</span></p>
-                        <p className={"line"}>AVC: <span className={"variable"}>{this.state.algorithm.avc?"Already have":"No"}</span></p>
+                        <div className={"divAvatar"}>
+                            <NiceAvatar className={"avatar"} shape={"rounded"}
+                                        bgColor={"lightgray"} {...this.state.config}/>
+                        </div>
+                        <p className={"line"}>Sex: <span
+                            className={"variable"}>{this.state.algorithm.sexe ? "Man" : "Woman"}</span></p>
+                        <p className={"line"}>Age: <span className={"variable"}>{this.state.algorithm.age} years</span>
+                        </p>
+                        <p className={"line"}>Height: <span
+                            className={"variable"}>{this.state.algorithm.taille} cm</span></p>
+                        <p className={"line"}>Syst: <span className={"variable"}>{this.state.algorithm.syst} mmHg</span>
+                        </p>
+                        <p className={"line"}>Glyc: <span className={"variable"}>{this.state.algorithm.glyc} g/L</span>
+                        </p>
+                        <p className={"line"}>Chol: <span className={"variable"}>{this.state.algorithm.chol} g/L</span>
+                        </p>
+                        <p className={"line"}>HDL: <span className={"variable"}>{this.state.algorithm.hdl} g/L</span>
+                        </p>
+                        <p className={"line"}>Diabete: <span
+                            className={"variable"}>{this.state.algorithm.diab ? "Yes" : "No"}</span></p>
+                        <p className={"line"}>Infarctus: <span
+                            className={"variable"}>{this.state.algorithm.inf ? "Already have" : "No"}</span></p>
+                        <p className={"line"}>AVC: <span
+                            className={"variable"}>{this.state.algorithm.avc ? "Already have" : "No"}</span></p>
                         <h2>Family</h2>
-                        <p className={"line"}>Infarctus: <span className={"variable"}>{this.state.algorithm.afinf?"Yes":"No"}</span></p>
-                        <p className={"line"}>Cancer: <span className={"variable"}>{this.state.algorithm.afcancer?"Yes":"No"}</span></p>
+                        <p className={"line"}>Infarctus: <span
+                            className={"variable"}>{this.state.algorithm.afinf ? "Yes" : "No"}</span></p>
+                        <p className={"line"}>Cancer: <span
+                            className={"variable"}>{this.state.algorithm.afcancer ? "Yes" : "No"}</span></p>
 
                     </div>
                     <div className={"column"}>
                         <h2>Your rhythm</h2>
-                        <p>*photo avatar*</p>
-
+                        <div className={"divAvatar"}>
+                            <NiceAvatar className={"avatar"} shape={"rounded"}
+                                        bgColor={"lightgray"} {...this.state.config}/>
+                            <img id={"drink1Img"} className={"imgAvatar"} src={"results/drink1.png"}/>
+                            <img id={"drink2Img"} className={"imgAvatar"} src={"results/drink2.png"}/>
+                            <img id={"drink3Img"} className={"imgAvatar"} src={"results/drink3.png"}/>
+                            <img id={"smokeImg"} className={"imgAvatar"} src={"results/smoke.png"}/>
+                        </div>
                         <div>
                             <label className={"labelView"}>Smoke: </label>
                             <input type={"checkbox"} checked={this.state.algorithm.fume}
@@ -237,12 +348,18 @@ export class MyPage extends React.Component {
                             this.state.algorithm.sport != this.state.algorithm.defaultSport ||
                             this.state.algorithm.alcool != this.state.algorithm.defaultAlcool ||
                             this.state.algorithm.fume != this.state.algorithm.defaultFume ?
-                                <button className={"resetButton"} onClick={this.reset}>Reset my rythm</button> : <></>
+                                <button className={"resetButton"} onClick={this.reset}>Reset my rhythm</button> : <></>
                         }
                     </div>
                     <div className={"column"}>
                         <h2>Your risks</h2>
-                        <p>*photo avatar*</p>
+                        <div className={"divAvatar"}>
+                            <NiceAvatar className={"avatar"} shape={"rounded"}
+                                        bgColor={"lightgray"} {...this.state.config}/>
+                            <img id={"infarctusImg"} className={"imgAvatar"} src={"results/heart.png"}/>
+                            <img id={"diabeteImg"} className={"imgAvatar"} src={"results/sugar.png"}/>
+                            <img id={"cancerImg"} className={"imgAvatar"} src={"results/cancer.png"}/>
+                        </div>
                         <center>
                             <h3 className={"disease"}>Infarctus rate</h3>
                             <CircularProgressBar

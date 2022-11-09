@@ -130,9 +130,10 @@
 }
 
 
-.createPatient{
+.createPatient {
     width: 50%;
 }
+
 .input-group {
     position: relative;
 }
@@ -167,7 +168,7 @@
 
 .formInput:focus+.input-label,
 .formInput:valid+.input-label {
-    transform:translate(3%, -55%) scale(.8);
+    transform: translate(3%, -55%) scale(.8);
     color: #444;
     padding-inline: 5px;
     background-color: #fff;
@@ -397,20 +398,20 @@ input:checked + .slider:before {
 }
 
 
-
-.general{
-    margin-top:8%;
+.general {
+    margin-top: 8%;
 }
 
-@media (max-width: 900px){
+@media (max-width: 900px) {
 
     .input-group {
         position: relative;
         margin-left: 5%;
         margin-right: 5%;
     }
-    .createPatient{
-        width:100%;
+
+    .createPatient {
+        width: 100%;
     }
 }
 

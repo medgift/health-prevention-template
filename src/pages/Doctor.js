@@ -1,12 +1,11 @@
-import {AdminDB} from "../DAL/AdminDB";
 import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {DoctorDB} from "../DAL/DoctorDB";
 import {PatientDB} from "../DAL/PatientDB";
-import MyPage, {ResultHistoric, ResultList} from "./MyPage";
+import {ResultHistoric} from "./MyPage";
 import "../css/Doctor.css";
 
-import {RoleContext, AvailableRoles} from "../Context/UserRoles";
+import {AvailableRoles, RoleContext} from "../Context/UserRoles";
 
 export default function DoctorPage({currentUser, setBackgroundImage}) {
     const navigate = useNavigate();
