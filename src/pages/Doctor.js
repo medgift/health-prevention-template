@@ -12,6 +12,7 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
     const navigate = useNavigate();
     let doctor = null;
     let [patients, setPatients] = useState([]);
+    let [pendingPatients, setPendingPatients] = useState([]);
     let [idSelectedPatient, setIdSelectedPatient] = useState(null);
     const userRoleContext = useContext(RoleContext);
 
@@ -38,11 +39,17 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
     }
 
     async function loadPatients() {
-        console.log("Loading patients")
+        //load the patients of the doctor
         for (let i = 0; i < doctor.patients.length; i++) {
             let p = await PatientDB.prototype.getPatientById(doctor.patients[i]);
             p.id = doctor.patients[i];
             setPatients((patients) => [...patients, p]);
+        }
+        //load the pending patients of the doctor
+        for (let i = 0; i < doctor.pendingPatients.length; i++) {
+            let p = await PatientDB.prototype.getPatientById(doctor.pendingPatients[i]);
+            p.id = doctor.pendingPatients[i];
+            setPendingPatients((pendingPatients) => [...pendingPatients, p]);
         }
         setIdSelectedPatient(doctor.patients[0]);
     }
@@ -51,9 +58,53 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
         setIdSelectedPatient(e.target.value);
     }
 
+    const acceptPatient= async (e) => {
+        const patientId = e.target.value;
+
+        //officially add the patient to the doctor's list
+        await DoctorDB.prototype.addPatientToDoctor(currentUser.uid, patientId);
+        await PatientDB.prototype.updatePatientDoctor(patientId, currentUser.uid);
+
+        //remove the patient from the pending list
+        await PatientDB.prototype.removePendingDoctor(patientId);
+        await DoctorDB.prototype.removePendingPatientFromDoctor(currentUser.uid, patientId);
+
+        //remove the patient from the state
+        setPendingPatients(pendingPatients.filter(p => p.id !== patientId));
+    }
+
+    async function refusePatient(e) {
+        const patientId = e.target.value;
+
+        //remove the patient from the pending list
+        await PatientDB.prototype.removePendingDoctor(patientId);
+        await DoctorDB.prototype.removePendingPatientFromDoctor(currentUser.uid, patientId);
+
+        //remove the patient from the state
+        setPendingPatients(pendingPatients.filter(p => p.id !== patientId));
+    }
+
+    let patientRequests = pendingPatients.map((patient) => {
+        return (
+            <div key={patient.id} className={"patientRequestDiv"}>
+                {patient.firstName} {patient.lastName} <button value={patient.id} onClick={acceptPatient} className={"formButton"}>Accept</button> <button value={patient.id} onClick={refusePatient} className={"PatientRefuse"}>Refuse</button>
+            </div>
+        );
+    });
+
+    let newPatientRequests = (
+        <div className={"PendingPatientDiv"}>
+            <h4>You have new patient requests</h4>
+            {patientRequests}
+        </div>
+    )
+
+
+    //TODO: affichage conditionnel des patients pending (ou faire une page à part)
     return (
         <div className={"DocDiv"}>
             <h2>Welcome back, Doctor</h2>
+            {pendingPatients.length > 0 ? newPatientRequests : null}
             <h3 className={"PatientListTitle"}>Your patients:</h3>
             <select className={"PatientList"} onChange={patientButtonPress}>
                 {patients.map((p) => (

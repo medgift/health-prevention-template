@@ -19,11 +19,14 @@ class DoctorDB {
 
     async addPatientToDoctor(doctorId, patientId) {
         await updateDoc(doc(db, "Doctor", doctorId), {Patients: arrayUnion(patientId)});
-
     }
 
-    async getPatientsOfDoctor(docUid) {
+    async addPendingPatientToDoctor(doctorId, patientId) {
+        await updateDoc(doc(db, "Doctor", doctorId), {Pending: arrayUnion(patientId)});
+    }
 
+    async removePendingPatientFromDoctor(doctorId, patientId) {
+        await updateDoc(doc(db, "Doctor", doctorId), {Pending: arrayRemove(patientId)});
     }
 }
 
