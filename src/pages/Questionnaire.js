@@ -258,27 +258,10 @@ function setDefaultValues(questions, varContext) {
 }
 
 function convertVariablesToMap(varContext) {
-    let map = {
-        Poids: varContext.Poids,
-        Alcool: varContext.Alcool,
-        GlycBool: varContext.GlycBool,
-        Alim: varContext.Alim,
-        Sport: varContext.Sport,
-        Inf: varContext.Inf,
-        Gender: varContext.Gender,
-        DIAB: varContext.DIAB,
-        Afcancer: varContext.Afcancer,
-        Avc: varContext.Avc,
-        Age: varContext.Age,
-        Afinf: varContext.Afinf,
-        SystBool: varContext.SystBool,
-        Syst: varContext.Syst,
-        Fume: varContext.Fume,
-        Taille: varContext.Taille,
-        CholBool: varContext.CholBool,
-        Chol: varContext.Chol,
-        Glyc: varContext.Glyc,
-        HDL: varContext.HDL
+    //transfert the content of the context to a new object
+    let res = {};
+    for (let key in varContext) {
+        res[key] = varContext[key];
     }
-    return map;
+    return res;
 }

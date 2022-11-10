@@ -55,7 +55,6 @@ export default function Profile({currentUser, setBackgroundImage}) {
     }
 
 
-    //TODO: affichage pour pending doctor
     return (
         <div className={"padded_div avatarDiv"}>
             <h2>Profile</h2>

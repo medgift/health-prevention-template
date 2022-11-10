@@ -173,7 +173,7 @@ export default function App() {
                     <Routes>
                         <Route exact path="/" element={<Navigate to="/home"></Navigate>}></Route>
                         <Route path="/home"
-                               element={<Home currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}/>
+                               element={<Home setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/register" element={<Register setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/login" element={<Login setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/logout" element={<Logout/>}/>

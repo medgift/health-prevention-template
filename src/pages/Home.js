@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import "../css/Home.css";
 import {useEffect} from "react";
 
-export default function Home({currentUser, setBackgroundImage}) {
+export default function Home({setBackgroundImage}) {
 
     useEffect(() => {
         setBackgroundImage(null);
