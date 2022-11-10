@@ -74,11 +74,11 @@
 @media (max-width: 900px) {
     .homeGrid {
         display: block;
-        width: 90%;
+        width: 80%;
         height: max-content;
     }
     .homeGridButton{
-        font-size: 80%;
+        font-size: 55%;
     }
     .homeGridItem {
         width: 90%;
