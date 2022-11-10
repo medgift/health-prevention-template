@@ -6,14 +6,17 @@
     border: lightgrey 2px solid;
     box-shadow: 1px 1px;
     margin-top: 5%;
-    padding-right: 100px;
-    padding-left: 100px;
+    padding-right: 10%;
+    padding-left: 10%;
     background-color: #f2f7fc;
     border-radius: 10px;
 }
 
 #questionnaireButtonDiv {
-    float: right;
+    display: flex;
+    align-content: flex-start;
+    text-align: left;
+    margin-left: 0;
     margin-bottom: 2vh;
 }
 
@@ -22,6 +25,37 @@
     grid-template-columns: 50% 50%;
     grid-gap: 10px;
     grid-template-rows: auto;
+}
+
+@media (max-width: 900px) {
+    #questionGrid {
+        display: block;
+    }
+    #questionnaire {
+        width: 60%;
+    }
+}
+
+@media (max-width: 600px) {
+    #questionGrid {
+        display: block;
+    }
+    #questionnaire {
+        width: 75%;
+    }
+}
+
+@media (max-width: 400px) {
+    #questionGrid {
+        display: block;
+    }
+    #questionnaire {
+        width: 75%;
+    }
+
+    .inputDiv {
+        display: block !important;
+    }
 }
 
 #questionGrid-item {
@@ -38,8 +72,6 @@
 
 .questionDiv {
     font-size: medium;
-    /* border: 0.5px solid lightgray;*/
-    /* box-shadow: 0.5px 0.5px lightgray;*/
     border-radius: 10px;
     overflow-clip: true;
     margin-bottom: 20px;
