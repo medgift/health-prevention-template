@@ -36,14 +36,20 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
 
     async function loadPatients() {
         //load the patients of the doctor
-        for (let i = 0; i < doctor.patients.length; i++) {
-            let p = await LoadOnePatient(doctor.patients[i]);
-            setPatients((patients) => [...patients, p]);
+        //skip for if the doctor has no patients
+        if (doctor.patients.length !== 0|| doctor.patients.length !== null || typeof doctor.patients.length !== "undefined") {
+            for (let i = 0; i < doctor.patients.length; i++) {
+                let p = await LoadOnePatient(doctor.patients[i]);
+                setPatients((patients) => [...patients, p]);
+            }
         }
         //load the pending patients of the doctor
-        for (let i = 0; i < doctor.pendingPatients.length; i++) {
-            let p = await LoadOnePatient(doctor.pendingPatients[i]);
-            setPendingPatients((pendingPatients) => [...pendingPatients, p]);
+        //skip for if the doctor has no pending patients
+        if (doctor.pendingPatients.length !== 0|| doctor.pendingPatients.length !== null || typeof doctor.pendingPatients.length !== "undefined") {
+            for (let i = 0; i < doctor.pendingPatients.length; i++) {
+                let p = await LoadOnePatient(doctor.pendingPatients[i]);
+                setPendingPatients((pendingPatients) => [...pendingPatients, p]);
+            }
         }
         setIdSelectedPatient(doctor.patients[0]);
     }

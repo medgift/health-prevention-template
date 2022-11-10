@@ -27,6 +27,10 @@ export default function Register({setBackgroundImage}) {
     const handleLastNameChange = (e) => setLastName(e.target.value);
 
     useEffect(() => {
+        //prohibit access to the login page if the user is already logged in
+        if (auth.currentUser) {
+            navigate("/home");
+        }
         setBackgroundImage(simpleBlueBg);
     }, []);
 

@@ -4,12 +4,18 @@ import "../css/Login.css";
 import UserForm from "../components/UserForm";
 import simpleBlueBg from "./simple_blue_background.webp";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 export default function Login({setBackgroundImage}) {
 
     const [loginMessage, setLoginMessage] = useState("");
-
+    const navigate = useNavigate();
     useEffect(() => {
+        //prohibit access to the login page if the user is already logged in
+        if (auth.currentUser) {
+            navigate("/home");
+        }
+
         setBackgroundImage(simpleBlueBg);
     }, []);
 

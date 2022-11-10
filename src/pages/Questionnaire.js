@@ -6,6 +6,7 @@ import {ResponseDTO} from "../DTO/ResponseDTO";
 import {Variables} from "../Context/Variables";
 import {useNavigate} from "react-router-dom";
 import questionBg from "./paint_bg.jpg"
+import {RoleContext, AvailableRoles} from "../Context/UserRoles"
 
 
 // Manages a single question, its input and values
@@ -308,11 +309,18 @@ export default function QuestionList({currentUser, setBackgroundImage}) {
     let [Display5, setDisplay5] = useState(false);
     let [Display6, setDisplay6] = useState(false);
     let [Display7, setDisplay7] = useState(false);
+    const userRoleContext = useContext(RoleContext);
     const varContext = useContext(Variables);
     const navigate = useNavigate();
 
     useEffect(() => {
         setBackgroundImage(questionBg);
+        console.log("user Role: " + currentUser.role);
+
+        //stop doctors from visiting this page
+        if (userRoleContext.role === "doctor") {
+            navigate("/doctor");
+        }
     }, []);
 
     let title = currentUser ? "Fill in the questionnaire to obtain custom results !" : "Log in to save your answers."
