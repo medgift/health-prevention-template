@@ -4,41 +4,41 @@ import React, {useEffect, useState} from "react";
 export const switchAlim = (param) => {
     switch (param) {
         case '0':
-            return 'never';
+            return 'Most of the time';
         case '1':
-            return 'not often';
+            return 'Often';
         case '2':
-            return 'often';
+            return 'Not often';
         case '3':
-            return 'most of the time';
+            return 'Never';
     }
 }
 
 export const switchSport = (param) => {
     switch (param) {
         case '0':
-            return 'not often';
-        case '1':
-            return '30min of sport 2-3 days a week';
-        case '2':
-            return '30min of sport 5 days a week';
-        case '3':
             return '>2 hours of intense sport per week';
+        case '1':
+            return '30min of sport 5 days a week';
+        case '2':
+            return '30min of sport 2-3 days a week';
+        case '3':
+            return 'not often';
     }
 }
 
 export const switchAlcool = (param) => {
     switch (param) {
         case '0':
-            return 'every day';
+            return "I don't drink";
         case '1':
-            return '3 to 6 times a week';
+            return 'Less than a day a week';
         case '2':
             return '1 to 2 times a week';
         case '3':
-            return 'less than a day a week';
+            return '3 to 6 times a week';
         case '4':
-            return "I don't drink";
+            return 'Every day';
     }
 }
 

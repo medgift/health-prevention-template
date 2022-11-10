@@ -47,7 +47,7 @@ function ResultPage() {
 
     // change state of the risk column
     const changeCancer = (event) => {
-        setCancer(myAlgo.Cancer(allAnswers.afCancer, smokeValue, allAnswers.bmiAlgo, sportValue, alcoolValue, allAnswers.alimAlgo))
+        setCancer(myAlgo.Cancer(allAnswers.afCancer, smokeValue, allAnswers.bmiAlgo, sportValue, alcoolValue, alimValue))
     }
     const changeDiabete = (event) => {
         setDiabete(myAlgo.Diabete(allAnswers.sex, allAnswers.age, allAnswers.bmiAlgo, allAnswers.systAlgo, allAnswers.glycAlgo, sportValue, alimValue))
@@ -61,55 +61,64 @@ function ResultPage() {
     // change state of the slidder column
     const changeSmoke = (event) => {
         setSmoke(event.target.value);
+        console.log("Smoke: " +  event.target.value)
+    };
+    useEffect(() =>{
         changeCancer()
-        changeDiabete()
         changeInfarctus()
         changeNonInfarctus()
-    };
+    }, [smokeValue])
+
     const changeAlim = (event) => {
         setAlim(event.target.value);
+    };
+    useEffect(()=>{
         changeCancer()
         changeDiabete()
-        changeInfarctus()
-        changeNonInfarctus()
-    };
+    }, [alimValue])
+
     const changeSport = (event) => {
-        setSport(event.target.value);
+        setSport(event.target.value)
+        console.log("Sport : " + event.target.value)
+
+    };
+    useEffect(() =>{
         changeCancer()
         changeDiabete()
-        changeInfarctus()
-        changeNonInfarctus()
-    };
+    }, [sportValue])
+
     const changeWeight = (event) => {
         setWeight(event.target.value);
+        console.log("Weight : " + event.target.value)
+
+    };
+    useEffect(()=>{
         allAnswers.updateBMI(allAnswers.height, weightValue)
-        changeCancer()
         changeDiabete()
+        changeCancer()
         changeInfarctus()
         changeNonInfarctus()
-    };
+    }, [weightValue])
+
     const changeAlcool = (event) => {
         setAlcool(event.target.value);
-        changeCancer()
-        changeDiabete()
-        changeInfarctus()
-        changeNonInfarctus()
+        console.log("Alcool : " + event.target.value)
     };
+    useEffect(()=>{
+        changeCancer()
+    }, [alcoolValue])
 
 
     const SaveChanges = () => {
         allAnswers.updateResults(cancerRisk, diabeteRisk, infarctusRisk, nonInfarctusRisk);
-        allAnswers.WriteResult(auth.currentUser.uid).then(r => {
-        })
+        allAnswers.WriteResult(auth.currentUser.uid).then(r => {})
         mySwal.fire({
             title: <strong>Your data are saved in the database</strong>,
             icon: 'success'
-        }).then(r => {
-        })
+        }).then(r => {})
     }
 
     const [avatar, setAvatar] = useState("")
-
     useEffect(() => {
         getAvatar();
 
@@ -134,8 +143,6 @@ function ResultPage() {
                 setRisk('medium')
             else
                 setRisk('high')
-
-            console.log(riskCalc)
         }
     });
 
@@ -164,7 +171,7 @@ function ResultPage() {
                 <div className="wrapper">
                     <div className="row" style={{display: "flex"}}>
                         <div className="column">
-                            {/*actualState === 'low' ?
+                            {actualState === 'low' ?
                                 <div className="backgroundLow">
                                     <p>Your habits</p>
                                     {avatar !== "" && typeof avatar != "undefined" ?
@@ -203,22 +210,15 @@ function ResultPage() {
                                             }</div> :
                                             <img src={MyImage} width="200px" height="200px"></img>
                                         }
-                                    </div>*/
+                                    </div>
                             }
 
                             <div className="allColumnText">
-                                <h2 className="title-results">Your results</h2>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Risus pretium quam vulputate dignissim.
-                                Tellus cras adipiscing enim eu turpis egestas pretium aenean pharetra.
-                            </div>
-
-                            <div className="allColumnText">
                                 <h2 className="title-results">Your personal details</h2>
-                                <p>age {allAnswers.age}</p>
-                                <p>sexe {allAnswers.sex < 1 ? "Femme" : "Homme"}</p>
-                                <p>taille {allAnswers.height}</p>
-                                <p>poids {allAnswers.weight}</p>
+                                <p>Age {allAnswers.age}</p>
+                                <p>Sex {allAnswers.sex < 1 ? "Femme" : "Homme"}</p>
+                                <p>Height {allAnswers.height}kg</p>
+                                <p>Weight {allAnswers.weight}cm</p>
                             </div>
 
 
@@ -228,13 +228,13 @@ function ResultPage() {
                             <div className="allColumnText">
                                 <h2 className="title-results">Your habits</h2>
                                 <div className="textAndSlider">
-                                    <p className="child" style={{alignSelf: "start"}}> Fumeur <br/> {smokeValue}</p>
+                                    <p className="child" style={{alignSelf: "start"}}> Smoker <br/> {smokeValue}</p>
                                     <input type="range" min="0" max="1" onChange={changeSmoke} value={smokeValue}
                                            step={1}
                                            className="slider"/>
                                 </div>
                                 <div className="textAndSlider">
-                                    <p className="child" style={{alignSelf: "start"}}>Alim <br/> {switchAlim(alimValue)}
+                                    <p className="child" style={{alignSelf: "start"}}>Diet <br/> {switchAlim(alimValue)}
                                     </p>
                                     <input type="range" min="0" max="3" onChange={changeAlim} value={alimValue} step={1}
                                            className="slider"/>
@@ -247,13 +247,13 @@ function ResultPage() {
                                            className="slider"/>
                                 </div>
                                 <div className="textAndSlider">
-                                    <p className="child" style={{alignSelf: "start"}}>weight <br/> {weightValue}</p>
+                                    <p className="child" style={{alignSelf: "start"}}>Weight <br/> {weightValue}</p>
                                     <input type="range" min="0" max="200" onChange={changeWeight} value={weightValue}
                                            step={1} className="slider"/>
                                 </div>
                                 <div className="textAndSlider">
                                     <p className="child"
-                                       style={{alignSelf: "start"}}>alcool <br/> {switchAlcool(alcoolValue)}</p>
+                                       style={{alignSelf: "start"}}>Alcool <br/> {switchAlcool(alcoolValue)}</p>
                                     <input type="range" min="0" max="4" onChange={changeAlcool} value={alcoolValue}
                                            step={1}
                                            className="slider"/>
@@ -349,10 +349,10 @@ function ResultPage() {
 
                             <div className="allColumnText">
                                 <h2 className="title-results">Your risks</h2>
-                                <p>Maladie Cardiaque {nonInfarctusRisk} %</p>
-                                <p>Attaque Cérébrale {infarctusRisk} %</p>
-                                <p>Diabète {diabeteRisk} %</p>
-                                <p>super cancer {cancerRisk} %</p>
+                                <p>Hearth Attack {nonInfarctusRisk} %</p>
+                                <p>Infarctus {infarctusRisk} %</p>
+                                <p>Diabete {diabeteRisk} %</p>
+                                <p>Cancer {cancerRisk} %</p>
                             </div>
 
                             {auth.currentUser ? <button onClick={SaveChanges}>Save</button> : null}

@@ -1,31 +1,32 @@
-import React from "react";
-import {collection, doc, setDoc, addDoc, getDocs, getDoc, query} from "firebase/firestore";
+import React  from "react";
+import {collection, doc, setDoc, addDoc, getDocs, getDoc,query} from "firebase/firestore";
 import {auth, database} from "../initFirebase";
+import {doctor} from "./UserProfilePage";
 
 
-export default class WriteAnswer extends React.Component {
+export default class WriteAnswer extends React.Component{
 
     //Data about the user
     sex = -1;
-    age = -1;
-    weight = -1;
-    height = -1;
-    syst = -1;
-    glyc = -1;
-    chol = -1;
-    diab = -1;
-    inf = -1;
-    avc = -1;
+    age= -1;
+    weight= -1;
+    height= -1;
+    syst= -1;
+    glyc= -1;
+    chol= -1;
+    diab= -1;
+    inf= -1;
+    avc= -1;
 
     //Data about his family
-    afinf = -1;
-    afCancer = -1;
+    afinf=-1;
+    afCancer= -1;
 
     //Data about his habits
-    smoke = -1;
-    sport = -1;
-    alcool = -1;
-    alim = -1;
+    smoke= -1;
+    sport= -1;
+    alcool= -1;
+    alim= -1;
 
     //calculate Data
     systAlgo = -1;
@@ -67,8 +68,8 @@ export default class WriteAnswer extends React.Component {
         this.alcool = alcool;
     }
 
-    updateBMI(height, weight) {
-        this.bmiAlgo = Math.pow(weight / height, 2);
+    updateBMI(height, weight){
+        this.bmiAlgo = Math.pow(weight/height,2);
     }
 
     updateResults(resultCancer, resultDiabete, resultInfarctus, resultNonInfarctus) {
@@ -83,7 +84,7 @@ export default class WriteAnswer extends React.Component {
         this.glycAlgo = this.glyc == 1 ? 5.6 : 0;
         this.cholAlgo = this.chol == 1 ? 5.9 : 0;
         this.hdlAlgo = this.chol == 1 ? 0.9 : 0;
-        this.bmiAlgo = Math.pow(this.weight / this.height, 2);
+        this.bmiAlgo = Math.pow(this.weight/this.height,2);
         this.sportAlgo = this.sport;
         this.alcoolAlgo = this.alcool;
         this.alimAlgo = this.alim;

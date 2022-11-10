@@ -37,15 +37,15 @@ import {getDoc, doc, updateDoc} from 'firebase/firestore'
 const optionsPost = {
     method: 'POST',
     headers: {
-        'X-RapidAPI-Key': '576b52e05cmsh518fa0aa980ff0bp1debb8jsn5b3a2d557485',
-        'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+        'X-RapidAPI-Key': '53c0717abamsh12e9ecc41ba6cc7p1892ecjsn2fddd02797cb',
+    'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 
     }
 };
 const optionsPut = {
     method: 'PUT',
     headers: {
-        'X-RapidAPI-Key': '576b52e05cmsh518fa0aa980ff0bp1debb8jsn5b3a2d557485',
+        'X-RapidAPI-Key': '53c0717abamsh12e9ecc41ba6cc7p1892ecjsn2fddd02797cb',
         'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 
     }
@@ -53,7 +53,7 @@ const optionsPut = {
 const optionsGet = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Key': '576b52e05cmsh518fa0aa980ff0bp1debb8jsn5b3a2d557485',
+        'X-RapidAPI-Key': '53c0717abamsh12e9ecc41ba6cc7p1892ecjsn2fddd02797cb',
         'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 
     }
@@ -252,14 +252,17 @@ export default function Avatar() {
                 const res = await fetch(removeUrl, optionsPut);
                 const data = await res.json();
                 console.log("Delete hair : ", data);
-                if (typeof data.avatarSrc == "undefined") {
-                    setAvatar(ava)
-
+                if (hair !='') {
+                    fetchModification()
                 } else {
-                    setAvatar(data.avatarSrc)
+                    if (data.avatarSrc === '') {
+                        setAvatar(ava)
+                    } else {
+                        setAvatar(data.avatarSrc)
+                    }
+                    console.log("Old hair2 : " + oldHair)
+                    console.log("New hair ID : " + hair)
                 }
-                console.log("Old hair : " + oldHair)
-                console.log("New hair ID : " + hair)
             } else fetchModification();
         }
 
@@ -275,7 +278,7 @@ export default function Avatar() {
             } else {
                 setAvatar(data.avatarSrc)
             }
-            console.log("Old hair : " + oldHair)
+            console.log("Old hair3 : " + oldHair)
             console.log("New hair ID : " + hair)
         }
 
@@ -292,10 +295,13 @@ export default function Avatar() {
 
     function changeColorAsset() {
         setDisplayAssetColorPicker(false)
-        setAssetColor(color.hex)
-        setAvatar('')
-        console.log("Asset color : " + color.hex)
-        console.log("New asset color : " + assetColor)
+        if (assetColor != color.hex){
+            setAssetColor(color.hex)
+            setAvatar('')
+            console.log("Asset color : " + color.hex)
+            console.log("New asset color : " + assetColor)
+        }
+
     }
 
     function handleAssetClick() {
@@ -318,15 +324,21 @@ export default function Avatar() {
     const [displayColorHairPicker, setDisplayColorHairPicker] = useState(false);
     const [hairColor, setHairColor] = useState('');
 
+    function changeColorHair() {
+        setDisplayColorHairPicker(false)
+        if (hairColor != color.hex){
+            setHairColor(color.hex)
+            setAvatar('')
+            console.log("Hair color : " + color.hex)
+            console.log("New hair color : " + hairColor)
+        }
+
+    }
+
     function handleHairClick() {
         setDisplayColorHairPicker(!displayColorHairPicker)
     }
 
-    function changeColorHair() {
-        setDisplayColorHairPicker(false)
-        setHairColor(color.hex)
-        setAvatar('')
-    }
 
     useEffect(() => {
         if (hairColor != '')
@@ -335,8 +347,6 @@ export default function Avatar() {
         async function fetchColorHair() {
             const newColor = hairColor.substring(1, 7);
             const res = await fetch('https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/hair/' + newColor, optionsPut);
-            console.log('https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/hair/' + newColor)
-
             const data = await res.json();
             console.log("Change color skin : ", data);
             setAvatar(data.avatarSrc)
@@ -353,10 +363,13 @@ export default function Avatar() {
 
     function changeColorSkin() {
         setDisplayColorSkinPicker(false)
-        console.log("Skin color : " + color.hex)
-        setSkinColor(color.hex)
-        console.log("New skin  color : " + skinColor)
-        setAvatar('')
+        if (skinColor != color.hex)
+        {
+            setSkinColor(color.hex)
+            setAvatar('')
+            console.log("Skin color : " + color.hex)
+            console.log("New skin color : " + skinColor)
+        }
     }
 
     useEffect(() => {
@@ -403,15 +416,18 @@ export default function Avatar() {
             <div className="buttons">
                 <button id='1101' alt="man" onClick={(e) => handleSexClick(e)}>Man</button>
                 <button id='1102' alt="woman" onClick={(e) => handleSexClick(e)}>Woman</button>
-                <button alt="assetColor" onClick={handleAssetClick}>Pick Asset Color</button>
-                {displayAssetColorPicker ? <div className='popover'>
-                    <div className='cover' onClick={changeColorAsset}/>
-                    <ColorPicker width={150} height={150}
-                                 color={color}
-                                 onChange={setColor} hideHSV hideHEX hideRGB/>
-                </div> : null}
-
-                <button alt="skinColor" onClick={handleSkinClick}>Pick Skin Color</button>
+                {showFragment ?
+                    <button alt="assetColor" onClick={handleAssetClick}>Pick Asset Color</button>: null}
+                {
+                    displayAssetColorPicker ? <div className='popover'>
+                        <div className='cover' onClick={changeColorAsset}/>
+                        <ColorPicker width={150} height={150}
+                                     color={color}
+                                     onChange={setColor} hideHSV hideHEX hideRGB/>
+                    </div> : null
+                }
+                {showFragment ?
+                <button alt="skinColor" onClick={handleSkinClick}>Pick Skin Color</button>: null}
                 {displayColorSkinPicker ? <div className='popover'>
                     <div className='cover' onClick={changeColorSkin}/>
                     <ColorPicker width={150} height={150}
@@ -419,7 +435,8 @@ export default function Avatar() {
                                  onChange={setColor} hideHSV hideHEX hideRGB/>
                 </div> : null}
 
-                <button alt="hairColor" onClick={handleHairClick}>Pick Hair Color</button>
+                {showFragment ?
+                <button alt="hairColor" onClick={handleHairClick}>Pick Hair Color</button>: null}
                 {displayColorHairPicker ? <div className='popover'>
                     <div className='cover' onClick={changeColorHair}/>
                     <ColorPicker width={150} height={150}
