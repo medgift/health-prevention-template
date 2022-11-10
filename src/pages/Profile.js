@@ -115,11 +115,6 @@ export default function Profile({currentUser, setBackgroundImage}) {
         } else {
             await PatientDB.prototype.updatePendingDoctor(currentUser.uid, doctorId);
             await DoctorDB.prototype.addPendingPatientToDoctor(doctorId, currentUser.uid);
-            //TODO: réévaluer l'utilité de cette ligne
-            if (user.prevDoctor != null) {
-                //TODO: Si nouvelle demande de docteur, retire-t-on l'ancien d'office?
-                await DoctorDB.prototype.removePatientFromDoctor(user.prevDoctor, currentUser.uid);
-            }
             setUser({...user, ["prevDoctor"]: doctorId});
             alert("Doctor changed!");
         }
