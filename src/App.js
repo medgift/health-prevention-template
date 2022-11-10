@@ -170,7 +170,7 @@ export default function App() {
                         <Route path="/logout" element={<Logout/>}/>
                         <Route path="/questionnaire" element={<QuestionList currentUser={currentUser}
                                                                             setBackgroundImage={setBackgroundImage}/>}></Route>
-                        <Route path="/admin" element={<NormalValueList currentUser={currentUser}
+                        <Route path="/admin" element={<NormalValueList
                                                                        setBackgroundImage={setBackgroundImage}></NormalValueList>}/>
                         <Route path="/view"
                                element={<LatestResult patientId={patientId} setBackgroundImage={setBackgroundImage}/>}/>

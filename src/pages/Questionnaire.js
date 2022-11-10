@@ -343,7 +343,7 @@ export default function QuestionList({currentUser, setBackgroundImage}) {
     return (
         <div>
             <div id="questionnaire">
-                <h3 style={{textAlign: "left"}}>{title}</h3>
+                    <h3 id="questionnaireTitle">{title}</h3>
                 <div id="questionGrid">
                     {questions.map((question) => (
                         <Question key={question.questionNO} {...question}

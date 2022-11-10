@@ -204,6 +204,7 @@
 }
 
 .rightButton {
+    margin: 0;
     float: right;
 }
 
