@@ -46,9 +46,6 @@ class Question extends React.Component {
                 this.props.setdisplay7(true);
                 break;
         }
-        //debug---------------------------------------------------
-        //console.log(this.context);
-        //debug---------------------------------------------------
     };
 
     //On flip, the value of the question is reset and we re-display the "parent" question
@@ -182,7 +179,7 @@ class Question extends React.Component {
             </div>
         );
     }
-};
+}
 Question.contextType = Variables;
 
 //To manage questions
