@@ -145,7 +145,7 @@ export default function Profile({currentUser, setBackgroundImage}) {
         for (const doct of doctors) {
             const d = doct.data();
             let text = "Dr. " + d.firstName + " " + d.lastName;
-            options.push(<option value={doct.id}>{text}</option>)
+            options.push(<option key={doct.id} value={doct.id}>{text}</option>)
         }
         return options;
     }
