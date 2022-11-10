@@ -131,10 +131,9 @@ export default function Profile({currentUser, setBackgroundImage}) {
             await PatientDB.prototype.updatePendingDoctor(currentUser.uid, doctorId);
             await DoctorDB.prototype.addPendingPatientToDoctor(doctorId, currentUser.uid);
             setUser({...user, ["prevDoctor"]: doctorId});
-            alert("Doctor changed!");
+            alert("Request submitted");
         }
         navigate("/profile")
-        //Cheat trick to refresh page because state don't like to be re-updated after being set a null value
     }
 
     /**
