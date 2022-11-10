@@ -104,7 +104,6 @@ Nav.contextType = RoleContext;
 export default function App() {
     /* Current user from firestore */
     const [currentUser, setCurrentUser] = useState(undefined);
-    const [currentPatient, setCurrentPatient] = useState(undefined);
     const [backgroundImage, setBackgroundImage] = useState(null);
     const userRoleContext = useContext(RoleContext);
 
@@ -116,7 +115,7 @@ export default function App() {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
             //Search for users in the db
-            redirectUser(user, setCurrentPatient);
+            redirectUser(user);
         });
         // Unsubscribe from changes when App is unmounted
         return () => {
@@ -124,12 +123,11 @@ export default function App() {
         };
     }, []);
 
-    async function redirectUser(user, setCurrentPatient) {
+    async function redirectUser(user) {
         if (user) {
             //search for a patient in the db
             let patient = await PatientDB.prototype.getPatientById(user.uid);
             if (patient != null) {
-                setCurrentPatient(patient);
                 userRoleContext.role = AvailableRoles.PATIENT;
                 navigate("/questionnaire");
                 return;
@@ -148,7 +146,6 @@ export default function App() {
             if (admin != null) {
                 userRoleContext.role = AvailableRoles.ADMIN;
                 navigate("/admin");
-                return;
             }
         }
     }
