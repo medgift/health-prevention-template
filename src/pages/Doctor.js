@@ -24,6 +24,7 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
 
     }, []);
 
+    //load the doctor from the db and prohihibit the access to non-doctor users
     async function loadDoctor() {
         //search for a doctor the db
         //if found, set the doctor variable
@@ -35,22 +36,21 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
     }
 
     async function loadPatients() {
-        //load the patients of the doctor
-        //skip for if the doctor has no patients
-        if (doctor.pendingPatients.length !== 0 || doctor.pendingPatients.length !== null || typeof doctor.pendingPatients.length !== "undefined") {
+        //skip the loop if the doctor has no patients
+        //load the pending patients of the doctor
+        if (doctor.pendingPatients.length !== 0 && doctor.pendingPatients.length !== null && typeof doctor.pendingPatients.length !== "undefined") {
             for (let i = 0; i < doctor.pendingPatients.length; i++) {
                 let p = await LoadOnePatient(doctor.pendingPatients[i]);
                 setPendingPatients((pendingPatients) => [...pendingPatients, p]);
             }
         }
-        if (doctor.patients.length !== 0 || doctor.patients.length !== null || typeof doctor.patients.length !== "undefined") {
+        //load the patients of the doctor
+        if (doctor.patients.length !== 0 && doctor.patients.length !== null && typeof doctor.patients.length !== "undefined") {
             for (let i = 0; i < doctor.patients.length; i++) {
                 let p = await LoadOnePatient(doctor.patients[i]);
                 setPatients((patients) => [...patients, p]);
             }
         }
-        //load the pending patients of the doctor
-        //skip for if the doctor has no pending patients
         setIdSelectedPatient(doctor.patients[0]);
     }
 
@@ -61,10 +61,12 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
         return p;
     }
 
+    //Change the selected patient and display its results
     const patientButtonPress = async (e) => {
         setIdSelectedPatient(e.target.value);
     }
 
+    //To accept a patient
     const acceptPatient= async (e) => {
         const patientId = e.target.value;
 
@@ -95,6 +97,7 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
         setPendingPatients(pendingPatients.filter(p => p.id !== patientId));
     }
 
+    //The list of pending patients for the doctor
     let patientRequests = pendingPatients.map((patient) => {
         return (
             <div key={patient.id} className={"patientRequestDiv"}>
@@ -103,6 +106,7 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
         );
     });
 
+    //The div that will contain the list of pending patients
     let newPatientRequests = (
         <div className={"PendingPatientDiv"}>
             <h4 className={"PatientListTitle"}>You have new patient requests:</h4>

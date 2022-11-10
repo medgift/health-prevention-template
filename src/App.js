@@ -116,9 +116,7 @@ export default function App() {
     /* Watch for authentication state changes */
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            console.log("User is", user);
             setCurrentUser(user);
-
             //Search for users in the db
             redirectUser(user, setCurrentPatient);
         });
@@ -130,7 +128,6 @@ export default function App() {
 
     async function redirectUser(user, setCurrentPatient) {
         if (user) {
-            console.log("signing in ...")
             //search for a patient in the db
             let patient = await PatientDB.prototype.getPatientById(user.uid);
             if (patient != null) {
@@ -143,7 +140,6 @@ export default function App() {
             //search for a doctor in the db
             let doctor = await DoctorDB.prototype.getDoctorById(user.uid);
             if (doctor != null) {
-                console.log("doctor found")
                 userRoleContext.role = AvailableRoles.DOCTOR;
                 navigate("/doctor");
                 return;
@@ -156,7 +152,6 @@ export default function App() {
                 navigate("/admin");
                 return;
             }
-            console.log("Cannot find user in DB.")
         }
     }
 
