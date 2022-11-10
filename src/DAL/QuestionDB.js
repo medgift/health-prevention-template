@@ -6,13 +6,6 @@ class QuestionDB {
         await addDoc(questionRef, question);
     }
 
-    async getQuestionsByQuestionnaire(questionnaireNo) {
-        const q = query(questionRef, where("QuestionnaireNO", "==", questionnaireNo));
-        const docSnap = await getDocs(q);
-        const questions = docSnap.docs.map(d => d.data());
-        return questions.sort((a, b) => a.questionNO - b.questionNO);
-    }
-
     async getAllQuestions() {
         const questions = await getDocs(questionRef);
         const q =questions.docs.map(q => q.data());

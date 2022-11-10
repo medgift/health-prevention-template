@@ -23,8 +23,6 @@ const db = getFirestore(app);
 // Collections
 const questionRef = collection(db, "Question").withConverter(questionConverter);
 const responseRef = collection(db, "Response").withConverter(responseConverter);
-const patientRef = collection(db, "Patient").withConverter(patientConverter);
-const doctorRef = collection(db, "Doctor").withConverter(doctorConverter);
 
 
 export const auth = getAuth(app);
