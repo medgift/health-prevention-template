@@ -47,22 +47,29 @@ class Nav extends React.Component {
         let docPage = null;
         let questionnaire = null;
         let results = null;
+        let admin = null;
 
-        //used to only display login and register to unauthenticated user
-        if (this.props.currentUser) {
-            LoginLogout = <NavLink to="/logout" onClick={() => this.closeNavBar()}>Logout</NavLink>
-        } else {
-            LoginLogout = <NavLink to="/login" onClick={() => this.closeNavBar()}>Login</NavLink>
-            register = <NavLink to="/register" onClick={() => this.closeNavBar()}>Register</NavLink>
-        }
-        if (this.context.role === AvailableRoles.DOCTOR) {
-            docPage = <NavLink to="/doctor" onClick={() => this.closeNavBar()}>Patients</NavLink>
-        }else{
-            questionnaire = <NavLink to="/questionnaire" onClick={() => this.closeNavBar()}>Questionnaire</NavLink>
-            results = <NavLink to="/view" onClick={() => this.closeNavBar()}>Results</NavLink>
-        }
-        if (this.context.role === AvailableRoles.PATIENT) {
-            profile = <NavLink to="/profile" onClick={() => this.closeNavBar()}>Profile</NavLink>
+        switch (this.context.role) {
+            case AvailableRoles.ADMIN:
+                admin = <NavLink to="/admin" onClick={() => this.closeNavBar()}>Admin</NavLink>
+                LoginLogout = <NavLink to="/logout" onClick={() => this.closeNavBar()}>Logout</NavLink>
+                break;
+            case AvailableRoles.DOCTOR:
+                docPage = <NavLink to="/doctor" onClick={() => this.closeNavBar()}>Patients</NavLink>
+                LoginLogout = <NavLink to="/logout" onClick={() => this.closeNavBar()}>Logout</NavLink>
+                break;
+            case AvailableRoles.PATIENT:
+                questionnaire = <NavLink to="/questionnaire" onClick={() => this.closeNavBar()}>Questionnaire</NavLink>
+                results = <NavLink to="/view" onClick={() => this.closeNavBar()}>Results</NavLink>
+                profile = <NavLink to="/profile" onClick={() => this.closeNavBar()}>Profile</NavLink>
+                LoginLogout = <NavLink to="/logout" onClick={() => this.closeNavBar()}>Logout</NavLink>
+                break;
+            case AvailableRoles.GUEST:
+                register = <NavLink to="/register" onClick={() => this.closeNavBar()}>Register</NavLink>
+                LoginLogout = <NavLink to="/login" onClick={() => this.closeNavBar()}>Login</NavLink>
+                questionnaire = <NavLink to="/questionnaire" onClick={() => this.closeNavBar()}>Questionnaire</NavLink>
+                results = <NavLink to="/view" onClick={() => this.closeNavBar()}>Results</NavLink>
+                break;
         }
 
         //initial navbar and icon state
@@ -77,6 +84,7 @@ class Nav extends React.Component {
                         {results}
                         {profile}
                         {docPage}
+                        {admin}
                         {register}
                         {LoginLogout}
                     </ul>
