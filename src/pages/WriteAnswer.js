@@ -69,7 +69,7 @@ export default class WriteAnswer extends React.Component{
     }
 
     updateBMI(height, weight){
-        this.bmiAlgo = Math.pow(weight/height,2);
+        this.bmiAlgo = weight/(Math.pow(height/100, 2));
     }
 
     updateResults(resultCancer, resultDiabete, resultInfarctus, resultNonInfarctus) {
@@ -84,7 +84,7 @@ export default class WriteAnswer extends React.Component{
         this.glycAlgo = this.glyc == 1 ? 5.6 : 0;
         this.cholAlgo = this.chol == 1 ? 5.9 : 0;
         this.hdlAlgo = this.chol == 1 ? 0.9 : 0;
-        this.bmiAlgo = Math.pow(this.weight/this.height,2);
+        this.bmiAlgo = this.weight/(Math.pow(this.height/100, 2));
         this.sportAlgo = this.sport;
         this.alcoolAlgo = this.alcool;
         this.alimAlgo = this.alim;
