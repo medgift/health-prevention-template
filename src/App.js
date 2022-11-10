@@ -45,6 +45,8 @@ class Nav extends React.Component {
         let register = null;
         let profile = null;
         let docPage = null;
+        let questionnaire = null;
+        let results = null;
 
         //used to only display login and register to unauthenticated user
         if (this.props.currentUser) {
@@ -55,6 +57,9 @@ class Nav extends React.Component {
         }
         if (this.context.role === AvailableRoles.DOCTOR) {
             docPage = <NavLink to="/doctor" onClick={() => this.closeNavBar()}>Patients</NavLink>
+        }else{
+            questionnaire = <NavLink to="/questionnaire" onClick={() => this.closeNavBar()}>Questionnaire</NavLink>
+            results = <NavLink to="/view" onClick={() => this.closeNavBar()}>Results</NavLink>
         }
         if (this.context.role === AvailableRoles.PATIENT) {
             profile = <NavLink to="/profile" onClick={() => this.closeNavBar()}>Profile</NavLink>
@@ -68,8 +73,8 @@ class Nav extends React.Component {
                 <div className="container-fluid">
                     <ul className="nav navbar-nav">
                         <NavLink to="/home" onClick={() => this.closeNavBar()}>Home</NavLink>
-                        <NavLink to="/questionnaire" onClick={() => this.closeNavBar()}>Questionnaire</NavLink>
-                        <NavLink to="/view" onClick={() => this.closeNavBar()}>Results</NavLink>
+                        {questionnaire}
+                        {results}
                         {profile}
                         {docPage}
                         {register}
@@ -130,6 +135,7 @@ export default function App() {
             //search for a doctor in the db
             let doctor = await DoctorDB.prototype.getDoctorById(user.uid);
             if (doctor != null) {
+                console.log("doctor found")
                 userRoleContext.role = AvailableRoles.DOCTOR;
                 navigate("/doctor");
                 return;

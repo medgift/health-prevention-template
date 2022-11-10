@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Algorithm from "../algorithm/Algorithm";
 import ProgressBar from "../components/ProgressBar";
 import CircularProgressBar from "../components/CircularProgressBar"
@@ -8,6 +8,8 @@ import {ResponseDB} from "../DAL/ResponseDB";
 import NiceAvatar, {genConfig} from "react-nice-avatar";
 import {PatientDB} from "../DAL/PatientDB";
 import {Variables} from "../Context/Variables";
+import {RoleContext, AvailableRoles} from "../Context/UserRoles"
+import {useNavigate} from "react-router-dom";
 
 export function ResultHistoric({patientId, setBackgroundImage}) {
     const [userResponses, setUserResponses] = useState([]);
@@ -28,7 +30,15 @@ export function ResultHistoric({patientId, setBackgroundImage}) {
 
 export default function LatestResult({patientId, setBackgroundImage}) {
     const [latestResponse, setLatestResponse] = useState(null);
+    const userRoleContext = useContext(RoleContext);
+    const navigate = useNavigate();
+
     useEffect(() => {
+        //prohibit access to doctors
+        if (userRoleContext.role === AvailableRoles.DOCTOR) {
+            navigate("/doctor");
+            return;
+        }
         async function loadLatestResponse() {
             setLatestResponse(await ResponseDB.prototype.getLatestResponseByUser(patientId));
         }
@@ -69,7 +79,6 @@ export class MyPage extends React.Component {
             config: defaultConfig,
             date: "Want you very own result ? Fill in the questionnaire !"
         }
-
     }
 
     componentDidMount() {
