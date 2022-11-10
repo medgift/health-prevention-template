@@ -315,9 +315,9 @@ export default function QuestionList({currentUser, setBackgroundImage}) {
     useEffect(() => {
         setBackgroundImage(questionBg);
 
-        //stop doctors from visiting this page
-        if (userRoleContext.role === "doctor") {
-            navigate("/doctor");
+        //stop doctors and admins from visiting this page
+        if (userRoleContext.role === "doctor" || userRoleContext.role === "admin") {
+            navigate("/home");
         }
     }, []);
 
