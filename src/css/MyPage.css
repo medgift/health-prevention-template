@@ -172,7 +172,7 @@
     }
     .viewGrid{
         display: block;
-        width: 100%;
+        width: 90%;
         grid-template-rows: auto;
         margin-top: 0;
         margin-left:0;
