@@ -74,9 +74,7 @@ export default function NormalValueList({setBackgroundImage}) {
 
 function NormalValue(props) {
     const handleChange = (event) => {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.valueAsNumber
-        normalValues[props.questionNO - 1] = value;
+        normalValues[props.questionNO - 1] = event.target.value;
     }
 
     return (
