@@ -7,10 +7,9 @@ import "firebase/compat/storage"
 import "firebase/compat/auth"
 import "firebase/compat/firestore"
 import {getDoc, doc, updateDoc} from 'firebase/firestore'
-import Navbar from "./Navbar";
 
 // 'X-RapidAPI-Key': '53c0717abamsh12e9ecc41ba6cc7p1892ecjsn2fddd02797cb',
-//     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 
 // 'X-RapidAPI-Key': '96a4e87f9emsh328fe90239660d8p159ca6jsn0a17636b4501',
 // 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
@@ -19,22 +18,21 @@ import Navbar from "./Navbar";
 // 'X-RapidAPI-Key': '7efcf51a94msh633475178167321p1e9398jsn94694871e69c',
 // 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 // 'X-RapidAPI-Key': '53c0717abamsh12e9ecc41ba6cc7p1892ecjsn2fddd02797cb',
-//  'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 // 'X-RapidAPI-Key': 'cd524b29efmsh084899770454f5bp1960fdjsn889dfc5a81d1',
-//     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 // 'X-RapidAPI-Key': 'ec42c633f3msh677591c838efc1fp151e4cjsn921664ec7c15',
-//     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 // 'X-RapidAPI-Key': 'd3d5572e9cmsh9b7f676291565f0p1fe26cjsn81b8ccdb76d2',
 // 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 // 'X-RapidAPI-Key': '61e0e12657msh4081d0c61398c53p1dd63fjsn54be421afad9',
-//     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 // 'X-RapidAPI-Key': '0a6c673840msh1410d11d7bc071ep1e6ca8jsn412b1141dd63',
-//     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 // 'X-RapidAPI-Key': '97a90eb51emshf9eba9d69493f14p15110fjsne016918584d1',
-//     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+// 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 // 'X-RapidAPI-Key': '576b52e05cmsh518fa0aa980ff0bp1debb8jsn5b3a2d557485',
-//     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
-
+// 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 
 const optionsPost = {
     method: 'POST',
@@ -430,7 +428,7 @@ export default function Avatar() {
                 </div> : null}
             </div>
             {showFragment ?
-                <React.Fragment>
+                <>
                     <div className='colorAvatar'>
                         <li>
                             <img alt="Avatar" src={avatar}/>
@@ -457,12 +455,13 @@ export default function Avatar() {
                             {hairs.slice(1, 6).map((hair) => (
                                 <li key={hair.key} className='assetsImage'>
                                     { /* hair.description */}
-                                    <img alt="hair" className="assetsImage img" src={hair.img} onClick={() => changeHair(hair.key)}/>
+                                    <img alt="hair" className="assetsImage img" src={hair.img}
+                                         onClick={() => changeHair(hair.key)}/>
                                 </li>
                             ))}
                         </ul>
                     </div>
-                </React.Fragment> : null}
+                </> : null}
         </>
     );
 }

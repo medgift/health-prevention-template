@@ -1,14 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {collection, getDoc, getDocs, query} from "firebase/firestore";
-import {doc, updateDoc} from "firebase/firestore";
+import {doc, updateDoc, deleteDoc} from "firebase/firestore";
 import {auth, database} from "../initFirebase";
 import Navbar from "../components/Navbar";
 import {onAuthStateChanged} from "firebase/auth";
 import "../UserProfilPage.css"
-import {tab} from "@testing-library/user-event/dist/tab";
-import {findRenderedDOMComponentWithClass} from "react-dom/test-utils";
 import {useNavigate} from "react-router-dom";
-import { Context } from "../App";
+import {Context} from "../App";
+import {BsTrash2Fill} from 'react-icons/bs';
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 export class doctor {
     idDoctor: string;
@@ -27,6 +28,7 @@ export default function UserProfilePage() {
     const navigate = useNavigate();
     const {role} = useContext(Context);
     console.log("user " + role.role)
+    const mySwal = withReactContent(Swal)
 
     useEffect(() => {
         if (!auth.currentUser) {
@@ -50,7 +52,7 @@ export default function UserProfilePage() {
     async function getHistory() {
         const colRef = collection(doc(database, "users/", auth.currentUser.uid), "answers/");
         const querySnapshot = await getDocs(colRef);
-        querySnapshot.forEach((doc)=>{
+        querySnapshot.forEach((doc) => {
             setDocument(oldDates => [...oldDates, doc]);
         })
     };
@@ -58,6 +60,28 @@ export default function UserProfilePage() {
     useEffect(() => {
         getHistory()
     }, []);
+
+    const deleteHistory = (event, id) => {
+        event.preventDefault();
+
+        const docRef = doc(database, 'users/' + auth.currentUser.uid + '/answers', id)
+
+        Swal.fire({
+            title: 'Are you sure you want to delete this?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteDoc(docRef).then(() => {
+                    window.location.reload();
+                })
+            } else if (result.isDenied) {
+                Swal.fire("The document wasn't deleted", '', 'info')
+            }
+        })
+
+    }
 
     async function getAllDoctors() {
         getCurrentUser()
@@ -67,7 +91,7 @@ export default function UserProfilePage() {
         const q = query(collection(database, "users/"));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            if (doc.data().role === 2) {
+            if (doc.data().role === 0) {
                 let creatDoctor = new doctor()
                 creatDoctor.idDoctor = doc.id
                 creatDoctor.lastname = doc.data().lastname
@@ -180,23 +204,27 @@ export default function UserProfilePage() {
             <div className="box">
                 <div className="wrapper">
                     <h1>Profile</h1>
-                    <h2 style={{ marginTop: "30px" }}>Your results:</h2>
-                    <div>{ document.map(
+                    <h2 style={{marginTop: "30px"}}>Your results:</h2>
+                    <div>{document.map(
                         e =>
                             <details>
-                                <summary>{ e.id }</summary>
+                                <summary>{e.id}
+                                    <button className="delete" onClick={event => deleteHistory(event, e.id)}>
+                                        <BsTrash2Fill/></button>
+                                </summary>
                                 {
                                     Object.entries(e.data()).map(([key, value]) => {
-                                        return (key.includes("result") ? <p style={{ color: "red" }}> {key} : {value} </p> : <p> {key} : {value} </p>)
+                                        return (key.includes("result") ?
+                                            <p style={{color: "red"}}> {key} : {value} </p> : <p> {key} : {value} </p>)
                                     })
                                 }
                             </details>
                     )}
                     </div>
-                    <h2 style={{ marginTop: "30px" }}>Choose which doctor can see your result</h2>
+                    <h2 style={{marginTop: "30px"}}>Choose which doctor can see your result</h2>
                     <div>
                         <div style={{listStyle: "none"}}>{allDoctors.map((doc, index) => (
-                            <li key={index} className="row" style={{ marginBottom: "20px"}}>
+                            <li key={index} className="row" style={{marginBottom: "20px"}}>
                                 <p className="column">{doc.firstname} {doc.lastname}</p>
                                 {doc.allowed ?
                                     <input className="column" type="checkbox" value={doc.idDoctor}

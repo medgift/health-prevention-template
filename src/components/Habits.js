@@ -167,7 +167,6 @@ function Habits({prevStep, nextStep, values, setValues}) {
             </form>
         </>
     )
-
 }
 
 export default Habits

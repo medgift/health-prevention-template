@@ -6,7 +6,7 @@ function You({nextStep, values, setValues}) {
 
     const [errors, setErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
-    const [max, setMax] = useState();
+    const [max, setMax] = useState([]);
 
     let handleChange = (event) => {
         const target = event.target;
@@ -34,22 +34,6 @@ function You({nextStep, values, setValues}) {
         }
         return errors;
     }
-
-
-    useEffect(() => {
-        getDefaultMax().then(result => setMax(result))
-    }, []);
-
-    async function getDefaultMax() {
-        const docRef = doc(database, "variables", "defaultMax");
-        const docSnap = await getDoc(docRef);
-
-        const data = docSnap.exists() ? docSnap.data() : null
-
-        return {...data}
-    }
-
-    console.log(max)
 
     return (
         <>
@@ -104,7 +88,7 @@ function You({nextStep, values, setValues}) {
                         <input type="number"
                                id="poids"
                                name="poids"
-                               min="15" max="100"
+                               min="50" max="180"
                                value={values.poids}
                                onChange={handleChange}
                         />
@@ -115,7 +99,7 @@ function You({nextStep, values, setValues}) {
                         <input type="number"
                                id="taille"
                                name="taille"
-                               min="100" max="250"
+                               min="140" max="230"
                                value={values.taille}
                                onChange={handleChange}
                         />
@@ -328,7 +312,6 @@ function You({nextStep, values, setValues}) {
             </form>
         </>
     )
-
 }
 
 export default You;

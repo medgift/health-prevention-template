@@ -10,7 +10,7 @@ export default function Register() {
     const navigate = useNavigate();
     const [errors, setErrors] = useState();
 
-    const handleRegister = async (e, email, password) => {
+    const handleRegister = async (e, email, password, firstname, lastname) => {
         e.preventDefault();
 
         try {
@@ -18,6 +18,8 @@ export default function Register() {
 
             onAuthStateChanged(auth, async (user) => {
                 await setDoc(doc(database, "users", user.uid), {
+                    firstname: firstname,
+                    lastname: lastname,
                     mail: email,
                     password: password,
                     role: 1
@@ -26,7 +28,7 @@ export default function Register() {
 
             navigate("/");
         } catch (e) {
-            switch(e.code){
+            switch (e.code) {
                 case "auth/email-already-in-use":
                     setErrors("There already exists an account with the given email address.");
                     break;
@@ -49,7 +51,7 @@ export default function Register() {
             <div className="box">
                 <div className="wrapper">
                     <h1>Register</h1>
-                    <p className="error"> { errors }</p>
+                    <p className="error"> {errors}</p>
                     <UserForm handleSubmit={handleRegister} submitButtonLabel="Register"/>
                 </div>
             </div>

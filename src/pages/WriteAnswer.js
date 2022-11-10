@@ -1,32 +1,31 @@
-import React  from "react";
-import {collection, doc, setDoc, addDoc, getDocs, getDoc,query} from "firebase/firestore";
+import React from "react";
+import {collection, doc, setDoc, addDoc, getDocs, getDoc, query} from "firebase/firestore";
 import {auth, database} from "../initFirebase";
-import {doctor} from "./UserProfilePage";
 
 
-export default class WriteAnswer extends React.Component{
+export default class WriteAnswer extends React.Component {
 
     //Data about the user
     sex = -1;
-    age= -1;
-    weight= -1;
-    height= -1;
-    syst= -1;
-    glyc= -1;
-    chol= -1;
-    diab= -1;
-    inf= -1;
-    avc= -1;
+    age = -1;
+    weight = -1;
+    height = -1;
+    syst = -1;
+    glyc = -1;
+    chol = -1;
+    diab = -1;
+    inf = -1;
+    avc = -1;
 
     //Data about his family
-    afinf=-1;
-    afCancer= -1;
+    afinf = -1;
+    afCancer = -1;
 
     //Data about his habits
-    smoke= -1;
-    sport= -1;
-    alcool= -1;
-    alim= -1;
+    smoke = -1;
+    sport = -1;
+    alcool = -1;
+    alim = -1;
 
     //calculate Data
     systAlgo = -1;
@@ -38,7 +37,12 @@ export default class WriteAnswer extends React.Component{
     alcoolAlgo = -1;
     alimAlgo = -1;
 
-    updatePersonalData = (sex,age,weight,heigt,syst,glyc,chol,diab,inf,avc) => {
+    resultCancer = -1;
+    resultDiabete = -1;
+    resultInfarctus = -1;
+    resultNonInfarctus = -1;
+
+    updatePersonalData = (sex, age, weight, heigt, syst, glyc, chol, diab, inf, avc) => {
         this.sex = sex;
         this.age = age;
         this.weight = weight;
@@ -51,28 +55,35 @@ export default class WriteAnswer extends React.Component{
         this.avc = avc;
     }
 
-    updateFamilyData = (afinf, afcancer) =>{
+    updateFamilyData = (afinf, afcancer) => {
         this.afinf = afinf;
         this.afCancer = afcancer;
     }
 
-    updateHabitsData = (smoke,food,sport,alcool) =>{
+    updateHabitsData = (smoke, food, sport, alcool) => {
         this.smoke = smoke;
         this.alim = food;
         this.sport = sport;
         this.alcool = alcool;
     }
 
-    updateBMI(height, weight){
-        this.bmiAlgo = Math.pow(weight/height,2);
+    updateBMI(height, weight) {
+        this.bmiAlgo = Math.pow(weight / height, 2);
     }
 
-    calculateFinalData = () =>{
+    updateResults(resultCancer, resultDiabete, resultInfarctus, resultNonInfarctus) {
+        this.resultCancer = resultCancer;
+        this.resultDiabete = resultDiabete;
+        this.resultInfarctus = resultInfarctus;
+        this.resultNonInfarctus = resultNonInfarctus;
+    }
+
+    calculateFinalData = () => {
         this.systAlgo = this.syst == 1 ? 150 : 0;
         this.glycAlgo = this.glyc == 1 ? 5.6 : 0;
         this.cholAlgo = this.chol == 1 ? 5.9 : 0;
         this.hdlAlgo = this.chol == 1 ? 0.9 : 0;
-        this.bmiAlgo = Math.pow(this.weight/this.height,2);
+        this.bmiAlgo = Math.pow(this.weight / this.height, 2);
         this.sportAlgo = this.sport;
         this.alcoolAlgo = this.alcool;
         this.alimAlgo = this.alim;
@@ -80,7 +91,7 @@ export default class WriteAnswer extends React.Component{
     }
 
     async WriteResult(uid) {
-        try{
+        try {
 
             const date = new Date();
 
@@ -103,12 +114,10 @@ export default class WriteAnswer extends React.Component{
                 smoking: this.smoke,
                 sport: this.sportAlgo,
                 syst: this.systAlgo,
-                /*RISK:{
-                    resultCancer: 0,
-                    resultDiabete: 0,
-                    resultInfarctus: 0,
-                    resultNonInfarctus: 0
-                }*/
+                resultCancer: this.resultCancer,
+                resultDiabete: this.resultDiabete,
+                resultInfarctus: this.resultInfarctus,
+                resultNonInfarctus: this.resultNonInfarctus
             });
             console.log("Write success")
         } catch (e) {

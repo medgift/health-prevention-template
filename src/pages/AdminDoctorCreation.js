@@ -8,18 +8,18 @@ import {doc, setDoc} from "firebase/firestore";
 import {auth, database} from "../initFirebase";
 import {createUserWithEmailAndPassword, onAuthStateChanged} from "firebase/auth";
 import React from "react";
-import { useState } from "react";
+import {useState} from "react";
 import DoctorForm from "../components/DoctorForm";
 
-export default function AdminDoctorCreation()  {
-   
+export default function AdminDoctorCreation() {
+
     //    const resetNewDoctor = () => {
     //     this.setState({newDoctor : this.emptyDoctor});
     // };
     var created = false;
 
-    const createDoctor = async(e, email, password, firstname, lastname) => {
-        
+    const createDoctor = async (e, email, password, firstname, lastname) => {
+
         e.preventDefault();
 
         try {
@@ -31,7 +31,7 @@ export default function AdminDoctorCreation()  {
                     lastname: lastname,
                     email: email,
                     password: password,
-                    role: 2
+                    role: 0
                 });
             });
 
@@ -40,8 +40,8 @@ export default function AdminDoctorCreation()  {
             console.log("Doctor Created")
             created = true;
 
-           // resetNewDoctor();
-            
+            // resetNewDoctor();
+
         } catch (e) {
             console.error(e);
             console.log("not Created")
@@ -49,11 +49,11 @@ export default function AdminDoctorCreation()  {
 
     }
 
-    
+
     return (
         <>
             <DoctorForm handleSubmit={createDoctor} submitButtonLabel="Create Doctor"/>
         </>
     );
-    
+
 }

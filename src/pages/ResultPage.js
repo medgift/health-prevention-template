@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "../ShowResult.css"
-import MyImage from "../img/avatar-gf34ddc003_1280.png";
+import MyImage from "../img/avatar.png";
 import Algorithm from "./Algorithm";
 import WriteAnswer from "./WriteAnswer";
 import {useLocation} from "react-router-dom";
@@ -100,11 +99,13 @@ function ResultPage() {
 
     const SaveChanges = () => {
         allAnswers.updateResults(cancerRisk, diabeteRisk, infarctusRisk, nonInfarctusRisk);
-        allAnswers.WriteResult(auth.currentUser.uid).then(r => {})
+        allAnswers.WriteResult(auth.currentUser.uid).then(r => {
+        })
         mySwal.fire({
             title: <strong>Your data are saved in the database</strong>,
             icon: 'success'
-        }).then(r => {})
+        }).then(r => {
+        })
     }
 
     const [avatar, setAvatar] = useState("")

@@ -3,7 +3,6 @@ import Family from "../components/Family";
 import You from "../components/You";
 import Habits from "../components/Habits";
 import WriteAnswer from "./WriteAnswer";
-import {auth} from "../initFirebase";
 import Navbar from "../components/Navbar";
 import {useNavigate} from "react-router-dom";
 
@@ -70,12 +69,6 @@ export default function Questionnary() {
             case 2:
                 return (
                     <Habits nextStep={ nextStep } prevStep={ prevStep } values={ values } setValues={ setValues }/>
-                )
-            case 4:
-                return (
-                    <>
-                    </>
-                    //<Success />
                 )
             // never forget the default case, otherwise VS code would be mad!
             default:

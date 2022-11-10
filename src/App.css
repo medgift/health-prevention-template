@@ -123,6 +123,7 @@ h2.title-results {
 /* LINKS */
 .App-link {
     color: var(--primary);
+    text-decoration: none;
 }
 
 .Home-link {
@@ -203,7 +204,7 @@ input[type=number] {
     border: 1px solid #7DB4E5;
 }
 
-button:not(.btn-profile) {
+button:not(.btn-profile, .delete) {
     border: 1px solid var(--primary);
     border-radius: 10px;
     height: auto;
@@ -220,6 +221,17 @@ button:hover {
     background: var(--primary);
     color: var(--white);
     cursor: pointer;
+}
+
+.delete {
+    border: 1px solid var(--primary);
+    border-radius: 5px;
+    height: auto;
+    color: var(--primary);
+    padding: 2px 4px;
+    font-size: 10px;
+    text-transform: uppercase;
+    margin: 10px 0px 10px 10px;
 }
 
 /* Questionnary */
@@ -285,6 +297,7 @@ footer {
     border-radius: 10px;
     border: 2px solid var(--primary);
     cursor: pointer;
+    font-size: 21px;
 }
 
 .btn-profile > svg {
@@ -619,6 +632,36 @@ button#1101 {
     left: 0
 }
 
+/* 404 */
+.message {
+    margin-top: 5px;
+    padding: 2px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.message > h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 11em;
+    transform: skewY(-5deg);
+    transition: 0.4s ease-in-out all;
+}
+
+.message > h3 {
+    color: black;
+    font-size: 2em;
+    font-weight: lighter;
+    line-height: 1;
+
+}
+
+.message > h2{
+    color: black;
+    font-size: 4em;
+    font-weight: lighter;
+    line-height: 1;
+}
 
 /* Media Query for Tablets */
 @media (max-width: 1310px) {
@@ -656,6 +699,14 @@ button#1101 {
     .radio-tile-group {
         display: block;
         width: 100%;
+    }
+
+    .message > h1 {
+        font-size: 7em;
+    }
+
+    .message > h2{
+        font-size: 2em;
     }
 
 }

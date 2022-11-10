@@ -3,7 +3,6 @@ import React, {useContext, useEffect, useState} from "react";
 import AdminCoef from "./AdminCoef";
 import AdminDoctorCreation from "./AdminDoctorCreation";
 import AdminVarTest from "./AdminVarTest";
-import {auth} from "../initFirebase";
 import {Context} from "../App.js"
 import {useNavigate} from "react-router-dom";
 import setBodyColor from "../components/setBackground";

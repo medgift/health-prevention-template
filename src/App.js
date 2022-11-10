@@ -8,8 +8,6 @@ import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
 import {createContext, useEffect, useMemo, useState} from "react";
 import Logout from "./pages/Logout";
-import Info from "./pages/Info";
-import ShowResult from "./pages/ShowResult";
 import Navbar from "./components/Navbar";
 import AdminPage from "./pages/AdminPage";
 import UserProfilePage from "./pages/UserProfilePage";
@@ -17,9 +15,6 @@ import Page404 from "./pages/Page404";
 import Questionnary from "./pages/Questionnary";
 import ResultPage from "./pages/ResultPage";
 import DoctorPage from "./pages/DoctorPage";
-import Profile_nb from "./pages/Profile_nb";
-//import Profile_nb from "./pages/Profile_nb";
-//TestPush
 
 export default function App() {
     /* Current user state */
@@ -63,13 +58,10 @@ export default function App() {
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/logout" element={<Logout/>}/>
-                    <Route path="/info" element={<Info/>}/>
-                    <Route path="/customization" element={<Customization/>}/>
-                    <Route path="/ShowResult" element={<ShowResult/>}/>
+                    <Route path="/customization" element={<Customization/>}/>s
                     <Route path="/AdminPage" element={<AdminPage/>}/>
                     <Route path="/questionnary" element={<Questionnary/>}/>
                     <Route path="/ResultPage" element={<ResultPage/>}/>
-                    <Route path="/profile" element={<Profile_nb/>}/>
                     <Route path="/UserProfilePage" element={<UserProfilePage/>}/>
                     <Route path="/DoctorPage" element={<DoctorPage/>}/>
                     <Route path="*" element={<Page404/>}/>
