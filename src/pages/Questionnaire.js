@@ -26,7 +26,7 @@ class Question extends React.Component {
             //To change a True/False value into a 1/0 value
             value = target.checked ? 1 : 0;
             this.setState({answer: value});
-        }else {
+        } else {
             value = target.value;
             this.setState({answer: value});
         }
@@ -36,16 +36,16 @@ class Question extends React.Component {
 
         //Call setDisplay to update the display of the question 5,6,7
         switch (this.props.questionNO) {
-            case 5: this.props.setdisplay5(true);
+            case 5:
+                this.props.setdisplay5(true);
                 break;
-            case 6: this.props.setdisplay6(true);
+            case 6:
+                this.props.setdisplay6(true);
                 break;
-            case 7: this.props.setdisplay7(true);
+            case 7:
+                this.props.setdisplay7(true);
                 break;
         }
-        //debug---------------------------------------------------
-        //console.log(this.context);
-        //debug---------------------------------------------------
     };
 
     //On flip, the value of the question is reset and we re-display the "parent" question
@@ -179,7 +179,7 @@ class Question extends React.Component {
             </div>
         );
     }
-};
+}
 Question.contextType = Variables;
 
 //To manage questions
@@ -224,11 +224,27 @@ export default function QuestionList({currentUser, setBackgroundImage}) {
         }())
     };
 
+    function setDefaultValues(questions, varContext) {
+        //Get the default values of the questions and map them in the Variables context class
+        questions.forEach((question) => {
+            varContext[question.variableName] = question.normalValue;
+        });
+    }
+
+    function convertVariablesToMap(varContext) {
+        //transfer the content of the context to a new object
+        let res = {};
+        for (let key in varContext) {
+            res[key] = varContext[key];
+        }
+        return res;
+    }
+
     //Create div for questions and submit button
     return (
         <div>
             <div id="questionnaire">
-                    <h3 id="questionnaireTitle">{title}</h3>
+                <h3 id="questionnaireTitle">{title}</h3>
                 <div id="questionGrid">
                     {questions.map((question) => (
                         <Question key={question.questionNO} {...question}
@@ -250,18 +266,4 @@ export default function QuestionList({currentUser, setBackgroundImage}) {
     );
 }
 
-function setDefaultValues(questions, varContext) {
-//Get the default values of the questions and map them in the Variables context class
-    questions.forEach((question) => {
-        varContext[question.variableName] = question.normalValue;
-    });
-}
 
-function convertVariablesToMap(varContext) {
-    //transfert the content of the context to a new object
-    let res = {};
-    for (let key in varContext) {
-        res[key] = varContext[key];
-    }
-    return res;
-}

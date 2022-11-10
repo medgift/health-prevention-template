@@ -11,7 +11,7 @@ import {useNavigate} from "react-router-dom";
  * @returns {JSX.Element}
  * @constructor
  */
-export default function AvatarPage({patientId}) {
+export default function AvatarPage({currentUser}) {
     const userRoleContext = useContext(RoleContext);
     const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ export default function AvatarPage({patientId}) {
 
     }, []);
     return <>
-        <EditAvatar patientId={patientId}/>
+        <EditAvatar currentUser={currentUser}/>
     </>
 }
 
@@ -85,7 +85,7 @@ export class EditAvatar extends React.Component {
      * @returns {Promise<void>}
      */
     save = async () => {
-        if (this.props.currentUser == null) {
+        if (!this.props.currentUser) {
             alert("Please login first");
         } else {
             await PatientDB.prototype.updateAvatar(this.props.currentUser.uid, this.state.myConfig)
