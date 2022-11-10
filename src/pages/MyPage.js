@@ -418,7 +418,7 @@ export class MyPage extends React.Component {
                             <img id={"cancerImg"} className={"imgAvatar"} src={"results/cancer.png"}/>
                         </div>
                         <center>
-                            <h3 className={"disease"}>Infarctus rate</h3>
+                            <h3 className={"disease"}>Infarct rate</h3>
                             <CircularProgressBar
                                 strokeWidth="13"
                                 sqSize="120"
