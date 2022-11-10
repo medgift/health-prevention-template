@@ -37,17 +37,22 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
     async function loadPatients() {
         //load the patients of the doctor
         for (let i = 0; i < doctor.patients.length; i++) {
-            let p = await PatientDB.prototype.getPatientById(doctor.patients[i]);
-            p.id = doctor.patients[i];
+            let p = await LoadOnePatient(doctor.patients[i]);
             setPatients((patients) => [...patients, p]);
         }
         //load the pending patients of the doctor
         for (let i = 0; i < doctor.pendingPatients.length; i++) {
-            let p = await PatientDB.prototype.getPatientById(doctor.pendingPatients[i]);
-            p.id = doctor.pendingPatients[i];
+            let p = await LoadOnePatient(doctor.pendingPatients[i]);
             setPendingPatients((pendingPatients) => [...pendingPatients, p]);
         }
         setIdSelectedPatient(doctor.patients[0]);
+    }
+
+    //To load a patient from the db
+    async function LoadOnePatient(patientId) {
+        let p = await PatientDB.prototype.getPatientById(patientId);
+        p.id = patientId;
+        return p;
     }
 
     const patientButtonPress = async (e) => {
@@ -67,6 +72,10 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
 
         //remove the patient from the state
         setPendingPatients(pendingPatients.filter(p => p.id !== patientId));
+
+        //add the patient to the state
+        let p = await LoadOnePatient(patientId);
+        setPatients((patients) => [...patients, p]);
     }
 
     async function refusePatient(e) {
