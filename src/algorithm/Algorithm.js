@@ -52,7 +52,11 @@ const DiaAge2 = 55;
 /* Valeur supplémentaire au BMI dans le calcul du risque de diabète */
 const coeffSuppWaist=3;
 
-
+/**
+ * Creates the algorithm object with the client's data to calculate BMI and differents rate
+ * @param v is an array containing all the answer of the client
+ * @author Nathan Dély
+ */
 export default class Algorithm {
     constructor(v) {
         this.sexe = v[0];
@@ -87,17 +91,9 @@ export default class Algorithm {
         this.modifPoidTauxDia = 5;
     }
 
-    Save(){
-        let modif=[];
-        modif.push(this.poids!=this.defaultPoids?this.poids:null);
-        modif.push(this.fume!=this.defaultFume?this.fume:null);
-        modif.push(this.alcool!=this.defaultAlcool?this.alcool:null);
-        modif.push(this.sport!=this.defaultSport?this.sport:null);
-        modif.push(this.alim!=this.defaultAlim?this.alim:null);
-        return modif;
-
-    }
-
+    /**
+     * allows our class to reset the changeable values
+     */
     Reset() {
         this.poids = this.defaultPoids;
         this.fume = this.defaultFume;
@@ -108,6 +104,9 @@ export default class Algorithm {
         this.Calculate();
     }
 
+    /**
+     * Calculates the three Rates
+     */
     Calculate() {
         this.infRate = this.CalculateInfarctus();
         this.canRate = this.CalculateCancer();
@@ -115,10 +114,18 @@ export default class Algorithm {
 
     }
 
+    /**
+     * This method is used to set the BMI
+     * @returns {number} BMI updated
+     */
     SetBMI() {
         return this.poids / Math.pow(this.taille / 100, 2);
     }
 
+    /**
+     * Calculates the infarct rate of a patient based on the algorithm of Dr Marc-André Raetzo (Geneva)
+     * @returns {number} infarct rate
+     */
     CalculateInfarctus() {
         if (this.infa || this.avc) {
             // a déjà eu un infarctus ou un avc
@@ -148,14 +155,21 @@ export default class Algorithm {
         }
     }
 
+    /**
+     * Calculates the diabetes rate of a patient based on the algorithm of Dr Marc-André Raetzo (Geneva)
+     * @returns {number} infarct rate
+     */
     CalculateDiabete() {
         let coeff = this.sexe ? coeffDiabM : coeffDiabF;
         let score = (this.age < DiaAge1 ? 1 : this.age < DiaAge2 ? 3 : 6) + (this.BMI < DiaBMI0 ? 0 : this.BMI < DiaBMI1 ? 1 : this.BMI < DiaBMI2 ? 3 : 6) + (this.systBool > 0 ? 2 : 0) + (this.glycBool > 0 ? 5 : 0) + alimAnswersDiab - this.alim + sportAnswersDiab - this.sport + coeffSuppWaist;
         let risk = Math.pow(score, 3) * coeff[0] - Math.pow(score, 2) * coeff[1] + score * coeff[2] - 3 * Math.pow(Math.E, coeffDiabRisqueCalc);
-        console.log(score);
         return risk;
     }
 
+    /**
+     * Calculates the cancer rate of a patient based on the algorithm of Dr Marc-André Raetzo (Geneva)
+     * @returns {number} infarct rate
+     */
     CalculateCancer() {
         let result = (this.afcancer * coeffCancer.afcancer + this.fume * coeffCancer.fume + (this.BMI - 25) / 10 * coeffCancer.BMI + (sportAnswersCanc - this.sport) / sportAnswersCanc * coeffCancer.sport +
             (alcAnswers - this.alcool) / alcAnswers * coeffCancer.alcool + (alimAnswersCanc - this.alim) / alimAnswersCanc * coeffCancer.alim) / sumCoeffCanc;

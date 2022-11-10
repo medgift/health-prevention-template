@@ -1,5 +1,10 @@
 import React from "react";
 
+/**
+ * this class is used to create a custom bar for the Rhythm part in the result
+ * @param props bgcolor and now corresponding to the color of the bar and the value inside it
+ * @returns {JSX.Element} the built progress bar
+ */
 const ProgressBar = (props) => {
     const {bgcolor, now} = props;
 
