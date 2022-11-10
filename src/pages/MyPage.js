@@ -127,6 +127,7 @@ export class MyPage extends React.Component {
 
     usePatientResponsesFromDB() {
         this.state.date = this.formatDate(this.props.patientResponse.dateFilled);
+        console.log(this.props.patientResponse)
         let list = this.props.patientResponse.responses;
         let answers = [list.Gender, list.Age, list.Poids, list.Taille, list.SystBool,
             list.Syst, list.GlycBool, list.Glyc, list.CholBool, list.Chol, list.HDL, list.DIAB,
@@ -143,7 +144,7 @@ export class MyPage extends React.Component {
             date.getFullYear() + " at " + date.getHours() + ":" + date.getMinutes();
     }
 
-    handleInputBool = (e) => {
+    handleInputBool = () => {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
             clonedAlgorithm.fume = clonedAlgorithm.fume === 0 ? 1 : 0;
@@ -191,12 +192,9 @@ export class MyPage extends React.Component {
                 weight = 50;
             else if (weight > 180)
                 weight = 180
-            let perfPoids = 22 * Math.pow(clonedAlgorithm.taille / 100, 2);
             clonedAlgorithm.poids = weight;
             clonedAlgorithm.BMI = clonedAlgorithm.SetBMI();
-            clonedAlgorithm.diaRate = clonedAlgorithm.CalculateDiabete()/*
-                *(100-(clonedAlgorithm.poids-(weight>perfPoids?weight:Math.floor(perfPoids)))*clonedAlgorithm.modifPoidTauxDia)/100;
-            console.log((100-(clonedAlgorithm.poids-(weight>perfPoids?weight:Math.floor(perfPoids)))*clonedAlgorithm.modifPoidTauxDia))*/;
+            clonedAlgorithm.diaRate = clonedAlgorithm.CalculateDiabete();
             return {algorithm: clonedAlgorithm};
         });
     }

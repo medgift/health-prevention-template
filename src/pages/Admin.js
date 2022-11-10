@@ -51,13 +51,14 @@ export default function NormalValueList({setBackgroundImage}) {
 
     return (
         <div id="admin" className="leftAlignedDiv">
-            <h2>Edit normal variables</h2>
-            <form onSubmit={handleFormSubmit}>
+            <h2 style={{width: "max-content"}}>Edit normal variables</h2>
+            <form className="formAdmin" onSubmit={handleFormSubmit}>
                 <button
                     type="submit"
                     className="formButton rightButton animatedButton bigButton"
                 >Confirm
                 </button>
+                <br/>
                 <br/>
                 <br/>
                 {questions.map((question) => (
@@ -78,13 +79,13 @@ function NormalValue(props) {
     }
 
     return (
-        <>
+        <div className={"divAdmin"}>
             <label id="normalValuesLabel">{props.questionNO}. {props.text}</label>
             <input type="number"
                    className="normalValueInput"
                    defaultValue={props.normalValue}
                    onChange={handleChange}
             />
-        </>
+        </div>
     );
 }
