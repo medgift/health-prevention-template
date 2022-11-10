@@ -34,9 +34,9 @@ export default function LatestResult({patientId, setBackgroundImage}) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        //prohibit access to doctors
-        if (userRoleContext.role === AvailableRoles.DOCTOR) {
-            navigate("/doctor");
+        //prohibit access to doctors and admins
+        if (userRoleContext.role === AvailableRoles.DOCTOR || userRoleContext.role === AvailableRoles.ADMIN){
+            navigate("/home");
             return;
         }
         async function loadLatestResponse() {
