@@ -72,16 +72,11 @@ export class MyPage extends React.Component {
 
     }
 
-
     componentDidMount() {
         this.props.setBackgroundImage(null);
         this.getAvatar();
         this.updateState();
-        this.updateSmoke();
-        this.updateDrinks();
-        this.updateCanRate();
-        this.updateDiaRate();
-        this.updateInfRate();
+        this.updateAllImages();
     }
 
 
@@ -93,11 +88,7 @@ export class MyPage extends React.Component {
             this.getAvatar();
 
         //update computed fields
-        this.updateSmoke();
-        this.updateDrinks();
-        this.updateCanRate();
-        this.updateDiaRate();
-        this.updateInfRate();
+        this.updateAllImages();
     }
 
     updateState() {
@@ -216,6 +207,7 @@ export class MyPage extends React.Component {
             clonedAlgorithm.Reset();
             return {algorithm: clonedAlgorithm};
         })
+        this.updateAllImages();
 
     }
 
@@ -245,17 +237,19 @@ export class MyPage extends React.Component {
     updateDrinks() {
         this.setDrinksHidden();
         switch (this.state.algorithm.alcool) {
+            case 0:
             case "0":
-                document.getElementById("drink3Img").style.visibility = "visible"
+                document.getElementById("drink3Img").style.visibility = "visible";
                 break;
+            case 1:
             case "1":
                 document.getElementById("drink2Img").style.visibility = "visible"
                 break;
+            case 2:
             case "2":
                 document.getElementById("drink1Img").style.visibility = "visible"
                 break;
         }
-
     }
 
     updateSmoke() {
@@ -296,6 +290,14 @@ export class MyPage extends React.Component {
             document.getElementById("infarctusImg").style.visibility = "hidden"
 
         }
+    }
+
+    updateAllImages() {
+        this.updateDrinks();
+        this.updateSmoke();
+        this.updateDiaRate();
+        this.updateCanRate();
+        this.updateInfRate();
     }
 
 
