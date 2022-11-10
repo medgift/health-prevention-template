@@ -16,4 +16,10 @@
     text-align: center;
 }
 
+@media (max-width: 800px) {
+    .avatarDiv{
+        width: 80%;
+    }
+}
+
 

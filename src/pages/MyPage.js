@@ -8,7 +8,7 @@ import {ResponseDB} from "../DAL/ResponseDB";
 import NiceAvatar, {genConfig} from "react-nice-avatar";
 import {PatientDB} from "../DAL/PatientDB";
 import {Variables} from "../Context/Variables";
-import {RoleContext, AvailableRoles} from "../Context/UserRoles"
+import {AvailableRoles, RoleContext} from "../Context/UserRoles"
 import {useNavigate} from "react-router-dom";
 
 export function ResultHistoric({patientId, setBackgroundImage}) {
@@ -71,6 +71,9 @@ const defaultConfig = {
     "bgColor": "white",
 };
 
+/**
+ * The class used to show result of the questionnaire and see the different rates
+ */
 export class MyPage extends React.Component {
     constructor(props) {
         super(props);
@@ -143,11 +146,14 @@ export class MyPage extends React.Component {
             date.getFullYear() + " at " + date.getHours() + ":" + date.getMinutes();
     }
 
-    handleInputBool = (e) => {
+    /**
+     * recalculates the rates with the new value of smoke (true or false)
+     * @param e the new value
+     */
+    handleInputBool = () => {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
             clonedAlgorithm.fume = clonedAlgorithm.fume === 0 ? 1 : 0;
-            console.log(clonedAlgorithm.infRate);
             clonedAlgorithm.infRate = (clonedAlgorithm.CalculateInfarctus() *
                     (100 + (clonedAlgorithm.defaultAlim - clonedAlgorithm.alim) * clonedAlgorithm.modifAlimTauxInf) / 100) *
                 (100 + (clonedAlgorithm.defaultSport - clonedAlgorithm.sport) * clonedAlgorithm.modifExerTauxInf) / 100;
@@ -156,6 +162,10 @@ export class MyPage extends React.Component {
         });
     }
 
+    /**
+     * recalculates the rates with the new value of alimentation
+     * @param e the new value
+     */
     changeAlim = (e) => {
         this.setState(s => {
             let al = +e.target.value;
@@ -170,6 +180,10 @@ export class MyPage extends React.Component {
         });
     };
 
+    /**
+     * recalculates the rates with the new value of physical activity
+     * @param e the new value
+     */
     changeSport = (e) => {
         this.setState(s => {
             let sp = +e.target.value;
@@ -183,6 +197,11 @@ export class MyPage extends React.Component {
             return {algorithm: clonedAlgorithm};
         });
     }
+
+    /**
+     * recalculates the rates with the new value of weight
+     * @param e the new value
+     */
     changeWeight = (e) => {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
@@ -191,15 +210,17 @@ export class MyPage extends React.Component {
                 weight = 50;
             else if (weight > 180)
                 weight = 180
-            let perfPoids = 22 * Math.pow(clonedAlgorithm.taille / 100, 2);
             clonedAlgorithm.poids = weight;
             clonedAlgorithm.BMI = clonedAlgorithm.SetBMI();
-            clonedAlgorithm.diaRate = clonedAlgorithm.CalculateDiabete()/*
-                *(100-(clonedAlgorithm.poids-(weight>perfPoids?weight:Math.floor(perfPoids)))*clonedAlgorithm.modifPoidTauxDia)/100;
-            console.log((100-(clonedAlgorithm.poids-(weight>perfPoids?weight:Math.floor(perfPoids)))*clonedAlgorithm.modifPoidTauxDia))*/;
+            clonedAlgorithm.diaRate = clonedAlgorithm.CalculateDiabete();
             return {algorithm: clonedAlgorithm};
         });
     }
+
+    /**
+     * recalculates the rates with the new value of alcohol
+     * @param e the new value
+     */
     changeAlcool = (e) => {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
@@ -210,6 +231,9 @@ export class MyPage extends React.Component {
         })
     }
 
+    /**
+     * reset the value if the patient has change some
+     */
     reset = () => {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
@@ -220,6 +244,10 @@ export class MyPage extends React.Component {
 
     }
 
+    /**
+     * Get user avatar
+     * @returns {Promise<void>}
+     */
     async getAvatar() {
         //if no user is connected do not read avatar config
         if (this.props.patientId === null)
@@ -237,12 +265,18 @@ export class MyPage extends React.Component {
         })
     }
 
+    /**
+     * Set all alcohol images to hidden
+     */
     setDrinksHidden() {
         document.getElementById("drink1Img").style.visibility = "hidden"
         document.getElementById("drink2Img").style.visibility = "hidden"
         document.getElementById("drink3Img").style.visibility = "hidden"
     }
 
+    /**
+     * Set images of alcohol visible depending on the value of alcohol
+     */
     updateDrinks() {
         this.setDrinksHidden();
         switch (this.state.algorithm.alcool) {
@@ -261,46 +295,53 @@ export class MyPage extends React.Component {
         }
     }
 
+    /**
+     * Set image of smoke visible or hidden depending on the value of smoke
+     */
     updateSmoke() {
         if (this.state.algorithm.fume) {
             document.getElementById("smokeImg").style.visibility = "visible"
-
         } else {
             document.getElementById("smokeImg").style.visibility = "hidden"
-
         }
     }
 
+    /**
+     * Set image of diabetes visible or hidden depending on the value of diabetes
+     */
     updateDiaRate() {
         if (this.state.algorithm.diaRate > 50) {
             document.getElementById("diabeteImg").style.visibility = "visible"
-
         } else {
             document.getElementById("diabeteImg").style.visibility = "hidden"
-
         }
     }
 
+    /**
+     * Set image of cancer visible or hidden depending on the value of cancer
+     */
     updateCanRate() {
         if (this.state.algorithm.canRate > 50) {
             document.getElementById("cancerImg").style.visibility = "visible"
-
         } else {
             document.getElementById("cancerImg").style.visibility = "hidden"
-
         }
     }
 
+    /**
+     * Set image of infarctus visible or hidden depending on the value of infarctus
+     */
     updateInfRate() {
         if (this.state.algorithm.infRate > 50) {
             document.getElementById("infarctusImg").style.visibility = "visible"
-
         } else {
             document.getElementById("infarctusImg").style.visibility = "hidden"
-
         }
     }
 
+    /**
+     * Function to call all image update above in one function
+     */
     updateAllImages() {
         this.updateDrinks();
         this.updateSmoke();
@@ -355,16 +396,20 @@ export class MyPage extends React.Component {
                         <div className={"divAvatar"}>
                             <NiceAvatar className={"avatar"} shape={"rounded"}
                                         bgColor={"lightgray"} {...this.state.config}/>
-                            <img id={"drink1Img"} className={"imgAvatar"} src={"results/drink1.png"}/>
-                            <img id={"drink2Img"} className={"imgAvatar"} src={"results/drink2.png"}/>
-                            <img id={"drink3Img"} className={"imgAvatar"} src={"results/drink3.png"}/>
-                            <img id={"smokeImg"} className={"imgAvatar"} src={"results/smoke.png"}/>
+                            <img id={"drink1Img"} className={"imgAvatar"} src={"results/drink1.png"}
+                                 alt={"Drink: 1 cup"}/>
+                            <img id={"drink2Img"} className={"imgAvatar"} src={"results/drink2.png"}
+                                 alt={"Drink: 2 cups"}/>
+                            <img id={"drink3Img"} className={"imgAvatar"} src={"results/drink3.png"}
+                                 alt={"Drink: 3 cups"}/>
+                            <img id={"smokeImg"} className={"imgAvatar"} src={"results/smoke.png"} alt={"Cigarette"}/>
                         </div>
                         <div>
                             <label className={"labelView"}>Smoke: </label>
                             <input type={"checkbox"} checked={this.state.algorithm.fume}
                                    placeholder={`${this.state.algorithm.fume}`} name="fume"
-                                   onChange={this.handleInputBool}/></div>
+                                   onChange={this.handleInputBool}/>
+                        </div>
                         <ProgressBar name={"fume"} min={0} max={1} bgcolor={"#1a73e8"}
                                      now={this.state.algorithm.fume * 100 / 1}/>
 
@@ -390,10 +435,10 @@ export class MyPage extends React.Component {
                         <ProgressBar name={"sport"} min={0} max={3} bgcolor={"#1a73e8"}
                                      now={this.state.algorithm.sport * 100 / 3}/>
 
-                        <label className={"labelView"}>Weight: </label>
-                        <input type={"number"} min={50} max={180} value={`${this.state.algorithm.poids}`}
-                               className={"choices"}
-                               onChange={this.changeWeight}/><br/>
+                        <div>
+                            <label className={"labelView"}>Weight: </label>
+                            <input type={"number"} min={50} max={180} value={`${this.state.algorithm.poids}`} className={"choices"} onChange={this.changeWeight}/>
+                        </div>
                         <ProgressBar name={"poids"} min={50} max={180} bgcolor={"#1a73e8"}
                                      now={(this.state.algorithm.poids - 50) * 100 / 130}/>
 
@@ -422,9 +467,10 @@ export class MyPage extends React.Component {
                         <div className={"divAvatar"}>
                             <NiceAvatar className={"avatar"} shape={"rounded"}
                                         bgColor={"lightgray"} {...this.state.config}/>
-                            <img id={"infarctusImg"} className={"imgAvatar"} src={"results/heart.png"}/>
-                            <img id={"diabeteImg"} className={"imgAvatar"} src={"results/sugar.png"}/>
-                            <img id={"cancerImg"} className={"imgAvatar"} src={"results/cancer.png"}/>
+                            <img id={"infarctusImg"} className={"imgAvatar"} src={"results/heart.png"}
+                                 alt={"Infarctus"}/>
+                            <img id={"diabeteImg"} className={"imgAvatar"} src={"results/sugar.png"} alt={"Diabete"}/>
+                            <img id={"cancerImg"} className={"imgAvatar"} src={"results/cancer.png"} alt={"Cancer"}/>
                         </div>
                         <center>
                             <h3 className={"disease"}>Infarct rate</h3>

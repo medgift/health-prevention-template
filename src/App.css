@@ -204,8 +204,9 @@
 }
 
 .rightButton {
-    margin: 0;
+    margin-right: 2%;
     float: right;
+    width: 25%;
 }
 
 .centered_div {
@@ -339,11 +340,6 @@ input:checked + .slider:before {
     grid-template-columns: 33.3% 33.3% 33.3%;
     grid-gap: 10px;
     grid-template-rows: auto;
-}
-
-
-.grid-item {
-
 }
 
 .homeGrid {

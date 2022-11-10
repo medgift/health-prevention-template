@@ -9,6 +9,8 @@ export default function Profile({currentUser, setBackgroundImage}) {
     const navigate = useNavigate();
     const [user, setUser] = React.useState(null);
     const [doctors, setDoctors] = React.useState([]);
+
+    //Default avatar config for users that don't have an avatar
     const defaultConfig = {
         "sex": "man",
         "faceColor": "#f5d6a1",
@@ -32,15 +34,15 @@ export default function Profile({currentUser, setBackgroundImage}) {
         if (!currentUser) {
             navigate("/login");
             return;
-
-
         }
         getPatient();
         getDoctors();
-
-
     }, []);
 
+    /**
+     * Save new Firstname and Lastname to the DB
+     * @returns {Promise<void>}
+     */
     async function save() {
         const firstName = document.getElementById("firstName").value;
         const lastName = document.getElementById("lastName").value;
@@ -49,7 +51,10 @@ export default function Profile({currentUser, setBackgroundImage}) {
 
     }
 
-    const handleChange = (e) => {
+    /**
+     * Set selected doctor in state
+     */
+    const handleChange = () => {
         const doctorId = document.getElementById("selectDoctor").value;
         setUser({...user, ["doctorId"]: doctorId});
     }
@@ -82,26 +87,35 @@ export default function Profile({currentUser, setBackgroundImage}) {
                     {optionsDoctors()}
                 </select>
             </div>
-            {user?.pendingDoctorId!=="" && user?.pendingDoctorId!==null && user?.pendingDoctorId!== undefined?
+            {user?.pendingDoctorId !== "" && user?.pendingDoctorId !== null && user?.pendingDoctorId !== undefined ?
                 <div className={"PendingMessage"}>Your request has been registered</div> : null}
             <button className={"homeGridButton"} onClick={submitDoctor}>Submit Request</button>
         </div>
     )
 
+    /**
+     * Get the patient from the DB
+     * @returns {Promise<void>}
+     */
     async function getPatient() {
         const pat = await PatientDB.prototype.getPatientById(currentUser.uid);
-        console.log(pat);
         pat.prevDoctor = pat.doctorId;
         setUser(pat);
-
     }
 
+    /**
+     * Get all the doctors from the DB
+     * @returns {Promise<void>}
+     */
     async function getDoctors() {
         const docs = await DoctorDB.prototype.getAllDoctors();
         setDoctors(docs);
-
     }
 
+    /**
+     *  Submit a follow request to a doctor
+     * @returns {Promise<void>}
+     */
     async function submitDoctor() {
         const doctorId = document.getElementById("selectDoctor").value;
         if (doctorId === "none") {
@@ -121,20 +135,19 @@ export default function Profile({currentUser, setBackgroundImage}) {
         }
         navigate("/profile")
         //Cheat trick to refresh page because state don't like to be re-updated after being set a null value
-
     }
 
+    /**
+     * Generate the doctors options for the select
+     * @returns {*[]}
+     */
     function optionsDoctors() {
         let options = [];
         for (const doct of doctors) {
             const d = doct.data();
             let text = "Dr. " + d.firstName + " " + d.lastName;
             options.push(<option value={doct.id}>{text}</option>)
-            console.log(d);
         }
         return options;
-
     }
-
-
 }

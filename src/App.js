@@ -11,7 +11,7 @@ import icon from "./hearth_icon.png"
 import expand from "./expand_navbar.jpg"
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./initFirebase";
-import EditAvatar from "./pages/EditAvatar";
+import AvatarPage from "./pages/EditAvatar";
 import Logout from "./pages/Logout";
 import PageNotFound from "./pages/404";
 import Profile from "./pages/Profile";
@@ -183,7 +183,7 @@ export default function App() {
                                element={<LatestResult patientId={patientId} setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/doctor" element={<DoctorPage currentUser={currentUser}
                                                                    setBackgroundImage={setBackgroundImage}/>}/>
-                        <Route path="/editAvatar" element={<EditAvatar currentUser={currentUser}/>}/>
+                        <Route path="/editAvatar" element={<AvatarPage currentUser={currentUser}/>}/>
                         <Route path="*"
                                element={<PageNotFound setBackgroundImage={setBackgroundImage}></PageNotFound>}/>
                         <Route path={"/profile"}

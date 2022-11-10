@@ -1,5 +1,8 @@
 import React from "react";
 
+/**
+ * This class is used to create a circular progress bar for the rate in the result page
+ */
 class CircularProgressBar extends React.Component {
     constructor(props) {
         super(props);
