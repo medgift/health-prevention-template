@@ -1,14 +1,13 @@
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {QuestionDB} from "../DAL/QuestionDB";
 import "../css/Admin.css";
 import {useContext, useEffect, useState} from "react";
 import React from "react";
-import {AdminDB} from "../DAL/AdminDB";
 import {RoleContext, AvailableRoles} from "../Context/UserRoles"
 
 let normalValues;
 
-export default function NormalValueList({currentUser, setBackgroundImage}) {
+export default function NormalValueList({setBackgroundImage}) {
     const navigate = useNavigate();
     const userRoleContext = useContext(RoleContext);
     let [questions, setQuestions] = useState([]);
