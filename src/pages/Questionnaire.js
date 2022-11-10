@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "../css/Questionnaire.css";
 import {QuestionDB} from "../DAL/QuestionDB";
 import {ResponseDB} from "../DAL/ResponseDB";
@@ -37,70 +37,70 @@ class Question extends React.Component {
         //Assigns the value of the answer to the corresponding variable in Variables.js
         switch (this.props.variableName) {
             case "Poids":
-                Variables.Poids = value;
+                this.context.Poids = value;
                 break;
             case "Alcool":
-                Variables.Alcool = value;
+                this.context.Alcool = value;
                 break;
             case "GlycBool":
-                Variables.GlycBool = 1;
+                this.context.GlycBool = 1;
                 //Display question 6.1 if answer is Yes
                 this.props.setdisplay6(true);
                 break;
             case "Alim":
-                Variables.Alim = value;
+                this.context.Alim = value;
                 break;
             case "Sport":
-                Variables.Sport = value;
+                this.context.Sport = value;
                 break;
             case "Inf":
-                Variables.Inf = value;
+                this.context.Inf = value;
                 break;
             case "Gender" :
-                Variables.Gender = value;
+                this.context.Gender = value;
                 break;
             case "DIAB" :
-                Variables.DIAB = value;
+                this.context.DIAB = value;
                 break;
             case "Afcancer" :
-                Variables.Afcancer = value;
+                this.context.Afcancer = value;
                 break;
             case "Avc" :
-                Variables.Avc = value;
+                this.context.Avc = value;
                 break;
             case "Age" :
-                Variables.Age = value;
+                this.context.Age = value;
                 break;
             case "Afinf" :
-                Variables.Afinf = value;
+                this.context.Afinf = value;
                 break;
             case "SystBool" :
-                Variables.SystBool = 1;
+                this.context.SystBool = 1;
                 //Display question 5.1 if answer is Yes
                 this.props.setdisplay5(true);
                 break;
             case "Fume" :
-                Variables.Fume = value;
+                this.context.Fume = value;
                 break;
             case "Taille" :
-                Variables.Taille = value;
+                this.context.Taille = value;
                 break;
             case "CholBool" :
-                Variables.CholBool = 1;
+                this.context.CholBool = 1;
                 //Display question 7.1 and 7.2 if answer is Yes
                 this.props.setdisplay7(true);
                 break;
             case "Syst" :
-                Variables.Syst = value;
+                this.context.Syst = value;
                 break;
             case "Glyc" :
-                Variables.Glyc = value;
+                this.context.Glyc = value;
                 break;
             case "Chol" :
-                Variables.Chol = value;
+                this.context.Chol = value;
                 break;
             case "HDL" :
-                Variables.HDL = value;
+                this.context.HDL = value;
                 break;
         }
 
@@ -135,22 +135,22 @@ class Question extends React.Component {
         console.log();
         switch (this.props.questionNO) {
             case 5.1 :
-                Variables.SystBool = 0;
+                this.context.SystBool = 0;
                 this.props.setdisplay5(false);
                 // console.log("FLIP! SystBool: " + Variables.SystBool);
                 break;
             case 6.1 :
-                Variables.GlycBool = 0;
+                this.context.GlycBool = 0;
                 this.props.setdisplay6(false);
                 // console.log("FLIP! GlycBool: " + Variables.GlycBool);
                 break;
             case 7.1 :
-                Variables.CholBool = 0;
+                this.context.CholBool = 0;
                 this.props.setdisplay7(false);
                 // console.log("FLIP! CholBool: " + Variables.CholBool);
                 break;
             case 7.2 :
-                Variables.CholBool = 0;
+                this.context.CholBool = 0;
                 this.props.setdisplay7(false);
                 //  console.log("FLIP! CholBool: " + Variables.CholBool);
                 break;
@@ -172,9 +172,9 @@ class Question extends React.Component {
 
             case 5.1:
                 if (this.props.display5 === false) {
-                    Variables.Syst = this.props.normalValue;
+                    this.context.Syst = this.props.normalValue;
                     //Debug---------------------------------------------------
-                    console.log("Syst at base value: " + Variables.Syst);
+                    console.log("Syst at base value: " + this.context.Syst);
                     return null;
                 }
                 break;
@@ -186,9 +186,9 @@ class Question extends React.Component {
 
             case 6.1 :
                 if (this.props.display6 === false) {
-                    Variables.Glyc = this.props.normalValue;
+                    this.context.Glyc = this.props.normalValue;
                     //Debug---------------------------------------------------
-                    console.log("Glyc at base value: " + Variables.Glyc);
+                    console.log("Glyc at base value: " + this.context.Glyc);
                     return null;
                 }
                 break;
@@ -200,17 +200,17 @@ class Question extends React.Component {
 
             case 7.1:
                 if (this.props.display7 === false) {
-                    Variables.Chol = this.props.normalValue;
+                    this.context.Chol = this.props.normalValue;
                     //Debug---------------------------------------------------
-                    console.log("Chol at base value: " + Variables.Chol);
+                    console.log("Chol at base value: " + this.context.Chol);
                     return null;
                 }
                 break;
             case 7.2:
                 if (this.props.display7 === false) {
-                    Variables.HDL = this.props.normalValue;
+                    this.context.HDL = this.props.normalValue;
                     //Debug---------------------------------------------------
-                    console.log("HDL at base value: " + Variables.HDL);
+                    console.log("HDL at base value: " + this.context.HDL);
                     return null;
                 }
                 break;
@@ -299,6 +299,7 @@ class Question extends React.Component {
         );
     }
 };
+Question.contextType = Variables;
 
 //To manage questions
 
@@ -307,6 +308,7 @@ export default function QuestionList({currentUser, setBackgroundImage}) {
     let [Display5, setDisplay5] = useState(false);
     let [Display6, setDisplay6] = useState(false);
     let [Display7, setDisplay7] = useState(false);
+    const varContext = useContext(Variables);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -319,7 +321,7 @@ export default function QuestionList({currentUser, setBackgroundImage}) {
         (async function loadQuestions() {
             let questions = await QuestionDB.prototype.getAllQuestions();
             setQuestions(questions);
-            setDefaultValues(questions);
+            setDefaultValues(questions, varContext);
         }())
     }, []);
 
@@ -328,7 +330,7 @@ export default function QuestionList({currentUser, setBackgroundImage}) {
     let HandleFormSubmit = (event) => {
         event.preventDefault();
         (async function postResponses() {
-            let responses = convertVariablesToMap(); //put values from variables context in a map
+            let responses = convertVariablesToMap(varContext); //put values from variables context in a map
             let userId = currentUser ? currentUser.uid : null; //id is null if a guest fills the questionnaire
             let resDTO = new ResponseDTO(new Date(), userId, responses);
             await ResponseDB.prototype.addResponses(resDTO);
@@ -350,108 +352,109 @@ export default function QuestionList({currentUser, setBackgroundImage}) {
                                   display7={Display7} setdisplay7={setDisplay7}
                         />
                     )).filter(q => q != null) /*null questions are questions that shouldn't be displayed (5, 6, and 7)*/}
+                    <p></p>{/*Empty cell to shift the button to the right*/}
+                    <div id="questionnaireButtonDiv">
+                        <button type="submit"
+                                className="formButton questionButton animatedButton"
+                                onClick={HandleFormSubmit}>Confirm
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div id="questionnaireButtonDiv">
-            <button type="submit"
-                    className="formButton questionButton animatedButton"
-                    onClick={HandleFormSubmit}>Confirm
-            </button>
             </div>
         </div>
     );
 }
 
-function setDefaultValues(questions) {
+function setDefaultValues(questions, varContext) {
 //Get the default values of the questions and set them in the Variables class
     questions.forEach(question => {
         switch (question.variableName) {
             case "Poids":
-                Variables.Poids = question.normalValue;
+                varContext.Poids = question.normalValue;
                 break;
             case "Alcool":
-                Variables.Alcool = question.normalValue;
+                varContext.Alcool = question.normalValue;
                 break;
             case "GlycBool":
-                Variables.GlycBool = question.normalValue;
+                varContext.GlycBool = question.normalValue;
                 break;
             case "Alim":
-                Variables.Alim = question.normalValue;
+                varContext.Alim = question.normalValue;
                 break;
             case "Sport":
-                Variables.Sport = question.normalValue;
+                varContext.Sport = question.normalValue;
                 break;
             case "Inf":
-                Variables.Inf = question.normalValue;
+                varContext.Inf = question.normalValue;
                 break;
             case "Gender" :
-                Variables.Gender = question.normalValue;
+                varContext.Gender = question.normalValue;
                 break;
             case "DIAB" :
-                Variables.DIAB = question.normalValue;
+                varContext.DIAB = question.normalValue;
                 break;
             case "Afcancer" :
-                Variables.Afcancer = question.normalValue;
+                varContext.Afcancer = question.normalValue;
                 break;
             case "Avc" :
-                Variables.Avc = question.normalValue;
+                varContext.Avc = question.normalValue;
                 break;
             case "Age" :
-                Variables.Age = question.normalValue;
+                varContext.Age = question.normalValue;
                 break;
             case "Afinf" :
-                Variables.Afinf = question.normalValue;
+                varContext.Afinf = question.normalValue;
                 break;
             case "SystBool" :
-                Variables.SystBool = question.normalValue;
+                varContext.SystBool = question.normalValue;
                 break;
             case "Fume" :
-                Variables.Fume = question.normalValue;
+                varContext.Fume = question.normalValue;
                 break;
             case "Taille" :
-                Variables.Taille = question.normalValue;
+                varContext.Taille = question.normalValue;
                 break;
             case "CholBool" :
-                Variables.CholBool = question.normalValue;
+                varContext.CholBool = question.normalValue;
                 break;
             case "Syst" :
-                Variables.Syst = question.normalValue;
+                varContext.Syst = question.normalValue;
                 break;
             case "Glyc" :
-                Variables.Glyc = question.normalValue;
+                varContext.Glyc = question.normalValue;
                 break;
             case "Chol" :
-                Variables.Chol = question.normalValue;
+                varContext.Chol = question.normalValue;
                 break;
             case "HDL" :
-                Variables.HDL = question.normalValue;
+                varContext.HDL = question.normalValue;
                 break;
         }
     });
 }
 
-function convertVariablesToMap() {
+function convertVariablesToMap(varContext) {
     let map = {
-        Poids: Variables.Poids,
-        Alcool: Variables.Alcool,
-        GlycBool: Variables.GlycBool,
-        Alim: Variables.Alim,
-        Sport: Variables.Sport,
-        Inf: Variables.Inf,
-        Gender: Variables.Gender,
-        DIAB: Variables.DIAB,
-        Afcancer: Variables.Afcancer,
-        Avc: Variables.Avc,
-        Age: Variables.Age,
-        Afinf: Variables.Afinf,
-        SystBool: Variables.SystBool,
-        Syst: Variables.Syst,
-        Fume: Variables.Fume,
-        Taille: Variables.Taille,
-        CholBool: Variables.CholBool,
-        Chol: Variables.Chol,
-        Glyc: Variables.Glyc,
-        HDL: Variables.HDL
+        Poids: varContext.Poids,
+        Alcool: varContext.Alcool,
+        GlycBool: varContext.GlycBool,
+        Alim: varContext.Alim,
+        Sport: varContext.Sport,
+        Inf: varContext.Inf,
+        Gender: varContext.Gender,
+        DIAB: varContext.DIAB,
+        Afcancer: varContext.Afcancer,
+        Avc: varContext.Avc,
+        Age: varContext.Age,
+        Afinf: varContext.Afinf,
+        SystBool: varContext.SystBool,
+        Syst: varContext.Syst,
+        Fume: varContext.Fume,
+        Taille: varContext.Taille,
+        CholBool: varContext.CholBool,
+        Chol: varContext.Chol,
+        Glyc: varContext.Glyc,
+        HDL: varContext.HDL
     }
     return map;
 }

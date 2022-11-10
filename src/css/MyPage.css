@@ -23,14 +23,14 @@
 }
 
 .labelView {
-    margin-left: 3%;
+    margin-left: 5%;
     font-size: 80%;
     color: #444;
 }
 
 .choicesView {
     width: 90%;
-    margin-left: 3%;
+    margin-left: 5%;
     align-content: center;
 }
 
@@ -66,8 +66,8 @@
 }
 
 .resetButton {
-    float: right;
-    margin: 7%;
+    position: relative;
+    margin: 5%;
     background: #1A73E8;
     backdrop-filter: blur(10px);
     border: 1px solid transparent;
@@ -76,7 +76,7 @@
     color: white;
     transition: all 0.1s ease-in-out;
     text-align: center;
-    font-size: large;
+    font-size: 60%;
     width: auto;
     text-decoration: none;
     box-shadow: 5px 5px #488fed;
@@ -89,7 +89,7 @@
 
 @keyframes slideInFromRight {
     0% {
-        transform: translateX(-75%);
+        transform: translateX(75%);
         opacity: 0;
     }
     100% {
@@ -181,6 +181,10 @@
         background: #1a73e8;
         box-shadow: 7px 7px #114d9b;
         height: max-content;
+    }
+
+    .resetButton{
+        font-size: 100%;
     }
 
     .column{
