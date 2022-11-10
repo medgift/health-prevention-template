@@ -2,7 +2,6 @@ import {doc, getDoc, setDoc, updateDoc} from "firebase/firestore";
 import {db} from "../initFirebase";
 import {patientConverter} from "../DTO/PatientDTO";
 
-//TODO: écrire ou modifier des méthodes pour les pending
 class PatientDB {
 
     async addPatient(uid, patient) {
@@ -50,6 +49,12 @@ class PatientDB {
         });
     }
 
+    async removeDoctor(patientId) {
+        const p = doc(db, "Patient", patientId);
+        await updateDoc(p, {
+            DoctorId: ""
+        });
+    }
 }
 
 export {PatientDB};

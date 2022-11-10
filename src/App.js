@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import "./App.css";
-import {Navigate, NavLink, Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import {Navigate, NavLink, Route, Routes, useNavigate} from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -99,7 +99,6 @@ class Nav extends React.Component {
         )
     };
 }
-
 Nav.contextType = RoleContext;
 
 export default function App() {
@@ -111,13 +110,11 @@ export default function App() {
 
     //navigation
     const navigate = useNavigate();
-    const location = useLocation();
 
     /* Watch for authentication state changes */
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
-
             //Search for users in the db
             redirectUser(user, setCurrentPatient);
         });
@@ -129,7 +126,6 @@ export default function App() {
 
     async function redirectUser(user, setCurrentPatient) {
         if (user) {
-            console.log("signing in ...")
             //search for a patient in the db
             let patient = await PatientDB.prototype.getPatientById(user.uid);
             if (patient != null) {
@@ -142,7 +138,6 @@ export default function App() {
             //search for a doctor in the db
             let doctor = await DoctorDB.prototype.getDoctorById(user.uid);
             if (doctor != null) {
-                console.log("doctor found")
                 userRoleContext.role = AvailableRoles.DOCTOR;
                 navigate("/doctor");
                 return;
@@ -155,7 +150,6 @@ export default function App() {
                 navigate("/admin");
                 return;
             }
-            console.log("Cannot find user in DB.")
         }
     }
 
@@ -177,7 +171,7 @@ export default function App() {
                     <Routes>
                         <Route exact path="/" element={<Navigate to="/home"></Navigate>}></Route>
                         <Route path="/home"
-                               element={<Home currentUser={currentUser} setBackgroundImage={setBackgroundImage}/>}/>
+                               element={<Home setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/register" element={<Register setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/login" element={<Login setBackgroundImage={setBackgroundImage}/>}/>
                         <Route path="/logout" element={<Logout/>}/>
