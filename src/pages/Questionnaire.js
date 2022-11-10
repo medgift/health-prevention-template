@@ -352,13 +352,14 @@ export default function QuestionList({currentUser, setBackgroundImage}) {
                                   display7={Display7} setdisplay7={setDisplay7}
                         />
                     )).filter(q => q != null) /*null questions are questions that shouldn't be displayed (5, 6, and 7)*/}
+                    <p></p>{/*Empty cell to shift the button to the right*/}
+                    <div id="questionnaireButtonDiv">
+                        <button type="submit"
+                                className="formButton questionButton animatedButton"
+                                onClick={HandleFormSubmit}>Confirm
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div id="questionnaireButtonDiv">
-            <button type="submit"
-                    className="formButton questionButton animatedButton"
-                    onClick={HandleFormSubmit}>Confirm
-            </button>
             </div>
         </div>
     );
