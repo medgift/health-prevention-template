@@ -334,7 +334,7 @@ export class MyPage extends React.Component {
                             className={"variable"}>{this.state.algorithm.inf ? "Already have" : "No"}</span></p>
                         <p className={"line"}>AVC: <span
                             className={"variable"}>{this.state.algorithm.avc ? "Already have" : "No"}</span></p>
-                        <h2>Family</h2>
+                        <h3 style="text-align:center">Family</h3>
                         <p className={"line"}>Infarctus: <span
                             className={"variable"}>{this.state.algorithm.afinf ? "Yes" : "No"}</span></p>
                         <p className={"line"}>Cancer: <span
