@@ -99,7 +99,7 @@ export default function Register({setBackgroundImage}) {
                            onChange={handlePasswordChange}
                            required
                     />
-                    <label for={"password"} class={"input-label"}>Password</label>
+                    <label htmlFor={"password"} className={"input-label"}>Password</label>
                     <p className="inputValidation">{passwordMessage}</p>
                 </div>
                 <div className={"input-group"} style={password.length < 6 ? {marginTop: "7.2%"} : {marginTop: "15%"}}>
@@ -109,7 +109,7 @@ export default function Register({setBackgroundImage}) {
                            onChange={handleFirstNameChange}
                            required
                     />
-                    <label for={"firstName"} class={"input-label"}>First Name</label>
+                    <label htmlFor={"firstName"} className={"input-label"}>First Name</label>
                 </div>
                 <br/>
                 <div className={"input-group"}>
@@ -119,7 +119,7 @@ export default function Register({setBackgroundImage}) {
                            onChange={handleLastNameChange}
                            required
                     />
-                    <label for={"lastName"} class={"input-label"}>Last Name</label>
+                    <label htmlFor={"lastName"} className={"input-label"}>Last Name</label>
                 </div>
                 <br/>
                 <button

@@ -32,19 +32,36 @@ export default function LatestResult({patientId, setBackgroundImage}) {
         loadLatestResponse();
     }, [patientId]);
     return <>
-        <MyPage patientResponse={latestResponse} setBackgroundImage={setBackgroundImage}/>
+        <MyPage patientResponse={latestResponse} setBackgroundImage={setBackgroundImage} patientId={patientId}/>
     </>
 }
 
 
 const v = [1, 46, 100, 179, 0, 110, 0, 5.0, 0, 3.0, 2.0, 0, 0,/*avc*/ 0, 0, 0, 0, 2, 2, 2];
+const defaultConfig = {
+    "sex": "man",
+    "faceColor": "#f5d6a1",
+    "earSize": "small",
+    "eyeStyle": "circle",
+    "noseStyle": "short",
+    "mouthStyle": "laugh",
+    "shirtStyle": "hoody",
+    "glassesStyle": "none",
+    "hairColor": "#000000",
+    "hairStyle": "normal",
+    "hatStyle": "none",
+    "hatColor": "#000000",
+    "eyeBrowStyle": "up",
+    "shirtColor": "#000000",
+    "bgColor": "white",
+};
 
 export class MyPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             algorithm: new Algorithm(v),
-            config: null,
+            config: defaultConfig,
             date: "Want you very own result ? Fill in the questionnaire !"
         }
 
@@ -53,8 +70,8 @@ export class MyPage extends React.Component {
 
     componentDidMount() {
         this.props.setBackgroundImage(null);
-        this.updateState();
         this.getAvatar();
+        this.updateState();
         this.updateSmoke();
         this.updateDrinks();
         this.updateCanRate();
@@ -62,11 +79,15 @@ export class MyPage extends React.Component {
         this.updateInfRate();
     }
 
+
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.patientResponse !== this.props.patientResponse) {
+        if (prevProps.patientResponse !== this.props.patientResponse)
             this.updateState();
-        }
-        this.getAvatar();
+
+        if (prevProps.patientId !== this.props.patientId)
+            this.getAvatar();
+
+        //update computed fields
         this.updateSmoke();
         this.updateDrinks();
         this.updateCanRate();
@@ -173,7 +194,13 @@ export class MyPage extends React.Component {
     }
 
     async getAvatar() {
-        const patientData = await PatientDB.prototype.getPatientById(this.props.patientResponse.userId);
+        //if no user is connected do not read avatar config
+        if (this.props.patientId === null)
+            return;
+        const patientData = await PatientDB.prototype.getPatientById(this.props.patientId);
+        //if user has no avatar, display default avatar config
+        if (typeof patientData.avatarConfig === "undefined")
+            return;
         patientData.avatarConfig.mouthStyle = "peace";
         patientData.avatarConfig.shape = null;
         patientData.avatarConfig.bgColor = "gray";
@@ -252,7 +279,7 @@ export class MyPage extends React.Component {
                 <h5>{this.state.date}</h5>
                 <div className={"viewGrid"}>
                     <div className={"column"}>
-                        <h2>Your situation</h2>
+                        <h2>Situation</h2>
                         <div className={"divAvatar"}>
                             <NiceAvatar className={"avatar"} shape={"rounded"}
                                         bgColor={"lightgray"} {...this.state.config}/>
@@ -285,7 +312,7 @@ export class MyPage extends React.Component {
 
                     </div>
                     <div className={"column"}>
-                        <h2>Your rhythm</h2>
+                        <h2>Rhythm</h2>
                         <div className={"divAvatar"}>
                             <NiceAvatar className={"avatar"} shape={"rounded"}
                                         bgColor={"lightgray"} {...this.state.config}/>
@@ -352,7 +379,7 @@ export class MyPage extends React.Component {
                         }
                     </div>
                     <div className={"column"}>
-                        <h2>Your risks</h2>
+                        <h2>Risks</h2>
                         <div className={"divAvatar"}>
                             <NiceAvatar className={"avatar"} shape={"rounded"}
                                         bgColor={"lightgray"} {...this.state.config}/>
