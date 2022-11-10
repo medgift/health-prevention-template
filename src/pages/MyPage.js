@@ -7,6 +7,7 @@ import "../css/MyPage.css";
 import {ResponseDB} from "../DAL/ResponseDB";
 import NiceAvatar, {genConfig} from "react-nice-avatar";
 import {PatientDB} from "../DAL/PatientDB";
+import {Variables} from "../Context/Variables";
 
 export function ResultHistoric({patientId, setBackgroundImage}) {
     const [userResponses, setUserResponses] = useState([]);
@@ -14,11 +15,13 @@ export function ResultHistoric({patientId, setBackgroundImage}) {
         async function loadResponses() {
             setUserResponses(await ResponseDB.prototype.getResponsesByUser(patientId));
         }
-        loadResponses();
+
+        if (patientId !== null)
+            loadResponses();
     }, [patientId]);
     return <>
         {userResponses.map((r) => (
-            <MyPage key={r.dateFilled.seconds} patientResponse={r} setBackgroundImage={setBackgroundImage}/>
+            <MyPage key={r.dateFilled.seconds} patientResponse={r} setBackgroundImage={setBackgroundImage} patientId={patientId}/>
         ))}
     </>
 }
@@ -29,7 +32,9 @@ export default function LatestResult({patientId, setBackgroundImage}) {
         async function loadLatestResponse() {
             setLatestResponse(await ResponseDB.prototype.getLatestResponseByUser(patientId));
         }
-        loadLatestResponse();
+
+        if (patientId !== null)
+            loadLatestResponse();
     }, [patientId]);
     return <>
         <MyPage patientResponse={latestResponse} setBackgroundImage={setBackgroundImage} patientId={patientId}/>
@@ -96,10 +101,31 @@ export class MyPage extends React.Component {
     }
 
     updateState() {
-        //if patient has not filled in a questionnaire yet, display default data
-        if (this.props.patientResponse === null || this.props.patientResponse === undefined){
-            return;
+        //patientResponse corresponds to responses saved in DB
+        if (this.props.patientResponse === null || this.props.patientResponse === undefined) {
+            //responses in context are questionnaire filled by anonymous
+            if (this.context.Poids !== null) {
+              this.useAnonymousResponsesInRAM();
+            }
+            return; //do not proceed to use data from db
         }
+
+        //those data comes from the patient in db
+        this.usePatientResponsesFromDB();
+    }
+
+    useAnonymousResponsesInRAM () {
+        //use data in RAM
+        let anonymousAnswersInRam = [this.context.Gender, this.context.Age, this.context.Poids, this.context.Taille, this.context.SystBool,
+            this.context.Syst, this.context.GlycBool, this.context.Glyc, this.context.CholBool, this.context.Chol, this.context.HDL, this.context.DIAB,
+            this.context.Inf, this.context.Avc, this.context.Afinf, this.context.Afcancer, this.context.Fume, this.context.Alim, this.context.Sport, this.context.Alcool]
+        this.setState({
+            algorithm: new Algorithm(anonymousAnswersInRam)
+        });
+        this.state.date = "Log in to save your results.";
+    }
+
+    usePatientResponsesFromDB() {
         this.state.date = this.formatDate(this.props.patientResponse.dateFilled);
         let list = this.props.patientResponse.responses;
         let answers = [list.Gender, list.Age, list.Poids, list.Taille, list.SystBool,
@@ -292,9 +318,11 @@ export class MyPage extends React.Component {
                             className={"variable"}>{this.state.algorithm.taille} cm</span></p>
                         <p className={"line"}>Syst: <span className={"variable"}>{this.state.algorithm.syst} mmHg</span>
                         </p>
-                        <p className={"line"}>Glyc: <span className={"variable"}>{this.state.algorithm.glyc} mmol/L</span>
+                        <p className={"line"}>Glyc: <span
+                            className={"variable"}>{this.state.algorithm.glyc} mmol/L</span>
                         </p>
-                        <p className={"line"}>Chol: <span className={"variable"}>{this.state.algorithm.chol} mmol/L</span>
+                        <p className={"line"}>Chol: <span
+                            className={"variable"}>{this.state.algorithm.chol} mmol/L</span>
                         </p>
                         <p className={"line"}>HDL: <span className={"variable"}>{this.state.algorithm.hdl} mmol/L</span>
                         </p>
@@ -371,11 +399,11 @@ export class MyPage extends React.Component {
                                      now={this.state.algorithm.alcool * 100 / 4}/>
                         {
                             (this.state.algorithm.poids != this.state.algorithm.defaultPoids ||
-                            this.state.algorithm.alim != this.state.algorithm.defaultAlim ||
-                            this.state.algorithm.sport != this.state.algorithm.defaultSport ||
-                            this.state.algorithm.alcool != this.state.algorithm.defaultAlcool ||
-                            this.state.algorithm.fume != this.state.algorithm.defaultFume) &&
-                                <button className={"resetButton"} onClick={this.reset}>Reset my rhythm</button>
+                                this.state.algorithm.alim != this.state.algorithm.defaultAlim ||
+                                this.state.algorithm.sport != this.state.algorithm.defaultSport ||
+                                this.state.algorithm.alcool != this.state.algorithm.defaultAlcool ||
+                                this.state.algorithm.fume != this.state.algorithm.defaultFume) &&
+                            <button className={"resetButton"} onClick={this.reset}>Reset my rhythm</button>
                         }
                     </div>
                     <div className={"column"}>
@@ -393,7 +421,7 @@ export class MyPage extends React.Component {
                                 strokeWidth="13"
                                 sqSize="120"
                                 color={"#25FDE9"}
-                                percentage={this.state.algorithm.infRate>100 ? 100:Math.floor(this.state.algorithm.infRate)}/>
+                                percentage={this.state.algorithm.infRate > 100 ? 100 : Math.floor(this.state.algorithm.infRate)}/>
                         </center>
                         <center>
                             <h3 className={"disease"}>Diabetes rate</h3>
@@ -401,7 +429,7 @@ export class MyPage extends React.Component {
                                 strokeWidth="13"
                                 sqSize="120"
                                 color={"#90EE90"}
-                                percentage={this.state.algorithm.diaRate>100 ? 100:Math.floor(this.state.algorithm.diaRate)}/>
+                                percentage={this.state.algorithm.diaRate > 100 ? 100 : Math.floor(this.state.algorithm.diaRate)}/>
                         </center>
                         <center>
                             <h3 className={"disease"}>Cancer rate</h3>
@@ -409,7 +437,7 @@ export class MyPage extends React.Component {
                                 strokeWidth="13"
                                 sqSize="120"
                                 color={"#FFE436"}
-                                percentage={this.state.algorithm.canRate>100 ? 100: Math.floor(this.state.algorithm.canRate)}/>
+                                percentage={this.state.algorithm.canRate > 100 ? 100 : Math.floor(this.state.algorithm.canRate)}/>
                         </center>
                     </div>
                 </div>
@@ -418,3 +446,4 @@ export class MyPage extends React.Component {
         )
     }
 }
+MyPage.contextType = Variables;
