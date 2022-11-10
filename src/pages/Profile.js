@@ -83,7 +83,8 @@ export default function Profile({currentUser, setBackgroundImage}) {
                     {optionsDoctors()}
                 </select>
             </div>
-            {user?.pendingDoctorId!=="" ? <div className={"PendingMessage"}>Your request has been registered</div> : null}
+            {user?.pendingDoctorId!=="" && user?.pendingDoctorId!==null && user?.pendingDoctorId!== undefined?
+                <div className={"PendingMessage"}>Your request has been registered</div> : null}
             <button className={"homeGridButton"} onClick={submitDoctor}>Submit Request</button>
         </div>
     )

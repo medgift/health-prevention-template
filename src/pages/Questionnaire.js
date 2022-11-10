@@ -303,7 +303,6 @@ class Question extends React.Component {
 Question.contextType = Variables;
 
 //To manage questions
-
 export default function QuestionList({currentUser, setBackgroundImage}) {
     let [questions, setQuestions] = useState([]);
     let [Display5, setDisplay5] = useState(false);
@@ -315,11 +314,10 @@ export default function QuestionList({currentUser, setBackgroundImage}) {
 
     useEffect(() => {
         setBackgroundImage(questionBg);
-        console.log("user Role: " + currentUser.role);
 
-        //stop doctors from visiting this page
-        if (userRoleContext.role === "doctor") {
-            navigate("/doctor");
+        //stop doctors and admins from visiting this page
+        if (userRoleContext.role === "doctor" || userRoleContext.role === "admin") {
+            navigate("/home");
         }
     }, []);
 

@@ -1,15 +1,28 @@
 import NiceAvatar, {genConfig} from "react-nice-avatar";
-import React from "react";
+import React, {useContext, useEffect} from "react";
 import "../css/Avatar.css";
 import {PatientDB} from "../DAL/PatientDB";
+import {AvailableRoles, RoleContext} from "../Context/UserRoles";
+import {useNavigate} from "react-router-dom";
 
-export default class EditAvatar extends React.Component {
+export default function AvatarPage({patientId}) {
+    const userRoleContext = useContext(RoleContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (userRoleContext.role !== AvailableRoles.PATIENT)
+            navigate("/");
+
+
+    }, []);
+    return <>
+        <EditAvatar patientId={patientId}/>
+    </>
+}
+
+export class EditAvatar extends React.Component {
     constructor(props) {
         super(props);
-
-        if (this.props.navigate == null) {
-            //navigate to login page
-        }
 
         const defaultConfig = {
             "sex": "man",
@@ -45,11 +58,7 @@ export default class EditAvatar extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.currentUser) {
-            //navigate to login page
-        }
         this.getPatient();
-
     }
 
     //On Change Event for select-options
