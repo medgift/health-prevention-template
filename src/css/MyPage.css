@@ -23,7 +23,7 @@
 
 .labelView {
     margin-left: 5%;
-    font-size: 80%;
+    font-size: 85%;
     color: #444;
 }
 
@@ -31,6 +31,8 @@
     width: 90%;
     margin-left: 5%;
     align-content: center;
+    font-size: 80%;
+    border-radius: 5px;
 }
 
 .line {

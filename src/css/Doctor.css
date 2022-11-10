@@ -3,8 +3,9 @@
 }
 
 .PatientList {
-    height: 30px;
-    width: 20vw;
+    height: max-content;
+    width: max-content;
+    font-size: 80%;
     box-shadow: 0px 0px 6px 0px #b2b2b2;
     border-radius: 7px;
 }

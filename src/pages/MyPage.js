@@ -71,6 +71,9 @@ const defaultConfig = {
     "bgColor": "white",
 };
 
+/**
+ * The class used to show result of the questionnaire and see the different rates
+ */
 export class MyPage extends React.Component {
     constructor(props) {
         super(props);
@@ -127,7 +130,6 @@ export class MyPage extends React.Component {
 
     usePatientResponsesFromDB() {
         this.state.date = this.formatDate(this.props.patientResponse.dateFilled);
-        console.log(this.props.patientResponse)
         let list = this.props.patientResponse.responses;
         let answers = [list.Gender, list.Age, list.Poids, list.Taille, list.SystBool,
             list.Syst, list.GlycBool, list.Glyc, list.CholBool, list.Chol, list.HDL, list.DIAB,
@@ -144,11 +146,14 @@ export class MyPage extends React.Component {
             date.getFullYear() + " at " + date.getHours() + ":" + date.getMinutes();
     }
 
+    /**
+     * recalculates the rates with the new value of smoke (true or false)
+     * @param e the new value
+     */
     handleInputBool = () => {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
             clonedAlgorithm.fume = clonedAlgorithm.fume === 0 ? 1 : 0;
-            console.log(clonedAlgorithm.infRate);
             clonedAlgorithm.infRate = (clonedAlgorithm.CalculateInfarctus() *
                     (100 + (clonedAlgorithm.defaultAlim - clonedAlgorithm.alim) * clonedAlgorithm.modifAlimTauxInf) / 100) *
                 (100 + (clonedAlgorithm.defaultSport - clonedAlgorithm.sport) * clonedAlgorithm.modifExerTauxInf) / 100;
@@ -157,6 +162,10 @@ export class MyPage extends React.Component {
         });
     }
 
+    /**
+     * recalculates the rates with the new value of alimentation
+     * @param e the new value
+     */
     changeAlim = (e) => {
         this.setState(s => {
             let al = +e.target.value;
@@ -171,6 +180,10 @@ export class MyPage extends React.Component {
         });
     };
 
+    /**
+     * recalculates the rates with the new value of physical activity
+     * @param e the new value
+     */
     changeSport = (e) => {
         this.setState(s => {
             let sp = +e.target.value;
@@ -184,6 +197,11 @@ export class MyPage extends React.Component {
             return {algorithm: clonedAlgorithm};
         });
     }
+
+    /**
+     * recalculates the rates with the new value of weight
+     * @param e the new value
+     */
     changeWeight = (e) => {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
@@ -198,6 +216,11 @@ export class MyPage extends React.Component {
             return {algorithm: clonedAlgorithm};
         });
     }
+
+    /**
+     * recalculates the rates with the new value of alcohol
+     * @param e the new value
+     */
     changeAlcool = (e) => {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
@@ -208,6 +231,9 @@ export class MyPage extends React.Component {
         })
     }
 
+    /**
+     * reset the value if the patient has change some
+     */
     reset = () => {
         this.setState(s => {
             let clonedAlgorithm = _.clone(s.algorithm);
@@ -362,7 +388,8 @@ export class MyPage extends React.Component {
                             <label className={"labelView"}>Smoke: </label>
                             <input type={"checkbox"} checked={this.state.algorithm.fume}
                                    placeholder={`${this.state.algorithm.fume}`} name="fume"
-                                   onChange={this.handleInputBool}/></div>
+                                   onChange={this.handleInputBool}/>
+                        </div>
                         <ProgressBar name={"fume"} min={0} max={1} bgcolor={"#1a73e8"}
                                      now={this.state.algorithm.fume * 100 / 1}/>
 
@@ -388,10 +415,10 @@ export class MyPage extends React.Component {
                         <ProgressBar name={"sport"} min={0} max={3} bgcolor={"#1a73e8"}
                                      now={this.state.algorithm.sport * 100 / 3}/>
 
-                        <label className={"labelView"}>Weight: </label>
-                        <input type={"number"} min={50} max={180} value={`${this.state.algorithm.poids}`}
-                               className={"choices"}
-                               onChange={this.changeWeight}/><br/>
+                        <div>
+                            <label className={"labelView"}>Weight: </label>
+                            <input type={"number"} min={50} max={180} value={`${this.state.algorithm.poids}`} className={"choices"} onChange={this.changeWeight}/>
+                        </div>
                         <ProgressBar name={"poids"} min={50} max={180} bgcolor={"#1a73e8"}
                                      now={(this.state.algorithm.poids - 50) * 100 / 130}/>
 

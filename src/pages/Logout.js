@@ -4,7 +4,6 @@ import {auth} from "../initFirebase";
 import {useNavigate} from "react-router-dom";
 import {RoleContext, AvailableRoles} from "../Context/UserRoles"
 
-
 export default function Logout() {
   const navigate = useNavigate();
   const userRoleContext = useContext(RoleContext);
