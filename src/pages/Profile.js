@@ -55,6 +55,7 @@ export default function Profile({currentUser, setBackgroundImage}) {
     }
 
 
+    //TODO: affichage pour pending doctor
     return (
         <div className={"padded_div avatarDiv"}>
             <h2>Profile</h2>
@@ -82,17 +83,8 @@ export default function Profile({currentUser, setBackgroundImage}) {
                     {optionsDoctors()}
                 </select>
             </div>
+            {user?.pendingDoctorId!=="" ? <div className={"PendingMessage"}>Your request has been registered</div> : null}
             <button className={"homeGridButton"} onClick={submitDoctor}>Submit Request</button>
-            {/*<hr/>
-            <h2>Pending doctor requests</h2>
-            <div className={"grid_3col"}>
-                <label>Date</label>
-                <label>Doctor</label>
-                <label>Status</label>
-                {//TODO: add pending requests method
-                }
-            </div>*/}
-
         </div>
     )
 
@@ -114,15 +106,18 @@ export default function Profile({currentUser, setBackgroundImage}) {
         const doctorId = document.getElementById("selectDoctor").value;
         if (doctorId === "none") {
             await PatientDB.prototype.updatePatientDoctor(currentUser.uid, null);
+            await PatientDB.prototype.removePendingDoctor(currentUser.uid);
             if (user?.prevDoctor != null) {
                 await DoctorDB.prototype.removePatientFromDoctor(user.prevDoctor, currentUser.uid);
                 alert("Doctor removed!");
             }
             setUser({...user, ["prevDoctor"]: null});
         } else {
-            await PatientDB.prototype.updatePatientDoctor(currentUser.uid, doctorId);
-            await DoctorDB.prototype.addPatientToDoctor(doctorId, currentUser.uid);
+            await PatientDB.prototype.updatePendingDoctor(currentUser.uid, doctorId);
+            await DoctorDB.prototype.addPendingPatientToDoctor(doctorId, currentUser.uid);
+            //TODO: réévaluer l'utilité de cette ligne
             if (user.prevDoctor != null) {
+                //TODO: Si nouvelle demande de docteur, retire-t-on l'ancien d'office?
                 await DoctorDB.prototype.removePatientFromDoctor(user.prevDoctor, currentUser.uid);
             }
             setUser({...user, ["prevDoctor"]: doctorId});
