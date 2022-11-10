@@ -32,7 +32,7 @@ export default function UserForm({handleSubmit, submitButtonLabel}) {
                     onChange={handlePasswordChange}
                     required
                 />
-                <label for={"email"} class={"input-label"}>Password</label>
+                <label htmlFor={"email"} className={"input-label"}>Password</label>
             </div>
             <br/>
             <button

@@ -36,11 +36,12 @@
 
 .line {
     width: inherit;
+    margin-left: 5%;
 }
 
 .variable {
     float: right;
-    margin-right: 5%;
+    margin-right: 9%;
     animation: fadeIn 2s;
 }
 
@@ -123,8 +124,75 @@
     font-weight: bold;
     animation: fadeIn 2s;
 }
+
 .disease {
-    font-size: 100% ;
+    font-size: 100%;
     margin: 3%;
     margin-top: 13%;
+}
+
+.avatar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.divAvatar {
+    width: 70%;
+    padding-top: 70%;
+    position: relative;
+    margin-left: 15%;
+}
+
+.imgAvatar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    width: 100%;
+
+}
+
+@media (max-width: 1200px) {
+    .App-header-align{
+        margin-left: -10%;
+    }
+    .viewGrid {
+        width: 80%;
+    }
+}
+
+@media (max-width: 800px) {
+    .App-header-align{
+        margin-left: -20%;
+    }
+    .viewGrid{
+        display: block;
+        width: 90%;
+        grid-template-rows: auto;
+        margin-top: 0;
+        margin-left:0;
+        border-radius: 15px;
+        padding: 2.5% 2.5%;
+        background: #1a73e8;
+        box-shadow: 7px 7px #114d9b;
+        height: max-content;
+    }
+
+    .column{
+        font-size: 100%;
+        color: #444;
+        width: 90%;
+        background: white;
+        border-radius: 5px;
+        margin: 5%;
+        padding: 1% 1%;
+        box-shadow: 7px 7px #488fed;
+        vertical-align: middle;
+        line-height: 1;
+    }
 }
