@@ -107,6 +107,7 @@ export default function Profile({currentUser, setBackgroundImage}) {
         if (doctorId === "none") {
             await PatientDB.prototype.updatePatientDoctor(currentUser.uid, null);
             await PatientDB.prototype.removePendingDoctor(currentUser.uid);
+            await PatientDB.prototype.removeDoctor(currentUser.uid);
             if (user?.prevDoctor != null) {
                 await DoctorDB.prototype.removePatientFromDoctor(user.prevDoctor, currentUser.uid);
                 alert("Doctor removed!");

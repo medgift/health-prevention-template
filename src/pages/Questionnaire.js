@@ -6,7 +6,7 @@ import {ResponseDTO} from "../DTO/ResponseDTO";
 import {Variables} from "../Context/Variables";
 import {useNavigate} from "react-router-dom";
 import questionBg from "./paint_bg.jpg"
-import {RoleContext, AvailableRoles} from "../Context/UserRoles"
+import {RoleContext} from "../Context/UserRoles"
 
 
 // Manages a single question, its input and values

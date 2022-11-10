@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import "./App.css";
-import {Navigate, NavLink, Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import {Navigate, NavLink, Route, Routes, useNavigate} from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -99,7 +99,6 @@ class Nav extends React.Component {
         )
     };
 }
-
 Nav.contextType = RoleContext;
 
 export default function App() {
@@ -111,7 +110,6 @@ export default function App() {
 
     //navigation
     const navigate = useNavigate();
-    const location = useLocation();
 
     /* Watch for authentication state changes */
     useEffect(() => {

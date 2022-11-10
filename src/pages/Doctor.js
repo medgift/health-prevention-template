@@ -71,8 +71,8 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
         const patientId = e.target.value;
 
         //officially add the patient to the doctor's list
-        await DoctorDB.prototype.addPatientToDoctor(currentUser.uid, patientId);
         await PatientDB.prototype.updatePatientDoctor(patientId, currentUser.uid);
+        await DoctorDB.prototype.addPatientToDoctor(currentUser.uid, patientId);
 
         //remove the patient from the pending list
         await PatientDB.prototype.removePendingDoctor(patientId);
