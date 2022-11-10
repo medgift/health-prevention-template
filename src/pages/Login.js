@@ -1,26 +1,39 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../initFirebase";
+import {signInWithEmailAndPassword} from "firebase/auth";
+import {auth} from "../initFirebase";
+import "../css/Login.css";
 import UserForm from "../components/UserForm";
-import { useNavigate } from "react-router-dom";
+import simpleBlueBg from "./simple_blue_background.webp";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
-export default function Login() {
-  const navigate = useNavigate();
+export default function Login({setBackgroundImage}) {
 
-  const handleLogin = async (e, email, password) => {
-    e.preventDefault();
+    const [loginMessage, setLoginMessage] = useState("");
+    const navigate = useNavigate();
+    useEffect(() => {
+        //prohibit access to the login page if the user is already logged in
+        if (auth.currentUser) {
+            navigate("/home");
+        }
 
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/");
-    } catch (e) {
-      console.error(e);
-    }
-  };
+        setBackgroundImage(simpleBlueBg);
+    }, []);
 
-  return (
-    <div>
-      <h1>Login</h1>
-      <UserForm handleSubmit={handleLogin} submitButtonLabel="Login" />
-    </div>
-  );
+    const handleLogin = async (e, email, password) => {
+        e.preventDefault();
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+        } catch (e) {
+            setLoginMessage("Incorrect email or password");
+            console.error(e);
+        }
+    };
+
+    return (
+        <div className="padded_div login">
+            <h2>Sign in</h2>
+            <p id="loginValidation" className="inputValidation">{loginMessage}</p>
+            <UserForm handleSubmit={handleLogin} submitButtonLabel="Confirm"/>
+        </div>
+    );
 }

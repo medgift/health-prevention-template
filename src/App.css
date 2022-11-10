@@ -1,38 +1,429 @@
+
 .App {
-  text-align: center;
+    /*background: #fff url(../src/White_Background_1_RF_RMPL-01.jpg) center center/cover no-repeat fixed;*/
+    /*background: #ffff url(../src/pages/quetion_background.webp) center center/cover no-repeat fixed;*/
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
+}
+
+#body {
+    background: center center/cover no-repeat fixed;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+#navBarDiv {
+    background-color: #001c46;
+    max-width: 100%;
+    margin: 0 auto;
+    margin-left: auto;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.navImage {
+    float: left;
+    height: 40px;
+    margin-top: 10px;
+    min-width: 15px;
+    margin-left: 21%;
+    margin-right: 1%;
+}
+
+/*Displayed only when the screen width is too thin*/
+.hamburger {
+    display: none;
+    float: left;
+    height: 27px;
+    padding: 10px;
+    margin-top: 10px;
+    min-width: 15px;
+    margin-left: 2%;
+    margin-right: 1%;
+}
+
+.appBar {
+    width: 90%;
+}
+
+.appBar a {
+    float: left;
+}
+
+.appBar ul a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 20px 20px;
+    text-decoration: none;
+}
+
+.appBar a:hover:not(.active) {
+    background-color: #111e6b;
+    color: white;
+}
+
+.appBar .active {
+    background-color: #1A73E8;
+}
+
+.appBar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+@media (max-width: 900px) {
+
+    /*hamburger goes visible*/
+    .hamburger {
+        display: block;
+    }
+
+    /*app logo goes invisible*/
+    .navImage {
+        display: none;
+        float: none;
+    }
+
+    .appBar ul a {
+        padding: 12px;
+        width: 100%
+    }
+
+    .appBar ul {
+        width: 100vw;
+    }
+
+    /*navbar links goes invisible*/
+    .appBarClosed ul {
+        display: none;
+    }
+
+}
+
+.padded_div {
+    min-height: 50vh;
+    margin: 0 auto;
+    margin-left: 0;
+    border-radius: 15px;
+    padding: 3vh;
+    border: 2px solid lightgray;
+    box-shadow: 1px 1px #888888;
+}
+
+.bigButton {
+    width: 7vw;
+    font-size: large;
+
+}
+
+
+.createPatient {
+    width: 50%;
+}
+
+.input-group {
+    position: relative;
+}
+
+.formInput {
+    width: 95%;
+    padding: 10px;
+    font: inherit;
+    border: none;
+    border-radius: 4px;
+    font-size: 60%;
+    background-color: transparent;
+    outline: 2px solid #888;
+}
+
+.inputValidation {
+    font-size: 50%;
+    margin: 1%;
+    color: red;
+}
+
+.input-label {
+    font-size: 70%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-3%, 40%);
+    transition: transform .25s;
+    pointer-events: none;
+    color: #888;
+}
+
+.formInput:focus+.input-label,
+.formInput:valid+.input-label {
+    transform: translate(3%, -55%) scale(.8);
+    color: #444;
+    padding-inline: 5px;
+    background-color: #fff;
+}
+
+.formInput:is(:focus, :valid) {
+    outline-color: #888;
+}
+
+.leftAlignedDiv {
+    margin: 0 auto;
+    margin-left: 0;
+}
+
+
+.formButton {
+    margin-top: 1vh;
+    background: #1A73E8;
+    box-shadow: 10px 10px 30px -6px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 1vh;
+    color: white;
+    margin-left: 40%;
+    margin-right: 40%;
+    text-align: center;
+
+}
+
+.animatedButton:hover {
+    background: #488fed;
+}
+
+.rightButton {
+    margin: 0;
+    float: right;
+}
+
+.centered_div {
+    justify-content: center;
+    display: flex;
+    margin: auto;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 21%;
+    font-size: calc(10px + 2vmin);
+    color: black;
+    margin-top: 5vh;
+}
+
+.App-header-align {
+
 }
 
 .App-link {
-  color: #61dafb;
+    color: #1A73E8;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* select CSS */
+.select {
+    width: 20%;
+    min-width: 115px;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    font-size: 15px;
+    border: 2px solid black;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-gap: 10px;
+    grid-template-rows: auto;
+}
+
+.grid-item {
+
+}
+
+.grid_2col {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 10px;
+    grid-template-rows: auto;
+}
+
+.grid_3col {
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    grid-gap: 10px;
+    grid-template-rows: auto;
+}
+
+
+.grid-item {
+
+}
+
+.homeGrid {
+    display: grid;
+    grid-template-columns: 47% 50%;
+    grid-gap: 3vh;
+    grid-template-rows: auto;
+    margin: 0 0;
+    margin-left: 0;
+    margin-right: 25%;
+    border-radius: 15px;
+    padding: 3vh 3vh;
+    background: #1a73e8;
+    box-shadow: 7px 7px #114d9b;
+
+}
+
+.homeGridItem {
+    width: auto;
+    background: white;
+    max-width: max-content;
+    border-radius: 15px;
+    padding: 3vh 3vh;
+    box-shadow: 7px 7px #488fed;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.homeGridButton {
+    margin-top: 1vh;
+    background: #1A73E8;
+    backdrop-filter: blur(10px);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 1vh;
+    color: white;
+    transition: all 0.2s ease-in-out;
+    text-align: center;
+    font-size: large;
+    width: 12vh;
+    text-decoration: none;
+    box-shadow: 5px 5px #488fed;
+
+}
+
+.PendingMessage{
+    display: flex;
+    justify-content: right;
+    color: #1A73E8FF;
+}
+
+.grid-item {
+
+}
+
+.ignore-css {
+    margin-top: 60px;
+    margin-left: -26.6%;
+}
+
+
+.general {
+    margin-top: 8%;
+}
+
+@media (max-width: 900px) {
+
+    .input-group {
+        position: relative;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .createPatient {
+        width: 100%;
+    }
+
+    .ignore-css {
+        margin-top: 60px;
+        margin-left: 0;
+    }
+}
+
