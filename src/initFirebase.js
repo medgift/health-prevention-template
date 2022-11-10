@@ -27,4 +27,4 @@ const responseRef = collection(db, "Response").withConverter(responseConverter);
 
 export const auth = getAuth(app);
 export {db};
-export {questionRef, responseRef, patientRef};
+export {questionRef, responseRef};
