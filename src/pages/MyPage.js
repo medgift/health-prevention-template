@@ -7,6 +7,7 @@ import "../css/MyPage.css";
 import {ResponseDB} from "../DAL/ResponseDB";
 import NiceAvatar, {genConfig} from "react-nice-avatar";
 import {PatientDB} from "../DAL/PatientDB";
+import {Variables} from "../Context/Variables";
 
 export function ResultHistoric({patientId, setBackgroundImage}) {
     const [userResponses, setUserResponses] = useState([]);
@@ -100,10 +101,31 @@ export class MyPage extends React.Component {
     }
 
     updateState() {
-        //if patient has not filled in a questionnaire yet, display default data
+        //patientResponse corresponds to responses saved in DB
         if (this.props.patientResponse === null || this.props.patientResponse === undefined) {
-            return;
+            //responses in context are questionnaire filled by anonymous
+            if (this.context.Poids !== null) {
+              this.useAnonymousResponsesInRAM();
+            }
+            return; //do not proceed to use data from db
         }
+
+        //those data comes from the patient in db
+        this.usePatientResponsesFromDB();
+    }
+
+    useAnonymousResponsesInRAM () {
+        //use data in RAM
+        let anonymousAnswersInRam = [this.context.Gender, this.context.Age, this.context.Poids, this.context.Taille, this.context.SystBool,
+            this.context.Syst, this.context.GlycBool, this.context.Glyc, this.context.CholBool, this.context.Chol, this.context.HDL, this.context.DIAB,
+            this.context.Inf, this.context.Avc, this.context.Afinf, this.context.Afcancer, this.context.Fume, this.context.Alim, this.context.Sport, this.context.Alcool]
+        this.setState({
+            algorithm: new Algorithm(anonymousAnswersInRam)
+        });
+        this.state.date = "Log in to save your results.";
+    }
+
+    usePatientResponsesFromDB() {
         this.state.date = this.formatDate(this.props.patientResponse.dateFilled);
         let list = this.props.patientResponse.responses;
         let answers = [list.Gender, list.Age, list.Poids, list.Taille, list.SystBool,
@@ -424,3 +446,4 @@ export class MyPage extends React.Component {
         )
     }
 }
+MyPage.contextType = Variables;
