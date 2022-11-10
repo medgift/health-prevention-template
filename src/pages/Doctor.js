@@ -32,9 +32,6 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
         if (typeof doctor === "undefined") {
             navigate("/");
         }
-        console.log("doctor is:")
-        console.log(doctor);
-
         await loadPatients();
     }
 
@@ -87,20 +84,21 @@ export default function DoctorPage({currentUser, setBackgroundImage}) {
     let patientRequests = pendingPatients.map((patient) => {
         return (
             <div key={patient.id} className={"patientRequestDiv"}>
-                {patient.firstName} {patient.lastName} <button value={patient.id} onClick={acceptPatient} className={"formButton"}>Accept</button> <button value={patient.id} onClick={refusePatient} className={"PatientRefuse"}>Refuse</button>
+                {patient.firstName} {patient.lastName} <div className={"PendingButtons"}> <button value={patient.id} onClick={acceptPatient} className={"PatientAccept"}>Accept</button> <button value={patient.id} onClick={refusePatient} className={"PatientRefuse"}>Refuse</button></div>
             </div>
         );
     });
 
     let newPatientRequests = (
         <div className={"PendingPatientDiv"}>
-            <h4>You have new patient requests</h4>
+            <h4 className={"PatientListTitle"}>You have new patient requests:</h4>
+            <div className={"PendingPatientList"}>
             {patientRequests}
+            </div>
         </div>
     )
 
 
-    //TODO: affichage conditionnel des patients pending (ou faire une page à part)
     return (
         <div className={"DocDiv"}>
             <h2>Welcome back, Doctor</h2>

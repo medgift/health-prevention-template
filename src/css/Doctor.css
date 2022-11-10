@@ -13,10 +13,32 @@
     width: 100%;
 }
 
-.PatientListTitle{
+.PatientListTitle {
     margin-bottom: 10px;
     font-size: 20px;
-    font-weight: bold;
-    color: #000000;
     text-indent: 20px;
+}
+.PendingButtons{
+    float: right;
+}
+
+.PatientAccept{
+    background-color: #1A73E8;
+    color: white;
+    border-radius: 3px;
+    border: none;
+}
+.PatientRefuse{
+    background-color: #e81a1a;
+    color: white;
+    border-radius: 3px;
+    border: none;
+}
+.patientRequestDiv{
+    margin-bottom: 5px;
+}
+
+.PendingPatientList{
+    overflow: auto;
+    height: 20vh;
 }

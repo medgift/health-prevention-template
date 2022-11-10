@@ -346,6 +346,12 @@ input:checked + .slider:before {
 
 }
 
+.PendingMessage{
+    display: flex;
+    justify-content: right;
+    color: #1A73E8FF;
+}
+
 .grid-item {
 
 }

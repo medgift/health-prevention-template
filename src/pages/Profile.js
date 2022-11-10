@@ -83,17 +83,8 @@ export default function Profile({currentUser, setBackgroundImage}) {
                     {optionsDoctors()}
                 </select>
             </div>
+            {user?.pendingDoctorId!=="" ? <div className={"PendingMessage"}>Your request has been registered</div> : null}
             <button className={"homeGridButton"} onClick={submitDoctor}>Submit Request</button>
-            {/*<hr/>
-            <h2>Pending doctor requests</h2>
-            <div className={"grid_3col"}>
-                <label>Date</label>
-                <label>Doctor</label>
-                <label>Status</label>
-                {//TODO: add pending requests method
-                }
-            </div>*/}
-
         </div>
     )
 
