@@ -8,7 +8,7 @@ import {ResponseDB} from "../DAL/ResponseDB";
 import NiceAvatar, {genConfig} from "react-nice-avatar";
 import {PatientDB} from "../DAL/PatientDB";
 import {Variables} from "../Context/Variables";
-import {RoleContext, AvailableRoles} from "../Context/UserRoles"
+import {AvailableRoles, RoleContext} from "../Context/UserRoles"
 import {useNavigate} from "react-router-dom";
 
 export function ResultHistoric({patientId, setBackgroundImage}) {
@@ -244,6 +244,10 @@ export class MyPage extends React.Component {
 
     }
 
+    /**
+     * Get user avatar
+     * @returns {Promise<void>}
+     */
     async getAvatar() {
         //if no user is connected do not read avatar config
         if (this.props.patientId === null)
@@ -261,12 +265,18 @@ export class MyPage extends React.Component {
         })
     }
 
+    /**
+     * Set all alcohol images to hidden
+     */
     setDrinksHidden() {
         document.getElementById("drink1Img").style.visibility = "hidden"
         document.getElementById("drink2Img").style.visibility = "hidden"
         document.getElementById("drink3Img").style.visibility = "hidden"
     }
 
+    /**
+     * Set images of alcohol visible depending on the value of alcohol
+     */
     updateDrinks() {
         this.setDrinksHidden();
         switch (this.state.algorithm.alcool) {
@@ -285,46 +295,53 @@ export class MyPage extends React.Component {
         }
     }
 
+    /**
+     * Set image of smoke visible or hidden depending on the value of smoke
+     */
     updateSmoke() {
         if (this.state.algorithm.fume) {
             document.getElementById("smokeImg").style.visibility = "visible"
-
         } else {
             document.getElementById("smokeImg").style.visibility = "hidden"
-
         }
     }
 
+    /**
+     * Set image of diabetes visible or hidden depending on the value of diabetes
+     */
     updateDiaRate() {
         if (this.state.algorithm.diaRate > 50) {
             document.getElementById("diabeteImg").style.visibility = "visible"
-
         } else {
             document.getElementById("diabeteImg").style.visibility = "hidden"
-
         }
     }
 
+    /**
+     * Set image of cancer visible or hidden depending on the value of cancer
+     */
     updateCanRate() {
         if (this.state.algorithm.canRate > 50) {
             document.getElementById("cancerImg").style.visibility = "visible"
-
         } else {
             document.getElementById("cancerImg").style.visibility = "hidden"
-
         }
     }
 
+    /**
+     * Set image of infarctus visible or hidden depending on the value of infarctus
+     */
     updateInfRate() {
         if (this.state.algorithm.infRate > 50) {
             document.getElementById("infarctusImg").style.visibility = "visible"
-
         } else {
             document.getElementById("infarctusImg").style.visibility = "hidden"
-
         }
     }
 
+    /**
+     * Function to call all image update above in one function
+     */
     updateAllImages() {
         this.updateDrinks();
         this.updateSmoke();
@@ -379,10 +396,13 @@ export class MyPage extends React.Component {
                         <div className={"divAvatar"}>
                             <NiceAvatar className={"avatar"} shape={"rounded"}
                                         bgColor={"lightgray"} {...this.state.config}/>
-                            <img id={"drink1Img"} className={"imgAvatar"} src={"results/drink1.png"}/>
-                            <img id={"drink2Img"} className={"imgAvatar"} src={"results/drink2.png"}/>
-                            <img id={"drink3Img"} className={"imgAvatar"} src={"results/drink3.png"}/>
-                            <img id={"smokeImg"} className={"imgAvatar"} src={"results/smoke.png"}/>
+                            <img id={"drink1Img"} className={"imgAvatar"} src={"results/drink1.png"}
+                                 alt={"Drink: 1 cup"}/>
+                            <img id={"drink2Img"} className={"imgAvatar"} src={"results/drink2.png"}
+                                 alt={"Drink: 2 cups"}/>
+                            <img id={"drink3Img"} className={"imgAvatar"} src={"results/drink3.png"}
+                                 alt={"Drink: 3 cups"}/>
+                            <img id={"smokeImg"} className={"imgAvatar"} src={"results/smoke.png"} alt={"Cigarette"}/>
                         </div>
                         <div>
                             <label className={"labelView"}>Smoke: </label>
@@ -447,9 +467,10 @@ export class MyPage extends React.Component {
                         <div className={"divAvatar"}>
                             <NiceAvatar className={"avatar"} shape={"rounded"}
                                         bgColor={"lightgray"} {...this.state.config}/>
-                            <img id={"infarctusImg"} className={"imgAvatar"} src={"results/heart.png"}/>
-                            <img id={"diabeteImg"} className={"imgAvatar"} src={"results/sugar.png"}/>
-                            <img id={"cancerImg"} className={"imgAvatar"} src={"results/cancer.png"}/>
+                            <img id={"infarctusImg"} className={"imgAvatar"} src={"results/heart.png"}
+                                 alt={"Infarctus"}/>
+                            <img id={"diabeteImg"} className={"imgAvatar"} src={"results/sugar.png"} alt={"Diabete"}/>
+                            <img id={"cancerImg"} className={"imgAvatar"} src={"results/cancer.png"} alt={"Cancer"}/>
                         </div>
                         <center>
                             <h3 className={"disease"}>Infarct rate</h3>

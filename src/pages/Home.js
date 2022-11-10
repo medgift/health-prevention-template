@@ -2,20 +2,23 @@ import {Link} from "react-router-dom";
 import "../css/Home.css";
 import {useEffect} from "react";
 
-export default function Home({currentUser, setBackgroundImage}) {
+export default function Home({setBackgroundImage}) {
 
     useEffect(() => {
         setBackgroundImage(null);
     }, []);
 
+    //Listener for animation function on scroll
     window.addEventListener("scroll", reveal)
+
     return (
         <div className="general">
             <h2 style={{textAlign: "left"}}>Welcome to the Health Prevention System</h2>
             <div className={"homeGrid"}>
                 <div className={"homeGridItem"} style={{width: "auto", background: "white"}}>
                     <img src={"health-checkup.png"}
-                         style={{width: "100%", borderRadius: "15px", boxShadow: "7px 7px #91d0f9"}}/>
+                         style={{width: "100%", borderRadius: "15px", boxShadow: "7px 7px #91d0f9"}}
+                         alt={"Health Image"}/>
                 </div>
                 <div className={"homeGridItem"} style={{width: "auto", background: "white", textAlign: "left"}}>
                     <p>Check your health using our tool !</p>
@@ -23,14 +26,14 @@ export default function Home({currentUser, setBackgroundImage}) {
                     <p>It will also help you to find the right doctor for you.</p>
                 </div>
             </div>
-
             <div style={{margin: "37px 0"}}/>
             <div className={"homeGrid"}>
                 <div className={"homeGridItem"} style={{width: "auto", background: "white"}}>
                     <p style={{verticalAlign: "middle"}}>Want to try ?</p>
                 </div>
                 <div className={"homeGridItem reveal"} style={{width: "auto", background: "white", textAlign: "left"}}>
-                    <Link className={"homeGridButton"} to="/questionnaire">Respond to the questionnaire anonymously</Link>
+                    <Link className={"homeGridButton"} to="/questionnaire">Respond to the questionnaire
+                        anonymously</Link>
                     <br className={"breakButton"}/>
                     <Link className={"homeGridButton"} to="/login">Connect</Link>
                     <br className={"breakButton"}/>
@@ -42,9 +45,11 @@ export default function Home({currentUser, setBackgroundImage}) {
                 by 9/10 doctors </h3>
             <div style={{margin: "200px 0"}}/>
         </div>
-
     );
 
+    /**
+     * Function to animate the elements on scroll
+     */
     function reveal() {
         const reveals = document.querySelectorAll(".reveal");
         for (let i = 0; i < reveals.length; i++) {

@@ -5,11 +5,18 @@ import {PatientDB} from "../DAL/PatientDB";
 import {AvailableRoles, RoleContext} from "../Context/UserRoles";
 import {useNavigate} from "react-router-dom";
 
+/**
+ * Function that returns the EditAvatar page if user is a patient (and indirectly if he is logged in), else redirect to home page
+ * @param patientId
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function AvatarPage({patientId}) {
     const userRoleContext = useContext(RoleContext);
     const navigate = useNavigate();
 
     useEffect(() => {
+        //Check if the user is a patient (and indirectly logged in)
         if (userRoleContext.role !== AvailableRoles.PATIENT)
             navigate("/");
 
@@ -24,6 +31,7 @@ export class EditAvatar extends React.Component {
     constructor(props) {
         super(props);
 
+        //Default config for avatar
         const defaultConfig = {
             "sex": "man",
             "faceColor": "#f5d6a1",
@@ -46,6 +54,14 @@ export class EditAvatar extends React.Component {
         };
     }
 
+    componentDidMount() {
+        this.getPatient();
+    }
+
+    /**
+     * Function that gets the patient from the DB and updates the avatar config
+     * @returns {Promise<void>}
+     */
     async getPatient() {
         if (this.props.currentUser) {
             const pat = await PatientDB.prototype.getPatientById(this.props.currentUser.uid);
@@ -53,31 +69,31 @@ export class EditAvatar extends React.Component {
                 return; //patient may not have an avatar yet
             const config = genConfig(pat.avatarConfig);
             this.setState({myConfig: config});
-            console.log(config);
         }
     }
 
-    componentDidMount() {
-        this.getPatient();
-    }
-
-    //On Change Event for select-options
+    /**
+     * Update the avatar in state
+     * @param e
+     */
     change = (e) => {
         this.setState(s => ({myConfig: {...s.myConfig, [e.target.name]: e.target.value}}));
     }
+
+    /**
+     * Save the avatar config to the DB
+     * @returns {Promise<void>}
+     */
     save = async () => {
         if (this.props.currentUser == null) {
             alert("Please login first");
         } else {
-            console.log(this.props.currentUser.uid & " " & this.state.myConfig)
             await PatientDB.prototype.updateAvatar(this.props.currentUser.uid, this.state.myConfig)
             alert("Avatar saved!")
         }
     }
 
-
     render() {
-
         return (
             <div className="padded_div avatarDiv">
                 <h1>Edit your Avatar</h1>
@@ -171,10 +187,7 @@ export class EditAvatar extends React.Component {
                     </button>
                 </div>
             </div>
-
         )
     };
-
-
 }
 
