@@ -13,6 +13,7 @@ import {getDoc, doc, updateDoc} from 'firebase/firestore'
 
 // 'X-RapidAPI-Key': '96a4e87f9emsh328fe90239660d8p159ca6jsn0a17636b4501',
 // 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
+
 // 'X-RapidAPI-Key': 'd3d5572e9cmsh9b7f676291565f0p1fe26cjsn81b8ccdb76d2',
 // 'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 // 'X-RapidAPI-Key': '7efcf51a94msh633475178167321p1e9398jsn94694871e69c',
@@ -37,7 +38,7 @@ import {getDoc, doc, updateDoc} from 'firebase/firestore'
 const optionsPost = {
     method: 'POST',
     headers: {
-        'X-RapidAPI-Key': '53c0717abamsh12e9ecc41ba6cc7p1892ecjsn2fddd02797cb',
+        'X-RapidAPI-Key': '96a4e87f9emsh328fe90239660d8p159ca6jsn0a17636b4501',
     'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 
     }
@@ -45,7 +46,7 @@ const optionsPost = {
 const optionsPut = {
     method: 'PUT',
     headers: {
-        'X-RapidAPI-Key': '53c0717abamsh12e9ecc41ba6cc7p1892ecjsn2fddd02797cb',
+        'X-RapidAPI-Key': '96a4e87f9emsh328fe90239660d8p159ca6jsn0a17636b4501',
         'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 
     }
@@ -53,7 +54,7 @@ const optionsPut = {
 const optionsGet = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Key': '53c0717abamsh12e9ecc41ba6cc7p1892ecjsn2fddd02797cb',
+        'X-RapidAPI-Key': '96a4e87f9emsh328fe90239660d8p159ca6jsn0a17636b4501',
         'X-RapidAPI-Host': 'doppelme-avatars.p.rapidapi.com'
 
     }
