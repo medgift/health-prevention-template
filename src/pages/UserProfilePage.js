@@ -33,12 +33,6 @@ export default function UserProfilePage() {
     const [lastname, setLastname] = useState("")
 
     useEffect(() => {
-        if (role.role !== 1) {
-            navigate("/");
-        }
-    }, []);
-
-    useEffect(() => {
         if (!auth.currentUser) {
             navigate("/login");
             return;
