@@ -8,7 +8,7 @@ export default function AdminCoef() {
     const [coefs, setCoefs] = useState({})
     const [isBusy, setBusy] = useState(true)
 
-    console.log("Bonjour " + getData)
+    //console.log("Bonjour " + getData)
 
     useEffect(() => {
         getDocs(collection(database, "coefficients")).then(query => {
@@ -35,7 +35,7 @@ export default function AdminCoef() {
             const docRef = doc(database, "coefficient", coefName);
             updateDoc(docRef, coefs[coefName]);
         })
-        console.log("The data was saved");
+        //console.log("The data was saved");
         e.preventDefault()
     }
 

@@ -64,7 +64,7 @@ export default function Login() {
             role = doc.get("role");
         });
 
-        console.log("this " + role);
+        //console.log("this " + role);
         return role;
     }
 

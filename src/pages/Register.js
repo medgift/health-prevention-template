@@ -21,7 +21,6 @@ export default function Register() {
                     firstname: firstname,
                     lastname: lastname,
                     mail: email,
-                    password: password,
                     role: 1
                 });
             });

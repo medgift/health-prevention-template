@@ -120,7 +120,7 @@ export default class WriteAnswer extends React.Component{
                 resultInfarctus: this.resultInfarctus,
                 resultNonInfarctus: this.resultNonInfarctus
             });
-            console.log("Write success")
+            //console.log("Write success")
         } catch (e) {
             console.log(e)
         }
@@ -132,7 +132,7 @@ export default class WriteAnswer extends React.Component{
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-            console.log("Age " + docSnap.data().age)
+            //console.log("Age " + docSnap.data().age)
             this.sex = docSnap.data().sex;
             this.age = docSnap.data().age;
             this.weight = docSnap.data().weight;

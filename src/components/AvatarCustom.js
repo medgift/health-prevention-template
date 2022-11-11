@@ -189,7 +189,7 @@ export default function Avatar() {
                 const removeUrl = 'https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/eye'
                 const res = await fetch(removeUrl, optionsPut);
                 const data = await res.json();
-                console.log("Delete asset : ", data);
+                //console.log("Delete asset : ", data);
                 if (asset != '') {
                     fetchModification()
                 } else {
@@ -198,8 +198,8 @@ export default function Avatar() {
                     } else {
                         setAvatar(data.avatarSrc)
                     }
-                    console.log("Old asset2 : " + oldAsset)
-                    console.log("New asset ID : " + asset)
+                    //console.log("Old asset2 : " + oldAsset)
+                    //console.log("New asset ID : " + asset)
                 }
             } else fetchModification();
         }
@@ -210,14 +210,14 @@ export default function Avatar() {
             const addUrl = 'https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/' + asset;
             const res = await fetch(addUrl, optionsPut);
             const data = await res.json();
-            console.log("Change asset : ", data);
+            //console.log("Change asset : ", data);
             if (typeof data.avatarSrc == "undefined") {
                 setAvatar(ava)
             } else {
                 setAvatar(data.avatarSrc)
             }
-            console.log("Old asset3 : " + oldAsset)
-            console.log("New asset ID : " + asset)
+            //console.log("Old asset3 : " + oldAsset)
+            //console.log("New asset ID : " + asset)
         }
 
         setDeleteAsset(false);
@@ -252,7 +252,7 @@ export default function Avatar() {
                 const removeUrl = 'https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/hair'
                 const res = await fetch(removeUrl, optionsPut);
                 const data = await res.json();
-                console.log("Delete hair : ", data);
+                //console.log("Delete hair : ", data);
                 if (hair !='') {
                     fetchModification()
                 } else {
@@ -261,8 +261,8 @@ export default function Avatar() {
                     } else {
                         setAvatar(data.avatarSrc)
                     }
-                    console.log("Old hair2 : " + oldHair)
-                    console.log("New hair ID : " + hair)
+                    //console.log("Old hair2 : " + oldHair)
+                    //console.log("New hair ID : " + hair)
                 }
             } else fetchModification();
         }
@@ -273,14 +273,14 @@ export default function Avatar() {
             const addUrl = 'https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/' + hair;
             const res = await fetch(addUrl, optionsPut);
             const data = await res.json();
-            console.log("Change asset : ", data);
+            //console.log("Change asset : ", data);
             if (typeof data.avatarSrc == "undefined") {
                 setAvatar(ava)
             } else {
                 setAvatar(data.avatarSrc)
             }
-            console.log("Old hair3 : " + oldHair)
-            console.log("New hair ID : " + hair)
+            //console.log("Old hair3 : " + oldHair)
+            //console.log("New hair ID : " + hair)
         }
 
         setDeleteHair(false);
@@ -299,8 +299,8 @@ export default function Avatar() {
         if (assetColor != color.hex){
             setAssetColor(color.hex)
             setAvatar('')
-            console.log("Asset color : " + color.hex)
-            console.log("New asset color : " + assetColor)
+            //console.log("Asset color : " + color.hex)
+            //console.log("New asset color : " + assetColor)
         }
 
     }
@@ -316,7 +316,7 @@ export default function Avatar() {
             const newColor = assetColor.substring(1, 7)
             const res = await fetch('https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/eye/' + newColor, optionsPut);
             const data = await res.json();
-            console.log("Change color asset : ", data);
+            //console.log("Change color asset : ", data);
             setAvatar(data.avatarSrc)
         }
     }, [assetColor])
@@ -330,8 +330,8 @@ export default function Avatar() {
         if (hairColor != color.hex){
             setHairColor(color.hex)
             setAvatar('')
-            console.log("Hair color : " + color.hex)
-            console.log("New hair color : " + hairColor)
+            //console.log("Hair color : " + color.hex)
+            //console.log("New hair color : " + hairColor)
         }
 
     }
@@ -349,7 +349,7 @@ export default function Avatar() {
             const newColor = hairColor.substring(1, 7);
             const res = await fetch('https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/hair/' + newColor, optionsPut);
             const data = await res.json();
-            console.log("Change color skin : ", data);
+            //console.log("Change color skin : ", data);
             setAvatar(data.avatarSrc)
         }
     }, [hairColor])
@@ -368,8 +368,8 @@ export default function Avatar() {
         {
             setSkinColor(color.hex)
             setAvatar('')
-            console.log("Skin color : " + color.hex)
-            console.log("New skin color : " + skinColor)
+            //console.log("Skin color : " + color.hex)
+            //console.log("New skin color : " + skinColor)
         }
     }
 
@@ -379,12 +379,12 @@ export default function Avatar() {
 
         async function fetchColorSkin() {
             const newColor = skinColor.substring(1, 7);
-            console.log("Skin color : " + skinColor)
+            //console.log("Skin color : " + skinColor)
             const res = await fetch('https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/skin/' + newColor, optionsPut);
-            console.log('https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/skin/' + newColor)
+            //console.log('https://doppelme-avatars.p.rapidapi.com/avatar/' + key + '/skin/' + newColor)
 
             const data = await res.json();
-            console.log("Change color skin : ", data);
+            //console.log("Change color skin : ", data);
             setAvatar(data.avatarSrc)
         }
     }, [skinColor])
@@ -402,11 +402,11 @@ export default function Avatar() {
                 avatarAsset: asset,
                 avatarSex: sex
             });
-            console.log("Avatar: " + avatar)
-            console.log("Key: " + key)
-            console.log("Hair: " + hair)
-            console.log("Asset: " + asset)
-            console.log("Sex: " + sex)
+            //console.log("Avatar: " + avatar)
+            //console.log("Key: " + key)
+            //console.log("Hair: " + hair)
+            //console.log("Asset: " + asset)
+            //console.log("Sex: " + sex)
         }
     }
 

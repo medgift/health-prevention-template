@@ -9,7 +9,7 @@ export default function AdminVarTest() {
     const [vars, setVars] = useState({})
     const [isBusy, setBusy] = useState(true)
 
-    console.log("Bonjour " + getData)
+    //console.log("Bonjour " + getData)
 
     useEffect(() => {
         getDocs(collection(database, "variables")).then(query => {
@@ -17,7 +17,7 @@ export default function AdminVarTest() {
             query.forEach((doc) => {
                 docsT[doc.id] = doc.data();
             })
-            console.log(docsT)
+            //console.log(docsT)
             setVars(docsT);
             setBusy(false);
         })
@@ -37,7 +37,7 @@ export default function AdminVarTest() {
             const docRef = doc(database, "variables", varName);
             updateDoc(docRef, vars[varName]);
         })
-        console.log("The data was saved");
+        //console.log("The data was saved");
         e.preventDefault()
     }
 

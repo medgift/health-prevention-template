@@ -29,7 +29,7 @@ export default function App() {
     /* Watch for authentication state changes */
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            console.log("User is", user);
+            //console.log("User is", user);
             setCurrentUser(user);
         });
 

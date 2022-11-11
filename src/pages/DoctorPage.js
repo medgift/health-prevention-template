@@ -22,7 +22,7 @@ export default function DoctorPage() {
 
     const navigate = useNavigate();
     const role = useContext(Context);
-    console.log("role dans doc " + role.role)
+    //console.log("role dans doc " + role.role)
 
     setBodyColor({color1: "#d56204", color2: "#e5b87d"})
 
@@ -35,7 +35,7 @@ export default function DoctorPage() {
     const getCurrentUser = () => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setUserID(user.uid)
-            console.log(user.uid)
+            //console.log(user.uid)
         });
     }
 
@@ -95,7 +95,6 @@ export default function DoctorPage() {
                             <div>{ document.map(
                                 e =>
                                     <details>
-                                        {console.log(e.data())}
                                         <summary>{ e.id }</summary>
                                         {
                                             Object.entries(e.data()).map(([key, value]) => {

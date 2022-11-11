@@ -27,7 +27,6 @@ export default function UserProfilePage() {
     const [document, setDocument] = useState([])
     const navigate = useNavigate();
     const {role} = useContext(Context);
-    //console.log("user " + role.role)
     const mySwal = withReactContent(Swal)
     const [firstname, setFirstname] = useState("")
     const [lastname, setLastname] = useState("")
@@ -75,7 +74,8 @@ export default function UserProfilePage() {
         getHistory()
     }, []);
 
-    const deleteHistory = (event, id) => {
+    //Function to delete an entry in the history
+    /*const deleteHistory = (event, id) => {
         event.preventDefault();
 
         const docRef = doc(database, 'users/' + auth.currentUser.uid + '/answers', id)
@@ -94,8 +94,7 @@ export default function UserProfilePage() {
                 Swal.fire("The document wasn't deleted", '', 'info')
             }
         })
-
-    }
+    }*/
 
     async function getAllDoctors() {
         getCurrentUser()
@@ -121,7 +120,7 @@ export default function UserProfilePage() {
                 addDoctor(oldArray => [...oldArray, creatDoctor])
             }
         })
-        for (var i = 0; i < listAllowedDoctor.length; i++) {
+        for (let i = 0; i < listAllowedDoctor.length; i++) {
         }
     }
 
@@ -179,7 +178,7 @@ export default function UserProfilePage() {
                         allowed: listAllowed
                     })
                 } catch (e) {
-                    console.log(e)
+                    //console.log(e)
                 }
             }
         }
@@ -190,21 +189,21 @@ export default function UserProfilePage() {
     const updateAllowedList = (event) => {
         if (event.target.checked) {
             listAllowedDoctor.push(event.target.value)
-            var index = listRemovedDoctor.indexOf(event.target.value)
+            let index = listRemovedDoctor.indexOf(event.target.value)
             listRemovedDoctor[index] = null
         } else {
-            var index = listAllowedDoctor.indexOf(event.target.value)
+            let index = listAllowedDoctor.indexOf(event.target.value)
             listAllowedDoctor[index] = null
             listRemovedDoctor.push(event.target.value)
         }
-        console.log(listAllowedDoctor.length + " allowed doctor")
+        //console.log(listAllowedDoctor.length + " allowed doctor")
 
-        for (var i = 0; i < listAllowedDoctor.length; i++) {
-            console.log(listAllowedDoctor[i])
+        for (let i = 0; i < listAllowedDoctor.length; i++) {
+            //console.log(listAllowedDoctor[i])
         }
-        console.log(listRemovedDoctor.length + " removed doctor")
-        for (var i = 0; i < listRemovedDoctor.length; i++) {
-            console.log(listRemovedDoctor[i])
+        //console.log(listRemovedDoctor.length + " removed doctor")
+        for (let i = 0; i < listRemovedDoctor.length; i++) {
+            //console.log(listRemovedDoctor[i])
         }
     }
 
@@ -225,8 +224,7 @@ export default function UserProfilePage() {
                         e =>
                             <details>
                                 <summary>{e.id}
-                                    <button className="delete" onClick={event => deleteHistory(event, e.id)}>
-                                        <BsTrash2Fill/></button>
+                                    {/*<button className="delete" onClick={event => deleteHistory(event, e.id)}><BsTrash2Fill/></button>*/}
                                 </summary>
                                 {
                                     Object.entries(e.data()).map(([key, value]) => {
@@ -256,6 +254,4 @@ export default function UserProfilePage() {
                 </div>
             </div>
         </>)
-
-
 }

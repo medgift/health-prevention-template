@@ -61,7 +61,7 @@ function ResultPage() {
     // change state of the slidder column
     const changeSmoke = (event) => {
         setSmoke(event.target.value);
-        console.log("Smoke: " +  event.target.value)
+        //console.log("Smoke: " +  event.target.value)
     };
     useEffect(() =>{
         changeCancer()
@@ -79,7 +79,7 @@ function ResultPage() {
 
     const changeSport = (event) => {
         setSport(event.target.value)
-        console.log("Sport : " + event.target.value)
+        //console.log("Sport : " + event.target.value)
 
     };
     useEffect(() =>{
@@ -89,7 +89,7 @@ function ResultPage() {
 
     const changeWeight = (event) => {
         setWeight(event.target.value);
-        console.log("Weight : " + event.target.value)
+        //console.log("Weight : " + event.target.value)
 
     };
     useEffect(()=>{
@@ -102,7 +102,7 @@ function ResultPage() {
 
     const changeAlcool = (event) => {
         setAlcool(event.target.value);
-        console.log("Alcool : " + event.target.value)
+        //console.log("Alcool : " + event.target.value)
     };
     useEffect(()=>{
         changeCancer()
@@ -127,7 +127,7 @@ function ResultPage() {
             const docSnap = await getDoc(docRef);
             const ava = docSnap.get("avatarURL");
             setAvatar(ava);
-            console.log(ava)
+            //console.log(ava)
         }
     }, [])
 
@@ -159,7 +159,7 @@ function ResultPage() {
             else
                 setActualState('high')
 
-            console.log(riskCalc)
+            //console.log(riskCalc)
         }
     }, []);
 
@@ -215,10 +215,10 @@ function ResultPage() {
 
                             <div className="allColumnText">
                                 <h2 className="title-results">Your personal details</h2>
-                                <p>Age {allAnswers.age}</p>
-                                <p>Sex {allAnswers.sex < 1 ? "Femme" : "Homme"}</p>
-                                <p>Height {allAnswers.height}kg</p>
-                                <p>Weight {allAnswers.weight}cm</p>
+                                <p><strong>Age</strong> {allAnswers.age}</p>
+                                <p><strong>Sex</strong> {allAnswers.sex < 1 ? "Woman" : "Man"}</p>
+                                <p><strong>Height</strong> {allAnswers.height} kg</p>
+                                <p><strong>Weight</strong> {allAnswers.weight} cm</p>
                             </div>
 
 
@@ -227,80 +227,61 @@ function ResultPage() {
                         <div className="column">
                             <div className="allColumnText">
                                 <h2 className="title-results">Your habits</h2>
-                                <div className="textAndSlider">
-                                    <p className="child" style={{alignSelf: "start"}}> Smoker <br/> {smokeValue}</p>
-                                    <input type="range" min="0" max="1" onChange={changeSmoke} value={smokeValue}
-                                           step={1}
-                                           className="slider"/>
+                                <p className="child" style={{alignSelf: "start"}}>Smoker</p>
+                                <div className="input-wrapper">
+                                    <div className="input-container">
+                                        <input type="radio"
+                                               id="yes"
+                                               className="radio-button"
+                                               name="fume"
+                                               value="1"
+                                               checked={smokeValue === "1"}
+                                               onChange={changeSmoke}
+                                        />
+                                        <div className="radio-tile">
+                                            <label htmlFor="yes" className="radio-tile-label">Yes</label>
+                                        </div>
+                                    </div>
+
+                                    <div className="input-container">
+                                        <input type="radio"
+                                               id="no"
+                                               className="radio-button"
+                                               name="fume"
+                                               value="0"
+                                               checked={smokeValue === "0"}
+                                               onChange={changeSmoke}
+                                        />
+                                        <div className="radio-tile">
+                                            <label htmlFor="no" className="radio-tile-label">No</label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="textAndSlider">
-                                    <p className="child" style={{alignSelf: "start"}}>Diet <br/> {switchAlim(alimValue)}
-                                    </p>
+                                    <p className="child" style={{alignSelf: "start"}}>Diet <br/> <strong>{switchAlim(alimValue)}</strong></p>
                                     <input type="range" min="0" max="3" onChange={changeAlim} value={alimValue} step={1}
                                            className="slider"/>
                                 </div>
                                 <div className="textAndSlider">
                                     <p className="child"
-                                       style={{alignSelf: "start"}}>Sport <br/> {switchSport(sportValue)}</p>
+                                       style={{alignSelf: "start"}}>Sport <br/> <strong>{switchSport(sportValue)}</strong></p>
                                     <input type="range" min="0" max="3" onChange={changeSport} value={sportValue}
                                            step={1}
                                            className="slider"/>
                                 </div>
                                 <div className="textAndSlider">
-                                    <p className="child" style={{alignSelf: "start"}}>Weight <br/> {weightValue}</p>
+                                    <p className="child" style={{alignSelf: "start"}}>Weight <br/> <strong>{weightValue}</strong></p>
                                     <input type="range" min="0" max="200" onChange={changeWeight} value={weightValue}
                                            step={1} className="slider"/>
                                 </div>
                                 <div className="textAndSlider">
                                     <p className="child"
-                                       style={{alignSelf: "start"}}>Alcool <br/> {switchAlcool(alcoolValue)}</p>
+                                       style={{alignSelf: "start"}}>Alcool <br/> <strong>{switchAlcool(alcoolValue)}</strong></p>
                                     <input type="range" min="0" max="4" onChange={changeAlcool} value={alcoolValue}
                                            step={1}
                                            className="slider"/>
                                 </div>
                             </div>
-
-                            {/*actualState === 'low' ?
-                                <div className="backgroundLow">
-                                    <p>Your habits</p>
-                                    {avatar !== "" && typeof avatar != "undefined" ?
-                                        <div> {actualState === 'low' ?
-                                            <img src={avatar} className={"imageLow"}/> :
-                                            actualState === 'medium' ?
-                                                <img src={avatar} className={"imageMedium"}/> :
-                                                <img src={avatar} className={"imageBig"}/>
-                                        }</div> :
-                                        <img src={MyImage} width="200px" height="200px"></img>
-                                    }
-                                </div>
-                                :
-                                actualState === 'medium' ?
-                                    <div className="backgroundMedium">
-                                        <p>Your habits</p>
-                                        {avatar !== "" && typeof avatar != "undefined" ?
-                                            <div> {actualState === 'low' ?
-                                                <img src={avatar} className={"imageLow"}/> :
-                                                actualState === 'medium' ?
-                                                    <img src={avatar} className={"imageMedium"}/> :
-                                                    <img src={avatar} className={"imageBig"}/>
-                                            }</div> :
-                                            <img src={MyImage} width="200px" height="200px"></img>
-                                        }
-                                    </div>
-                                    :
-                                    <div className="backgroundHigh">
-                                        <p>Your habits</p>
-                                        {avatar !== "" && typeof avatar != "undefined" ?
-                                            <div> {actualState === 'low' ?
-                                                <img src={avatar} className={"imageLow"}/> :
-                                                actualState === 'medium' ?
-                                                    <img src={avatar} className={"imageMedium"}/> :
-                                                    <img src={avatar} className={"imageBig"}/>
-                                            }</div> :
-                                            <img src={MyImage} width="200px" height="200px"></img>
-                                        }
-                                    </div>*/
-                            }
                         </div>
 
 
@@ -349,10 +330,10 @@ function ResultPage() {
 
                             <div className="allColumnText">
                                 <h2 className="title-results">Your risks</h2>
-                                <p>Hearth Attack {nonInfarctusRisk} %</p>
-                                <p>Infarctus {infarctusRisk} %</p>
-                                <p>Diabete {diabeteRisk} %</p>
-                                <p>Cancer {cancerRisk} %</p>
+                                <p><strong>Hearth Attack</strong> {nonInfarctusRisk} %</p>
+                                <p><strong>Infarctus</strong> {infarctusRisk} %</p>
+                                <p><strong>Diabete</strong> {diabeteRisk} %</p>
+                                <p><strong>Cancer</strong> {cancerRisk} %</p>
                             </div>
 
                             {auth.currentUser ? <button onClick={SaveChanges}>Save</button> : null}

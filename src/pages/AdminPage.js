@@ -12,7 +12,7 @@ import NavbarAdmin from "../components/NavbarAdmin";
 export default function AdminPage() {
     const navigate = useNavigate();
     const role = useContext(Context);
-    console.log("role dans l'admin " + role.role)
+    //console.log("role dans l'admin " + role.role)
 
     setBodyColor({color1: "#04d515", color2: "#cee57d"})
 

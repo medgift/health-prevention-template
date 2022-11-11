@@ -37,14 +37,14 @@ export default function AdminDoctorCreation() {
 
             //navigate("/");
             //succeeded = true;
-            console.log("Doctor Created")
+            //console.log("Doctor Created")
             created = true;
 
             // resetNewDoctor();
 
         } catch (e) {
             console.error(e);
-            console.log("not Created")
+            //console.log("not Created")
         }
 
     }

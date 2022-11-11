@@ -62,7 +62,7 @@ function Habits({prevStep, nextStep, values, setValues}) {
 
     useEffect(() => {
         if (Object.keys(errors).length === 0 && isSubmit) {
-            console.log("test")
+            //console.log("test")
             nextStep();
         }
     }, [errors])
