@@ -27,8 +27,16 @@ export default function UserProfilePage() {
     const [document, setDocument] = useState([])
     const navigate = useNavigate();
     const {role} = useContext(Context);
-    console.log("user " + role.role)
+    //console.log("user " + role.role)
     const mySwal = withReactContent(Swal)
+    const [firstname, setFirstname] = useState("")
+    const [lastname, setLastname] = useState("")
+
+    useEffect(() => {
+        if (role.role !== 1) {
+            navigate("/");
+        }
+    }, []);
 
     useEffect(() => {
         if (!auth.currentUser) {
@@ -41,12 +49,24 @@ export default function UserProfilePage() {
     const [currentUser, setCurrentUser] = useState(undefined);
     var userID
 
-
     const getCurrentUser = () => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             userID = user.uid
         });
     }
+
+    const getName = () => {
+        const docRef = doc(database, "users/", auth.currentUser.uid);
+
+        getDoc(docRef).then((doc) => {
+            setFirstname(doc.data().firstname)
+            setLastname(doc.data().lastname)
+        })
+    }
+
+    useEffect(() => {
+        getName();
+    }, [])
 
     // access the db collection
     async function getHistory() {
@@ -204,7 +224,9 @@ export default function UserProfilePage() {
             <div className="box">
                 <div className="wrapper">
                     <h1>Profile</h1>
-                    <h2 style={{marginTop: "30px"}}>Your results:</h2>
+                    <p><strong>Firstname:</strong> {firstname}</p>
+                    <p><strong>Lastname:</strong> {lastname}</p>
+                    <h2 style={{marginTop: "30px", marginBottom: "10px"}}>Your results:</h2>
                     <div>{document.map(
                         e =>
                             <details>
@@ -221,7 +243,7 @@ export default function UserProfilePage() {
                             </details>
                     )}
                     </div>
-                    <h2 style={{marginTop: "30px"}}>Choose which doctor can see your result</h2>
+                    <h2 style={{marginTop: "30px", marginBottom: "10px"}}>Choose which doctor can see your result</h2>
                     <div>
                         <div style={{listStyle: "none"}}>{allDoctors.map((doc, index) => (
                             <li key={index} className="row" style={{marginBottom: "20px"}}>

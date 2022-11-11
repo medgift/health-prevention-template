@@ -196,6 +196,10 @@ input:not([type=radio], [type=number]):focus {
     top: 15px;
 }
 
+.container-sh-pwd.confirm {
+    margin: 0;
+}
+
 input[type=number] {
     background-color: transparent;
     color: var(--primary);
