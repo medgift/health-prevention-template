@@ -148,7 +148,6 @@ export class MyPage extends React.Component {
 
     /**
      * recalculates the rates with the new value of smoke (true or false)
-     * @param e the new value
      */
     handleInputBool = () => {
         this.setState(s => {
@@ -411,7 +410,7 @@ export class MyPage extends React.Component {
                                    onChange={this.handleInputBool}/>
                         </div>
                         <ProgressBar name={"fume"} min={0} max={1} bgcolor={"#1a73e8"}
-                                     now={this.state.algorithm.fume * 100 / 1}/>
+                                     now={this.state.algorithm.fume * 100}/>
 
                         <label className={"labelView"}>Healthy Food: </label>
                         <select className={"choicesView"} id="alim" onChange={this.changeAlim}
@@ -454,11 +453,11 @@ export class MyPage extends React.Component {
                         <ProgressBar name={"alcool"} min={0} max={4} bgcolor={"#1a73e8"}
                                      now={this.state.algorithm.alcool * 100 / 4}/>
                         {
-                            (this.state.algorithm.poids != this.state.algorithm.defaultPoids ||
-                                this.state.algorithm.alim != this.state.algorithm.defaultAlim ||
-                                this.state.algorithm.sport != this.state.algorithm.defaultSport ||
-                                this.state.algorithm.alcool != this.state.algorithm.defaultAlcool ||
-                                this.state.algorithm.fume != this.state.algorithm.defaultFume) &&
+                            (this.state.algorithm.poids !== this.state.algorithm.defaultPoids ||
+                                this.state.algorithm.alim !== this.state.algorithm.defaultAlim ||
+                                this.state.algorithm.sport !== this.state.algorithm.defaultSport ||
+                                this.state.algorithm.alcool !== this.state.algorithm.defaultAlcool ||
+                                this.state.algorithm.fume !== this.state.algorithm.defaultFume) &&
                             <button className={"resetButton"} onClick={this.reset}>Reset my rhythm</button>
                         }
                     </div>
